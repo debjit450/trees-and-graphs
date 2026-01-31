@@ -1,38 +1,832 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>complexity-analysis - Trees & Graphs</title>
+    <title>Complexity Analysis - Interactive Learning</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center; }
-        .container { text-align: center; color: white; padding: 40px; }
-        h1 { font-size: 3em; margin-bottom: 20px; }
-        p { font-size: 1.3em; margin-bottom: 30px; opacity: 0.9; }
-        .btn { padding: 15px 30px; background: white; color: #667eea; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; }
-        .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
-        .topics { background: rgba(255,255,255,0.1); padding: 30px; border-radius: 16px; margin: 30px auto; max-width: 600px; text-align: left; }
-        .topics h3 { margin-bottom: 15px; }
-        .topics ul { margin-left: 20px; }
-        .topics li { margin: 8px 0; opacity: 0.9; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+        }
+
+        .nav-bar {
+            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-bar a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-bar h1 {
+            color: white;
+            font-size: 1.5em;
+            flex: 1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 25px;
+        }
+
+        .card h2 {
+            font-size: 1.8em;
+            color: #1a1a2e;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #16a34a;
+            padding-bottom: 10px;
+        }
+
+        .card h3 {
+            font-size: 1.3em;
+            color: #1a1a2e;
+            margin: 25px 0 15px 0;
+        }
+
+        .card p {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .card ul,
+        .card ol {
+            margin-left: 25px;
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .card li {
+            margin-bottom: 8px;
+        }
+
+        .info-box {
+            background: #f0fdf4;
+            border: 2px solid #16a34a;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .info-box h4 {
+            color: #16a34a;
+            margin-bottom: 10px;
+        }
+
+        .info-box p,
+        .info-box li {
+            color: #166534;
+            line-height: 1.6;
+        }
+
+        .info-box ul {
+            margin-left: 20px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.95em;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 10px 12px;
+            border: 1px solid #e0e0e0;
+            text-align: left;
+        }
+
+        .comparison-table th {
+            background: #16a34a;
+            color: white;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: #f8f8f8;
+        }
+
+        .comparison-table .good {
+            color: #16a34a;
+            font-weight: 600;
+        }
+
+        .comparison-table .ok {
+            color: #ca8a04;
+            font-weight: 600;
+        }
+
+        .comparison-table .bad {
+            color: #dc2626;
+            font-weight: 600;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: #16a34a;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #1a1a2e;
+            border: 2px solid #e0e0e0;
+        }
+
+        .concept-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .concept-card {
+            background: #f0fdf4;
+            border-left: 4px solid #16a34a;
+            padding: 15px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .concept-card h4 {
+            color: #166534;
+            margin-bottom: 8px;
+            font-size: 1em;
+        }
+
+        .concept-card p {
+            color: #15803d;
+            margin: 0;
+            font-size: 0.9em;
+        }
     </style>
 </head>
+
 <body>
+    <div class="nav-bar">
+        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+        <h1><i class="fas fa-chart-line"></i> Complexity Analysis</h1>
+    </div>
+
     <div class="container">
-        <h1><i class="fas fa-code"></i> complexity-analysis</h1>
-        <p>This topic is part of the comprehensive Trees & Graphs tutorial.</p>
-        <div class="topics">
-            <h3>Topics Covered:</h3>
-            <ul>
-                <li>Core concepts and definitions</li>
-                <li>Algorithm implementations</li>
-                <li>Time and space complexity</li>
-                <li>Practice problems and examples</li>
-            </ul>
+        <div class="card">
+            <h2>Big O Notation Review</h2>
+            <p>Big O notation describes the upper bound of an algorithm's growth rate as input size increases.</p>
+
+            <div class="concept-grid">
+                <div class="concept-card">
+                    <h4>O(1)</h4>
+                    <p>Constant time</p>
+                </div>
+                <div class="concept-card">
+                    <h4>O(log n)</h4>
+                    <p>Logarithmic</p>
+                </div>
+                <div class="concept-card">
+                    <h4>O(n)</h4>
+                    <p>Linear</p>
+                </div>
+                <div class="concept-card">
+                    <h4>O(n log n)</h4>
+                    <p>Linearithmic</p>
+                </div>
+                <div class="concept-card">
+                    <h4>O(n²)</h4>
+                    <p>Quadratic</p>
+                </div>
+                <div class="concept-card">
+                    <h4>O(2ⁿ)</h4>
+                    <p>Exponential</p>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h4><i class="fas fa-sort-amount-up"></i> Growth Rate Order</h4>
+                <p>O(1) < O(log n) < O(n) < O(n log n) < O(n²) < O(n³) < O(2ⁿ) < O(n!)</p>
+            </div>
         </div>
-        <a href="index.html" class="btn"><i class="fas fa-home"></i> Back to Home</a>
+
+        <div class="card">
+            <h2>Tree Data Structures</h2>
+            <table class="comparison-table">
+                <tr>
+                    <th>Data Structure</th>
+                    <th>Search</th>
+                    <th>Insert</th>
+                    <th>Delete</th>
+                    <th>Space</th>
+                </tr>
+                <tr>
+                    <td><strong>Binary Search Tree (avg)</strong></td>
+                    <td class="good">O(log n)</td>
+                    <td class="good">O(log n)</td>
+                    <td class="good">O(log n)</td>
+                    <td>O(n)</td>
+                </tr>
+                <tr>
+                    <td><strong>Binary Search Tree (worst)</strong></td>
+                    <td class="bad">O(n)</td>
+                    <td class="bad">O(n)</td>
+                    <td class="bad">O(n)</td>
+                    <td>O(n)</td>
+                </tr>
+                <tr>
+                    <td><strong>AVL Tree</strong></td>
+                    <td class="good">O(log n)</td>
+                    <td class="good">O(log n)</td>
+                    <td class="good">O(log n)</td>
+                    <td>O(n)</td>
+                </tr>
+                <tr>
+                    <td><strong>Red-Black Tree</strong></td>
+                    <td class="good">O(log n)</td>
+                    <td class="good">O(log n)</td>
+                    <td class="good">O(log n)</td>
+                    <td>O(n)</td>
+                </tr>
+                <tr>
+                    <td><strong>B-Tree (order m)</strong></td>
+                    <td class="good">O(log n)</td>
+                    <td class="good">O(log n)</td>
+                    <td class="good">O(log n)</td>
+                    <td>O(n)</td>
+                </tr>
+                <tr>
+                    <td><strong>Heap (Min/Max)</strong></td>
+                    <td class="bad">O(n)</td>
+                    <td class="good">O(log n)</td>
+                    <td class="good">O(log n)</td>
+                    <td>O(n)</td>
+                </tr>
+                <tr>
+                    <td><strong>Heap (Find Min/Max)</strong></td>
+                    <td class="good">O(1)</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>O(n)</td>
+                </tr>
+                <tr>
+                    <td><strong>Trie</strong></td>
+                    <td class="good">O(m)*</td>
+                    <td class="good">O(m)*</td>
+                    <td class="good">O(m)*</td>
+                    <td class="ok">O(ALPHABET × m × n)</td>
+                </tr>
+            </table>
+            <p><small>* m = length of key/string</small></p>
+        </div>
+
+        <div class="card">
+            <h2>Advanced Tree Algorithms</h2>
+            <table class="comparison-table">
+                <tr>
+                    <th>Algorithm</th>
+                    <th>Preprocessing</th>
+                    <th>Query</th>
+                    <th>Space</th>
+                </tr>
+                <tr>
+                    <td><strong>LCA (Naive)</strong></td>
+                    <td>-</td>
+                    <td class="bad">O(n)</td>
+                    <td>O(1)</td>
+                </tr>
+                <tr>
+                    <td><strong>LCA (Binary Lifting)</strong></td>
+                    <td class="ok">O(n log n)</td>
+                    <td class="good">O(log n)</td>
+                    <td>O(n log n)</td>
+                </tr>
+                <tr>
+                    <td><strong>LCA (Euler Tour + RMQ)</strong></td>
+                    <td class="ok">O(n log n)</td>
+                    <td class="good">O(1)</td>
+                    <td>O(n log n)</td>
+                </tr>
+                <tr>
+                    <td><strong>Tree Diameter (2 BFS)</strong></td>
+                    <td>-</td>
+                    <td class="good">O(n)</td>
+                    <td>O(n)</td>
+                </tr>
+                <tr>
+                    <td><strong>Centroid Decomposition</strong></td>
+                    <td class="ok">O(n log n)</td>
+                    <td class="good">O(log n)</td>
+                    <td>O(n)</td>
+                </tr>
+                <tr>
+                    <td><strong>Heavy-Light Decomposition</strong></td>
+                    <td class="ok">O(n)</td>
+                    <td class="ok">O(log² n)</td>
+                    <td>O(n)</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>Range Query Data Structures</h2>
+            <table class="comparison-table">
+                <tr>
+                    <th>Data Structure</th>
+                    <th>Build</th>
+                    <th>Point Update</th>
+                    <th>Range Query</th>
+                    <th>Space</th>
+                </tr>
+                <tr>
+                    <td><strong>Prefix Sum Array</strong></td>
+                    <td class="good">O(n)</td>
+                    <td class="bad">O(n)</td>
+                    <td class="good">O(1)</td>
+                    <td>O(n)</td>
+                </tr>
+                <tr>
+                    <td><strong>Segment Tree</strong></td>
+                    <td class="good">O(n)</td>
+                    <td class="good">O(log n)</td>
+                    <td class="good">O(log n)</td>
+                    <td>O(n)</td>
+                </tr>
+                <tr>
+                    <td><strong>Segment Tree (Lazy)</strong></td>
+                    <td class="good">O(n)</td>
+                    <td class="good">O(log n)*</td>
+                    <td class="good">O(log n)</td>
+                    <td>O(n)</td>
+                </tr>
+                <tr>
+                    <td><strong>Fenwick Tree (BIT)</strong></td>
+                    <td class="good">O(n)</td>
+                    <td class="good">O(log n)</td>
+                    <td class="good">O(log n)</td>
+                    <td>O(n)</td>
+                </tr>
+                <tr>
+                    <td><strong>Sparse Table (RMQ)</strong></td>
+                    <td class="ok">O(n log n)</td>
+                    <td class="bad">N/A</td>
+                    <td class="good">O(1)</td>
+                    <td>O(n log n)</td>
+                </tr>
+                <tr>
+                    <td><strong>Sqrt Decomposition</strong></td>
+                    <td class="good">O(n)</td>
+                    <td class="good">O(1)</td>
+                    <td class="ok">O(√n)</td>
+                    <td>O(n)</td>
+                </tr>
+            </table>
+            <p><small>* With lazy propagation, range updates are also O(log n)</small></p>
+        </div>
+
+        <div class="card">
+            <h2>Graph Traversal & Basic Algorithms</h2>
+            <table class="comparison-table">
+                <tr>
+                    <th>Algorithm</th>
+                    <th>Time</th>
+                    <th>Space</th>
+                    <th>Notes</th>
+                </tr>
+                <tr>
+                    <td><strong>BFS</strong></td>
+                    <td class="good">O(V + E)</td>
+                    <td>O(V)</td>
+                    <td>Unweighted shortest path</td>
+                </tr>
+                <tr>
+                    <td><strong>DFS</strong></td>
+                    <td class="good">O(V + E)</td>
+                    <td>O(V)</td>
+                    <td>Recursion stack</td>
+                </tr>
+                <tr>
+                    <td><strong>Topological Sort (Kahn's)</strong></td>
+                    <td class="good">O(V + E)</td>
+                    <td>O(V)</td>
+                    <td>BFS-based</td>
+                </tr>
+                <tr>
+                    <td><strong>Topological Sort (DFS)</strong></td>
+                    <td class="good">O(V + E)</td>
+                    <td>O(V)</td>
+                    <td>DFS-based</td>
+                </tr>
+                <tr>
+                    <td><strong>Cycle Detection (undirected)</strong></td>
+                    <td class="good">O(V + E)</td>
+                    <td>O(V)</td>
+                    <td>DFS or Union-Find</td>
+                </tr>
+                <tr>
+                    <td><strong>Cycle Detection (directed)</strong></td>
+                    <td class="good">O(V + E)</td>
+                    <td>O(V)</td>
+                    <td>DFS with colors</td>
+                </tr>
+                <tr>
+                    <td><strong>Connected Components</strong></td>
+                    <td class="good">O(V + E)</td>
+                    <td>O(V)</td>
+                    <td>DFS/BFS</td>
+                </tr>
+                <tr>
+                    <td><strong>Bipartite Check</strong></td>
+                    <td class="good">O(V + E)</td>
+                    <td>O(V)</td>
+                    <td>BFS/DFS 2-coloring</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>Shortest Path Algorithms</h2>
+            <table class="comparison-table">
+                <tr>
+                    <th>Algorithm</th>
+                    <th>Time</th>
+                    <th>Space</th>
+                    <th>Use Case</th>
+                </tr>
+                <tr>
+                    <td><strong>BFS</strong></td>
+                    <td class="good">O(V + E)</td>
+                    <td>O(V)</td>
+                    <td>Unweighted graphs</td>
+                </tr>
+                <tr>
+                    <td><strong>Dijkstra (binary heap)</strong></td>
+                    <td class="ok">O((V + E) log V)</td>
+                    <td>O(V)</td>
+                    <td>Non-negative weights</td>
+                </tr>
+                <tr>
+                    <td><strong>Dijkstra (Fibonacci heap)</strong></td>
+                    <td class="good">O(E + V log V)</td>
+                    <td>O(V)</td>
+                    <td>Dense graphs</td>
+                </tr>
+                <tr>
+                    <td><strong>Bellman-Ford</strong></td>
+                    <td class="ok">O(V × E)</td>
+                    <td>O(V)</td>
+                    <td>Negative weights, cycle detection</td>
+                </tr>
+                <tr>
+                    <td><strong>Floyd-Warshall</strong></td>
+                    <td class="bad">O(V³)</td>
+                    <td class="ok">O(V²)</td>
+                    <td>All-pairs shortest path</td>
+                </tr>
+                <tr>
+                    <td><strong>Johnson's Algorithm</strong></td>
+                    <td class="ok">O(V² log V + VE)</td>
+                    <td class="ok">O(V²)</td>
+                    <td>All-pairs, sparse graphs</td>
+                </tr>
+                <tr>
+                    <td><strong>A* Search</strong></td>
+                    <td>O(E)* </td>
+                    <td>O(V)</td>
+                    <td>With good heuristic</td>
+                </tr>
+            </table>
+            <p><small>* A* depends heavily on heuristic quality</small></p>
+        </div>
+
+        <div class="card">
+            <h2>Minimum Spanning Tree</h2>
+            <table class="comparison-table">
+                <tr>
+                    <th>Algorithm</th>
+                    <th>Time</th>
+                    <th>Space</th>
+                    <th>Approach</th>
+                </tr>
+                <tr>
+                    <td><strong>Kruskal's</strong></td>
+                    <td class="ok">O(E log E)</td>
+                    <td>O(E)</td>
+                    <td>Sort edges + Union-Find</td>
+                </tr>
+                <tr>
+                    <td><strong>Prim's (binary heap)</strong></td>
+                    <td class="ok">O((V + E) log V)</td>
+                    <td>O(V)</td>
+                    <td>Greedy with priority queue</td>
+                </tr>
+                <tr>
+                    <td><strong>Prim's (Fibonacci heap)</strong></td>
+                    <td class="good">O(E + V log V)</td>
+                    <td>O(V)</td>
+                    <td>Better for dense graphs</td>
+                </tr>
+                <tr>
+                    <td><strong>Borůvka's</strong></td>
+                    <td class="ok">O(E log V)</td>
+                    <td>O(V + E)</td>
+                    <td>Parallelizable</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>Advanced Graph Algorithms</h2>
+            <table class="comparison-table">
+                <tr>
+                    <th>Algorithm</th>
+                    <th>Time</th>
+                    <th>Space</th>
+                </tr>
+                <tr>
+                    <td><strong>SCC - Kosaraju's</strong></td>
+                    <td class="good">O(V + E)</td>
+                    <td>O(V + E)</td>
+                </tr>
+                <tr>
+                    <td><strong>SCC - Tarjan's</strong></td>
+                    <td class="good">O(V + E)</td>
+                    <td>O(V)</td>
+                </tr>
+                <tr>
+                    <td><strong>Articulation Points</strong></td>
+                    <td class="good">O(V + E)</td>
+                    <td>O(V)</td>
+                </tr>
+                <tr>
+                    <td><strong>Bridges</strong></td>
+                    <td class="good">O(V + E)</td>
+                    <td>O(V)</td>
+                </tr>
+                <tr>
+                    <td><strong>Eulerian Path (Hierholzer's)</strong></td>
+                    <td class="good">O(E)</td>
+                    <td>O(E)</td>
+                </tr>
+                <tr>
+                    <td><strong>Hamiltonian Path (Backtracking)</strong></td>
+                    <td class="bad">O(n!)</td>
+                    <td>O(n)</td>
+                </tr>
+                <tr>
+                    <td><strong>Hamiltonian (Held-Karp DP)</strong></td>
+                    <td class="bad">O(2ⁿ × n²)</td>
+                    <td class="bad">O(2ⁿ × n)</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>Network Flow Algorithms</h2>
+            <table class="comparison-table">
+                <tr>
+                    <th>Algorithm</th>
+                    <th>Time</th>
+                    <th>Space</th>
+                    <th>Notes</th>
+                </tr>
+                <tr>
+                    <td><strong>Ford-Fulkerson (DFS)</strong></td>
+                    <td class="bad">O(E × max_flow)</td>
+                    <td>O(V + E)</td>
+                    <td>Can be slow for large capacities</td>
+                </tr>
+                <tr>
+                    <td><strong>Edmonds-Karp (BFS)</strong></td>
+                    <td class="ok">O(V × E²)</td>
+                    <td>O(V + E)</td>
+                    <td>Polynomial guarantee</td>
+                </tr>
+                <tr>
+                    <td><strong>Dinic's</strong></td>
+                    <td class="ok">O(V² × E)</td>
+                    <td>O(V + E)</td>
+                    <td>O(E√V) for unit capacity</td>
+                </tr>
+                <tr>
+                    <td><strong>Push-Relabel (FIFO)</strong></td>
+                    <td class="ok">O(V³)</td>
+                    <td>O(V + E)</td>
+                    <td>Good for dense graphs</td>
+                </tr>
+                <tr>
+                    <td><strong>Bipartite Matching (Hopcroft-Karp)</strong></td>
+                    <td class="good">O(E√V)</td>
+                    <td>O(V)</td>
+                    <td>Maximum matching</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>Union-Find (Disjoint Set Union)</h2>
+            <table class="comparison-table">
+                <tr>
+                    <th>Operation</th>
+                    <th>Without Optimizations</th>
+                    <th>With Union by Rank</th>
+                    <th>With Path Compression + Rank</th>
+                </tr>
+                <tr>
+                    <td><strong>Find</strong></td>
+                    <td class="bad">O(n)</td>
+                    <td class="ok">O(log n)</td>
+                    <td class="good">O(α(n))*</td>
+                </tr>
+                <tr>
+                    <td><strong>Union</strong></td>
+                    <td class="bad">O(n)</td>
+                    <td class="ok">O(log n)</td>
+                    <td class="good">O(α(n))*</td>
+                </tr>
+                <tr>
+                    <td><strong>Space</strong></td>
+                    <td>O(n)</td>
+                    <td>O(n)</td>
+                    <td>O(n)</td>
+                </tr>
+            </table>
+            <p><small>* α(n) is the inverse Ackermann function, effectively constant (≤ 4 for practical n)</small></p>
+        </div>
+
+        <div class="card">
+            <h2>Sparse vs Dense Graphs</h2>
+            <p>Algorithm choice often depends on graph density:</p>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Graph Type</th>
+                    <th>Edges (E)</th>
+                    <th>Best Representation</th>
+                    <th>Good Algorithms</th>
+                </tr>
+                <tr>
+                    <td><strong>Sparse</strong></td>
+                    <td>E ≈ O(V)</td>
+                    <td>Adjacency List</td>
+                    <td>Kruskal's MST, Dijkstra with heap</td>
+                </tr>
+                <tr>
+                    <td><strong>Dense</strong></td>
+                    <td>E ≈ O(V²)</td>
+                    <td>Adjacency Matrix</td>
+                    <td>Prim's MST, Floyd-Warshall</td>
+                </tr>
+            </table>
+
+            <div class="info-box">
+                <h4><i class="fas fa-lightbulb"></i> When to Use What</h4>
+                <ul>
+                    <li><strong>Adjacency List:</strong> O(V + E) space — use for sparse graphs</li>
+                    <li><strong>Adjacency Matrix:</strong> O(V²) space — use for dense graphs or when O(1) edge lookup
+                        needed</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>NP-Complete Graph Problems</h2>
+            <p>These problems have no known polynomial-time algorithm:</p>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Problem</th>
+                    <th>Decision Version</th>
+                    <th>Best Known</th>
+                </tr>
+                <tr>
+                    <td><strong>Hamiltonian Path/Cycle</strong></td>
+                    <td>Does a path visiting all vertices exist?</td>
+                    <td>O(2ⁿ × n²) DP</td>
+                </tr>
+                <tr>
+                    <td><strong>Traveling Salesman</strong></td>
+                    <td>Is there a tour of cost ≤ k?</td>
+                    <td>O(2ⁿ × n²) DP</td>
+                </tr>
+                <tr>
+                    <td><strong>Graph Coloring (k ≥ 3)</strong></td>
+                    <td>Can graph be colored with k colors?</td>
+                    <td>Exponential</td>
+                </tr>
+                <tr>
+                    <td><strong>Clique</strong></td>
+                    <td>Is there a clique of size k?</td>
+                    <td>O(2ⁿ) brute force</td>
+                </tr>
+                <tr>
+                    <td><strong>Vertex Cover</strong></td>
+                    <td>Is there a vertex cover of size k?</td>
+                    <td>O(2ᵏ × poly(n))</td>
+                </tr>
+                <tr>
+                    <td><strong>Graph Isomorphism</strong></td>
+                    <td>Are two graphs identical?</td>
+                    <td>Quasipolynomial (Babai 2015)</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>Decision Guide: Choosing the Right Data Structure</h2>
+            <table class="comparison-table">
+                <tr>
+                    <th>Need</th>
+                    <th>Best Choice</th>
+                    <th>Why</th>
+                </tr>
+                <tr>
+                    <td>Ordered elements with fast search/insert</td>
+                    <td>Red-Black Tree or AVL</td>
+                    <td>Guaranteed O(log n)</td>
+                </tr>
+                <tr>
+                    <td>Priority queue (min/max)</td>
+                    <td>Binary Heap</td>
+                    <td>O(1) find-min, O(log n) operations</td>
+                </tr>
+                <tr>
+                    <td>Range sum/min queries with updates</td>
+                    <td>Segment Tree or BIT</td>
+                    <td>O(log n) query and update</td>
+                </tr>
+                <tr>
+                    <td>Static range minimum queries</td>
+                    <td>Sparse Table</td>
+                    <td>O(1) query after preprocessing</td>
+                </tr>
+                <tr>
+                    <td>Dictionary with string keys</td>
+                    <td>Trie</td>
+                    <td>O(m) per operation, prefix queries</td>
+                </tr>
+                <tr>
+                    <td>Dynamic connectivity</td>
+                    <td>Union-Find (DSU)</td>
+                    <td>Near O(1) amortized</td>
+                </tr>
+                <tr>
+                    <td>Database indexing</td>
+                    <td>B-Tree / B+ Tree</td>
+                    <td>Optimized for disk access</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="nav-buttons">
+            <a href="articulation-bridges.html" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Articulation
+                & Bridges</a>
+            <a href="index.html" class="btn btn-primary">Back to Home <i class="fas fa-home"></i></a>
+        </div>
     </div>
 </body>
+
 </html>

@@ -1,38 +1,638 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>topological-sort - Trees & Graphs</title>
+    <title>Topological Sorting - Interactive Learning</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center; }
-        .container { text-align: center; color: white; padding: 40px; }
-        h1 { font-size: 3em; margin-bottom: 20px; }
-        p { font-size: 1.3em; margin-bottom: 30px; opacity: 0.9; }
-        .btn { padding: 15px 30px; background: white; color: #667eea; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; }
-        .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
-        .topics { background: rgba(255,255,255,0.1); padding: 30px; border-radius: 16px; margin: 30px auto; max-width: 600px; text-align: left; }
-        .topics h3 { margin-bottom: 15px; }
-        .topics ul { margin-left: 20px; }
-        .topics li { margin: 8px 0; opacity: 0.9; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+        }
+
+        .nav-bar {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-bar a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-bar h1 {
+            color: white;
+            font-size: 1.5em;
+            flex: 1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 25px;
+        }
+
+        .card h2 {
+            font-size: 1.8em;
+            color: #1a1a2e;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #2563eb;
+            padding-bottom: 10px;
+        }
+
+        .card h3 {
+            font-size: 1.3em;
+            color: #1a1a2e;
+            margin: 25px 0 15px 0;
+        }
+
+        .card p {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .card ul,
+        .card ol {
+            margin-left: 25px;
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .card li {
+            margin-bottom: 8px;
+        }
+
+        .info-box {
+            background: #eff6ff;
+            border: 2px solid #2563eb;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .info-box h4 {
+            color: #1d4ed8;
+            margin-bottom: 10px;
+        }
+
+        .info-box p,
+        .info-box li {
+            color: #1e40af;
+            line-height: 1.6;
+        }
+
+        .info-box ul {
+            margin-left: 20px;
+        }
+
+        .warning-box {
+            background: #fef2f2;
+            border: 2px solid #ef4444;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .warning-box h4 {
+            color: #dc2626;
+            margin-bottom: 10px;
+        }
+
+        .warning-box p {
+            color: #991b1b;
+        }
+
+        .algorithm-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .algorithm-card {
+            background: #eff6ff;
+            border-left: 4px solid #2563eb;
+            padding: 20px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .algorithm-card h4 {
+            color: #1d4ed8;
+            margin-bottom: 10px;
+        }
+
+        .algorithm-card p {
+            color: #1e40af;
+            margin: 0;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 12px 15px;
+            border: 1px solid #e0e0e0;
+            text-align: left;
+        }
+
+        .comparison-table th {
+            background: #2563eb;
+            color: white;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: #f8f8f8;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #1a1a2e;
+            border: 2px solid #e0e0e0;
+        }
+
+        .code-box {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 13px;
+            margin: 15px 0;
+            overflow-x: auto;
+            line-height: 1.6;
+        }
+
+        .code-box .keyword {
+            color: #569cd6;
+        }
+
+        .code-box .comment {
+            color: #6a9955;
+        }
+
+        .code-box .function {
+            color: #dcdcaa;
+        }
+
+        .code-box .number {
+            color: #b5cea8;
+        }
+
+        .diagram-box {
+            background: #f0f0f0;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            font-family: monospace;
+        }
+
+        .step-list {
+            counter-reset: step-counter;
+            list-style: none;
+            margin-left: 0;
+        }
+
+        .step-list li {
+            counter-increment: step-counter;
+            margin-bottom: 15px;
+            padding-left: 45px;
+            position: relative;
+        }
+
+        .step-list li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #2563eb;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+        }
     </style>
 </head>
+
 <body>
+    <div class="nav-bar">
+        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+        <h1><i class="fas fa-sort-amount-down"></i> Topological Sorting</h1>
+        <a href="algorithms-interactive.html">Next: Shortest Paths <i class="fas fa-arrow-right"></i></a>
+    </div>
+
     <div class="container">
-        <h1><i class="fas fa-code"></i> topological-sort</h1>
-        <p>This topic is part of the comprehensive Trees & Graphs tutorial.</p>
-        <div class="topics">
-            <h3>Topics Covered:</h3>
-            <ul>
-                <li>Core concepts and definitions</li>
-                <li>Algorithm implementations</li>
-                <li>Time and space complexity</li>
-                <li>Practice problems and examples</li>
-            </ul>
+        <div class="card">
+            <h2>What is Topological Sorting?</h2>
+            <p>A <strong>topological sort</strong> (or topological ordering) of a directed acyclic graph (DAG) is a
+                linear ordering of its vertices such that for every directed edge (u → v), vertex u comes before v in
+                the ordering.</p>
+
+            <div class="info-box">
+                <h4><i class="fas fa-lightbulb"></i> Key Insight</h4>
+                <p>Topological sorting is only possible for DAGs (Directed Acyclic Graphs). If the graph has a cycle, no
+                    valid topological ordering exists because there's no way to order vertices in a cycle linearly.</p>
+            </div>
+
+            <div class="diagram-box">
+                <pre>
+Example DAG:          Topological Orders:
+                      
+    A → B → D         A, B, C, D, E  ✓
+    ↓   ↓             A, C, B, D, E  ✓
+    C → E             A, C, B, E, D  ✓
+                      (Multiple valid orderings possible)
+                </pre>
+            </div>
         </div>
-        <a href="index.html" class="btn"><i class="fas fa-home"></i> Back to Home</a>
+
+        <div class="card">
+            <h2>Real-World Applications</h2>
+            <div class="algorithm-grid">
+                <div class="algorithm-card">
+                    <h4><i class="fas fa-cogs"></i> Build Systems</h4>
+                    <p>Determining compilation order where files depend on each other (Make, Maven, Gradle).</p>
+                </div>
+                <div class="algorithm-card">
+                    <h4><i class="fas fa-calendar-check"></i> Task Scheduling</h4>
+                    <p>Ordering tasks with prerequisites (course prerequisites, project management).</p>
+                </div>
+                <div class="algorithm-card">
+                    <h4><i class="fas fa-download"></i> Package Management</h4>
+                    <p>Installing dependencies in correct order (npm, pip, apt).</p>
+                </div>
+                <div class="algorithm-card">
+                    <h4><i class="fas fa-table"></i> Spreadsheet Formulas</h4>
+                    <p>Evaluating cells that reference other cells in correct order.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Algorithm 1: Kahn's Algorithm (BFS-based)</h2>
+            <p>Kahn's algorithm uses the concept of <strong>in-degree</strong> (number of incoming edges) to find
+                vertices with no dependencies.</p>
+
+            <h3>How It Works</h3>
+            <ol class="step-list">
+                <li>Calculate in-degree for all vertices</li>
+                <li>Add all vertices with in-degree 0 to a queue (no dependencies)</li>
+                <li>While queue is not empty:
+                    <ul style="margin-top: 10px;">
+                        <li>Remove vertex u from queue, add to result</li>
+                        <li>For each neighbor v of u, decrement v's in-degree</li>
+                        <li>If v's in-degree becomes 0, add v to queue</li>
+                    </ul>
+                </li>
+                <li>If result contains all vertices → valid topological order. Otherwise → cycle exists!</li>
+            </ol>
+
+            <div class="code-box">
+                <span class="keyword">function</span> <span class="function">kahnTopologicalSort</span>(graph, n):
+                inDegree = array of size n, initialized to <span class="number">0</span>
+
+                <span class="comment">// Calculate in-degrees</span>
+                <span class="keyword">for</span> u = <span class="number">0</span> <span class="keyword">to</span>
+                n-<span class="number">1</span>:
+                <span class="keyword">for</span> v <span class="keyword">in</span> graph[u]:
+                inDegree[v]++
+
+                <span class="comment">// Add all vertices with in-degree 0</span>
+                queue = new Queue()
+                <span class="keyword">for</span> v = <span class="number">0</span> <span class="keyword">to</span>
+                n-<span class="number">1</span>:
+                <span class="keyword">if</span> inDegree[v] == <span class="number">0</span>:
+                queue.enqueue(v)
+
+                result = []
+
+                <span class="keyword">while</span> queue <span class="keyword">not</span> empty:
+                u = queue.dequeue()
+                result.append(u)
+
+                <span class="keyword">for</span> v <span class="keyword">in</span> graph[u]:
+                inDegree[v]--
+                <span class="keyword">if</span> inDegree[v] == <span class="number">0</span>:
+                queue.enqueue(v)
+
+                <span class="comment">// Check if all vertices processed</span>
+                <span class="keyword">if</span> len(result) != n:
+                <span class="keyword">return</span> null <span class="comment">// Cycle detected!</span>
+
+                <span class="keyword">return</span> result
+            </div>
+
+            <div class="warning-box">
+                <h4><i class="fas fa-exclamation-triangle"></i> Cycle Detection</h4>
+                <p>If the result doesn't contain all n vertices after Kahn's algorithm completes, the graph contains a
+                    cycle. Vertices in the cycle can never have in-degree 0.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Algorithm 2: DFS-based Approach</h2>
+            <p>The DFS-based approach uses the observation that in a topological order, a vertex appears before all
+                vertices reachable from it. We add vertices to the result in reverse order of their DFS finish times.
+            </p>
+
+            <h3>How It Works</h3>
+            <ol class="step-list">
+                <li>Perform DFS from each unvisited vertex</li>
+                <li>When a vertex finishes (all descendants processed), push it to a stack</li>
+                <li>Pop all vertices from stack to get topological order</li>
+            </ol>
+
+            <div class="code-box">
+                <span class="keyword">function</span> <span class="function">dfsTopologicalSort</span>(graph, n):
+                visited = array of size n, initialized to <span class="keyword">false</span>
+                inStack = array of size n, initialized to <span class="keyword">false</span> <span class="comment">//
+                    For cycle detection</span>
+                stack = []
+
+                <span class="keyword">for</span> v = <span class="number">0</span> <span class="keyword">to</span>
+                n-<span class="number">1</span>:
+                <span class="keyword">if not</span> visited[v]:
+                <span class="keyword">if not</span> <span class="function">dfs</span>(v, graph, visited, inStack,
+                stack):
+                <span class="keyword">return</span> null <span class="comment">// Cycle detected</span>
+
+                <span class="comment">// Reverse stack to get topological order</span>
+                <span class="keyword">return</span> reverse(stack)
+
+                <span class="keyword">function</span> <span class="function">dfs</span>(u, graph, visited, inStack,
+                stack):
+                visited[u] = <span class="keyword">true</span>
+                inStack[u] = <span class="keyword">true</span> <span class="comment">// Currently in recursion
+                    stack</span>
+
+                <span class="keyword">for</span> v <span class="keyword">in</span> graph[u]:
+                <span class="keyword">if not</span> visited[v]:
+                <span class="keyword">if not</span> <span class="function">dfs</span>(v, graph, visited, inStack,
+                stack):
+                <span class="keyword">return</span> <span class="keyword">false</span> <span class="comment">// Cycle
+                    found</span>
+                <span class="keyword">else if</span> inStack[v]:
+                <span class="keyword">return</span> <span class="keyword">false</span> <span class="comment">// Back
+                    edge = cycle!</span>
+
+                inStack[u] = <span class="keyword">false</span> <span class="comment">// Done with this path</span>
+                stack.push(u) <span class="comment">// Add to result after processing children</span>
+                <span class="keyword">return</span> <span class="keyword">true</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Trace Example</h2>
+            <p>Let's trace Kahn's algorithm on a simple DAG:</p>
+            <div class="diagram-box">
+                <pre>
+Graph:  5 → 0 ← 4
+        ↓       ↓
+        2 → 3 → 1
+
+Edges: 5→0, 4→0, 4→1, 2→3, 3→1, 5→2
+
+Initial in-degrees: [2, 2, 1, 1, 0, 0]
+                     0  1  2  3  4  5
+                </pre>
+            </div>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Step</th>
+                    <th>Queue</th>
+                    <th>Process</th>
+                    <th>Update In-degrees</th>
+                    <th>Result</th>
+                </tr>
+                <tr>
+                    <td>Init</td>
+                    <td>[4, 5]</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>[]</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>[5]</td>
+                    <td>4</td>
+                    <td>inDeg[0]=1, inDeg[1]=1</td>
+                    <td>[4]</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>[0]</td>
+                    <td>5</td>
+                    <td>inDeg[0]=0, inDeg[2]=0</td>
+                    <td>[4, 5]</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>[2]</td>
+                    <td>0</td>
+                    <td>-</td>
+                    <td>[4, 5, 0]</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>[3]</td>
+                    <td>2</td>
+                    <td>inDeg[3]=0</td>
+                    <td>[4, 5, 0, 2]</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>[1]</td>
+                    <td>3</td>
+                    <td>inDeg[1]=0</td>
+                    <td>[4, 5, 0, 2, 3]</td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>[]</td>
+                    <td>1</td>
+                    <td>-</td>
+                    <td>[4, 5, 0, 2, 3, 1]</td>
+                </tr>
+            </table>
+            <p><strong>Result:</strong> [4, 5, 0, 2, 3, 1] - One valid topological order!</p>
+        </div>
+
+        <div class="card">
+            <h2>Comparison: Kahn's vs DFS</h2>
+            <table class="comparison-table">
+                <tr>
+                    <th>Aspect</th>
+                    <th>Kahn's Algorithm (BFS)</th>
+                    <th>DFS-based</th>
+                </tr>
+                <tr>
+                    <td>Approach</td>
+                    <td>Iterative, uses queue</td>
+                    <td>Recursive, uses stack</td>
+                </tr>
+                <tr>
+                    <td>Time Complexity</td>
+                    <td>O(V + E)</td>
+                    <td>O(V + E)</td>
+                </tr>
+                <tr>
+                    <td>Space Complexity</td>
+                    <td>O(V) for in-degree array</td>
+                    <td>O(V) for recursion stack</td>
+                </tr>
+                <tr>
+                    <td>Cycle Detection</td>
+                    <td>If result.size < V</td>
+                    <td>Back edge during DFS</td>
+                </tr>
+                <tr>
+                    <td>Output Order</td>
+                    <td>Lexicographically smallest (with priority queue)</td>
+                    <td>Natural DFS order</td>
+                </tr>
+                <tr>
+                    <td>Parallelization</td>
+                    <td>Naturally parallelizable</td>
+                    <td>Less suitable</td>
+                </tr>
+                <tr>
+                    <td>Use Case</td>
+                    <td>When order flexibility matters</td>
+                    <td>Simpler implementation</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>Counting Topological Orders</h2>
+            <p>A DAG may have multiple valid topological orderings. The number depends on the graph structure:</p>
+            <ul>
+                <li><strong>Linear chain:</strong> Only 1 ordering</li>
+                <li><strong>No edges:</strong> n! orderings (any permutation)</li>
+                <li><strong>General DAG:</strong> Count using DP over subsets (exponential)</li>
+            </ul>
+
+            <div class="info-box">
+                <h4><i class="fas fa-lightbulb"></i> Getting Lexicographically Smallest Order</h4>
+                <p>In Kahn's algorithm, replace the regular queue with a min-priority queue (min-heap). This ensures we
+                    always process the smallest-numbered vertex first among those with in-degree 0.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Detecting Cycles</h2>
+            <p>Both algorithms can detect cycles in directed graphs:</p>
+
+            <h3>Using Kahn's Algorithm</h3>
+            <p>If the final result has fewer than V vertices, there's a cycle (some vertices never reached in-degree 0).
+            </p>
+
+            <h3>Using DFS</h3>
+            <p>Use three colors for vertices:</p>
+            <ul>
+                <li><strong>White:</strong> Unvisited</li>
+                <li><strong>Gray:</strong> Currently in recursion stack</li>
+                <li><strong>Black:</strong> Completely processed</li>
+            </ul>
+            <p>A back edge (edge to a gray vertex) indicates a cycle!</p>
+        </div>
+
+        <div class="card">
+            <h2>Time and Space Complexity</h2>
+            <table class="comparison-table">
+                <tr>
+                    <th>Operation</th>
+                    <th>Time</th>
+                    <th>Space</th>
+                </tr>
+                <tr>
+                    <td>Kahn's Algorithm</td>
+                    <td>O(V + E)</td>
+                    <td>O(V)</td>
+                </tr>
+                <tr>
+                    <td>DFS-based</td>
+                    <td>O(V + E)</td>
+                    <td>O(V)</td>
+                </tr>
+                <tr>
+                    <td>Cycle Detection</td>
+                    <td>O(V + E)</td>
+                    <td>O(V)</td>
+                </tr>
+            </table>
+            <p>Both algorithms visit each vertex and edge exactly once.</p>
+        </div>
+
+        <div class="nav-buttons">
+            <a href="graphs-interactive.html" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Graph
+                Traversals</a>
+            <a href="algorithms-interactive.html" class="btn btn-primary">Shortest Paths <i
+                    class="fas fa-arrow-right"></i></a>
+        </div>
     </div>
 </body>
+
 </html>

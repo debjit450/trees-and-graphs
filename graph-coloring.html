@@ -1,38 +1,610 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>graph-coloring - Trees & Graphs</title>
+    <title>Graph Coloring - Interactive Learning</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center; }
-        .container { text-align: center; color: white; padding: 40px; }
-        h1 { font-size: 3em; margin-bottom: 20px; }
-        p { font-size: 1.3em; margin-bottom: 30px; opacity: 0.9; }
-        .btn { padding: 15px 30px; background: white; color: #667eea; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; }
-        .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
-        .topics { background: rgba(255,255,255,0.1); padding: 30px; border-radius: 16px; margin: 30px auto; max-width: 600px; text-align: left; }
-        .topics h3 { margin-bottom: 15px; }
-        .topics ul { margin-left: 20px; }
-        .topics li { margin: 8px 0; opacity: 0.9; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+        }
+
+        .nav-bar {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-bar a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-bar h1 {
+            color: white;
+            font-size: 1.5em;
+            flex: 1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 25px;
+        }
+
+        .card h2 {
+            font-size: 1.8em;
+            color: #1a1a2e;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #2563eb;
+            padding-bottom: 10px;
+        }
+
+        .card h3 {
+            font-size: 1.3em;
+            color: #1a1a2e;
+            margin: 25px 0 15px 0;
+        }
+
+        .card p {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .card ul,
+        .card ol {
+            margin-left: 25px;
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .card li {
+            margin-bottom: 8px;
+        }
+
+        .info-box {
+            background: #eff6ff;
+            border: 2px solid #2563eb;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .info-box h4 {
+            color: #1d4ed8;
+            margin-bottom: 10px;
+        }
+
+        .info-box p,
+        .info-box li {
+            color: #1e40af;
+            line-height: 1.6;
+        }
+
+        .info-box ul {
+            margin-left: 20px;
+        }
+
+        .warning-box {
+            background: #fef2f2;
+            border: 2px solid #ef4444;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .warning-box h4 {
+            color: #dc2626;
+            margin-bottom: 10px;
+        }
+
+        .warning-box p {
+            color: #991b1b;
+        }
+
+        .concept-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .concept-card {
+            background: #eff6ff;
+            border-left: 4px solid #2563eb;
+            padding: 20px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .concept-card h4 {
+            color: #1d4ed8;
+            margin-bottom: 10px;
+        }
+
+        .concept-card p {
+            color: #1e40af;
+            margin: 0;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 12px 15px;
+            border: 1px solid #e0e0e0;
+            text-align: left;
+        }
+
+        .comparison-table th {
+            background: #2563eb;
+            color: white;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: #f8f8f8;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #1a1a2e;
+            border: 2px solid #e0e0e0;
+        }
+
+        .code-box {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 13px;
+            margin: 15px 0;
+            overflow-x: auto;
+            line-height: 1.6;
+        }
+
+        .code-box .keyword {
+            color: #569cd6;
+        }
+
+        .code-box .comment {
+            color: #6a9955;
+        }
+
+        .code-box .function {
+            color: #dcdcaa;
+        }
+
+        .code-box .number {
+            color: #b5cea8;
+        }
+
+        .diagram-box {
+            background: #f0f0f0;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            font-family: monospace;
+        }
+
+        .color-demo {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        .color-node {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
     </style>
 </head>
+
 <body>
+    <div class="nav-bar">
+        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+        <h1><i class="fas fa-palette"></i> Graph Coloring</h1>
+        <a href="eulerian-hamiltonian.html">Next: Eulerian & Hamiltonian <i class="fas fa-arrow-right"></i></a>
+    </div>
+
     <div class="container">
-        <h1><i class="fas fa-code"></i> graph-coloring</h1>
-        <p>This topic is part of the comprehensive Trees & Graphs tutorial.</p>
-        <div class="topics">
-            <h3>Topics Covered:</h3>
+        <div class="card">
+            <h2>What is Graph Coloring?</h2>
+            <p><strong>Graph coloring</strong> is the assignment of labels (called "colors") to vertices of a graph such
+                that no two adjacent vertices share the same color. This is known as <strong>vertex coloring</strong>.
+            </p>
+
+            <div class="diagram-box">
+                <pre>
+Valid 3-coloring:          Invalid coloring:
+                           
+   (R)───(B)                  (R)───(R)  ✗
+   / \   / \                  / \   / \
+ (B) (G)─(R)                (B) (G)─(R)
+                           
+R=Red, B=Blue, G=Green     Adjacent vertices same color!
+                </pre>
+            </div>
+
+            <div class="info-box">
+                <h4><i class="fas fa-lightbulb"></i> Key Insight</h4>
+                <p>The minimum number of colors needed to color a graph is called its <strong>chromatic number</strong>,
+                    denoted χ(G). Finding the chromatic number is NP-hard for general graphs.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Key Concepts</h2>
+            <div class="concept-grid">
+                <div class="concept-card">
+                    <h4><i class="fas fa-palette"></i> Chromatic Number χ(G)</h4>
+                    <p>The minimum number of colors needed to properly color a graph.</p>
+                </div>
+                <div class="concept-card">
+                    <h4><i class="fas fa-check-circle"></i> k-Colorable</h4>
+                    <p>A graph is k-colorable if it can be properly colored using at most k colors.</p>
+                </div>
+                <div class="concept-card">
+                    <h4><i class="fas fa-divide"></i> Bipartite = 2-Colorable</h4>
+                    <p>A graph is bipartite if and only if it's 2-colorable (no odd-length cycles).</p>
+                </div>
+                <div class="concept-card">
+                    <h4><i class="fas fa-network-wired"></i> Complete Graph K<sub>n</sub></h4>
+                    <p>Requires exactly n colors (every vertex connected to every other).</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Bipartite Graph Check (2-Coloring)</h2>
+            <p>A graph is <strong>bipartite</strong> if we can partition its vertices into two sets such that every edge
+                connects a vertex in one set to a vertex in the other. This is equivalent to being 2-colorable.</p>
+
+            <h3>BFS-based Bipartite Check</h3>
+            <div class="code-box">
+                <span class="keyword">function</span> <span class="function">isBipartite</span>(graph, n):
+                color = [-<span class="number">1</span>] * n <span class="comment">// -1 = uncolored, 0 or 1 =
+                    color</span>
+
+                <span class="keyword">for</span> start = <span class="number">0</span> <span class="keyword">to</span>
+                n-<span class="number">1</span>:
+                <span class="keyword">if</span> color[start] == -<span class="number">1</span>:
+                <span class="comment">// BFS from this uncolored vertex</span>
+                queue = [start]
+                color[start] = <span class="number">0</span>
+
+                <span class="keyword">while</span> queue <span class="keyword">not</span> empty:
+                u = queue.dequeue()
+
+                <span class="keyword">for</span> v <span class="keyword">in</span> graph[u]:
+                <span class="keyword">if</span> color[v] == -<span class="number">1</span>:
+                <span class="comment">// Color with opposite color</span>
+                color[v] = <span class="number">1</span> - color[u]
+                queue.enqueue(v)
+                <span class="keyword">else if</span> color[v] == color[u]:
+                <span class="comment">// Same color = not bipartite!</span>
+                <span class="keyword">return</span> <span class="keyword">false</span>
+
+                <span class="keyword">return</span> <span class="keyword">true</span>
+            </div>
+
+            <h3>DFS-based Bipartite Check</h3>
+            <div class="code-box">
+                <span class="keyword">function</span> <span class="function">isBipartiteDFS</span>(graph, n):
+                color = [-<span class="number">1</span>] * n
+
+                <span class="keyword">for</span> v = <span class="number">0</span> <span class="keyword">to</span>
+                n-<span class="number">1</span>:
+                <span class="keyword">if</span> color[v] == -<span class="number">1</span>:
+                <span class="keyword">if not</span> <span class="function">dfs</span>(v, <span class="number">0</span>,
+                graph, color):
+                <span class="keyword">return</span> <span class="keyword">false</span>
+                <span class="keyword">return</span> <span class="keyword">true</span>
+
+                <span class="keyword">function</span> <span class="function">dfs</span>(u, c, graph, color):
+                color[u] = c
+
+                <span class="keyword">for</span> v <span class="keyword">in</span> graph[u]:
+                <span class="keyword">if</span> color[v] == -<span class="number">1</span>:
+                <span class="keyword">if not</span> <span class="function">dfs</span>(v, <span class="number">1</span> -
+                c, graph, color):
+                <span class="keyword">return</span> <span class="keyword">false</span>
+                <span class="keyword">else if</span> color[v] == c:
+                <span class="keyword">return</span> <span class="keyword">false</span>
+
+                <span class="keyword">return</span> <span class="keyword">true</span>
+            </div>
+
+            <div class="info-box">
+                <h4><i class="fas fa-info-circle"></i> Bipartite Condition</h4>
+                <p>A graph is bipartite if and only if it contains no odd-length cycles. If we find an edge where both
+                    endpoints have the same color during BFS/DFS, we've found an odd cycle.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Greedy Coloring Algorithm</h2>
+            <p>The greedy algorithm colors vertices one by one, assigning each vertex the smallest available color that
+                doesn't conflict with already-colored neighbors.</p>
+
+            <div class="code-box">
+                <span class="keyword">function</span> <span class="function">greedyColoring</span>(graph, n):
+                color = [-<span class="number">1</span>] * n <span class="comment">// -1 = uncolored</span>
+
+                <span class="keyword">for</span> u = <span class="number">0</span> <span class="keyword">to</span>
+                n-<span class="number">1</span>:
+                <span class="comment">// Find colors used by neighbors</span>
+                usedColors = set()
+                <span class="keyword">for</span> v <span class="keyword">in</span> graph[u]:
+                <span class="keyword">if</span> color[v] != -<span class="number">1</span>:
+                usedColors.add(color[v])
+
+                <span class="comment">// Find smallest unused color</span>
+                c = <span class="number">0</span>
+                <span class="keyword">while</span> c <span class="keyword">in</span> usedColors:
+                c++
+
+                color[u] = c
+
+                <span class="keyword">return</span> color
+            </div>
+
+            <h3>Properties of Greedy Coloring</h3>
             <ul>
-                <li>Core concepts and definitions</li>
-                <li>Algorithm implementations</li>
-                <li>Time and space complexity</li>
-                <li>Practice problems and examples</li>
+                <li><strong>Time Complexity:</strong> O(V + E)</li>
+                <li><strong>Colors Used:</strong> At most Δ + 1 (Δ = maximum degree)</li>
+                <li><strong>Not Optimal:</strong> May use more colors than chromatic number</li>
+                <li><strong>Order Matters:</strong> Different vertex orderings give different results</li>
+            </ul>
+
+            <div class="warning-box">
+                <h4><i class="fas fa-exclamation-triangle"></i> Not Always Optimal</h4>
+                <p>Greedy coloring doesn't always find the minimum number of colors. The result depends on the order in
+                    which vertices are processed. However, it's guaranteed to use at most Δ + 1 colors.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Special Graph Classes</h2>
+            <table class="comparison-table">
+                <tr>
+                    <th>Graph Type</th>
+                    <th>Chromatic Number</th>
+                    <th>Notes</th>
+                </tr>
+                <tr>
+                    <td>Tree</td>
+                    <td>2 (if |V| ≥ 2)</td>
+                    <td>Trees are bipartite</td>
+                </tr>
+                <tr>
+                    <td>Cycle C<sub>n</sub></td>
+                    <td>2 if n even, 3 if n odd</td>
+                    <td>Even cycles are bipartite</td>
+                </tr>
+                <tr>
+                    <td>Complete Graph K<sub>n</sub></td>
+                    <td>n</td>
+                    <td>Every vertex adjacent to all others</td>
+                </tr>
+                <tr>
+                    <td>Complete Bipartite K<sub>m,n</sub></td>
+                    <td>2</td>
+                    <td>Bipartite = 2-colorable</td>
+                </tr>
+                <tr>
+                    <td>Wheel W<sub>n</sub></td>
+                    <td>3 if n even, 4 if n odd</td>
+                    <td>Hub + cycle</td>
+                </tr>
+                <tr>
+                    <td>Planar Graph</td>
+                    <td>≤ 4</td>
+                    <td>Four Color Theorem</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>The Four Color Theorem</h2>
+            <p>The <strong>Four Color Theorem</strong> states that any planar graph (a graph that can be drawn on a
+                plane without edge crossings) can be colored with at most 4 colors.</p>
+
+            <div class="info-box">
+                <h4><i class="fas fa-map"></i> Map Coloring</h4>
+                <p>This theorem originated from map coloring: any map can be colored with 4 colors such that no two
+                    adjacent regions share the same color. This was proven in 1976 using computer assistance — one of
+                    the first major theorems proved with computers.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Applications</h2>
+            <div class="concept-grid">
+                <div class="concept-card">
+                    <h4><i class="fas fa-calendar-alt"></i> Scheduling</h4>
+                    <p>Exam scheduling where conflicting exams (shared students) need different time slots.</p>
+                </div>
+                <div class="concept-card">
+                    <h4><i class="fas fa-microchip"></i> Register Allocation</h4>
+                    <p>Assigning CPU registers to variables in compilers.</p>
+                </div>
+                <div class="concept-card">
+                    <h4><i class="fas fa-map-marked-alt"></i> Map Coloring</h4>
+                    <p>Coloring regions on a map so adjacent regions have different colors.</p>
+                </div>
+                <div class="concept-card">
+                    <h4><i class="fas fa-broadcast-tower"></i> Frequency Assignment</h4>
+                    <p>Assigning radio frequencies to transmitters to avoid interference.</p>
+                </div>
+                <div class="concept-card">
+                    <h4><i class="fas fa-puzzle-piece"></i> Sudoku</h4>
+                    <p>Sudoku can be modeled as a graph coloring problem with 9 colors.</p>
+                </div>
+                <div class="concept-card">
+                    <h4><i class="fas fa-project-diagram"></i> Pattern Matching</h4>
+                    <p>Graph isomorphism and subgraph matching algorithms.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Computational Complexity</h2>
+            <table class="comparison-table">
+                <tr>
+                    <th>Problem</th>
+                    <th>Complexity</th>
+                    <th>Notes</th>
+                </tr>
+                <tr>
+                    <td>2-Colorability (Bipartite Check)</td>
+                    <td>O(V + E)</td>
+                    <td>BFS/DFS</td>
+                </tr>
+                <tr>
+                    <td>3-Colorability</td>
+                    <td>NP-Complete</td>
+                    <td>Decision problem</td>
+                </tr>
+                <tr>
+                    <td>k-Colorability (k ≥ 3)</td>
+                    <td>NP-Complete</td>
+                    <td>Decision problem</td>
+                </tr>
+                <tr>
+                    <td>Finding Chromatic Number</td>
+                    <td>NP-Hard</td>
+                    <td>Optimization problem</td>
+                </tr>
+                <tr>
+                    <td>Greedy Coloring</td>
+                    <td>O(V + E)</td>
+                    <td>Polynomial but not optimal</td>
+                </tr>
+            </table>
+
+            <div class="warning-box">
+                <h4><i class="fas fa-skull-crossbones"></i> NP-Completeness</h4>
+                <p>Determining whether a graph can be colored with exactly k colors (for k ≥ 3) is NP-complete. This
+                    means no known polynomial-time algorithm exists, and finding one would prove P = NP!</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Edge Coloring</h2>
+            <p>Besides vertex coloring, there's also <strong>edge coloring</strong>: assigning colors to edges such that
+                no two edges sharing a vertex have the same color.</p>
+
+            <h3>Vizing's Theorem</h3>
+            <p>For any simple graph G with maximum degree Δ, the edges can be colored with either Δ or Δ + 1 colors.</p>
+            <ul>
+                <li><strong>Class 1 graphs:</strong> Can be edge-colored with Δ colors</li>
+                <li><strong>Class 2 graphs:</strong> Require Δ + 1 colors</li>
             </ul>
         </div>
-        <a href="index.html" class="btn"><i class="fas fa-home"></i> Back to Home</a>
+
+        <div class="card">
+            <h2>Time and Space Complexity Summary</h2>
+            <table class="comparison-table">
+                <tr>
+                    <th>Algorithm</th>
+                    <th>Time</th>
+                    <th>Space</th>
+                    <th>Optimal?</th>
+                </tr>
+                <tr>
+                    <td>Bipartite Check (BFS/DFS)</td>
+                    <td>O(V + E)</td>
+                    <td>O(V)</td>
+                    <td>Yes (for 2-coloring)</td>
+                </tr>
+                <tr>
+                    <td>Greedy Coloring</td>
+                    <td>O(V + E)</td>
+                    <td>O(V)</td>
+                    <td>No</td>
+                </tr>
+                <tr>
+                    <td>Exact Chromatic Number</td>
+                    <td>Exponential</td>
+                    <td>-</td>
+                    <td>Yes</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="nav-buttons">
+            <a href="scc-interactive.html" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Strongly
+                Connected Components</a>
+            <a href="eulerian-hamiltonian.html" class="btn btn-primary">Eulerian & Hamiltonian <i
+                    class="fas fa-arrow-right"></i></a>
+        </div>
     </div>
 </body>
+
 </html>

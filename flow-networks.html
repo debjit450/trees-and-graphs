@@ -1,38 +1,619 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>flow-networks - Trees & Graphs</title>
+    <title>Flow Networks - Interactive Learning</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center; }
-        .container { text-align: center; color: white; padding: 40px; }
-        h1 { font-size: 3em; margin-bottom: 20px; }
-        p { font-size: 1.3em; margin-bottom: 30px; opacity: 0.9; }
-        .btn { padding: 15px 30px; background: white; color: #667eea; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; }
-        .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
-        .topics { background: rgba(255,255,255,0.1); padding: 30px; border-radius: 16px; margin: 30px auto; max-width: 600px; text-align: left; }
-        .topics h3 { margin-bottom: 15px; }
-        .topics ul { margin-left: 20px; }
-        .topics li { margin: 8px 0; opacity: 0.9; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+        }
+
+        .nav-bar {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-bar a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-bar h1 {
+            color: white;
+            font-size: 1.5em;
+            flex: 1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 25px;
+        }
+
+        .card h2 {
+            font-size: 1.8em;
+            color: #1a1a2e;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #ef4444;
+            padding-bottom: 10px;
+        }
+
+        .card h3 {
+            font-size: 1.3em;
+            color: #1a1a2e;
+            margin: 25px 0 15px 0;
+        }
+
+        .card p {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .card ul,
+        .card ol {
+            margin-left: 25px;
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .card li {
+            margin-bottom: 8px;
+        }
+
+        .info-box {
+            background: #fef2f2;
+            border: 2px solid #ef4444;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .info-box h4 {
+            color: #dc2626;
+            margin-bottom: 10px;
+        }
+
+        .info-box p,
+        .info-box li {
+            color: #991b1b;
+            line-height: 1.6;
+        }
+
+        .info-box ul {
+            margin-left: 20px;
+        }
+
+        .theorem-box {
+            background: #f0fdf4;
+            border: 2px solid #16a34a;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .theorem-box h4 {
+            color: #16a34a;
+            margin-bottom: 10px;
+        }
+
+        .theorem-box p {
+            color: #166534;
+            line-height: 1.6;
+        }
+
+        .concept-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .concept-card {
+            background: #fef2f2;
+            border-left: 4px solid #ef4444;
+            padding: 20px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .concept-card h4 {
+            color: #991b1b;
+            margin-bottom: 10px;
+        }
+
+        .concept-card p {
+            color: #7f1d1d;
+            margin: 0;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 12px 15px;
+            border: 1px solid #e0e0e0;
+            text-align: left;
+        }
+
+        .comparison-table th {
+            background: #ef4444;
+            color: white;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: #f8f8f8;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #1a1a2e;
+            border: 2px solid #e0e0e0;
+        }
+
+        .code-box {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 13px;
+            margin: 15px 0;
+            overflow-x: auto;
+            line-height: 1.6;
+        }
+
+        .code-box .keyword {
+            color: #569cd6;
+        }
+
+        .code-box .comment {
+            color: #6a9955;
+        }
+
+        .code-box .function {
+            color: #dcdcaa;
+        }
+
+        .code-box .number {
+            color: #b5cea8;
+        }
+
+        .diagram-box {
+            background: #f0f0f0;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            font-family: monospace;
+        }
+
+        .step-list {
+            counter-reset: step-counter;
+            list-style: none;
+            margin-left: 0;
+        }
+
+        .step-list li {
+            counter-increment: step-counter;
+            margin-bottom: 15px;
+            padding-left: 45px;
+            position: relative;
+        }
+
+        .step-list li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #ef4444;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+        }
     </style>
 </head>
+
 <body>
+    <div class="nav-bar">
+        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+        <h1><i class="fas fa-water"></i> Flow Networks</h1>
+        <a href="graph-coloring.html">Next: Graph Coloring <i class="fas fa-arrow-right"></i></a>
+    </div>
+
     <div class="container">
-        <h1><i class="fas fa-code"></i> flow-networks</h1>
-        <p>This topic is part of the comprehensive Trees & Graphs tutorial.</p>
-        <div class="topics">
-            <h3>Topics Covered:</h3>
-            <ul>
-                <li>Core concepts and definitions</li>
-                <li>Algorithm implementations</li>
-                <li>Time and space complexity</li>
-                <li>Practice problems and examples</li>
-            </ul>
+        <div class="card">
+            <h2>What is a Flow Network?</h2>
+            <p>A <strong>flow network</strong> (or network flow) is a directed graph where each edge has a capacity, and
+                flow can be sent from a source vertex to a sink vertex. The goal is typically to find the maximum amount
+                of flow that can be sent from source to sink.</p>
+
+            <div class="diagram-box">
+                <pre>
+Flow Network Example:
+                     capacity
+         ┌──────(10)──────┐
+         │                ↓
+    [S] ─┼───(15)───→ [A] ───(10)───→ [T]
+         │            ↗  │
+         │     (5)   /   │(5)
+         │      ↓   /    ↓
+         └───→ [B] ─────(10)────→ [C]
+              (10)
+                     
+S = Source, T = Sink (Target)
+Numbers = Edge Capacities
+                </pre>
+            </div>
+
+            <h3>Key Terminology</h3>
+            <div class="concept-grid">
+                <div class="concept-card">
+                    <h4><i class="fas fa-play-circle"></i> Source (s)</h4>
+                    <p>The starting vertex where flow originates. Has only outgoing edges in typical formulations.</p>
+                </div>
+                <div class="concept-card">
+                    <h4><i class="fas fa-stop-circle"></i> Sink (t)</h4>
+                    <p>The destination vertex where flow ends. Has only incoming edges.</p>
+                </div>
+                <div class="concept-card">
+                    <h4><i class="fas fa-tachometer-alt"></i> Capacity c(u,v)</h4>
+                    <p>Maximum flow that can pass through edge (u,v).</p>
+                </div>
+                <div class="concept-card">
+                    <h4><i class="fas fa-water"></i> Flow f(u,v)</h4>
+                    <p>Actual flow through edge (u,v). Must satisfy: 0 ≤ f(u,v) ≤ c(u,v)</p>
+                </div>
+            </div>
         </div>
-        <a href="index.html" class="btn"><i class="fas fa-home"></i> Back to Home</a>
+
+        <div class="card">
+            <h2>Flow Constraints</h2>
+            <p>A valid flow must satisfy these constraints:</p>
+
+            <ol>
+                <li><strong>Capacity Constraint:</strong> For every edge, 0 ≤ f(u,v) ≤ c(u,v)</li>
+                <li><strong>Flow Conservation:</strong> For every vertex except s and t, incoming flow = outgoing flow
+                    <div style="text-align: center; margin: 10px 0;">∑ f(u,v) = ∑ f(v,w) for all v ∉ {s, t}</div>
+                </li>
+            </ol>
+
+            <div class="info-box">
+                <h4><i class="fas fa-info-circle"></i> Flow Value</h4>
+                <p>The value of a flow |f| is the total flow out of source s (or equivalently, into sink t):<br>
+                    |f| = ∑ f(s,v) - ∑ f(v,s)</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Max-Flow Min-Cut Theorem</h2>
+            <div class="theorem-box">
+                <h4><i class="fas fa-balance-scale"></i> The Theorem</h4>
+                <p>The maximum value of an s-t flow equals the minimum capacity of an s-t cut.</p>
+            </div>
+
+            <h3>What is a Cut?</h3>
+            <p>An <strong>s-t cut</strong> is a partition of vertices into two sets S and T where s ∈ S and t ∈ T. The
+                <strong>capacity of a cut</strong> is the sum of capacities of edges going from S to T.</p>
+
+            <div class="diagram-box">
+                <pre>
+Min Cut Example:
+                     
+    [S] ──(10)──→ [A] ──(5)──┐
+     │             │         ↓
+    (8)           (3)      [T]
+     ↓             ↓         ↑
+    [B] ──(15)──→ [C] ──(7)──┘
+
+Min Cut: edges {(A,T), (C,T)} with capacity 5 + 7 = 12
+Max Flow = 12
+                </pre>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Ford-Fulkerson Method</h2>
+            <p>The <strong>Ford-Fulkerson method</strong> is a general approach to finding maximum flow by repeatedly
+                finding augmenting paths and pushing flow along them.</p>
+
+            <h3>Residual Graph</h3>
+            <p>The <strong>residual graph</strong> G<sub>f</sub> shows remaining capacity on each edge:</p>
+            <ul>
+                <li>Forward edge: residual capacity = c(u,v) - f(u,v)</li>
+                <li>Backward edge: residual capacity = f(v,u) (allows "undoing" flow)</li>
+            </ul>
+
+            <h3>Augmenting Path</h3>
+            <p>A path from s to t in the residual graph with positive capacity on all edges.</p>
+
+            <div class="code-box">
+                <span class="keyword">function</span> <span class="function">fordFulkerson</span>(graph, source, sink):
+                maxFlow = <span class="number">0</span>
+                residual = <span class="function">copy</span>(graph) <span class="comment">// Residual graph</span>
+
+                <span class="keyword">while</span> <span class="keyword">true</span>:
+                <span class="comment">// Find augmenting path (DFS/BFS)</span>
+                path = <span class="function">findPath</span>(residual, source, sink)
+
+                <span class="keyword">if</span> path == null:
+                <span class="keyword">break</span> <span class="comment">// No more augmenting paths</span>
+
+                <span class="comment">// Find bottleneck (minimum capacity on path)</span>
+                bottleneck = infinity
+                <span class="keyword">for</span> (u, v) <span class="keyword">in</span> path:
+                bottleneck = min(bottleneck, residual[u][v])
+
+                <span class="comment">// Augment flow along path</span>
+                <span class="keyword">for</span> (u, v) <span class="keyword">in</span> path:
+                residual[u][v] -= bottleneck <span class="comment">// Reduce forward edge</span>
+                residual[v][u] += bottleneck <span class="comment">// Increase backward edge</span>
+
+                maxFlow += bottleneck
+
+                <span class="keyword">return</span> maxFlow
+            </div>
+
+            <p><strong>Time Complexity:</strong> O(E × max_flow) — can be slow if capacities are large!</p>
+        </div>
+
+        <div class="card">
+            <h2>Edmonds-Karp Algorithm</h2>
+            <p>The <strong>Edmonds-Karp algorithm</strong> is Ford-Fulkerson with BFS to find the <em>shortest</em>
+                augmenting path. This guarantees polynomial time.</p>
+
+            <div class="code-box">
+                <span class="keyword">function</span> <span class="function">edmondsKarp</span>(graph, source, sink, n):
+                maxFlow = <span class="number">0</span>
+                parent = [-<span class="number">1</span>] * n
+                residual = <span class="function">copy</span>(graph)
+
+                <span class="keyword">while</span> <span class="function">bfs</span>(residual, source, sink, parent, n):
+                <span class="comment">// Find bottleneck</span>
+                bottleneck = infinity
+                v = sink
+                <span class="keyword">while</span> v != source:
+                u = parent[v]
+                bottleneck = min(bottleneck, residual[u][v])
+                v = u
+
+                <span class="comment">// Augment flow</span>
+                v = sink
+                <span class="keyword">while</span> v != source:
+                u = parent[v]
+                residual[u][v] -= bottleneck
+                residual[v][u] += bottleneck
+                v = u
+
+                maxFlow += bottleneck
+
+                <span class="keyword">return</span> maxFlow
+
+                <span class="keyword">function</span> <span class="function">bfs</span>(residual, source, sink, parent,
+                n):
+                visited = [<span class="keyword">false</span>] * n
+                queue = [source]
+                visited[source] = <span class="keyword">true</span>
+                parent[source] = -<span class="number">1</span>
+
+                <span class="keyword">while</span> queue <span class="keyword">not</span> empty:
+                u = queue.dequeue()
+
+                <span class="keyword">for</span> v = <span class="number">0</span> <span class="keyword">to</span>
+                n-<span class="number">1</span>:
+                <span class="keyword">if not</span> visited[v] <span class="keyword">and</span> residual[u][v] > <span
+                    class="number">0</span>:
+                visited[v] = <span class="keyword">true</span>
+                parent[v] = u
+                <span class="keyword">if</span> v == sink:
+                <span class="keyword">return</span> <span class="keyword">true</span>
+                queue.enqueue(v)
+
+                <span class="keyword">return</span> <span class="keyword">false</span>
+            </div>
+
+            <p><strong>Time Complexity:</strong> O(V × E²) — polynomial and practical</p>
+        </div>
+
+        <div class="card">
+            <h2>Dinic's Algorithm</h2>
+            <p><strong>Dinic's algorithm</strong> (also Dinitz) is a more efficient max-flow algorithm that uses level
+                graphs and blocking flows.</p>
+
+            <h3>Key Concepts</h3>
+            <ul>
+                <li><strong>Level Graph:</strong> Built using BFS, contains only edges going to the next level</li>
+                <li><strong>Blocking Flow:</strong> A flow where every s-t path in the level graph is saturated</li>
+            </ul>
+
+            <h3>Algorithm Steps</h3>
+            <ol class="step-list">
+                <li>Build level graph using BFS from source</li>
+                <li>Find blocking flow in level graph using DFS</li>
+                <li>Add blocking flow to total flow</li>
+                <li>Repeat until sink is unreachable from source</li>
+            </ol>
+
+            <p><strong>Time Complexity:</strong> O(V² × E) — O(E × √V) for unit capacity graphs</p>
+        </div>
+
+        <div class="card">
+            <h2>Applications</h2>
+            <div class="concept-grid">
+                <div class="concept-card">
+                    <h4><i class="fas fa-users"></i> Bipartite Matching</h4>
+                    <p>Maximum matching in bipartite graphs reduces to max flow with unit capacities.</p>
+                </div>
+                <div class="concept-card">
+                    <h4><i class="fas fa-network-wired"></i> Network Routing</h4>
+                    <p>Finding maximum data throughput in computer networks.</p>
+                </div>
+                <div class="concept-card">
+                    <h4><i class="fas fa-project-diagram"></i> Project Selection</h4>
+                    <p>Selecting projects with dependencies to maximize profit.</p>
+                </div>
+                <div class="concept-card">
+                    <h4><i class="fas fa-cut"></i> Image Segmentation</h4>
+                    <p>Min-cut algorithms for separating foreground from background.</p>
+                </div>
+                <div class="concept-card">
+                    <h4><i class="fas fa-plane"></i> Airline Scheduling</h4>
+                    <p>Assigning flights to minimize crew needed.</p>
+                </div>
+                <div class="concept-card">
+                    <h4><i class="fas fa-baseball-ball"></i> Sports Elimination</h4>
+                    <p>Determining if a team can still win the championship.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Bipartite Matching Example</h2>
+            <p>To find maximum matching in a bipartite graph:</p>
+            <ol>
+                <li>Add source s connected to all vertices in set A with capacity 1</li>
+                <li>Add sink t connected from all vertices in set B with capacity 1</li>
+                <li>Original edges from A to B have capacity 1</li>
+                <li>Max flow = Maximum matching size</li>
+            </ol>
+
+            <div class="diagram-box">
+                <pre>
+Bipartite Graph:              Flow Network:
+                              
+  a1 ──── b1                [s]─(1)→ a1 ─(1)→ b1 ─(1)→[t]
+    \   / |                      │     \   / │        ↑
+     \ /  |                     (1)      \ /  │       (1)
+      X   |        →             ↓        X   │        │
+     / \  |                     a2 ─(1)─→ b2 ─(1)─────┘
+    /   \ |                      │         ↑
+  a2 ──── b2                    (1)       (1)
+                               [s]───────a3
+                </pre>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Algorithm Comparison</h2>
+            <table class="comparison-table">
+                <tr>
+                    <th>Algorithm</th>
+                    <th>Time Complexity</th>
+                    <th>Best For</th>
+                </tr>
+                <tr>
+                    <td>Ford-Fulkerson (DFS)</td>
+                    <td>O(E × max_flow)</td>
+                    <td>Small capacities</td>
+                </tr>
+                <tr>
+                    <td>Edmonds-Karp (BFS)</td>
+                    <td>O(V × E²)</td>
+                    <td>General graphs</td>
+                </tr>
+                <tr>
+                    <td>Dinic's</td>
+                    <td>O(V² × E)</td>
+                    <td>Dense graphs</td>
+                </tr>
+                <tr>
+                    <td>Dinic's (unit cap)</td>
+                    <td>O(E × √V)</td>
+                    <td>Bipartite matching</td>
+                </tr>
+                <tr>
+                    <td>Push-Relabel</td>
+                    <td>O(V² × E) or O(V³)</td>
+                    <td>Very dense graphs</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>Minimum Cut Finding</h2>
+            <p>After running max flow, the minimum cut can be found by:</p>
+            <ol>
+                <li>Run BFS/DFS from source in the residual graph</li>
+                <li>All reachable vertices are in set S</li>
+                <li>All unreachable vertices are in set T</li>
+                <li>Edges from S to T in original graph form the min cut</li>
+            </ol>
+
+            <div class="info-box">
+                <h4><i class="fas fa-cut"></i> Min Cut = Max Flow</h4>
+                <p>The total capacity of edges in the min cut equals the max flow value. These edges are "saturated" —
+                    they carry flow equal to their capacity.</p>
+            </div>
+        </div>
+
+        <div class="nav-buttons">
+            <a href="scc-interactive.html" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Strongly
+                Connected Components</a>
+            <a href="graph-coloring.html" class="btn btn-primary">Graph Coloring <i class="fas fa-arrow-right"></i></a>
+        </div>
     </div>
 </body>
+
 </html>

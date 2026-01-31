@@ -1,38 +1,661 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>tree-algorithms - Trees & Graphs</title>
+    <title>Tree Algorithms - Interactive Learning</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center; }
-        .container { text-align: center; color: white; padding: 40px; }
-        h1 { font-size: 3em; margin-bottom: 20px; }
-        p { font-size: 1.3em; margin-bottom: 30px; opacity: 0.9; }
-        .btn { padding: 15px 30px; background: white; color: #667eea; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; }
-        .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
-        .topics { background: rgba(255,255,255,0.1); padding: 30px; border-radius: 16px; margin: 30px auto; max-width: 600px; text-align: left; }
-        .topics h3 { margin-bottom: 15px; }
-        .topics ul { margin-left: 20px; }
-        .topics li { margin: 8px 0; opacity: 0.9; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+        }
+
+        .nav-bar {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-bar a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-bar h1 {
+            color: white;
+            font-size: 1.5em;
+            flex: 1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 25px;
+        }
+
+        .card h2 {
+            font-size: 1.8em;
+            color: #1a1a2e;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #f59e0b;
+            padding-bottom: 10px;
+        }
+
+        .card h3 {
+            font-size: 1.3em;
+            color: #1a1a2e;
+            margin: 25px 0 15px 0;
+        }
+
+        .card p {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .card ul,
+        .card ol {
+            margin-left: 25px;
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .card li {
+            margin-bottom: 8px;
+        }
+
+        .info-box {
+            background: #fffbeb;
+            border: 2px solid #f59e0b;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .info-box h4 {
+            color: #b45309;
+            margin-bottom: 10px;
+        }
+
+        .info-box p,
+        .info-box li {
+            color: #92400e;
+            line-height: 1.6;
+        }
+
+        .info-box ul {
+            margin-left: 20px;
+        }
+
+        .algorithm-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .algorithm-card {
+            background: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 20px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .algorithm-card h4 {
+            color: #b45309;
+            margin-bottom: 10px;
+        }
+
+        .algorithm-card p {
+            color: #92400e;
+            margin: 0;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 12px 15px;
+            border: 1px solid #e0e0e0;
+            text-align: left;
+        }
+
+        .comparison-table th {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: #f8f8f8;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #1a1a2e;
+            border: 2px solid #e0e0e0;
+        }
+
+        .code-box {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 13px;
+            margin: 15px 0;
+            overflow-x: auto;
+            line-height: 1.6;
+        }
+
+        .code-box .keyword {
+            color: #569cd6;
+        }
+
+        .code-box .comment {
+            color: #6a9955;
+        }
+
+        .code-box .function {
+            color: #dcdcaa;
+        }
+
+        .code-box .number {
+            color: #b5cea8;
+        }
+
+        .diagram-box {
+            background: #f0f0f0;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            font-family: monospace;
+        }
     </style>
 </head>
+
 <body>
+    <div class="nav-bar">
+        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+        <h1><i class="fas fa-sitemap"></i> Tree Algorithms</h1>
+        <a href="articulation-bridges.html">Next: Articulation & Bridges <i class="fas fa-arrow-right"></i></a>
+    </div>
+
     <div class="container">
-        <h1><i class="fas fa-code"></i> tree-algorithms</h1>
-        <p>This topic is part of the comprehensive Trees & Graphs tutorial.</p>
-        <div class="topics">
-            <h3>Topics Covered:</h3>
-            <ul>
-                <li>Core concepts and definitions</li>
-                <li>Algorithm implementations</li>
-                <li>Time and space complexity</li>
-                <li>Practice problems and examples</li>
-            </ul>
+        <div class="card">
+            <h2>Overview</h2>
+            <p>This section covers advanced algorithms on trees that are essential for competitive programming and
+                technical interviews. These algorithms exploit the special structure of trees to solve complex problems
+                efficiently.</p>
+
+            <div class="algorithm-grid">
+                <div class="algorithm-card">
+                    <h4><i class="fas fa-code-branch"></i> LCA (Lowest Common Ancestor)</h4>
+                    <p>Find the deepest node that is an ancestor of two given nodes.</p>
+                </div>
+                <div class="algorithm-card">
+                    <h4><i class="fas fa-arrows-alt-h"></i> Tree Diameter</h4>
+                    <p>Find the longest path between any two nodes in a tree.</p>
+                </div>
+                <div class="algorithm-card">
+                    <h4><i class="fas fa-bullseye"></i> Centroid Decomposition</h4>
+                    <p>Divide-and-conquer technique for path queries on trees.</p>
+                </div>
+                <div class="algorithm-card">
+                    <h4><i class="fas fa-project-diagram"></i> Heavy-Light Decomposition</h4>
+                    <p>Decompose tree into chains for efficient path queries.</p>
+                </div>
+            </div>
         </div>
-        <a href="index.html" class="btn"><i class="fas fa-home"></i> Back to Home</a>
+
+        <div class="card">
+            <h2>Lowest Common Ancestor (LCA)</h2>
+            <p>The <strong>Lowest Common Ancestor</strong> of two nodes u and v in a rooted tree is the deepest node
+                that is an ancestor of both u and v.</p>
+
+            <div class="diagram-box">
+                <pre>
+            1
+           /|\
+          2 3 4
+         /|   |
+        5 6   7
+       /
+      8
+
+LCA(5, 6) = 2    LCA(5, 7) = 1    LCA(8, 6) = 2
+                </pre>
+            </div>
+
+            <h3>Approach 1: Naive Method</h3>
+            <p>Trace paths from both nodes to root, find the first common node.</p>
+            <ul>
+                <li><strong>Time:</strong> O(n) per query</li>
+                <li><strong>Space:</strong> O(n) for path storage</li>
+            </ul>
+
+            <div class="code-box">
+                <span class="keyword">function</span> <span class="function">lcaNaive</span>(u, v):
+                <span class="comment">// Get ancestors of u</span>
+                ancestorsU = set()
+                <span class="keyword">while</span> u != null:
+                ancestorsU.add(u)
+                u = parent[u]
+
+                <span class="comment">// Find first ancestor of v that's in ancestorsU</span>
+                <span class="keyword">while</span> v != null:
+                <span class="keyword">if</span> v <span class="keyword">in</span> ancestorsU:
+                <span class="keyword">return</span> v
+                v = parent[v]
+                <span class="keyword">return</span> null
+            </div>
+
+            <h3>Approach 2: Binary Lifting</h3>
+            <p>Precompute 2<sup>k</sup>-th ancestors for each node using dynamic programming. This allows jumping up the
+                tree in O(log n) steps.</p>
+
+            <div class="info-box">
+                <h4><i class="fas fa-key"></i> Key Idea</h4>
+                <p>Store up[i][j] = the 2<sup>j</sup>-th ancestor of node i. Then: up[i][j] = up[up[i][j-1]][j-1]</p>
+            </div>
+
+            <div class="code-box">
+                <span class="comment">// Preprocessing: O(n log n)</span>
+                LOG = <span class="number">20</span> <span class="comment">// Enough for n up to 10^6</span>
+                up[n][LOG] <span class="comment">// up[v][j] = 2^j-th ancestor of v</span>
+                depth[n]
+
+                <span class="keyword">function</span> <span class="function">preprocess</span>(root):
+                <span class="function">dfs</span>(root, root, <span class="number">0</span>)
+                <span class="comment">// Fill sparse table</span>
+                <span class="keyword">for</span> j = <span class="number">1</span> <span class="keyword">to</span>
+                LOG-<span class="number">1</span>:
+                <span class="keyword">for</span> v = <span class="number">1</span> <span class="keyword">to</span> n:
+                up[v][j] = up[up[v][j-<span class="number">1</span>]][j-<span class="number">1</span>]
+
+                <span class="keyword">function</span> <span class="function">dfs</span>(v, parent, d):
+                depth[v] = d
+                up[v][<span class="number">0</span>] = parent
+                <span class="keyword">for</span> child <span class="keyword">in</span> children[v]:
+                <span class="function">dfs</span>(child, v, d + <span class="number">1</span>)
+
+                <span class="comment">// Query: O(log n)</span>
+                <span class="keyword">function</span> <span class="function">lca</span>(u, v):
+                <span class="keyword">if</span> depth[u] < depth[v]: swap(u, v) <span class="comment">// Bring u to same
+                    depth as v</span>
+                    diff = depth[u] - depth[v]
+                    <span class="keyword">for</span> j = <span class="number">0</span> <span class="keyword">to</span>
+                    LOG-<span class="number">1</span>:
+                    <span class="keyword">if</span> (diff >> j) & <span class="number">1</span>:
+                    u = up[u][j]
+
+                    <span class="keyword">if</span> u == v:
+                    <span class="keyword">return</span> u
+
+                    <span class="comment">// Binary search for LCA</span>
+                    <span class="keyword">for</span> j = LOG-<span class="number">1</span> <span class="keyword">down
+                        to</span> <span class="number">0</span>:
+                    <span class="keyword">if</span> up[u][j] != up[v][j]:
+                    u = up[u][j]
+                    v = up[v][j]
+
+                    <span class="keyword">return</span> up[u][<span class="number">0</span>]
+            </div>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Method</th>
+                    <th>Preprocessing</th>
+                    <th>Query</th>
+                    <th>Space</th>
+                </tr>
+                <tr>
+                    <td>Naive</td>
+                    <td>O(1)</td>
+                    <td>O(n)</td>
+                    <td>O(n)</td>
+                </tr>
+                <tr>
+                    <td>Binary Lifting</td>
+                    <td>O(n log n)</td>
+                    <td>O(log n)</td>
+                    <td>O(n log n)</td>
+                </tr>
+                <tr>
+                    <td>Euler Tour + RMQ</td>
+                    <td>O(n)</td>
+                    <td>O(1)</td>
+                    <td>O(n)</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>Tree Diameter</h2>
+            <p>The <strong>diameter</strong> of a tree is the length of the longest path between any two nodes. This
+                path is called the <strong>longest path</strong> or <strong>diametral path</strong>.</p>
+
+            <h3>Two-BFS/DFS Approach</h3>
+            <ol>
+                <li>Run BFS/DFS from any node to find the farthest node <strong>u</strong></li>
+                <li>Run BFS/DFS from <strong>u</strong> to find the farthest node <strong>v</strong></li>
+                <li>The distance from <strong>u</strong> to <strong>v</strong> is the diameter</li>
+            </ol>
+
+            <div class="code-box">
+                <span class="keyword">function</span> <span class="function">treeDiameter</span>(root):
+                <span class="comment">// First BFS/DFS to find farthest node from any start</span>
+                (farthest, _) = <span class="function">bfsFarthest</span>(root)
+
+                <span class="comment">// Second BFS/DFS from that node</span>
+                (_, diameter) = <span class="function">bfsFarthest</span>(farthest)
+
+                <span class="keyword">return</span> diameter
+
+                <span class="keyword">function</span> <span class="function">bfsFarthest</span>(start):
+                dist = {start: <span class="number">0</span>}
+                queue = [start]
+                farthest = start
+                maxDist = <span class="number">0</span>
+
+                <span class="keyword">while</span> queue <span class="keyword">not</span> empty:
+                u = queue.dequeue()
+                <span class="keyword">for</span> v <span class="keyword">in</span> neighbors[u]:
+                <span class="keyword">if</span> v <span class="keyword">not in</span> dist:
+                dist[v] = dist[u] + <span class="number">1</span>
+                queue.enqueue(v)
+                <span class="keyword">if</span> dist[v] > maxDist:
+                maxDist = dist[v]
+                farthest = v
+
+                <span class="keyword">return</span> (farthest, maxDist)
+            </div>
+
+            <h3>Tree DP Approach</h3>
+            <p>For each node, compute the two longest paths going down through different children:</p>
+
+            <div class="code-box">
+                diameter = <span class="number">0</span>
+
+                <span class="keyword">function</span> <span class="function">dfs</span>(v, parent):
+                <span class="keyword">global</span> diameter
+                maxDepth1 = <span class="number">0</span> <span class="comment">// Longest path down</span>
+                maxDepth2 = <span class="number">0</span> <span class="comment">// Second longest path down</span>
+
+                <span class="keyword">for</span> child <span class="keyword">in</span> neighbors[v]:
+                <span class="keyword">if</span> child == parent:
+                <span class="keyword">continue</span>
+
+                childDepth = <span class="function">dfs</span>(child, v) + <span class="number">1</span>
+
+                <span class="keyword">if</span> childDepth > maxDepth1:
+                maxDepth2 = maxDepth1
+                maxDepth1 = childDepth
+                <span class="keyword">else if</span> childDepth > maxDepth2:
+                maxDepth2 = childDepth
+
+                <span class="comment">// Diameter through v = sum of two longest paths</span>
+                diameter = max(diameter, maxDepth1 + maxDepth2)
+
+                <span class="keyword">return</span> maxDepth1
+            </div>
+            <p><strong>Time Complexity:</strong> O(n) for both approaches</p>
+        </div>
+
+        <div class="card">
+            <h2>Tree DP (Dynamic Programming on Trees)</h2>
+            <p>Many tree problems can be solved using DP where we compute values for subtrees and combine them.</p>
+
+            <h3>Common Patterns</h3>
+            <div class="algorithm-grid">
+                <div class="algorithm-card">
+                    <h4>Subtree DP</h4>
+                    <p>Compute answer for subtree rooted at each node, combine children's results.</p>
+                </div>
+                <div class="algorithm-card">
+                    <h4>Rerooting Technique</h4>
+                    <p>Compute answer assuming each node is root, reuse previous computation.</p>
+                </div>
+            </div>
+
+            <h3>Example: Subtree Sum</h3>
+            <div class="code-box">
+                subtreeSum[n]
+
+                <span class="keyword">function</span> <span class="function">computeSubtreeSums</span>(v, parent):
+                subtreeSum[v] = value[v]
+                <span class="keyword">for</span> child <span class="keyword">in</span> neighbors[v]:
+                <span class="keyword">if</span> child != parent:
+                <span class="function">computeSubtreeSums</span>(child, v)
+                subtreeSum[v] += subtreeSum[child]
+            </div>
+
+            <h3>Example: Maximum Independent Set on Tree</h3>
+            <p>Select maximum weight subset where no two adjacent nodes are selected:</p>
+            <div class="code-box">
+                <span class="comment">// dp[v][0] = max sum if v is NOT selected</span>
+                <span class="comment">// dp[v][1] = max sum if v IS selected</span>
+
+                <span class="keyword">function</span> <span class="function">treeDP</span>(v, parent):
+                dp[v][<span class="number">0</span>] = <span class="number">0</span>
+                dp[v][<span class="number">1</span>] = value[v]
+
+                <span class="keyword">for</span> child <span class="keyword">in</span> neighbors[v]:
+                <span class="keyword">if</span> child != parent:
+                <span class="function">treeDP</span>(child, v)
+                <span class="comment">// If v not selected, child can be either</span>
+                dp[v][<span class="number">0</span>] += max(dp[child][<span class="number">0</span>], dp[child][<span
+                    class="number">1</span>])
+                <span class="comment">// If v selected, child must not be</span>
+                dp[v][<span class="number">1</span>] += dp[child][<span class="number">0</span>]
+
+                <span class="comment">// Answer = max(dp[root][0], dp[root][1])</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Centroid Decomposition</h2>
+            <p><strong>Centroid Decomposition</strong> is a divide-and-conquer technique that recursively finds the
+                centroid (a node whose removal splits the tree into subtrees of at most half the size) and processes
+                paths through it.</p>
+
+            <div class="info-box">
+                <h4><i class="fas fa-bullseye"></i> What is a Centroid?</h4>
+                <p>A centroid of a tree is a node whose removal results in no remaining subtree having more than n/2
+                    nodes. Every tree has at least one centroid.</p>
+            </div>
+
+            <h3>Finding the Centroid</h3>
+            <div class="code-box">
+                subtreeSize[n]
+
+                <span class="keyword">function</span> <span class="function">computeSize</span>(v, parent):
+                subtreeSize[v] = <span class="number">1</span>
+                <span class="keyword">for</span> child <span class="keyword">in</span> neighbors[v]:
+                <span class="keyword">if</span> child != parent <span class="keyword">and not</span> removed[child]:
+                <span class="function">computeSize</span>(child, v)
+                subtreeSize[v] += subtreeSize[child]
+
+                <span class="keyword">function</span> <span class="function">findCentroid</span>(v, parent, treeSize):
+                <span class="keyword">for</span> child <span class="keyword">in</span> neighbors[v]:
+                <span class="keyword">if</span> child != parent <span class="keyword">and not</span> removed[child]:
+                <span class="keyword">if</span> subtreeSize[child] > treeSize / <span class="number">2</span>:
+                <span class="keyword">return</span> <span class="function">findCentroid</span>(child, v, treeSize)
+                <span class="keyword">return</span> v
+            </div>
+
+            <h3>Decomposition Structure</h3>
+            <p>The centroid decomposition creates a new tree (centroid tree) with O(log n) height, where each node
+                represents a centroid of some subtree.</p>
+
+            <h3>Applications</h3>
+            <ul>
+                <li>Count/find paths with specific properties (length, weight sum)</li>
+                <li>Query distances between node pairs</li>
+                <li>Tree queries that involve paths</li>
+            </ul>
+            <p><strong>Time Complexity:</strong> O(n log n) for decomposition</p>
+        </div>
+
+        <div class="card">
+            <h2>Heavy-Light Decomposition (HLD)</h2>
+            <p><strong>Heavy-Light Decomposition</strong> partitions tree edges into "heavy" and "light" edges, grouping
+                the tree into chains. This enables path queries using segment trees.</p>
+
+            <div class="info-box">
+                <h4><i class="fas fa-link"></i> Key Idea</h4>
+                <p>For each node, the edge to its largest subtree child is "heavy". All other edges are "light". Any
+                    path from root to leaf crosses at most O(log n) light edges.</p>
+            </div>
+
+            <h3>Heavy vs Light Edges</h3>
+            <ul>
+                <li><strong>Heavy Child:</strong> The child with the largest subtree</li>
+                <li><strong>Heavy Edge:</strong> Edge connecting a node to its heavy child</li>
+                <li><strong>Heavy Chain:</strong> Maximal sequence of heavy edges</li>
+                <li><strong>Light Edge:</strong> All non-heavy edges</li>
+            </ul>
+
+            <div class="code-box">
+                <span class="keyword">function</span> <span class="function">computeHeavy</span>(v, parent):
+                subtreeSize[v] = <span class="number">1</span>
+                heavyChild[v] = -<span class="number">1</span>
+                maxChildSize = <span class="number">0</span>
+
+                <span class="keyword">for</span> child <span class="keyword">in</span> children[v]:
+                <span class="function">computeHeavy</span>(child, v)
+                subtreeSize[v] += subtreeSize[child]
+                <span class="keyword">if</span> subtreeSize[child] > maxChildSize:
+                maxChildSize = subtreeSize[child]
+                heavyChild[v] = child
+
+                <span class="keyword">function</span> <span class="function">decompose</span>(v, chainHead):
+                head[v] = chainHead
+                pos[v] = currentPos++ <span class="comment">// Position in segment tree</span>
+
+                <span class="keyword">if</span> heavyChild[v] != -<span class="number">1</span>:
+                <span class="comment">// Continue the chain with heavy child</span>
+                <span class="function">decompose</span>(heavyChild[v], chainHead)
+
+                <span class="keyword">for</span> child <span class="keyword">in</span> children[v]:
+                <span class="keyword">if</span> child != heavyChild[v]:
+                <span class="comment">// Start new chain for light children</span>
+                <span class="function">decompose</span>(child, child)
+            </div>
+
+            <h3>Path Queries with HLD</h3>
+            <p>To query/update a path from u to v:</p>
+            <ol>
+                <li>While u and v are in different chains:</li>
+                <li>&nbsp;&nbsp;&nbsp;&nbsp;Query the chain of the deeper node to its head</li>
+                <li>&nbsp;&nbsp;&nbsp;&nbsp;Move to the parent of the chain head</li>
+                <li>Query the remaining path in the common chain</li>
+            </ol>
+            <p><strong>Time Complexity:</strong> O(log²n) per query (O(log n) chains × O(log n) segment tree)</p>
+        </div>
+
+        <div class="card">
+            <h2>Complexity Summary</h2>
+            <table class="comparison-table">
+                <tr>
+                    <th>Algorithm</th>
+                    <th>Preprocessing</th>
+                    <th>Query</th>
+                    <th>Space</th>
+                </tr>
+                <tr>
+                    <td>LCA (Binary Lifting)</td>
+                    <td>O(n log n)</td>
+                    <td>O(log n)</td>
+                    <td>O(n log n)</td>
+                </tr>
+                <tr>
+                    <td>LCA (Euler Tour + RMQ)</td>
+                    <td>O(n)</td>
+                    <td>O(1)</td>
+                    <td>O(n)</td>
+                </tr>
+                <tr>
+                    <td>Tree Diameter</td>
+                    <td>O(n)</td>
+                    <td>-</td>
+                    <td>O(n)</td>
+                </tr>
+                <tr>
+                    <td>Centroid Decomposition</td>
+                    <td>O(n log n)</td>
+                    <td>O(log n)</td>
+                    <td>O(n)</td>
+                </tr>
+                <tr>
+                    <td>Heavy-Light Decomposition</td>
+                    <td>O(n)</td>
+                    <td>O(log²n)</td>
+                    <td>O(n)</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="nav-buttons">
+            <a href="fenwick-tree.html" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Fenwick Tree</a>
+            <a href="articulation-bridges.html" class="btn btn-primary">Articulation & Bridges <i
+                    class="fas fa-arrow-right"></i></a>
+        </div>
     </div>
 </body>
+
 </html>

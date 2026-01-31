@@ -1,38 +1,644 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>eulerian-hamiltonian - Trees & Graphs</title>
+    <title>Eulerian & Hamiltonian Paths - Interactive Learning</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center; }
-        .container { text-align: center; color: white; padding: 40px; }
-        h1 { font-size: 3em; margin-bottom: 20px; }
-        p { font-size: 1.3em; margin-bottom: 30px; opacity: 0.9; }
-        .btn { padding: 15px 30px; background: white; color: #667eea; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; }
-        .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
-        .topics { background: rgba(255,255,255,0.1); padding: 30px; border-radius: 16px; margin: 30px auto; max-width: 600px; text-align: left; }
-        .topics h3 { margin-bottom: 15px; }
-        .topics ul { margin-left: 20px; }
-        .topics li { margin: 8px 0; opacity: 0.9; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+        }
+
+        .nav-bar {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-bar a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-bar h1 {
+            color: white;
+            font-size: 1.5em;
+            flex: 1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 25px;
+        }
+
+        .card h2 {
+            font-size: 1.8em;
+            color: #1a1a2e;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #ef4444;
+            padding-bottom: 10px;
+        }
+
+        .card h3 {
+            font-size: 1.3em;
+            color: #1a1a2e;
+            margin: 25px 0 15px 0;
+        }
+
+        .card p {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .card ul,
+        .card ol {
+            margin-left: 25px;
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .card li {
+            margin-bottom: 8px;
+        }
+
+        .info-box {
+            background: #fef2f2;
+            border: 2px solid #ef4444;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .info-box h4 {
+            color: #dc2626;
+            margin-bottom: 10px;
+        }
+
+        .info-box p,
+        .info-box li {
+            color: #991b1b;
+            line-height: 1.6;
+        }
+
+        .info-box ul {
+            margin-left: 20px;
+        }
+
+        .success-box {
+            background: #f0fdf4;
+            border: 2px solid #16a34a;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .success-box h4 {
+            color: #16a34a;
+            margin-bottom: 10px;
+        }
+
+        .success-box p,
+        .success-box li {
+            color: #166534;
+            line-height: 1.6;
+        }
+
+        .warning-box {
+            background: #fffbeb;
+            border: 2px solid #f59e0b;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .warning-box h4 {
+            color: #d97706;
+            margin-bottom: 10px;
+        }
+
+        .warning-box p {
+            color: #92400e;
+        }
+
+        .concept-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .concept-card {
+            background: #fef2f2;
+            border-left: 4px solid #ef4444;
+            padding: 20px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .concept-card h4 {
+            color: #991b1b;
+            margin-bottom: 10px;
+        }
+
+        .concept-card p {
+            color: #7f1d1d;
+            margin: 0;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 12px 15px;
+            border: 1px solid #e0e0e0;
+            text-align: left;
+        }
+
+        .comparison-table th {
+            background: #ef4444;
+            color: white;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: #f8f8f8;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #1a1a2e;
+            border: 2px solid #e0e0e0;
+        }
+
+        .code-box {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 13px;
+            margin: 15px 0;
+            overflow-x: auto;
+            line-height: 1.6;
+        }
+
+        .code-box .keyword {
+            color: #569cd6;
+        }
+
+        .code-box .comment {
+            color: #6a9955;
+        }
+
+        .code-box .function {
+            color: #dcdcaa;
+        }
+
+        .code-box .number {
+            color: #b5cea8;
+        }
+
+        .diagram-box {
+            background: #f0f0f0;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            font-family: monospace;
+        }
     </style>
 </head>
+
 <body>
+    <div class="nav-bar">
+        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+        <h1><i class="fas fa-circle-notch"></i> Eulerian & Hamiltonian Paths</h1>
+        <a href="articulation-bridges.html">Next: Articulation & Bridges <i class="fas fa-arrow-right"></i></a>
+    </div>
+
     <div class="container">
-        <h1><i class="fas fa-code"></i> eulerian-hamiltonian</h1>
-        <p>This topic is part of the comprehensive Trees & Graphs tutorial.</p>
-        <div class="topics">
-            <h3>Topics Covered:</h3>
+        <div class="card">
+            <h2>Overview</h2>
+            <p>This topic covers two classic graph problems that ask whether we can traverse a graph in a specific way:
+            </p>
+
+            <div class="concept-grid">
+                <div class="concept-card">
+                    <h4><i class="fas fa-route"></i> Eulerian Path/Circuit</h4>
+                    <p>Visit every <strong>edge</strong> exactly once. Named after Leonhard Euler (1736).</p>
+                </div>
+                <div class="concept-card">
+                    <h4><i class="fas fa-map-marker-alt"></i> Hamiltonian Path/Cycle</h4>
+                    <p>Visit every <strong>vertex</strong> exactly once. Named after William Hamilton (1857).</p>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h4><i class="fas fa-history"></i> Historical Note</h4>
+                <p>The Eulerian problem originated from the famous "Seven Bridges of Königsberg" puzzle. Euler proved it
+                    was impossible to walk through the city crossing each bridge exactly once, founding graph theory in
+                    the process!</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Eulerian Paths and Circuits</h2>
+
+            <h3>Definitions</h3>
             <ul>
-                <li>Core concepts and definitions</li>
-                <li>Algorithm implementations</li>
-                <li>Time and space complexity</li>
-                <li>Practice problems and examples</li>
+                <li><strong>Eulerian Path:</strong> A path that visits every edge exactly once</li>
+                <li><strong>Eulerian Circuit (Cycle):</strong> An Eulerian path that starts and ends at the same vertex
+                </li>
+                <li><strong>Eulerian Graph:</strong> A graph that has an Eulerian circuit</li>
+                <li><strong>Semi-Eulerian Graph:</strong> A graph that has an Eulerian path but not a circuit</li>
+            </ul>
+
+            <div class="diagram-box">
+                <pre>
+Eulerian Circuit exists:        Eulerian Path exists (not circuit):
+                                
+    A ─── B                         A ─── B
+   /│\   /│                        /│\   /│
+  / │ \ / │                       / │ \ / │
+ E──┼──C  │                      E──┼──C  │
+  \ │   \ │                        \ │   \ │
+   \│    \│                         \│    \│
+    D ─── F                          D ─── F
+                                
+All vertices even degree       Exactly 2 vertices odd degree
+                                (Start at one, end at other)
+                </pre>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Conditions for Eulerian Paths/Circuits</h2>
+
+            <h3>Undirected Graphs</h3>
+            <div class="success-box">
+                <h4><i class="fas fa-check-circle"></i> Eulerian Circuit Condition</h4>
+                <p>An undirected connected graph has an Eulerian circuit if and only if <strong>every vertex has even
+                        degree</strong>.</p>
+            </div>
+
+            <div class="info-box">
+                <h4><i class="fas fa-route"></i> Eulerian Path Condition</h4>
+                <p>An undirected connected graph has an Eulerian path if and only if it has <strong>exactly 0 or 2
+                        vertices of odd degree</strong>. If 2 vertices have odd degree, the path must start at one and
+                    end at the other.</p>
+            </div>
+
+            <h3>Directed Graphs</h3>
+            <div class="success-box">
+                <h4><i class="fas fa-check-circle"></i> Eulerian Circuit Condition</h4>
+                <p>A directed graph has an Eulerian circuit if and only if:</p>
+                <ul>
+                    <li>The graph is strongly connected (ignoring edge directions for connectivity check)</li>
+                    <li>Every vertex has <strong>in-degree = out-degree</strong></li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <h4><i class="fas fa-route"></i> Eulerian Path Condition</h4>
+                <p>A directed graph has an Eulerian path if:</p>
+                <ul>
+                    <li>At most one vertex has out-degree - in-degree = 1 (start vertex)</li>
+                    <li>At most one vertex has in-degree - out-degree = 1 (end vertex)</li>
+                    <li>All other vertices have in-degree = out-degree</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Hierholzer's Algorithm</h2>
+            <p><strong>Hierholzer's Algorithm</strong> efficiently finds an Eulerian path or circuit in O(E) time by
+                building the path iteratively and inserting sub-circuits.</p>
+
+            <h3>Algorithm Steps</h3>
+            <ol>
+                <li>Start at any vertex (for circuit) or at a vertex with odd degree (for path)</li>
+                <li>Follow edges, removing them as you go, until you return to start</li>
+                <li>If there are remaining edges, find a vertex in current path with unused edges</li>
+                <li>Build a sub-circuit from that vertex and splice it into the main path</li>
+                <li>Repeat until all edges are used</li>
+            </ol>
+
+            <div class="code-box">
+                <span class="keyword">function</span> <span class="function">hierholzer</span>(graph, start):
+                stack = [start]
+                path = []
+
+                <span class="keyword">while</span> stack <span class="keyword">not</span> empty:
+                v = stack.top()
+
+                <span class="keyword">if</span> graph[v] <span class="keyword">has</span> edges:
+                <span class="comment">// Take any edge from v</span>
+                u = graph[v].pop()
+                <span class="comment">// Remove edge v→u (for undirected, also remove u→v)</span>
+                <span class="function">removeEdge</span>(graph, u, v) <span class="comment">// For undirected
+                    graphs</span>
+                stack.push(u)
+                <span class="keyword">else</span>:
+                <span class="comment">// No more edges from v, add to path</span>
+                path.append(stack.pop())
+
+                <span class="keyword">return</span> reverse(path)
+
+                <span class="comment">// For undirected graph: check condition first</span>
+                <span class="keyword">function</span> <span class="function">findEulerianPath</span>(graph):
+                oddDegree = []
+                <span class="keyword">for</span> v <span class="keyword">in</span> vertices:
+                <span class="keyword">if</span> degree[v] % <span class="number">2</span> == <span
+                    class="number">1</span>:
+                oddDegree.append(v)
+
+                <span class="keyword">if</span> len(oddDegree) == <span class="number">0</span>:
+                <span class="keyword">return</span> <span class="function">hierholzer</span>(graph, anyVertex) <span
+                    class="comment">// Circuit</span>
+                <span class="keyword">else if</span> len(oddDegree) == <span class="number">2</span>:
+                <span class="keyword">return</span> <span class="function">hierholzer</span>(graph, oddDegree[<span
+                    class="number">0</span>]) <span class="comment">// Path</span>
+                <span class="keyword">else</span>:
+                <span class="keyword">return</span> null <span class="comment">// No Eulerian path exists</span>
+            </div>
+
+            <p><strong>Time Complexity:</strong> O(E) — each edge processed exactly once</p>
+            <p><strong>Space Complexity:</strong> O(E) for path storage</p>
+        </div>
+
+        <div class="card">
+            <h2>Hamiltonian Paths and Cycles</h2>
+
+            <h3>Definitions</h3>
+            <ul>
+                <li><strong>Hamiltonian Path:</strong> A path that visits every vertex exactly once</li>
+                <li><strong>Hamiltonian Cycle:</strong> A Hamiltonian path that returns to the starting vertex</li>
+                <li><strong>Hamiltonian Graph:</strong> A graph that has a Hamiltonian cycle</li>
+            </ul>
+
+            <div class="diagram-box">
+                <pre>
+Hamiltonian Cycle:              No Hamiltonian Cycle:
+                                
+    A ─── B                         A ─── B
+    │     │                         │     │
+    │     │                         │     │
+    D ─── C                         D     C
+                                    │
+Path: A → B → C → D → A             E
+                                
+                                (Can't visit all and return)
+                </pre>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Hamiltonian Problem Complexity</h2>
+
+            <div class="warning-box">
+                <h4><i class="fas fa-exclamation-triangle"></i> NP-Complete Problem</h4>
+                <p>Unlike Eulerian paths (polynomial time), determining whether a Hamiltonian path or cycle exists is
+                    <strong>NP-complete</strong>. There is no known polynomial-time algorithm!</p>
+            </div>
+
+            <h3>Why It's Hard</h3>
+            <ul>
+                <li>No simple degree-based conditions (unlike Eulerian)</li>
+                <li>Must potentially explore exponentially many paths</li>
+                <li>Related to the Traveling Salesman Problem (TSP)</li>
+            </ul>
+
+            <h3>Sufficient Conditions (Not Necessary)</h3>
+            <p>These conditions guarantee a Hamiltonian cycle exists, but graphs not meeting them may still have one:
+            </p>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Theorem</th>
+                    <th>Condition</th>
+                </tr>
+                <tr>
+                    <td>Dirac's Theorem (1952)</td>
+                    <td>If every vertex has degree ≥ n/2, graph has Hamiltonian cycle</td>
+                </tr>
+                <tr>
+                    <td>Ore's Theorem (1960)</td>
+                    <td>If deg(u) + deg(v) ≥ n for all non-adjacent u,v, graph has Hamiltonian cycle</td>
+                </tr>
+                <tr>
+                    <td>Complete Graph K<sub>n</sub></td>
+                    <td>Always has Hamiltonian cycle (for n ≥ 3)</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>Backtracking Algorithm for Hamiltonian</h2>
+            <p>The brute-force approach uses backtracking to explore all possible paths:</p>
+
+            <div class="code-box">
+                <span class="keyword">function</span> <span class="function">hamiltonianCycle</span>(graph, n):
+                path = [-<span class="number">1</span>] * n
+                path[<span class="number">0</span>] = <span class="number">0</span> <span class="comment">// Start from
+                    vertex 0</span>
+
+                <span class="keyword">if</span> <span class="function">backtrack</span>(graph, path, <span
+                    class="number">1</span>, n):
+                <span class="keyword">return</span> path
+                <span class="keyword">return</span> null <span class="comment">// No Hamiltonian cycle</span>
+
+                <span class="keyword">function</span> <span class="function">backtrack</span>(graph, path, pos, n):
+                <span class="comment">// Base case: all vertices included</span>
+                <span class="keyword">if</span> pos == n:
+                <span class="comment">// Check if cycle: edge from last to first</span>
+                <span class="keyword">return</span> graph[path[pos-<span class="number">1</span>]][path[<span
+                    class="number">0</span>]] == <span class="number">1</span>
+
+                <span class="comment">// Try each vertex as next in path</span>
+                <span class="keyword">for</span> v = <span class="number">1</span> <span class="keyword">to</span>
+                n-<span class="number">1</span>:
+                <span class="keyword">if</span> <span class="function">isSafe</span>(v, graph, path, pos):
+                path[pos] = v
+
+                <span class="keyword">if</span> <span class="function">backtrack</span>(graph, path, pos + <span
+                    class="number">1</span>, n):
+                <span class="keyword">return</span> <span class="keyword">true</span>
+
+                path[pos] = -<span class="number">1</span> <span class="comment">// Backtrack</span>
+
+                <span class="keyword">return</span> <span class="keyword">false</span>
+
+                <span class="keyword">function</span> <span class="function">isSafe</span>(v, graph, path, pos):
+                <span class="comment">// Check if v is adjacent to previous vertex</span>
+                <span class="keyword">if</span> graph[path[pos-<span class="number">1</span>]][v] == <span
+                    class="number">0</span>:
+                <span class="keyword">return</span> <span class="keyword">false</span>
+
+                <span class="comment">// Check if v already in path</span>
+                <span class="keyword">for</span> i = <span class="number">0</span> <span class="keyword">to</span>
+                pos-<span class="number">1</span>:
+                <span class="keyword">if</span> path[i] == v:
+                <span class="keyword">return</span> <span class="keyword">false</span>
+
+                <span class="keyword">return</span> <span class="keyword">true</span>
+            </div>
+
+            <p><strong>Time Complexity:</strong> O(n!) in worst case — exponential</p>
+        </div>
+
+        <div class="card">
+            <h2>Comparison: Eulerian vs Hamiltonian</h2>
+            <table class="comparison-table">
+                <tr>
+                    <th>Aspect</th>
+                    <th>Eulerian</th>
+                    <th>Hamiltonian</th>
+                </tr>
+                <tr>
+                    <td>Traverses</td>
+                    <td>Every <strong>edge</strong> once</td>
+                    <td>Every <strong>vertex</strong> once</td>
+                </tr>
+                <tr>
+                    <td>Existence Check</td>
+                    <td>Polynomial O(V + E)</td>
+                    <td>NP-Complete</td>
+                </tr>
+                <tr>
+                    <td>Finding Path</td>
+                    <td>O(E) - Hierholzer's</td>
+                    <td>O(n!) - Backtracking</td>
+                </tr>
+                <tr>
+                    <td>Sufficient Condition</td>
+                    <td>Degree parity (exact)</td>
+                    <td>Degree sums (not exact)</td>
+                </tr>
+                <tr>
+                    <td>Historic Problem</td>
+                    <td>Seven Bridges (1736)</td>
+                    <td>Icosian Game (1857)</td>
+                </tr>
+                <tr>
+                    <td>Related Problem</td>
+                    <td>Chinese Postman</td>
+                    <td>Traveling Salesman (TSP)</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>Applications</h2>
+
+            <h3>Eulerian Applications</h3>
+            <ul>
+                <li><strong>DNA Sequencing:</strong> Reconstructing DNA from fragments (de Bruijn graphs)</li>
+                <li><strong>Circuit Design:</strong> Testing all connections on a circuit board</li>
+                <li><strong>Snow Plow Routing:</strong> Covering all streets efficiently</li>
+                <li><strong>Network Routing:</strong> Visiting all network links</li>
+            </ul>
+
+            <h3>Hamiltonian Applications</h3>
+            <ul>
+                <li><strong>Traveling Salesman:</strong> Finding shortest tour visiting all cities</li>
+                <li><strong>Genome Assembly:</strong> Ordering contigs in sequencing</li>
+                <li><strong>Knight's Tour:</strong> Chess puzzle visiting all squares</li>
+                <li><strong>Manufacturing:</strong> Optimizing machine tool paths</li>
             </ul>
         </div>
-        <a href="index.html" class="btn"><i class="fas fa-home"></i> Back to Home</a>
+
+        <div class="card">
+            <h2>Complexity Summary</h2>
+            <table class="comparison-table">
+                <tr>
+                    <th>Problem</th>
+                    <th>Time Complexity</th>
+                    <th>Algorithm</th>
+                </tr>
+                <tr>
+                    <td>Check Eulerian (undirected)</td>
+                    <td>O(V + E)</td>
+                    <td>Degree counting</td>
+                </tr>
+                <tr>
+                    <td>Find Eulerian Path/Circuit</td>
+                    <td>O(E)</td>
+                    <td>Hierholzer's</td>
+                </tr>
+                <tr>
+                    <td>Check Hamiltonian</td>
+                    <td>NP-Complete</td>
+                    <td>Backtracking / DP</td>
+                </tr>
+                <tr>
+                    <td>Find Hamiltonian Path</td>
+                    <td>O(n! or 2ⁿ·n²)</td>
+                    <td>Backtracking / Held-Karp DP</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="nav-buttons">
+            <a href="graph-coloring.html" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Graph Coloring</a>
+            <a href="articulation-bridges.html" class="btn btn-primary">Articulation & Bridges <i
+                    class="fas fa-arrow-right"></i></a>
+        </div>
     </div>
 </body>
+
 </html>
