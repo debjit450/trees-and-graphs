@@ -17,6 +17,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: #f5f5f5;
             min-height: 100vh;
+            color: #333;
         }
 
         .nav-bar {
@@ -52,6 +53,7 @@
             display: grid;
             grid-template-columns: 1fr 380px;
             gap: 30px;
+            margin-bottom: 40px;
         }
 
         @media (max-width: 1100px) {
@@ -64,7 +66,7 @@
             background: white;
             border-radius: 16px;
             padding: 30px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             margin-bottom: 25px;
         }
 
@@ -150,17 +152,21 @@
             display: flex;
             gap: 10px;
             margin-bottom: 20px;
+            background: #e0e0e0;
+            padding: 5px;
+            border-radius: 10px;
         }
 
         .tab {
             flex: 1;
-            padding: 12px;
-            background: #e0e0e0;
+            padding: 10px;
+            background: transparent;
             border: none;
             border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
+            color: #555;
         }
 
         .tab.active {
@@ -168,31 +174,137 @@
             color: white;
         }
 
-        .code-box {
+        /* THEORY SECTION STYLES */
+        .theory-section {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            margin-top: 40px;
+        }
+
+        .theory-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .theory-header h2 {
+            font-size: 2.2em;
+            color: #1a1a2e;
+            margin-bottom: 10px;
+        }
+
+        .theory-header p {
+            color: #666;
+            font-size: 1.1em;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .theory-header::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: #e11d48;
+            margin: 20px auto 0;
+            border-radius: 2px;
+        }
+
+        .theory-block {
+            margin-bottom: 50px;
+        }
+
+        .theory-block h3 {
+            font-size: 1.6em;
+            color: #e11d48;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .theory-block p {
+            line-height: 1.7;
+            color: #444;
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+
+        .theory-block ul {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        .theory-block li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        .theory-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 800px) {
+            .theory-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .code-block {
             background: #1e1e1e;
             color: #d4d4d4;
-            padding: 20px;
-            border-radius: 8px;
-            font-family: 'Courier New', monospace;
-            font-size: 12px;
+            padding: 25px;
+            border-radius: 10px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9em;
             overflow-x: auto;
-            margin: 15px 0;
+            line-height: 1.5;
+            border: 1px solid #333;
         }
 
-        .dp-grid {
-            display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 5px;
-            margin-top: 15px;
+        .keyword {
+            color: #569cd6;
         }
 
-        .dp-cell {
-            background: #fff;
-            border: 1px solid #ccc;
-            padding: 10px;
-            text-align: center;
-            border-radius: 4px;
-            font-weight: bold;
+        .type {
+            color: #4ec9b0;
+        }
+
+        .func {
+            color: #dcdcaa;
+        }
+
+        .comment {
+            color: #6a9955;
+        }
+
+        .complexity-card {
+            background: #fff1f2;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #e11d48;
+        }
+
+        .complexity-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #fecdd3;
+            padding-bottom: 5px;
+        }
+
+        .complexity-item:last-child {
+            border-bottom: none;
+        }
+
+        .complexity-val {
+            font-family: 'Courier New', monospace;
+            font-weight: 700;
+            color: #9f1239;
         }
     </style>
 </head>
@@ -233,246 +345,272 @@
 
             <div class="right-column">
                 <div class="card">
-                    <h2><i class="fas fa-lightbulb"></i> Concept</h2>
+                    <h2><i class="fas fa-lightbulb"></i> Basics</h2>
                     <div id="infoContent">
-                        <h4>DP: Overlapping Subproblems</h4>
-                        <p style="color: #555; margin-bottom: 10px;">Solve complex problems by breaking them down into
-                            simpler subproblems and storing their solutions.</p>
-
-                        <div class="code-box">
-                            // Memoization (Top-Down)
-                            int fib(n) {
-                            if (memo[n] != -1) return memo[n];
-                            if (n <= 1) return n; return memo[n]=fib(n-1) + fib(n-2); } // Tabulation (Bottom-Up)
-                                dp[0]=0; dp[1]=1; for (i=2; i <=n; i++) dp[i]=dp[i-1] + dp[i-2]; </div>
+                        <h4>Subproblems</h4>
+                        <p style="color: #555; margin-bottom: 10px;">Solve complex problems by storing solutions to
+                            simpler subproblems.</p>
+                        <div class="highlight-box" style="background: #fff1f2; padding: 10px; border-radius: 5px;">
+                            <strong>Memoization:</strong> Top-down (Recursion + Cache)<br>
+                            <strong>Tabulation:</strong> Bottom-up (Iterative table fill)
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <script>
-            const canvas = document.getElementById('mainCanvas');
-            const ctx = canvas.getContext('2d');
-            const stepInfo = document.getElementById('stepInfo');
+        <!-- Comprehensive Theory Section -->
+        <div class="theory-section">
+            <div class="theory-header">
+                <h2>Comprehensive Guide</h2>
+                <p>Dynamic Programming: Optimizing Recursion through Caching.</p>
+            </div>
 
-            // Mode
-            let mode = 'fib';
-            let isRunning = false;
+            <!-- Topic 1 -->
+            <div class="theory-block" id="theory-dp-intro">
+                <h3><i class="fas fa-brain"></i> What is DP?</h3>
+                <p>Dynamic Programming is a technique used to solve problems that have <strong>Overlapping
+                        Subproblems</strong> and <strong>Optimal Substructure</strong>.</p>
 
-            // Fib State
-            let memo = [];
+                <div class="theory-grid">
+                    <div>
+                        <h4>Two Main Approaches</h4>
+                        <ul>
+                            <li><strong>Memoization (Top-Down):</strong> Write the recursive solution, then add a
+                                cache/map to store results of function calls. If a state is visited again, return the
+                                cached value.</li>
+                            <li><strong>Tabulation (Bottom-Up):</strong> Solve the smallest subproblems first (base
+                                cases) and use their results to iteratively build up to the final answer.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>When to use?</h4>
+                        <p>Whenever you see a recursive solution that solves the same subproblem multiple times (e.g.,
+                            Fibonacci(5) calls Fibonacci(3) twice).</p>
+                    </div>
+                </div>
+            </div>
 
-            // Knapsack State
-            let weights = [1, 3, 4, 5];
-            let values = [1, 4, 5, 7];
-            let capacity = 7;
-            let dpTable = [];
+            <hr style="border:0; border-top:1px solid #eee; margin: 40px 0;">
 
-            function switchMode(newMode) {
-                mode = newMode;
-                isRunning = false;
-                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-                event.target.classList.add('active');
+            <!-- Topic 2 -->
+            <div class="theory-block" id="theory-knapsack">
+                <h3><i class="fas fa-suitcase"></i> Classic Problem: 0/1 Knapsack</h3>
+                <p>Given a set of items, each with a weight and a value, determine the number of each item to include in
+                    a collection so that the total weight is less than or equal to a given limit and the total value is
+                    as large as possible.</p>
 
-                document.getElementById('fibControls').style.display = mode === 'fib' ? 'flex' : 'none';
-                document.getElementById('knapsackControls').style.display = mode === 'knapsack' ? 'flex' : 'none';
+                <div class="theory-grid">
+                    <div>
+                        <h4>State Definition</h4>
+                        <p><code>dp[i][w]</code> = Max value using subset of first <code>i</code> items with capacity
+                            <code>w</code>.</p>
+                        <h4>Recurrence Relation</h4>
+                        <p>If weight[i] > w:<br>
+                            <code>dp[i][w] = dp[i-1][w]</code> (Skip item)
+                        </p>
+                        <p>Else:<br>
+                            <code>dp[i][w] = max(dp[i-1][w], val[i] + dp[i-1][w-wt[i]])</code>
+                        </p>
+                    </div>
+                    <div class="complexity-card">
+                        <h4>Complexity Analysis</h4>
+                        <div class="complexity-item"><span>Time Complexity</span> <span class="complexity-val">O(N *
+                                W)</span></div>
+                        <div class="complexity-item"><span>Space Complexity</span> <span class="complexity-val">O(N *
+                                W)</span></div>
+                        <div style="font-size: 0.8em; color: #666; margin-top: 5px;">Can be space-optimized to O(W).
+                        </div>
+                    </div>
+                </div>
 
-                if (mode === 'fib') {
-                    runFibMemo(); // Initial draw
-                } else {
-                    initKnapsack();
-                    drawKnapsack();
-                }
-            }
+                <h4>Implementation (Tabulation)</h4>
+                <div class="code-block">
+                    <span class="keyword">for</span> (i = 1; i <= n; i++) { <span class="keyword">for</span> (w = 0; w
+                        <= capacity; w++) { <span class="keyword">if</span> (weights[i-1] <= w) { dp[i][w]=max(
+                                dp[i-1][w], <span class="comment">// Exclude</span>
+                                values[i-1] + dp[i-1][w - weights[i-1]] <span class="comment">// Include</span>
+                                );
+                                } <span class="keyword">else</span> {
+                                dp[i][w] = dp[i-1][w];
+                                }
+                                }
+                                }
+                </div>
+            </div>
+        </div>
+    </div>
 
-            // --- DRAWING HELPERS ---
-            function clearCanvas() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-            }
+    <!-- Visualization Script (Kept Intact) -->
+    <script>
+        const canvas = document.getElementById('mainCanvas');
+        const ctx = canvas.getContext('2d');
+        const stepInfo = document.getElementById('stepInfo');
 
-            function drawArray(arr, x, y, label, highlightIdx = -1) {
-                ctx.font = '16px Segoe UI';
-                ctx.fillStyle = '#333';
-                ctx.textAlign = 'left';
-                ctx.fillText(label, x, y - 10);
+        let mode = 'fib';
+        let isRunning = false;
+        let memo = [];
+        let weights = [1, 3, 4, 5];
+        let values = [1, 4, 5, 7];
+        let capacity = 7;
+        let dpTable = [];
 
-                arr.forEach((val, i) => {
-                    const bx = x + i * 60;
-                    ctx.fillStyle = i === highlightIdx ? '#fcd34d' : '#fff'; // yellow if highlight
-                    if (val !== -1 && val !== undefined && i !== highlightIdx) ctx.fillStyle = '#86efac'; // green if filled
-                    if (val === -1 || val === undefined) ctx.fillStyle = '#f3f4f6'; // gray if empty
+        function switchMode(newMode) {
+            mode = newMode;
+            isRunning = false;
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
 
-                    ctx.fillRect(bx, y, 50, 50);
-                    ctx.strokeStyle = '#333';
-                    ctx.strokeRect(bx, y, 50, 50);
+            document.getElementById('fibControls').style.display = mode === 'fib' ? 'flex' : 'none';
+            document.getElementById('knapsackControls').style.display = mode === 'knapsack' ? 'flex' : 'none';
 
-                    ctx.fillStyle = '#111';
-                    ctx.textAlign = 'center';
-                    ctx.fillText(val === -1 || val === undefined ? '?' : val, bx + 25, y + 30);
+            if (mode === 'fib') runFibMemo();
+            else { initKnapsack(); drawKnapsack(); }
+        }
 
-                    // Index
-                    ctx.font = '12px Segoe UI';
-                    ctx.fillText(i, bx + 25, y + 65);
-                    ctx.font = '16px Segoe UI'; // reset
-                });
-            }
+        // --- DRAWING HELPERS ---
+        function clearCanvas() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
 
-            // --- FIBONACCI ---
-            async function runFibMemo() {
-                if (isRunning) return;
-                isRunning = true;
-                memo = Array(7).fill(-1);
+        function drawArray(arr, x, y, label, highlightIdx = -1) {
+            ctx.font = '16px Segoe UI';
+            ctx.fillStyle = '#333';
+            ctx.textAlign = 'left';
+            ctx.fillText(label, x, y - 10);
 
-                // Visualization wrapper
-                await fibMemo(6);
+            arr.forEach((val, i) => {
+                const bx = x + i * 60;
+                ctx.fillStyle = i === highlightIdx ? '#fcd34d' : '#fff';
+                if (val !== -1 && val !== undefined && i !== highlightIdx) ctx.fillStyle = '#86efac';
+                if (val === -1 || val === undefined) ctx.fillStyle = '#f3f4f6';
 
-                stepInfo.textContent = "Memoization Complete.";
-                isRunning = false;
-            }
+                ctx.fillRect(bx, y, 50, 50);
+                ctx.strokeStyle = '#333';
+                ctx.strokeRect(bx, y, 50, 50);
 
-            async function fibMemo(n, depth = 0) {
-                if (!isRunning) return 0;
-
-                clearCanvas();
-                drawArray(memo, 100, 200, "Memo Array (Top-Down)");
-
-                // Draw Call Stack Visualization (simple text)
-                ctx.fillStyle = '#333';
-                ctx.textAlign = 'left';
-                ctx.fillText(`Calculating fib(${n})...`, 100, 100);
-
-                if (n <= 1) return n;
-
-                if (memo[n] !== -1) {
-                    stepInfo.textContent = `fib(${n}) found in memo: ${memo[n]}. Returning.`;
-                    ctx.fillStyle = '#e11d48';
-                    ctx.fillText(`Hit memo[${n}]! Skips recursion.`, 300, 100);
-                    await sleep(1000);
-                    return memo[n];
-                }
-
-                stepInfo.textContent = `fib(${n}) not known. Recursing...`;
-                await sleep(500);
-
-                let res = await fibMemo(n - 1, depth + 1) + await fibMemo(n - 2, depth + 1);
-
-                memo[n] = res;
-                stepInfo.textContent = `Computed fib(${n}) = ${res}. Storing in memo.`;
-                clearCanvas();
-                drawArray(memo, 100, 200, "Memo Array", n); // Highlight assignment
-                await sleep(800);
-
-                return res;
-            }
-
-            async function runFibTab() {
-                if (isRunning) return;
-                isRunning = true;
-                let tab = Array(7).fill(0);
-
-                stepInfo.textContent = "Base cases: dp[0]=0, dp[1]=1";
-                tab[0] = 0; tab[1] = 1;
-
-                clearCanvas();
-                drawArray(tab, 100, 200, "DP Table (Bottom-Up)");
-                await sleep(1000);
-
-                for (let i = 2; i <= 6; i++) {
-                    stepInfo.textContent = `df[${i}] = dp[${i - 1}] + dp[${i - 2}] = ${tab[i - 1]} + ${tab[i - 2]}`;
-                    tab[i] = tab[i - 1] + tab[i - 2];
-                    clearCanvas();
-                    drawArray(tab, 100, 200, "DP Table (Bottom-Up)", i);
-                    await sleep(1000);
-                }
-
-                stepInfo.textContent = "Tabulation Complete.";
-                isRunning = false;
-            }
-
-            // --- KNAPSACK ---
-            function initKnapsack() {
-                // W=7, items=4
-                // Reset DP table (n+1 x W+1)
-                dpTable = Array.from({ length: 5 }, () => Array(8).fill(0));
-            }
-
-            function drawKnapsack(currI = -1, currW = -1) {
-                clearCanvas();
-                const startX = 50;
-                const startY = 80;
-                const cellW = 40;
-                const cellH = 30;
-
-                // Draw Headers
-                ctx.font = '14px Segoe UI';
+                ctx.fillStyle = '#111';
                 ctx.textAlign = 'center';
+                ctx.fillText(val === -1 || val === undefined ? '?' : val, bx + 25, y + 30);
+
+                ctx.font = '12px Segoe UI';
+                ctx.fillText(i, bx + 25, y + 65);
+                ctx.font = '16px Segoe UI';
+            });
+        }
+
+        // --- FIBONACCI ---
+        async function runFibMemo() {
+            if (isRunning) return;
+            isRunning = true;
+            memo = Array(7).fill(-1);
+            await fibMemo(6);
+            stepInfo.textContent = "Memoization Complete.";
+            isRunning = false;
+        }
+
+        async function fibMemo(n, depth = 0) {
+            if (!isRunning) return 0;
+            clearCanvas();
+            drawArray(memo, 100, 200, "Memo Array (Top-Down)");
+            ctx.fillStyle = '#333'; ctx.textAlign = 'left';
+            ctx.fillText(`Calculating fib(${n})...`, 100, 100);
+
+            if (n <= 1) return n;
+            if (memo[n] !== -1) {
+                stepInfo.textContent = `fib(${n}) found in memo.`;
+                ctx.fillStyle = '#e11d48';
+                ctx.fillText(`Hit memo[${n}]!`, 300, 100);
+                await sleep(800);
+                return memo[n];
+            }
+
+            stepInfo.textContent = `fib(${n}) not known. Recursing...`;
+            await sleep(400);
+            let res = await fibMemo(n - 1, depth + 1) + await fibMemo(n - 2, depth + 1);
+            memo[n] = res;
+            stepInfo.textContent = `Stored fib(${n}) = ${res}.`;
+            clearCanvas();
+            drawArray(memo, 100, 200, "Memo Array", n);
+            await sleep(600);
+            return res;
+        }
+
+        async function runFibTab() {
+            if (isRunning) return;
+            isRunning = true;
+            let tab = Array(7).fill(0);
+            stepInfo.textContent = "Base cases: dp[0]=0, dp[1]=1";
+            tab[0] = 0; tab[1] = 1;
+
+            clearCanvas();
+            drawArray(tab, 100, 200, "DP Table (Bottom-Up)");
+            await sleep(1000);
+
+            for (let i = 2; i <= 6; i++) {
+                stepInfo.textContent = `dp[${i}] = dp[${i - 1}] + dp[${i - 2}]`;
+                tab[i] = tab[i - 1] + tab[i - 2];
+                clearCanvas();
+                drawArray(tab, 100, 200, "DP Table (Bottom-Up)", i);
+                await sleep(800);
+            }
+            stepInfo.textContent = "Tabulation Complete.";
+            isRunning = false;
+        }
+
+        // --- KNAPSACK ---
+        function initKnapsack() { dpTable = Array.from({ length: 5 }, () => Array(8).fill(0)); }
+
+        function drawKnapsack(currI = -1, currW = -1) {
+            clearCanvas();
+            const startX = 50, startY = 80, cellW = 40, cellH = 30;
+            ctx.font = '14px Segoe UI'; ctx.textAlign = 'center';
+
+            for (let w = 0; w <= 7; w++) ctx.fillText(w, startX + 100 + w * cellW + cellW / 2, startY - 10);
+
+            for (let i = 0; i <= 4; i++) {
+                const label = i === 0 ? '0' : `Item ${i} (${weights[i - 1]}kg, $${values[i - 1]})`;
+                ctx.textAlign = 'right';
+                ctx.fillText(label, startX + 90, startY + i * cellH + cellH / 2 + 5);
+
                 for (let w = 0; w <= 7; w++) {
-                    ctx.fillText(w, startX + 100 + w * cellW + cellW / 2, startY - 10);
-                }
-
-                for (let i = 0; i <= 4; i++) {
-                    const label = i === 0 ? '0' : `Item ${i} (${weights[i - 1]}kg, $${values[i - 1]})`;
-                    ctx.textAlign = 'right';
-                    ctx.fillText(label, startX + 90, startY + i * cellH + cellH / 2 + 5);
-
-                    for (let w = 0; w <= 7; w++) {
-                        const bx = startX + 100 + w * cellW;
-                        const by = startY + i * cellH;
-
-                        ctx.fillStyle = (i === currI && w === currW) ? '#fcd34d' : '#fff';
-                        ctx.fillRect(bx, by, cellW, cellH);
-                        ctx.strokeStyle = '#ccc';
-                        ctx.strokeRect(bx, by, cellW, cellH);
-
-                        ctx.fillStyle = '#333';
-                        ctx.textAlign = 'center';
-                        ctx.fillText(dpTable[i][w], bx + cellW / 2, by + cellH / 2 + 5);
-                    }
+                    const bx = startX + 100 + w * cellW;
+                    const by = startY + i * cellH;
+                    ctx.fillStyle = (i === currI && w === currW) ? '#fcd34d' : '#fff';
+                    ctx.fillRect(bx, by, cellW, cellH);
+                    ctx.strokeStyle = '#ccc'; ctx.strokeRect(bx, by, cellW, cellH);
+                    ctx.fillStyle = '#333'; ctx.textAlign = 'center';
+                    ctx.fillText(dpTable[i][w], bx + cellW / 2, by + cellH / 2 + 5);
                 }
             }
+        }
 
-            async function runKnapsack() {
-                if (isRunning) return;
-                isRunning = true;
-                initKnapsack();
-
-                for (let i = 1; i <= 4; i++) {
-                    let wt = weights[i - 1];
-                    let val = values[i - 1];
-
-                    for (let w = 0; w <= 7; w++) {
-                        stepInfo.textContent = `Checking Item ${i} (wt:${wt}) for capacity ${w}...`;
-                        drawKnapsack(i, w);
-                        await sleep(300);
-
-                        if (wt <= w) {
-                            let include = val + dpTable[i - 1][w - wt];
-                            let exclude = dpTable[i - 1][w];
-                            dpTable[i][w] = Math.max(include, exclude);
-                            if (include > exclude) {
-                                stepInfo.textContent = `Take item: ${val} + dp[${i - 1}][${w - wt}] = ${include}`;
-                            } else {
-                                stepInfo.textContent = `Skip item: dp[${i - 1}][${w}] = ${exclude}`;
-                            }
-                        } else {
-                            dpTable[i][w] = dpTable[i - 1][w];
-                            stepInfo.textContent = `Too heavy. Skip.`;
-                        }
-                        drawKnapsack(i, w); // show update
-                        await sleep(400);
+        async function runKnapsack() {
+            if (isRunning) return;
+            isRunning = true;
+            initKnapsack();
+            for (let i = 1; i <= 4; i++) {
+                let wt = weights[i - 1], val = values[i - 1];
+                for (let w = 0; w <= 7; w++) {
+                    stepInfo.textContent = `Item ${i} (wt:${wt}) for cap ${w}...`;
+                    drawKnapsack(i, w);
+                    await sleep(200);
+                    if (wt <= w) {
+                        let include = val + dpTable[i - 1][w - wt];
+                        let exclude = dpTable[i - 1][w];
+                        dpTable[i][w] = Math.max(include, exclude);
+                    } else {
+                        dpTable[i][w] = dpTable[i - 1][w];
                     }
+                    drawKnapsack(i, w);
+                    await sleep(200);
                 }
-
-                stepInfo.textContent = "Finished! Max Value: " + dpTable[4][7];
-                isRunning = false;
             }
+            stepInfo.textContent = "Finished! Max Value: " + dpTable[4][7];
+            isRunning = false;
+        }
 
-            function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
-
-            // Initial
-            runFibMemo();
-        </script>
+        function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+        runFibMemo();
+    </script>
 </body>
 
 </html>

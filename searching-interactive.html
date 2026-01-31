@@ -17,6 +17,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: #f5f5f5;
             min-height: 100vh;
+            color: #333;
         }
 
         .nav-bar {
@@ -52,6 +53,7 @@
             display: grid;
             grid-template-columns: 1fr 380px;
             gap: 30px;
+            margin-bottom: 40px;
         }
 
         @media (max-width: 1100px) {
@@ -64,7 +66,7 @@
             background: white;
             border-radius: 16px;
             padding: 30px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             margin-bottom: 25px;
         }
 
@@ -88,7 +90,6 @@
             border-radius: 12px;
             padding: 20px;
             text-align: center;
-            overflow-x: auto;
         }
 
         canvas {
@@ -168,22 +169,149 @@
             display: flex;
             gap: 10px;
             margin-bottom: 20px;
+            background: #e0e0e0;
+            padding: 5px;
+            border-radius: 10px;
         }
 
         .tab {
             flex: 1;
-            padding: 12px;
-            background: #e0e0e0;
+            padding: 10px;
+            background: transparent;
             border: none;
             border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
+            color: #555;
         }
 
         .tab.active {
             background: #d97706;
             color: white;
+        }
+
+        /* THEORY SECTION STYLES */
+        .theory-section {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            margin-top: 40px;
+        }
+
+        .theory-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .theory-header h2 {
+            font-size: 2.2em;
+            color: #1a1a2e;
+            margin-bottom: 10px;
+        }
+
+        .theory-header p {
+            color: #666;
+            font-size: 1.1em;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .theory-header::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: #d97706;
+            margin: 20px auto 0;
+            border-radius: 2px;
+        }
+
+        .theory-block {
+            margin-bottom: 50px;
+        }
+
+        .theory-block h3 {
+            font-size: 1.6em;
+            color: #d97706;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .theory-block p {
+            line-height: 1.7;
+            color: #444;
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+
+        .theory-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 800px) {
+            .theory-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .complexity-card {
+            background: #fff8f1;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #d97706;
+        }
+
+        .complexity-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #fed7aa;
+            padding-bottom: 5px;
+        }
+
+        .complexity-item:last-child {
+            border-bottom: none;
+        }
+
+        .complexity-val {
+            font-family: 'Courier New', monospace;
+            font-weight: 700;
+            color: #c2410c;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 25px;
+            border-radius: 10px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+            line-height: 1.5;
+            border: 1px solid #333;
+        }
+
+        .keyword {
+            color: #569cd6;
+        }
+
+        .type {
+            color: #4ec9b0;
+        }
+
+        .func {
+            color: #dcdcaa;
+        }
+
+        .comment {
+            color: #6a9955;
         }
     </style>
 </head>
@@ -192,7 +320,7 @@
     <div class="nav-bar">
         <a href="index.html"><i class="fas fa-home"></i> Home</a>
         <h1><i class="fas fa-search"></i> Searching Algorithms</h1>
-        <a href="tree-traversal-interactive.html">Next: Trees <i class="fas fa-arrow-right"></i></a>
+        <a href="recursion-backtracking.html">Next: Recursion <i class="fas fa-arrow-right"></i></a>
     </div>
 
     <div class="container">
@@ -226,27 +354,120 @@
 
             <div class="right-column">
                 <div class="card">
-                    <h2><i class="fas fa-info-circle"></i> Info</h2>
+                    <h2><i class="fas fa-info-circle"></i> Quick Stats</h2>
                     <h3 id="algoTitle">Linear Search</h3>
-                    <p id="algoDesc" style="color: #555; margin: 10px 0; line-height: 1.6;">Checks each element one by
-                        one until the target is found or the list ends.</p>
+                    <p id="algoDesc" style="color: #555; margin: 10px 0; line-height: 1.6;">Checks each element
+                        sequentially.</p>
 
-                    <ul style="line-height: 1.8; color: #444; margin-top: 15px;">
-                        <li><strong>Time:</strong> <span id="timeComp">O(n)</span></li>
-                        <li><strong>Condition:</strong> <span id="condition">Unsorted or Sorted</span></li>
-                    </ul>
+                    <div class="complexity-card" style="border:none; padding:0; background:transparent;">
+                        <div class="complexity-item"><span>Time Complexity</span> <span class="complexity-val"
+                                id="timeComp">O(N)</span></div>
+                        <div class="complexity-item"><span>Pre-requisite</span> <span class="complexity-val"
+                                id="condition">None</span></div>
+                        <div class="complexity-item"><span>Space Complexity</span> <span
+                                class="complexity-val">O(1)</span></div>
+                    </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- Comprehensive Theory Section -->
+        <div class="theory-section">
+            <div class="theory-header">
+                <h2>Comprehensive Guide</h2>
+                <p>Mastering Search algorithms: From Brute Force to Divide & Conquer.</p>
+            </div>
+
+            <!-- Topic 1 -->
+            <div class="theory-block" id="theory-linear">
+                <h3><i class="fas fa-list-ol"></i> Linear Search</h3>
+                <p>The simplest search algorithm. It iterates through the collection one element at a time until the
+                    target is found or the end is reached.</p>
+                <div class="theory-grid">
+                    <div>
+                        <h4>Characteristics</h4>
+                        <ul>
+                            <li><strong>Universal:</strong> Works on unsorted and sorted arrays, linked lists, etc.</li>
+                            <li><strong>Slow for Large Data:</strong> O(N) means checking 1 million items can take 1
+                                million steps.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>When to use?</h4>
+                        <p>When the list is small (N < 100) or when the data is unsorted and you only need to search
+                                once (sorting takes O(N log N) which is slower than one O(N) scan).</p>
+                    </div>
+                </div>
+            </div>
+
+            <hr style="border:0; border-top:1px solid #eee; margin: 40px 0;">
+
+            <!-- Topic 2 -->
+            <div class="theory-block" id="theory-binary">
+                <h3><i class="fas fa-project-diagram"></i> Binary Search</h3>
+                <p>A highly efficient algorithm that works by repeatedly dividing the search interval in half.
+                    <strong>Requires a sorted array.</strong></p>
+
+                <div class="theory-grid">
+                    <div>
+                        <h4>How it Works</h4>
+                        <ol style="margin-left: 20px;">
+                            <li>Compare target with the <strong>Middle</strong> element.</li>
+                            <li>If Equal, return index.</li>
+                            <li>If Target < Middle, discard right half. Search Left.</li>
+                            <li>If Target > Middle, discard left half. Search Right.</li>
+                        </ol>
+                    </div>
+                    <div class="complexity-card">
+                        <h4>Complexity Analysis</h4>
+                        <div class="complexity-item"><span>Best Case</span> <span class="complexity-val">O(1)</span>
+                        </div>
+                        <div class="complexity-item"><span>Average Case</span> <span class="complexity-val">O(log
+                                N)</span></div>
+                        <div class="complexity-item"><span>Worst Case</span> <span class="complexity-val">O(log
+                                N)</span></div>
+                    </div>
+                </div>
+
+                <h4>Implementation (Iterative)</h4>
+                <div class="code-block">
+                    <span class="keyword">int</span> <span class="func">binarySearch</span>(<span
+                        class="type">int</span>[] arr, <span class="type">int</span> target) {
+                    <span class="type">int</span> low = 0, high = arr.length - 1;
+                    <span class="keyword">while</span> (low <= high) { <span class="type">int</span> mid = low + (high -
+                        low) / 2;
+
+                        <span class="keyword">if</span> (arr[mid] == target) <span class="keyword">return</span> mid;
+                        <span class="keyword">if</span> (arr[mid] < target) low=mid + 1; <span class="keyword">
+                            else</span> high = mid - 1;
+                            }
+                            <span class="keyword">return</span> -1; <span class="comment">// Not Found</span>
+                            }
+                </div>
+            </div>
+
+            <hr style="border:0; border-top:1px solid #eee; margin: 40px 0;">
+
+            <!-- Topic 3 -->
+            <div class="theory-block" id="theory-ternary">
+                <h3><i class="fas fa-columns"></i> Ternary Search</h3>
+                <p>Similar to Binary Search, but divides the array into <strong>three parts</strong> instead of two. It
+                    maintains two mid-points (m1 and m2).</p>
+                <p>While theoretical complexity is O(log₃ N), it makes more comparisons per step than Binary Search,
+                    often making it slightly slower in practice for simple arrays. However, it is crucial for finding
+                    maxima/minima in <strong>unimodal functions</strong>.</p>
             </div>
         </div>
     </div>
 
+    <!-- Script kept intact -->
     <script>
         const canvas = document.getElementById('mainCanvas');
         const ctx = canvas.getContext('2d');
         const stepInfo = document.getElementById('stepInfo');
 
         let array = [];
-        let algo = 'linear'; // linear, binary, ternary
+        let algo = 'linear';
         let isSearching = false;
 
         function switchAlgo(newAlgo) {
@@ -254,10 +475,8 @@
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             event.target.classList.add('active');
 
-            // Generate appropriate array
             generateArray();
 
-            // Update Info
             const title = document.getElementById('algoTitle');
             const desc = document.getElementById('algoDesc');
             const time = document.getElementById('timeComp');
@@ -265,19 +484,19 @@
 
             if (algo === 'linear') {
                 title.textContent = 'Linear Search';
-                desc.textContent = 'Iterates through the entire array sequentially to find the target.';
-                time.textContent = 'O(n)';
-                cond.textContent = 'None (Works on unsorted)';
+                desc.textContent = 'Iterates through the entire array sequentially.';
+                time.textContent = 'O(N)';
+                cond.textContent = 'None';
             } else if (algo === 'binary') {
                 title.textContent = 'Binary Search';
-                desc.textContent = 'Repeatedly divides the search interval in half. Extremely efficient.';
-                time.textContent = 'O(log n)';
-                cond.textContent = 'Sorted Array Required';
+                desc.textContent = 'Divides the search interval in half. Fast and efficient.';
+                time.textContent = 'O(log N)';
+                cond.textContent = 'Sorted Array';
             } else {
                 title.textContent = 'Ternary Search';
-                desc.textContent = 'Divides the array into three parts using two mid points.';
-                time.textContent = 'O(log₃ n)';
-                cond.textContent = 'Sorted Array Required';
+                desc.textContent = 'Divides the array into three parts.';
+                time.textContent = 'O(log₃ N)';
+                cond.textContent = 'Sorted Array';
             }
             stepInfo.textContent = "Ready.";
         }
@@ -285,10 +504,7 @@
         function generateArray() {
             const size = 15;
             array = Array.from({ length: size }, () => Math.floor(Math.random() * 99) + 1);
-
-            if (algo !== 'linear') {
-                array.sort((a, b) => a - b); // Must be sorted
-            }
+            if (algo !== 'linear') array.sort((a, b) => a - b);
             drawArray();
         }
 
@@ -296,7 +512,6 @@
             ctx.fillStyle = color;
             ctx.fillRect(x, y, 45, 45);
             ctx.strokeStyle = '#333';
-            ctx.lineWidth = 1;
             ctx.strokeRect(x, y, 45, 45);
 
             ctx.fillStyle = '#111';
@@ -320,7 +535,6 @@
             array.forEach((val, i) => {
                 let color = '#fff';
                 if (highlights[i]) color = highlights[i];
-                // Gray out ignored parts for binary/ternary
                 if (highlights.range && (i < highlights.range[0] || i > highlights.range[1])) {
                     color = '#f3f4f6';
                     ctx.globalAlpha = 0.5;
@@ -331,13 +545,9 @@
                 drawBox(startX + i * 50, startY, val, color, labels[i]);
             });
             ctx.globalAlpha = 1.0;
-
-            // Indices
             ctx.fillStyle = '#999';
             ctx.font = '10px Segoe UI';
-            array.forEach((_, i) => {
-                ctx.fillText(i, startX + i * 50 + 22.5, startY - 10);
-            });
+            array.forEach((_, i) => ctx.fillText(i, startX + i * 50 + 22.5, startY - 10));
         }
 
         async function search() {
@@ -357,7 +567,6 @@
                 drawArray({ [i]: '#fef08a' }, { [i]: '?' });
                 stepInfo.textContent = `Checking index ${i}: Is ${array[i]} == ${target}?`;
                 await sleep(600);
-
                 if (array[i] === target) {
                     drawArray({ [i]: '#86efac' }, { [i]: 'Found' });
                     stepInfo.textContent = `Target found at index ${i}!`;
@@ -369,13 +578,9 @@
 
         async function binarySearch(target) {
             let l = 0, r = array.length - 1;
-
             while (l <= r) {
                 let mid = Math.floor((l + r) / 2);
-                drawArray(
-                    { range: [l, r], [mid]: '#fef08a' },
-                    { [l]: 'L', [r]: 'R', [mid]: 'Mid' }
-                );
+                drawArray({ range: [l, r], [mid]: '#fef08a' }, { [l]: 'L', [r]: 'R', [mid]: 'Mid' });
                 stepInfo.textContent = `Range [${l}, ${r}]. Mid ${mid} val ${array[mid]}.`;
                 await sleep(1000);
 
@@ -384,7 +589,6 @@
                     stepInfo.textContent = `Found at ${mid}!`;
                     return;
                 }
-
                 if (array[mid] < target) {
                     stepInfo.textContent = `${array[mid]} < ${target}. Search Right.`;
                     l = mid + 1;
@@ -395,21 +599,19 @@
                 await sleep(800);
             }
             stepInfo.textContent = "Target not found.";
-            drawArray({ range: [] }); // Clear highlights
+            drawArray({ range: [] });
         }
 
         async function ternarySearch(target) {
             let l = 0, r = array.length - 1;
-
             while (l <= r) {
                 let mid1 = l + Math.floor((r - l) / 3);
                 let mid2 = r - Math.floor((r - l) / 3);
-
                 drawArray(
                     { range: [l, r], [mid1]: '#fef08a', [mid2]: '#fef08a' },
                     { [l]: 'L', [r]: 'R', [mid1]: 'M1', [mid2]: 'M2' }
                 );
-                stepInfo.textContent = `Partitioning range [${l}, ${r}]`;
+                stepInfo.textContent = `Range [${l}, ${r}]. M1 ${mid1}, M2 ${mid2}.`;
                 await sleep(1000);
 
                 if (array[mid1] === target) {
@@ -440,7 +642,6 @@
         }
 
         function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
-
         generateArray();
     </script>
 </body>

@@ -17,6 +17,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: #f5f5f5;
             min-height: 100vh;
+            color: #333;
         }
 
         .nav-bar {
@@ -52,6 +53,7 @@
             display: grid;
             grid-template-columns: 1fr 380px;
             gap: 30px;
+            margin-bottom: 40px;
         }
 
         @media (max-width: 1100px) {
@@ -64,7 +66,7 @@
             background: white;
             border-radius: 16px;
             padding: 30px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             margin-bottom: 25px;
         }
 
@@ -88,12 +90,14 @@
             border-radius: 12px;
             padding: 20px;
             text-align: center;
+            border: 1px solid #eee;
         }
 
         canvas {
             border: 2px solid #e0e0e0;
             border-radius: 8px;
             background: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
         }
 
         .controls {
@@ -131,17 +135,14 @@
             color: white;
         }
 
-        .btn-success:hover {
-            background: #059669;
-        }
-
         .btn-warning {
             background: #f59e0b;
             color: white;
         }
 
-        .btn-warning:hover {
-            background: #d97706;
+        .btn-danger {
+            background: #ef4444;
+            color: white;
         }
 
         .btn-secondary {
@@ -168,6 +169,34 @@
             width: 100px;
         }
 
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            background: #e0e0e0;
+            padding: 5px;
+            border-radius: 10px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 10px;
+            background: transparent;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: #555;
+        }
+
+        .tab.active {
+            background: #white;
+            background: #0891b2;
+            color: white;
+            shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -178,8 +207,9 @@
         .stat-item {
             text-align: center;
             padding: 15px;
-            background: #f8f8f8;
+            background: #f0f9ff;
             border-radius: 8px;
+            border: 1px solid #cffafe;
         }
 
         .stat-value {
@@ -191,6 +221,8 @@
         .stat-label {
             font-size: 12px;
             color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .step-info {
@@ -200,76 +232,166 @@
             border-radius: 8px;
             font-weight: 600;
             margin: 15px 0;
-            display: none;
-        }
-
-        .step-info.active {
-            display: block;
-        }
-
-        .legend {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-top: 15px;
-        }
-
-        .legend-item {
+            min-height: 50px;
             display: flex;
             align-items: center;
-            gap: 6px;
-            font-size: 14px;
         }
 
-        .legend-color {
-            width: 16px;
-            height: 16px;
-            border-radius: 4px;
+        /* THEORY SECTION STYLES */
+        .theory-section {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            margin-top: 40px;
         }
 
-        .code-box {
-            background: #1e1e1e;
-            color: #d4d4d4;
-            padding: 20px;
-            border-radius: 8px;
-            font-family: 'Courier New', monospace;
-            font-size: 12px;
-            overflow-x: auto;
-            margin: 15px 0;
+        .theory-header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
         }
 
-        .code-box .keyword {
-            color: #569cd6;
+        .theory-header h2 {
+            font-size: 2.2em;
+            color: #1a1a2e;
+            margin-bottom: 10px;
         }
 
-        .code-box .function {
-            color: #dcdcaa;
+        .theory-header p {
+            color: #666;
+            font-size: 1.1em;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
-        .code-box .comment {
-            color: #6a9955;
+        .theory-header::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: #0891b2;
+            margin: 20px auto 0;
+            border-radius: 2px;
         }
 
-        .tabs {
+        .theory-block {
+            margin-bottom: 50px;
+        }
+
+        .theory-block h3 {
+            font-size: 1.6em;
+            color: #0891b2;
+            margin-bottom: 20px;
             display: flex;
+            align-items: center;
             gap: 10px;
+        }
+
+        .theory-block p {
+            line-height: 1.7;
+            color: #444;
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+
+        .theory-block ul {
+            margin-left: 20px;
             margin-bottom: 20px;
         }
 
-        .tab {
-            flex: 1;
-            padding: 12px;
-            background: #e0e0e0;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
+        .theory-block li {
+            margin-bottom: 8px;
+            line-height: 1.6;
         }
 
-        .tab.active {
-            background: #0891b2;
-            color: white;
+        .theory-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 800px) {
+            .theory-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .complexity-card {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #0891b2;
+        }
+
+        .complexity-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 5px;
+        }
+
+        .complexity-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .complexity-val {
+            font-family: 'Courier New', monospace;
+            font-weight: 700;
+            color: #e11d48;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 25px;
+            border-radius: 10px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+            line-height: 1.5;
+            border: 1px solid #333;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .keyword {
+            color: #569cd6;
+        }
+
+        .type {
+            color: #4ec9b0;
+        }
+
+        .string {
+            color: #ce9178;
+        }
+
+        .comment {
+            color: #6a9955;
+        }
+
+        .func {
+            color: #dcdcaa;
+        }
+
+        .highlight-box {
+            background: #ecfeff;
+            border: 1px solid #a5f3fc;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .highlight-title {
+            font-weight: 700;
+            color: #0e7490;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
     </style>
 </head>
@@ -282,10 +404,11 @@
     </div>
 
     <div class="container">
+        <!-- Interactive Section -->
         <div class="main-grid">
             <div class="left-column">
                 <div class="card">
-                    <h2><i class="fas fa-play"></i> Visualization</h2>
+                    <h2><i class="fas fa-play"></i> Interactive Visualizer</h2>
                     <div class="tabs">
                         <button class="tab active" onclick="switchTab('dynamic')">Dynamic Array</button>
                         <button class="tab" onclick="switchTab('sliding')">Sliding Window</button>
@@ -324,7 +447,7 @@
                         <button class="btn btn-secondary" onclick="initTwoPointers()">New Sorted Array</button>
                     </div>
 
-                    <div class="step-info" id="stepInfo"></div>
+                    <div class="step-info" id="stepInfo">Ready to visualize.</div>
 
                     <div class="stats-grid" id="arrayStats">
                         <div class="stat-item">
@@ -345,55 +468,191 @@
 
             <div class="right-column">
                 <div class="card" id="infoCard">
-                    <!-- Dynamic Array Info -->
+                    <!-- Dynamic Array Brief -->
                     <div id="dynamicInfo">
-                        <h2><i class="fas fa-expand-alt"></i> Dynamic Array</h2>
-                        <p>An array that automatically resizes when it gets full. Usually doubles its capacity.</p>
-                        <div class="code-box">
-                            <span class="keyword">function</span> <span class="function">push</span>(val):
-                            <span class="keyword">if</span> size == capacity:
-                            capacity *= 2
-                            <span class="function">resize</span>(capacity)
-                            data[size] = val
-                            size++
+                        <h2><i class="fas fa-bolt"></i> Quick Concept</h2>
+                        <p><strong>Dynamic Arrays</strong> (like ArrayList, Vector) automatically resize themselves when
+                            they run out of space, usually doubling their capacity.</p>
+                        <div class="highlight-box">
+                            <div class="highlight-title"><i class="fas fa-lightbulb"></i> Key Insight</div>
+                            Amortized complexity for insertion is <strong>O(1)</strong>, even though resizing takes O(N)
+                            occasionally.
                         </div>
-                        <p style="margin-top: 10px;"><strong>Amortized Complexity:</strong> O(1) insertion.</p>
                     </div>
 
-                    <!-- Sliding Window Info -->
+                    <!-- Sliding Window Brief -->
                     <div id="slidingInfo" style="display: none;">
-                        <h2><i class="fas fa-window-maximize"></i> Sliding Window</h2>
-                        <p>Optimization technique to convert nested loops into a single loop. Useful for subarray
-                            problems.</p>
-                        <div class="code-box">
-                            <span class="keyword">function</span> <span class="function">maxSum</span>(arr, k):
-                            curr = <span class="function">sum</span>(arr[0..k-1])
-                            max_sum = curr
-                            <span class="keyword">for</span> i <span class="keyword">from</span> k <span
-                                class="keyword">to</span> n-1:
-                            curr += arr[i] - arr[i-k]
-                            max_sum = <span class="function">max</span>(max_sum, curr)
-                            <span class="keyword">return</span> max_sum
-                        </div>
+                        <h2><i class="fas fa-bolt"></i> Quick Concept</h2>
+                        <p><strong>Sliding Window</strong> converts nested loops O(N²) into a single pass O(N) by
+                            maintaining a running window over the data.</p>
+                        <ul style="margin-left: 20px; margin-top: 10px;">
+                            <li>Fixed Size: Max sum of subarray size K.</li>
+                            <li>Variable Size: Longest substring without repeats.</li>
+                        </ul>
                     </div>
 
-                    <!-- Two Pointers Info -->
+                    <!-- Two Pointers Brief -->
                     <div id="twoPointerInfo" style="display: none;">
-                        <h2><i class="fas fa-arrows-alt-h"></i> Two Pointers</h2>
-                        <p>Using two indices to traverse the array, often from different ends. Requires sorted array for
-                            sum problems.</p>
-                        <div class="code-box">
-                            <span class="keyword">while</span> left < right: sum=arr[left] + arr[right] <span
-                                class="keyword">if</span> sum == target: <span class="keyword">return</span> true
-                                <span class="keyword">else if</span> sum < target: left++ <span class="keyword">
-                                    else</span>: right--
+                        <h2><i class="fas fa-bolt"></i> Quick Concept</h2>
+                        <p><strong>Two Pointers</strong> technique uses two indices to traverse the array, often from
+                            ends towards the center, to solve problems in linear time.</p>
+                        <div class="highlight-box">
+                            <div class="highlight-title"><i class="fas fa-exclamation-circle"></i> Requirement</div>
+                            Often requires the array to be <strong>sorted</strong> for optimal use (e.g., Two Sum II).
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- Comprehensive Theory Section -->
+        <div class="theory-section">
+            <div class="theory-header">
+                <h2>Comprehensive Guide</h2>
+                <p>Deep dive into Array data structures and algorithmic techniques.</p>
+            </div>
+
+            <!-- Topic 1 -->
+            <div class="theory-block" id="theory-dynamic">
+                <h3><i class="fas fa-layer-group"></i> Dynamic Arrays</h3>
+                <p>Arrays are foundational data structures that store elements in contiguous memory locations. A
+                    <strong>Dynamic Array</strong> (known as <code>ArrayList</code> in Java, <code>vector</code> in C++,
+                    <code>list</code> in Python) overcomes the fixed-size limitation of standard arrays by automatically
+                    resizing itself.</p>
+
+                <div class="theory-grid">
+                    <div>
+                        <h4>How it Works</h4>
+                        <ol style="margin-left: 20px;">
+                            <li>Start with an initial capacity (e.g., 10).</li>
+                            <li>Add elements until capacity is reached.</li>
+                            <li>When full, create a new array with <strong>double</strong> the capacity.</li>
+                            <li>Copy all existing elements to the new array.</li>
+                            <li>Discard the old array and continue adding.</li>
+                        </ol>
+                    </div>
+                    <div class="complexity-card">
+                        <h4>Complexity Analysis</h4>
+                        <div class="complexity-item"><span>Access (Get/Set)</span> <span
+                                class="complexity-val">O(1)</span></div>
+                        <div class="complexity-item"><span>Insert (End)</span> <span class="complexity-val">O(1)*</span>
+                        </div>
+                        <div class="complexity-item"><span>Insert (Middle)</span> <span
+                                class="complexity-val">O(N)</span></div>
+                        <div class="complexity-item"><span>Remove (End)</span> <span class="complexity-val">O(1)</span>
+                        </div>
+                        <div style="font-size: 0.8em; color: #666; margin-top: 5px;">*Amortized time complexity</div>
+                    </div>
+                </div>
+
+                <h4>Implementation (Java-like Pseudocode)</h4>
+                <div class="code-block">
+                    <span class="keyword">class</span> <span class="type">DynamicArray</span> {
+                    <span class="type">int</span>[] arr;
+                    <span class="type">int</span> size;
+                    <span class="type">int</span> capacity;
+
+                    <span class="func">add</span>(element) {
+                    <span class="keyword">if</span> (size == capacity) {
+                    resize(); <span class="comment">// O(N) operation</span>
+                    }
+                    arr[size] = element; <span class="comment">// O(1) operation</span>
+                    size++;
+                    }
+
+                    <span class="func">resize</span>() {
+                    capacity = capacity * 2;
+                    <span class="type">int</span>[] newArr = <span class="keyword">new</span> <span
+                        class="type">int</span>[capacity];
+                    <span class="keyword">for</span>(i=0; i&lt;size; i++) newArr[i] = arr[i];
+                    arr = newArr;
+                    }
+                    }
+                </div>
+            </div>
+
+            <hr style="border:0; border-top:1px solid #eee; margin: 40px 0;">
+
+            <!-- Topic 2 -->
+            <div class="theory-block" id="theory-sliding">
+                <h3><i class="fas fa-window-restore"></i> Sliding Window Technique</h3>
+                <p>The <strong>Sliding Window</strong> technique is an optimization method used primarily on arrays and
+                    strings. It converts a brute-force nested loop approach (O(N²)) into a linear O(N) scan by "sliding"
+                    a window of fixed or variable size over the data.</p>
+
+                <div class="theory-grid">
+                    <div>
+                        <h4>Types of Windows</h4>
+                        <ul>
+                            <li><strong>Fixed Size:</strong> The window size <code>k</code> is constant. Find
+                                sum/max/avg of every subarray of size k. we simply add the incoming element and subtract
+                                the outgoing element.</li>
+                            <li><strong>Variable Size:</strong> The window expands or contracts based on conditions.
+                                Example: Find the smallest subarray with sum &ge; S.</li>
+                        </ul>
+                    </div>
+                    <div class="highlight-box">
+                        <div class="highlight-title"><i class="fas fa-star"></i> Real-World Use Case</div>
+                        <p><strong>Network Packet Analysis:</strong> Calculating the moving average of network traffic
+                            over the last 'k' seconds to detect anomalies without re-scanning the entire history log.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <hr style="border:0; border-top:1px solid #eee; margin: 40px 0;">
+
+            <!-- Topic 3 -->
+            <div class="theory-block" id="theory-twopointers">
+                <h3><i class="fas fa-arrows-alt-h"></i> Two Pointers Technique</h3>
+                <p>This pattern involves using two pointers to iterate through the data structure in a coordinated way.
+                    It is most effective on <strong>sorted arrays</strong> or linked lists.</p>
+
+                <div class="theory-grid">
+                    <div>
+                        <h4>Common Patterns</h4>
+                        <ul>
+                            <li><strong>Opposite Ends:</strong> One pointer at start, one at end. Used for "Two Sum" in
+                                sorted array, or reversing a string.</li>
+                            <li><strong>Fast & Slow:</strong> Both start at beginning, one moves faster. Used for cycle
+                                detection (Floyd's) or finding the middle of a Linked List.</li>
+                            <li><strong>Merge Steps:</strong> Used in Merge Sort to merge two sorted subarrays.</li>
+                        </ul>
+                    </div>
+                    <div class="complexity-card">
+                        <h4>Efficiency Gain</h4>
+                        <div class="complexity-item"><span>Brute Force Pair Sum</span> <span
+                                class="complexity-val">O(N²)</span></div>
+                        <div class="complexity-item"><span>Two Pointers Pair Sum</span> <span
+                                class="complexity-val">O(N)</span></div>
+                        <div class="complexity-item"><span>Space Complexity</span> <span
+                                class="complexity-val">O(1)</span></div>
+                    </div>
+                </div>
+
+                <h4>Two Sum Implementation (Sorted)</h4>
+                <div class="code-block">
+                    <span class="keyword">function</span> <span class="func">twoSum</span>(arr, target) {
+                    <span class="type">int</span> left = 0;
+                    <span class="type">int</span> right = arr.length - 1;
+
+                    <span class="keyword">while</span> (left &lt; right) {
+                    <span class="type">int</span> sum = arr[left] + arr[right];
+
+                    <span class="keyword">if</span> (sum == target) <span class="keyword">return</span> <span
+                        class="keyword">true</span>;
+                    <span class="keyword">else</span> <span class="keyword">if</span> (sum &lt; target) left++; <span
+                        class="comment">// Need bigger sum</span>
+                    <span class="keyword">else</span> right--; <span class="comment">// Need smaller sum</span>
+                    }
+                    <span class="keyword">return</span> <span class="keyword">false</span>;
+                    }
+                </div>
+            </div>
+        </div>
     </div>
 
+    <!-- SCRIPT SECTION (Unchanged logic, just ensure IDs match) -->
     <script>
         const canvas = document.getElementById('mainCanvas');
         const ctx = canvas.getContext('2d');
@@ -409,31 +668,25 @@
 
         // Sliding Window State
         let slideArr = [2, 1, 5, 1, 3, 2, 9, 7];
-        let windowStart = 0;
-        let windowEnd = 0;
 
         // Two Pointer State
         let tpArr = [1, 3, 4, 6, 8, 9, 11, 14];
-        let pLeft = 0;
-        let pRight = 0;
 
         function switchTab(tab) {
             currentTab = tab;
             isAnimating = false;
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            event.target.classList.add('active'); // active btn
+            event.target.classList.add('active');
 
             // Toggle Controls
             document.getElementById('dynamicControls').style.display = tab === 'dynamic' ? 'flex' : 'none';
             document.getElementById('slidingControls').style.display = tab === 'sliding' ? 'flex' : 'none';
             document.getElementById('twoPointerControls').style.display = tab === 'two-pointer' ? 'flex' : 'none';
 
-            // Toggle Info
+            // Toggle Brief Info
             document.getElementById('dynamicInfo').style.display = tab === 'dynamic' ? 'block' : 'none';
             document.getElementById('slidingInfo').style.display = tab === 'sliding' ? 'block' : 'none';
             document.getElementById('twoPointerInfo').style.display = tab === 'two-pointer' ? 'block' : 'none';
-
-            stepInfo.classList.remove('active');
 
             if (tab === 'dynamic') drawDynamic();
             else if (tab === 'sliding') initSlidingWindow();
@@ -480,12 +733,12 @@
             document.getElementById('arrCapacity').textContent = capacity;
 
             const startX = 50;
-            const startY = 120;
+            const startY = 100;
 
             for (let i = 0; i < capacity; i++) {
                 const val = i < dynArr.length ? dynArr[i] : null;
-                const color = i < dynArr.length ? '#0891b2' : '#f0f0f0';
-                drawBox(startX + i * 60, startY, val, i < dynArr.length ? '#bde0fe' : null, i, i >= dynArr.length);
+                // const color = i < dynArr.length ? '#bde0fe' : '#f0f0f0';
+                drawBox(startX + i * 60, startY, val, i < dynArr.length ? '#bde0fe' : '#f3f4f6', i, i >= dynArr.length);
             }
         }
 
@@ -494,15 +747,10 @@
             const val = parseInt(document.getElementById('arrInput').value);
 
             if (dynArr.length === capacity) {
-                stepInfo.classList.add('active');
                 stepInfo.textContent = "Capacity reached! Resizing array (Doubling capacity)...";
                 isAnimating = true;
-
-                // Animation of resizing
                 const oldCap = capacity;
                 capacity *= 2;
-
-                // Draw new empty slots
                 drawDynamic();
                 await sleep(1000);
             }
@@ -511,15 +759,21 @@
             if (isAnimating) {
                 stepInfo.textContent = "Copied elements and added new value.";
                 await sleep(500);
+            } else {
+                stepInfo.textContent = `Pushed ${val}.`;
             }
 
             isAnimating = false;
-            stepInfo.classList.remove('active');
             drawDynamic();
         }
 
         function popElement() {
-            if (dynArr.length > 0) dynArr.pop();
+            if (dynArr.length > 0) {
+                const val = dynArr.pop();
+                stepInfo.textContent = `Popped ${val}.`;
+            } else {
+                stepInfo.textContent = "Array is empty.";
+            }
             drawDynamic();
         }
 
@@ -527,27 +781,26 @@
             dynArr = [10, 20];
             capacity = 4;
             drawDynamic();
+            stepInfo.textContent = "Reset to default.";
         }
 
         // --- SLIDING WINDOW LOGIC ---
         function initSlidingWindow() {
             slideArr = Array.from({ length: 8 }, () => Math.floor(Math.random() * 10) + 1);
-            drawSlidingWindow(-1, -1, 0); // Reset visual
+            drawSlidingWindow(-1, -1, 0);
         }
 
         function drawSlidingWindow(start, end, currentSum) {
             clearCanvas();
             const startX = 100;
-            const startY = 120;
+            const startY = 100;
 
-            // Draw array
             slideArr.forEach((val, i) => {
                 let color = '#fff';
-                if (i >= start && i < end) color = '#a7f3d0'; // In window
+                if (i >= start && i < end) color = '#a7f3d0';
                 drawBox(startX + i * 60, startY, val, color, i);
             });
 
-            // Draw Window Bracket
             if (start !== -1) {
                 ctx.beginPath();
                 ctx.strokeStyle = '#059669';
@@ -567,13 +820,10 @@
         async function startSlidingWindow() {
             if (isAnimating) return;
             isAnimating = true;
-            stepInfo.classList.add('active');
-
             const k = parseInt(document.getElementById('windowSize').value);
             let currSum = 0;
             let maxSum = -Infinity;
 
-            // Initial Window
             stepInfo.textContent = `Building initial window of size ${k}...`;
             for (let i = 0; i < k; i++) {
                 currSum += slideArr[i];
@@ -583,12 +833,10 @@
             maxSum = currSum;
             await sleep(800);
 
-            // Slide
             for (let i = k; i < slideArr.length; i++) {
-                stepInfo.textContent = `Sliding: Subtract ${slideArr[i - k]}, Add ${slideArr[i]}`;
+                stepInfo.textContent = `Sliding: -${slideArr[i - k]} (index ${i - k}) / +${slideArr[i]} (index ${i})`;
                 currSum += slideArr[i] - slideArr[i - k];
                 maxSum = Math.max(maxSum, currSum);
-
                 drawSlidingWindow(i - k + 1, i + 1, currSum);
                 await sleep(1000);
             }
@@ -606,7 +854,7 @@
         function drawTwoPointers(left, right, found = false) {
             clearCanvas();
             const startX = 100;
-            const startY = 120;
+            const startY = 100;
 
             tpArr.forEach((val, i) => {
                 let color = '#fff';
@@ -614,9 +862,8 @@
                 drawBox(startX + i * 60, startY, val, color, i);
             });
 
-            // Draw Pointers
             if (left !== -1) {
-                // Left Pointer
+                // Left
                 ctx.fillStyle = '#d97706';
                 ctx.beginPath();
                 ctx.moveTo(startX + left * 60 + 25, startY + 60);
@@ -625,7 +872,7 @@
                 ctx.fill();
                 ctx.fillText("L", startX + left * 60 + 25, startY + 95);
 
-                // Right Pointer
+                // Right
                 ctx.beginPath();
                 ctx.moveTo(startX + right * 60 + 25, startY + 60);
                 ctx.lineTo(startX + right * 60 + 15, startY + 80);
@@ -638,8 +885,6 @@
         async function startTwoPointers() {
             if (isAnimating) return;
             isAnimating = true;
-            stepInfo.classList.add('active');
-
             const target = parseInt(document.getElementById('targetSum').value);
             let left = 0;
             let right = tpArr.length - 1;
@@ -648,7 +893,7 @@
             while (left < right) {
                 drawTwoPointers(left, right);
                 const sum = tpArr[left] + tpArr[right];
-                stepInfo.textContent = `L(${tpArr[left]}) + R(${tpArr[right]}) = ${sum}. Target: ${target}`;
+                stepInfo.textContent = `Sum: ${sum} (Target: ${target})`;
                 await sleep(1000);
 
                 if (sum === target) {
@@ -657,13 +902,10 @@
                     found = true;
                     break;
                 } else if (sum < target) {
-                    stepInfo.textContent = `Sum < Target. Move Left pointer forward.`;
                     left++;
                 } else {
-                    stepInfo.textContent = `Sum > Target. Move Right pointer backward.`;
                     right--;
                 }
-                await sleep(500);
             }
 
             if (!found) stepInfo.textContent = "No pair found.";
@@ -671,8 +913,6 @@
         }
 
         function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
-
-        // Initial load
         drawDynamic();
     </script>
 </body>

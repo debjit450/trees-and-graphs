@@ -17,6 +17,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: #f5f5f5;
             min-height: 100vh;
+            color: #333;
         }
 
         .nav-bar {
@@ -52,6 +53,7 @@
             display: grid;
             grid-template-columns: 1fr 380px;
             gap: 30px;
+            margin-bottom: 40px;
         }
 
         @media (max-width: 1100px) {
@@ -64,7 +66,7 @@
             background: white;
             border-radius: 16px;
             padding: 30px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             margin-bottom: 25px;
         }
 
@@ -150,17 +152,21 @@
             display: flex;
             gap: 10px;
             margin-bottom: 20px;
+            background: #e0e0e0;
+            padding: 5px;
+            border-radius: 10px;
         }
 
         .tab {
             flex: 1;
-            padding: 12px;
-            background: #e0e0e0;
+            padding: 10px;
+            background: transparent;
             border: none;
             border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
+            color: #555;
         }
 
         .tab.active {
@@ -168,15 +174,137 @@
             color: white;
         }
 
-        .code-box {
+        /* THEORY SECTION STYLES */
+        .theory-section {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            margin-top: 40px;
+        }
+
+        .theory-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .theory-header h2 {
+            font-size: 2.2em;
+            color: #1a1a2e;
+            margin-bottom: 10px;
+        }
+
+        .theory-header p {
+            color: #666;
+            font-size: 1.1em;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .theory-header::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: #e11d48;
+            margin: 20px auto 0;
+            border-radius: 2px;
+        }
+
+        .theory-block {
+            margin-bottom: 50px;
+        }
+
+        .theory-block h3 {
+            font-size: 1.6em;
+            color: #e11d48;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .theory-block p {
+            line-height: 1.7;
+            color: #444;
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+
+        .theory-block ul {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        .theory-block li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        .theory-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 800px) {
+            .theory-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .code-block {
             background: #1e1e1e;
             color: #d4d4d4;
-            padding: 20px;
-            border-radius: 8px;
-            font-family: 'Courier New', monospace;
-            font-size: 12px;
+            padding: 25px;
+            border-radius: 10px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9em;
             overflow-x: auto;
-            margin: 15px 0;
+            line-height: 1.5;
+            border: 1px solid #333;
+        }
+
+        .keyword {
+            color: #569cd6;
+        }
+
+        .type {
+            color: #4ec9b0;
+        }
+
+        .func {
+            color: #dcdcaa;
+        }
+
+        .comment {
+            color: #6a9955;
+        }
+
+        .complexity-card {
+            background: #fff1f2;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #e11d48;
+        }
+
+        .complexity-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #fecdd3;
+            padding-bottom: 5px;
+        }
+
+        .complexity-item:last-child {
+            border-bottom: none;
+        }
+
+        .complexity-val {
+            font-family: 'Courier New', monospace;
+            font-weight: 700;
+            color: #9f1239;
         }
     </style>
 </head>
@@ -189,6 +317,7 @@
     </div>
 
     <div class="container">
+        <!-- Main Interactive -->
         <div class="main-grid">
             <div class="left-column">
                 <div class="card">
@@ -218,221 +347,272 @@
 
             <div class="right-column">
                 <div class="card">
-                    <h2><i class="fas fa-code-branch"></i> Logic</h2>
+                    <h2><i class="fas fa-code-branch"></i> Concepts</h2>
                     <div id="infoContent">
-                        <h4>N-Queens Backtracking</h4>
-                        <p style="font-size: 14px; margin-bottom: 10px; color: #555;">Place N queens on an NxN
-                            chessboard such that no two queens attack each other.</p>
-                    </div>
-
-                    <div class="code-box" id="codeDisplay">
-                        function solve(row) {
-                        if (row == N) return true;
-                        for (col = 0; col < N; col++) { if (isSafe(row, col)) { board[row][col]='Q' ; if (solve(row +
-                            1)) return true; board[row][col]='.' ; // Backtrack } } return false; } </div>
+                        <h4>Backtracking</h4>
+                        <p style="font-size: 14px; margin-bottom: 10px; color: #555;">An algorithmic technique that
+                            considers searching every possible combination in order to find a solution.</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <script>
-            const canvas = document.getElementById('mainCanvas');
-            const ctx = canvas.getContext('2d');
-            const stepInfo = document.getElementById('stepInfo');
+        <!-- Comprehensive Theory Section -->
+        <div class="theory-section">
+            <div class="theory-header">
+                <h2>Comprehensive Guide</h2>
+                <p>Understanding Recursion Stack and Backtracking Logic.</p>
+            </div>
 
-            // Mode
-            let mode = 'nqueens';
-            let isRunning = false;
+            <!-- Topic 1 -->
+            <div class="theory-block" id="theory-recursion">
+                <h3><i class="fas fa-project-diagram"></i> Recursion</h3>
+                <p>Recursion is a method where the solution to a problem depends on solutions to smaller instances of
+                    the same problem. A recursive function calls itself.</p>
 
-            // N-Queens State
-            let N = 4;
-            let board = []; // 2D array
+                <div class="theory-grid">
+                    <div>
+                        <h4>Key Components</h4>
+                        <ul>
+                            <li><strong>Base Case:</strong> The condition that stops the recursion (e.g.,
+                                <code>n == 0</code>).</li>
+                            <li><strong>Recursive Case:</strong> The part where the function calls itself with a
+                                modified argument.</li>
+                            <li><strong>Call Stack:</strong> The memory structure that stores active function calls.
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>Example: Factorial</h4>
+                        <p><code>fact(n) = n * fact(n-1)</code></p>
+                        <p>Calculates 5! by calling 4!, which calls 3!, etc., until 1! returns 1.</p>
+                    </div>
+                </div>
+            </div>
 
-            // Recursion Tree State
-            let treeNodes = [];
-            let edges = [];
+            <hr style="border:0; border-top:1px solid #eee; margin: 40px 0;">
 
-            function switchMode(newMode) {
-                mode = newMode;
-                isRunning = false;
-                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-                event.target.classList.add('active');
+            <!-- Topic 2 -->
+            <div class="theory-block" id="theory-backtracking">
+                <h3><i class="fas fa-undo-alt"></i> Backtracking</h3>
+                <p>Backtracking is a refined brute force approach. It builds candidates for a solution recursively and
+                    <strong>abandons</strong> a candidate ("backtracks") as soon as it determines that the candidate
+                    cannot lead to a valid solution.</p>
 
-                document.getElementById('nqueensControls').style.display = mode === 'nqueens' ? 'flex' : 'none';
-                document.getElementById('recursionControls').style.display = mode === 'recursion' ? 'flex' : 'none';
-                stepInfo.textContent = 'Ready';
+                <div class="theory-grid">
+                    <div>
+                        <h4>The 3 Keys</h4>
+                        <ul>
+                            <li><strong>Choice:</strong> What option do we take at this step? (e.g., Place Queen at Col
+                                C).</li>
+                            <li><strong>Constraint:</strong> Is this choice valid? (e.g., Is position safe?).</li>
+                            <li><strong>Goal:</strong> Have we reached the solution? (e.g., Are N queens placed?).</li>
+                        </ul>
+                    </div>
+                    <div class="complexity-card">
+                        <h4>N-Queens Complexity</h4>
+                        <div class="complexity-item"><span>Time Complexity</span> <span
+                                class="complexity-val">O(N!)</span></div>
+                        <div class="complexity-item"><span>Space Complexity</span> <span
+                                class="complexity-val">O(N)</span></div>
+                        <div style="font-size: 0.8em; color: #666; margin-top: 5px;">Exponential time makes it slow for
+                            N > 20.</div>
+                    </div>
+                </div>
 
-                if (mode === 'nqueens') {
-                    initBoard();
-                    document.getElementById('infoContent').innerHTML = `<h4>Backtracking</h4><p>Try placing a queen, if it leads to a solution, great. If not, undo (backtrack) and try next spot.</p>`;
-                    document.getElementById('codeDisplay').style.display = 'block';
-                } else {
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    document.getElementById('infoContent').innerHTML = `<h4>Recursion Tree</h4><p>Visualizing the call stack for Fibonacci(n). Notice the repeated work (overlapping subproblems).</p>`;
-                    document.getElementById('codeDisplay').style.display = 'none';
-                }
-            }
+                <h4>Pseudocode Template</h4>
+                <div class="code-block">
+                    <span class="func">solve</span>(state) {
+                    <span class="keyword">if</span> (isSolution(state)) <span class="keyword">return</span> <span
+                        class="keyword">true</span>;
 
-            // --- N-QUEENS ---
-            function updateN(val) {
-                N = parseInt(val);
-                document.getElementById('nVal').textContent = N;
+                    <span class="keyword">for</span> (choice : choices) {
+                    <span class="keyword">if</span> (isValid(choice)) {
+                    makeChoice(choice); <span class="comment">// Do</span>
+                    <span class="keyword">if</span> (solve(newState)) <span class="keyword">return</span> <span
+                        class="keyword">true</span>;
+                    undoChoice(choice); <span class="comment">// Undo (Backtrack)</span>
+                    }
+                    }
+                    <span class="keyword">return</span> <span class="keyword">false</span>;
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script reuse -->
+    <script>
+        const canvas = document.getElementById('mainCanvas');
+        const ctx = canvas.getContext('2d');
+        const stepInfo = document.getElementById('stepInfo');
+
+        // Mode
+        let mode = 'nqueens';
+        let isRunning = false;
+
+        // N-Queens State
+        let N = 4;
+        let board = [];
+
+        function switchMode(newMode) {
+            mode = newMode;
+            isRunning = false;
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+
+            document.getElementById('nqueensControls').style.display = mode === 'nqueens' ? 'flex' : 'none';
+            document.getElementById('recursionControls').style.display = mode === 'recursion' ? 'flex' : 'none';
+            stepInfo.textContent = 'Ready';
+
+            if (mode === 'nqueens') {
                 initBoard();
-            }
-
-            function initBoard() {
-                board = Array.from({ length: N }, () => Array(N).fill(0));
-                drawBoard();
-            }
-
-            function drawBoard(currentRow = -1, currentCol = -1) {
+                document.getElementById('infoContent').innerHTML = `<h4>N-Queens</h4><p>Place N queens so none attack each other. If a placement fails, backtrack.</p>`;
+            } else {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
-                const cellSize = canvas.width / N;
+                document.getElementById('infoContent').innerHTML = `<h4>Recursion Tree</h4><p>Visualizing Fibonacci calls. Red nodes are active calls.</p>`;
+            }
+        }
 
-                for (let r = 0; r < N; r++) {
-                    for (let c = 0; c < N; c++) {
-                        // Checkboard pattern
-                        ctx.fillStyle = (r + c) % 2 === 0 ? '#fff' : '#fda4af';
+        // --- N-QUEENS ---
+        function updateN(val) {
+            N = parseInt(val);
+            document.getElementById('nVal').textContent = N;
+            initBoard();
+        }
 
-                        // Highlight current cell being checked
-                        if (r === currentRow && c === currentCol) ctx.fillStyle = '#fef3c7'; // yellow
+        function initBoard() {
+            board = Array.from({ length: N }, () => Array(N).fill(0));
+            drawBoard();
+        }
 
-                        ctx.fillRect(c * cellSize, r * cellSize, cellSize, cellSize);
-                        ctx.strokeStyle = '#e11d48'; // border
-                        ctx.strokeRect(c * cellSize, r * cellSize, cellSize, cellSize);
+        function drawBoard(currentRow = -1, currentCol = -1) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const cellSize = Math.min(canvas.width, canvas.height) / N; // Safe sizing
 
-                        // Draw Queen
-                        if (board[r][c] === 1) {
-                            ctx.fillStyle = '#be123c';
-                            ctx.font = `${cellSize / 1.5}px Arial`;
-                            ctx.textAlign = 'center';
-                            ctx.textBaseline = 'middle';
-                            ctx.fillText('♛', c * cellSize + cellSize / 2, r * cellSize + cellSize / 2 + 5);
-                        }
+            for (let r = 0; r < N; r++) {
+                for (let c = 0; c < N; c++) {
+                    ctx.fillStyle = (r + c) % 2 === 0 ? '#fff' : '#fda4af';
+                    if (r === currentRow && c === currentCol) ctx.fillStyle = '#fef3c7';
+
+                    ctx.fillRect(c * cellSize, r * cellSize, cellSize, cellSize);
+                    ctx.strokeStyle = '#e11d48';
+                    ctx.strokeRect(c * cellSize, r * cellSize, cellSize, cellSize);
+
+                    if (board[r][c] === 1) {
+                        ctx.fillStyle = '#be123c';
+                        ctx.font = `${cellSize / 1.5}px Arial`;
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'middle';
+                        ctx.fillText('♛', c * cellSize + cellSize / 2, r * cellSize + cellSize / 2 + 5);
                     }
                 }
             }
+        }
 
-            async function solveNQueens() {
-                if (isRunning) return;
-                isRunning = true;
-                initBoard();
+        async function solveNQueens() {
+            if (isRunning) return;
+            isRunning = true;
+            initBoard();
+            await backtrack(0);
+            if (isRunning) stepInfo.textContent = "Solution Found!";
+            isRunning = false;
+        }
 
-                await backtrack(0);
+        async function backtrack(row) {
+            if (!isRunning) return false;
+            if (row >= N) return true;
 
-                if (isRunning) stepInfo.textContent = "Solution Found!";
-                isRunning = false;
-            }
-
-            async function backtrack(row) {
+            for (let col = 0; col < N; col++) {
                 if (!isRunning) return false;
+                stepInfo.textContent = `Trying row ${row}, col ${col}...`;
+                drawBoard(row, col);
+                await sleep(400);
 
-                if (row >= N) return true; // Found solution
-
-                for (let col = 0; col < N; col++) {
-                    if (!isRunning) return false;
-
-                    stepInfo.textContent = `Trying row ${row}, col ${col}...`;
+                if (isSafe(row, col)) {
+                    board[row][col] = 1;
                     drawBoard(row, col);
                     await sleep(400);
 
-                    if (isSafe(row, col)) {
-                        board[row][col] = 1;
-                        drawBoard(row, col);
-                        await sleep(400);
+                    if (await backtrack(row + 1)) return true;
 
-                        if (await backtrack(row + 1)) return true;
-
-                        stepInfo.textContent = `Backtracking from row ${row}, col ${col}`;
-                        board[row][col] = 0; // Backtrack
-                        drawBoard(row, col);
-                        await sleep(400);
-                    }
+                    stepInfo.textContent = `Backtracking from row ${row}, col ${col}`;
+                    board[row][col] = 0;
+                    drawBoard(row, col);
+                    await sleep(400);
                 }
-                return false;
+            }
+            return false;
+        }
+
+        function isSafe(row, col) {
+            for (let i = 0; i < row; i++) if (board[i][col]) return false;
+            for (let i = row, j = col; i >= 0 && j >= 0; i--, j--) if (board[i][j]) return false;
+            for (let i = row, j = col; i >= 0 && j < N; i--, j++) if (board[i][j]) return false;
+            return true;
+        }
+
+        // --- RECURSION ---
+        async function runFibonacci() {
+            if (isRunning) return;
+            isRunning = true;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            await fib(5, canvas.width / 2, 50, canvas.width / 4);
+            stepInfo.textContent = "Tree Complete.";
+            isRunning = false;
+        }
+
+        async function fib(n, x, y, offset) {
+            if (!isRunning) return;
+            drawNode(x, y, `fib(${n})`, '#e11d48');
+            stepInfo.textContent = `Calling fib(${n})`;
+            await sleep(600);
+
+            if (n <= 1) {
+                drawNode(x, y, n, '#10b981');
+                return;
             }
 
-            function isSafe(row, col) {
-                // Check Col
-                for (let i = 0; i < row; i++) if (board[i][col]) return false;
+            const lx = x - offset;
+            const ly = y + 80;
+            drawEdge(x, y + 20, lx, ly - 20);
+            await fib(n - 1, lx, ly, offset / 1.5);
 
-                // Check Diagonals
-                for (let i = row, j = col; i >= 0 && j >= 0; i--, j--) if (board[i][j]) return false;
-                for (let i = row, j = col; i >= 0 && j < N; i--, j++) if (board[i][j]) return false;
+            const rx = x + offset;
+            const ry = y + 80;
+            drawEdge(x, y + 20, rx, ry - 20);
+            await fib(n - 2, rx, ry, offset / 1.5);
+        }
 
-                return true;
-            }
+        function drawNode(x, y, text, color) {
+            ctx.fillStyle = 'white';
+            ctx.beginPath();
+            ctx.arc(x, y, 25, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 3;
+            ctx.stroke();
 
-            // --- RECURSION TREE ---
+            ctx.fillStyle = '#333';
+            ctx.font = '12px Segoe UI';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(text, x, y);
+        }
 
-            async function runFibonacci() {
-                if (isRunning) return;
-                isRunning = true;
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                treeNodes = [];
-                edges = [];
-                await fib(5, canvas.width / 2, 50, canvas.width / 4);
-                stepInfo.textContent = "Tree Complete. O(2^n) calls.";
-                isRunning = false;
-            }
+        function drawEdge(x1, y1, x2, y2) {
+            ctx.beginPath();
+            ctx.strokeStyle = '#999';
+            ctx.lineWidth = 1;
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.stroke();
+        }
 
-            async function fib(n, x, y, offset) {
-                if (!isRunning) return;
+        function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
-                // Draw current node
-                drawNode(x, y, `fib(${n})`, '#e11d48');
-                stepInfo.textContent = `Calling fib(${n})`;
-                await sleep(600);
-
-                if (n <= 1) {
-                    drawNode(x, y, n, '#10b981'); // Base case
-                    return;
-                }
-
-                // Create slots for children
-                // Left child
-                const lx = x - offset;
-                const ly = y + 80;
-                drawEdge(x, y + 20, lx, ly - 20);
-                await fib(n - 1, lx, ly, offset / 1.5);
-
-                // Right child
-                const rx = x + offset;
-                const ry = y + 80;
-                drawEdge(x, y + 20, rx, ry - 20);
-                await fib(n - 2, rx, ry, offset / 1.5);
-            }
-
-            function drawNode(x, y, text, color) {
-                ctx.fillStyle = 'white';
-                ctx.beginPath();
-                ctx.arc(x, y, 25, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.strokeStyle = color;
-                ctx.lineWidth = 3;
-                ctx.stroke();
-
-                ctx.fillStyle = '#333';
-                ctx.font = '12px Segoe UI';
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-                ctx.fillText(text, x, y);
-            }
-
-            function drawEdge(x1, y1, x2, y2) {
-                ctx.beginPath();
-                ctx.strokeStyle = '#999';
-                ctx.lineWidth = 1;
-                ctx.moveTo(x1, y1);
-                ctx.lineTo(x2, y2);
-                ctx.stroke();
-            }
-
-            function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
-
-            // Initial
-            initBoard();
-        </script>
+        initBoard();
+    </script>
 </body>
 
 </html>

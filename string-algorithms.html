@@ -17,6 +17,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: #f5f5f5;
             min-height: 100vh;
+            color: #333;
         }
 
         .nav-bar {
@@ -52,6 +53,7 @@
             display: grid;
             grid-template-columns: 1fr 380px;
             gap: 30px;
+            margin-bottom: 40px;
         }
 
         @media (max-width: 1100px) {
@@ -64,7 +66,7 @@
             background: white;
             border-radius: 16px;
             padding: 30px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             margin-bottom: 25px;
         }
 
@@ -141,6 +143,7 @@
             display: flex;
             gap: 10px;
             margin-bottom: 15px;
+            width: 100%;
         }
 
         .input-group input {
@@ -163,17 +166,21 @@
             display: flex;
             gap: 10px;
             margin-bottom: 20px;
+            background: #e0e0e0;
+            padding: 5px;
+            border-radius: 10px;
         }
 
         .tab {
             flex: 1;
-            padding: 12px;
-            background: #e0e0e0;
+            padding: 10px;
+            background: transparent;
             border: none;
             border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
+            color: #555;
         }
 
         .tab.active {
@@ -181,15 +188,137 @@
             color: white;
         }
 
-        .code-box {
+        /* THEORY SECTION STYLES */
+        .theory-section {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            margin-top: 40px;
+        }
+
+        .theory-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .theory-header h2 {
+            font-size: 2.2em;
+            color: #1a1a2e;
+            margin-bottom: 10px;
+        }
+
+        .theory-header p {
+            color: #666;
+            font-size: 1.1em;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .theory-header::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: #10b981;
+            margin: 20px auto 0;
+            border-radius: 2px;
+        }
+
+        .theory-block {
+            margin-bottom: 50px;
+        }
+
+        .theory-block h3 {
+            font-size: 1.6em;
+            color: #10b981;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .theory-block p {
+            line-height: 1.7;
+            color: #444;
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+
+        .theory-block ul {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        .theory-block li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        .theory-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 800px) {
+            .theory-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .code-block {
             background: #1e1e1e;
             color: #d4d4d4;
-            padding: 20px;
-            border-radius: 8px;
-            font-family: 'Courier New', monospace;
-            font-size: 12px;
+            padding: 25px;
+            border-radius: 10px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9em;
             overflow-x: auto;
-            margin: 15px 0;
+            line-height: 1.5;
+            border: 1px solid #333;
+        }
+
+        .keyword {
+            color: #569cd6;
+        }
+
+        .type {
+            color: #4ec9b0;
+        }
+
+        .func {
+            color: #dcdcaa;
+        }
+
+        .comment {
+            color: #6a9955;
+        }
+
+        .complexity-card {
+            background: #ecfdf5;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #10b981;
+        }
+
+        .complexity-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #d1fae5;
+            padding-bottom: 5px;
+        }
+
+        .complexity-item:last-child {
+            border-bottom: none;
+        }
+
+        .complexity-val {
+            font-family: 'Courier New', monospace;
+            font-weight: 700;
+            color: #047857;
         }
     </style>
 </head>
@@ -217,7 +346,7 @@
                     </div>
 
                     <div class="controls">
-                        <div class="input-group" style="width: 100%;">
+                        <div class="input-group">
                             <input type="text" id="textInput" value="ABABDABACDABABCABAB" placeholder="Text">
                             <input type="text" id="patternInput" value="ABABCABAB" placeholder="Pattern">
                         </div>
@@ -232,324 +361,260 @@
 
             <div class="right-column">
                 <div class="card">
-                    <h2><i class="fas fa-info-circle"></i> Understanding KMP</h2>
+                    <h2><i class="fas fa-lightbulb"></i> Basics</h2>
                     <div id="infoContent">
-                        <h4>Knuth-Morris-Pratt (KMP)</h4>
-                        <p style="color: #555; margin-bottom: 10px;">Avoids redundant comparisons by using an LPS
-                            (Longest Prefix Suffix) array.</p>
-                        <p><strong>Time Comp:</strong> O(N + M)</p>
-                        <p><strong>Space Comp:</strong> O(M)</p>
-
-                        <div class="code-box">
-                            // LPS Construction
-                            len = 0; lps[0] = 0; i = 1;
-                            while(i < M) { if(pat[i]==pat[len]) { len++; lps[i]=len; i++; } else { if(len !=0)
-                                len=lps[len-1]; else { lps[i]=0; i++; } } } </div>
+                        <h4>String Matching</h4>
+                        <p style="color: #555; margin-bottom: 10px;">Finding all occurrences of a pattern P in text T.
+                        </p>
+                        <div class="highlight-box" style="background: #ecfdf5; padding: 10px; border-radius: 5px;">
+                            <strong>Search:</strong> Ctrl+F functionality.<br>
+                            <strong>DNA:</strong> Finding gene sequences.
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <script>
-            const canvas = document.getElementById('mainCanvas');
-            const ctx = canvas.getContext('2d');
-            const stepInfo = document.getElementById('stepInfo');
+        <!-- Comprehensive Theory Section -->
+        <div class="theory-section">
+            <div class="theory-header">
+                <h2>Comprehensive Guide</h2>
+                <p>Advanced Text Processing and Searching.</p>
+            </div>
 
-            let algo = 'brute';
-            let isSearching = false;
+            <!-- Topic 1 -->
+            <div class="theory-block" id="theory-kmp">
+                <h3><i class="fas fa-project-diagram"></i> Knuth-Morris-Pratt (KMP)</h3>
+                <p>The **KMP algorithm** improves upon the brute-force approach (O(NM)) by utilizing the property that
+                    when a mismatch occurs, we already know "some" characters of the pattern match the text. We can skip
+                    redundant comparisons.</p>
 
-            // State
-            let text = "ABABDABACDABABCABAB";
-            let pattern = "ABABCABAB";
+                <div class="theory-grid">
+                    <div>
+                        <h4>The LPS Array</h4>
+                        <p><strong>LPS:</strong> Longest Prefix which is also Suffix. This auxiliary array tells us how
+                            much to shift the pattern when a mismatch occurs.</p>
+                        <ul>
+                            <li><strong>Prefix:</strong> Part of pattern starting from index 0.</li>
+                            <li><strong>Suffix:</strong> Part of pattern ending at current index.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>Complexity Analysis</h4>
+                        <div class="complexity-card">
+                            <div class="complexity-item"><span>Time Complexity</span> <span class="complexity-val">O(N +
+                                    M)</span></div>
+                            <div class="complexity-item"><span>Space Complexity</span> <span
+                                    class="complexity-val">O(M)</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-            function switchAlgo(newAlgo) {
-                algo = newAlgo;
-                isSearching = false;
-                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-                event.target.classList.add('active');
+            <hr style="border:0; border-top:1px solid #eee; margin: 40px 0;">
 
-                if (algo === 'brute') {
-                    document.getElementById('infoContent').innerHTML = `<h4>Brute Force</h4><p class='text-sm text-gray-600'>Slide pattern one by one. O(N*M).</p>`;
-                } else if (algo === 'kmp') {
-                    document.getElementById('infoContent').innerHTML = `<h4>KMP Algorithm</h4><p>Uses LPS array to skip characters. O(N+M).</p>`;
-                } else {
-                    document.getElementById('infoContent').innerHTML = `<h4>Rabin-Karp</h4><p>Uses Rolling Hash to compare pattern. Efficient for multiple patterns. O(N+M) avg.</p>`;
-                }
-                drawStatic();
+            <!-- Topic 2 -->
+            <div class="theory-block" id="theory-rabin">
+                <h3><i class="fas fa-hashtag"></i> Rabin-Karp Algorithm</h3>
+                <p>Uses **Hashing** to find the pattern. It calculates a hash value for the pattern and for each
+                    M-character window of text.</p>
+
+                <div class="theory-grid">
+                    <div>
+                        <h4>Rolling Hash</h4>
+                        <p>Instead of recalculating the hash from scratch (O(M)), we "roll" the hash by removing the
+                            leading character and adding the trailing character in O(1).</p>
+                        <p>Typically uses: <code>Hash = (Hash - leading*d) * d + trailing</code></p>
+                    </div>
+                    <div>
+                        <h4>Spurious Hits</h4>
+                        <p>If Hash(Window) == Hash(Pattern), we must still check characters one-by-one because hash
+                            collisions (spurious hits) are possible.</p>
+                    </div>
+                </div>
+
+                <h4>Algorithm Steps</h4>
+                <ol style="margin-left: 20px;">
+                    <li>Calculate Hash(Pattern) and Hash(Text[0...M-1]).</li>
+                    <li>Loop through text (i from 0 to N-M).</li>
+                    <li>If Hashes match, compare characters.</li>
+                    <li>Calculate Hash(Next Window) using Rolling Hash formula.</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script Kept Intact -->
+    <script>
+        const canvas = document.getElementById('mainCanvas');
+        const ctx = canvas.getContext('2d');
+        const stepInfo = document.getElementById('stepInfo');
+        let algo = 'brute';
+        let isSearching = false;
+        let text = "ABABDABACDABABCABAB";
+        let pattern = "ABABCABAB";
+
+        function switchAlgo(newAlgo) {
+            algo = newAlgo; isSearching = false;
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            if (algo === 'brute') document.getElementById('infoContent').innerHTML = `<h4>Brute Force</h4><p class='text-sm text-gray-600'>Slide pattern one by one. O(N*M).</p>`;
+            else if (algo === 'kmp') document.getElementById('infoContent').innerHTML = `<h4>KMP Algorithm</h4><p>Uses LPS array to skip characters. O(N+M).</p>`;
+            else document.getElementById('infoContent').innerHTML = `<h4>Rabin-Karp</h4><p>Uses Rolling Hash. O(N+M) avg.</p>`;
+            drawStatic();
+        }
+
+        function generateRandom() {
+            const chars = "ABCD";
+            text = Array.from({ length: 20 }, () => chars[Math.floor(Math.random() * 4)]).join('');
+            pattern = Array.from({ length: 4 }, () => chars[Math.floor(Math.random() * 4)]).join('');
+            document.getElementById('textInput').value = text;
+            document.getElementById('patternInput').value = pattern;
+            drawStatic();
+        }
+
+        function drawStatic() { ctx.clearRect(0, 0, canvas.width, canvas.height); drawState(-1, -1); }
+
+        function drawBox(char, x, y, color = '#fff', label = '') {
+            ctx.fillStyle = color; ctx.fillRect(x, y, 35, 35);
+            ctx.strokeStyle = '#999'; ctx.strokeRect(x, y, 35, 35);
+            ctx.fillStyle = '#111'; ctx.font = 'bold 18px Courier New';
+            ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(char, x + 17.5, y + 17.5);
+            if (label) { ctx.font = '10px sans-serif'; ctx.fillText(label, x + 17.5, y + 45); }
+        }
+
+        function drawState(txtIdx, patIdx, matchLen = -1, status = '') {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const startX = 50, textY = 80, patY = 160, w = 40;
+            ctx.font = "14px Segoe UI"; ctx.fillStyle = "#333"; ctx.textAlign = "left";
+            ctx.fillText("Text:", startX, textY - 10);
+            for (let i = 0; i < text.length; i++) {
+                let color = '#fff';
+                if (i === txtIdx) color = '#fcd34d';
+                if (status === 'found' && i >= txtIdx - pattern.length + 1 && i <= txtIdx) color = '#86efac';
+                drawBox(text[i], startX + i * w, textY, color, i);
             }
+            let alignIndex = 0;
+            if (algo === 'brute' && typeof patIdx === 'number') alignIndex = txtIdx;
+            else if (algo === 'kmp') alignIndex = txtIdx - patIdx;
+            else if (algo === 'rabin') alignIndex = txtIdx;
 
-            function generateRandom() {
-                const chars = "ABCD";
-                text = Array.from({ length: 20 }, () => chars[Math.floor(Math.random() * 4)]).join('');
-                pattern = Array.from({ length: 4 }, () => chars[Math.floor(Math.random() * 4)]).join('');
-                document.getElementById('textInput').value = text;
-                document.getElementById('patternInput').value = pattern;
-                drawStatic();
-            }
-
-            function drawStatic() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                drawState(-1, -1);
-            }
-
-            function drawBox(char, x, y, color = '#fff', label = '') {
-                ctx.fillStyle = color;
-                ctx.fillRect(x, y, 35, 35);
-                ctx.strokeStyle = '#999';
-                ctx.strokeRect(x, y, 35, 35);
-
-                ctx.fillStyle = '#111';
-                ctx.font = 'bold 18px Courier New';
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-                ctx.fillText(char, x + 17.5, y + 17.5);
-
-                if (label) {
-                    ctx.font = '10px sans-serif';
-                    ctx.fillText(label, x + 17.5, y + 45);
-                }
-            }
-
-            function drawState(txtIdx, patIdx, matchLen = -1, status = '') {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                const startX = 50;
-                const textY = 80;
-                const patY = 160;
-                const w = 40;
-
-                // Draw Text
-                ctx.font = "14px Segoe UI";
-                ctx.fillStyle = "#333";
-                ctx.textAlign = "left";
-                ctx.fillText("Text:", startX, textY - 10);
-
-                for (let i = 0; i < text.length; i++) {
+            ctx.fillText("Pattern:", startX, patY - 10);
+            if (status !== 'init') {
+                for (let j = 0; j < pattern.length; j++) {
+                    const x = startX + (alignIndex + j) * w;
                     let color = '#fff';
-                    if (i === txtIdx) color = '#fcd34d'; // Analyzing
-                    if (status === 'found' && i >= txtIdx - pattern.length + 1 && i <= txtIdx) color = '#86efac';
-
-                    drawBox(text[i], startX + i * w, textY, color, i);
-                }
-
-                // Draw Pattern
-                if (patIdx !== -1 || algo === 'brute') {
-                    let pStart = (algo === 'brute') ? txtIdx - patIdx : txtIdx - patIdx;
-                    // For KMP visuals, we align pattern based on comparison
-
-                    const shift = (algo === 'kmp') ? (txtIdx - patIdx) : (txtIdx); // naive shift logic for brute
-                    const drawX = startX + shift * w; // This is simplistic, let's refine
-
-                    // Only draw pattern align
-                }
-
-                // Simplified display: Just show pattern below aligned correctly
-                // Alignment logic differs per algo visuals, but for clarity:
-                // In brute force loop: i is shift, j is pattern index
-                // In KMP: i is text index, j is pattern index
-
-                let alignIndex = 0;
-                if (algo === 'brute' && typeof patIdx === 'number') {
-                    alignIndex = txtIdx; // txtIdx here represents 'i' (shift) in brute
-                } else if (algo === 'kmp') {
-                    alignIndex = txtIdx - patIdx;
-                } else if (algo === 'rabin') {
-                    alignIndex = txtIdx;
-                }
-
-                ctx.fillText("Pattern:", startX, patY - 10);
-
-                // Draw pattern shifted
-                if (status !== 'init') {
-                    for (let j = 0; j < pattern.length; j++) {
-                        const x = startX + (alignIndex + j) * w;
-                        let color = '#fff';
-
-                        if (algo === 'brute') {
-                            if (j === patIdx) color = '#fcd34d'; // Comparing
-                            if (j < patIdx) color = '#86efac'; // Matched so far
-                        } else if (algo === 'kmp') {
-                            if (j === patIdx) color = '#fcd34d';
-                            if (j < patIdx) color = '#86efac';
-                        }
-
-                        drawBox(pattern[j], x, patY, color, j);
+                    if (algo === 'brute' || algo === 'kmp') {
+                        if (j === patIdx) color = '#fcd34d';
+                        if (j < patIdx) color = '#86efac';
                     }
+                    drawBox(pattern[j], x, patY, color, j);
+                }
+                if (patIdx >= 0 && patIdx < pattern.length) {
+                    const tx = startX + (alignIndex + patIdx) * w + 17.5;
+                    ctx.beginPath(); ctx.moveTo(tx, textY + 35); ctx.lineTo(tx, patY);
+                    ctx.strokeStyle = status === 'mismatch' ? '#ef4444' : '#3b82f6'; ctx.lineWidth = 2; ctx.stroke();
+                }
+            } else {
+                for (let j = 0; j < pattern.length; j++) drawBox(pattern[j], startX + j * w, patY, '#fff', j);
+            }
+        }
 
-                    // Draw connecting line for current comparison
-                    if (patIdx >= 0 && patIdx < pattern.length) {
-                        const tx = startX + (alignIndex + patIdx) * w + 17.5;
-                        ctx.beginPath();
-                        ctx.moveTo(tx, textY + 35);
-                        ctx.lineTo(tx, patY);
-                        ctx.strokeStyle = status === 'mismatch' ? '#ef4444' : '#3b82f6';
-                        ctx.lineWidth = 2;
-                        ctx.stroke();
+        async function search() {
+            if (isSearching) return;
+            isSearching = true;
+            text = document.getElementById('textInput').value;
+            pattern = document.getElementById('patternInput').value;
+            if (algo === 'brute') await bruteSearch();
+            else if (algo === 'kmp') await kmpSearch();
+            else await rabinSearch();
+            isSearching = false;
+        }
+
+        async function bruteSearch() {
+            const n = text.length, m = pattern.length;
+            for (let i = 0; i <= n - m; i++) {
+                stepInfo.textContent = `Shift ${i}: Comparing...`;
+                let j;
+                for (j = 0; j < m; j++) {
+                    drawState(i, j, -1, 'comparing'); await sleep(300);
+                    if (text[i + j] !== pattern[j]) {
+                        stepInfo.textContent = `Mismatch at ${j}. Break.`;
+                        drawState(i, j, -1, 'mismatch'); await sleep(500); break;
+                    }
+                }
+                if (j === m) {
+                    stepInfo.textContent = `Pattern found at index ${i}!`;
+                    drawState(i, m - 1, -1, 'found'); await sleep(1000);
+                }
+            }
+            stepInfo.textContent = "Search complete.";
+        }
+
+        async function kmpSearch() {
+            const n = text.length, m = pattern.length;
+            stepInfo.textContent = "Computing LPS...";
+            const lps = computeLPS(pattern);
+            stepInfo.textContent = `LPS: [${lps.join(', ')}]`; await sleep(1000);
+            let i = 0, j = 0;
+            while (i < n) {
+                stepInfo.textContent = `Text[${i}] vs Pat[${j}]`;
+                drawState(i, j, -1, 'comp'); await sleep(500);
+                if (pattern[j] === text[i]) {
+                    i++; j++;
+                    if (j === m) {
+                        stepInfo.textContent = `Found at ${i - j}!`;
+                        j = lps[j - 1]; await sleep(1000);
                     }
                 } else {
-                    // Static pattern
-                    for (let j = 0; j < pattern.length; j++) {
-                        drawBox(pattern[j], startX + j * w, patY, '#fff', j);
-                    }
+                    stepInfo.textContent = `Mismatch!`; drawState(i, j, -1, 'mismatch'); await sleep(500);
+                    if (j !== 0) {
+                        stepInfo.textContent = `Jump j to ${lps[j - 1]}`; j = lps[j - 1];
+                    } else i++;
                 }
             }
+            stepInfo.textContent = "Search complete.";
+        }
 
-            async function search() {
-                if (isSearching) return;
-                isSearching = true;
-
-                text = document.getElementById('textInput').value;
-                pattern = document.getElementById('patternInput').value;
-
-                if (algo === 'brute') await bruteSearch();
-                else if (algo === 'kmp') await kmpSearch();
-                else await rabinSearch();
-
-                isSearching = false;
+        function computeLPS(pat) {
+            let m = pat.length, lps = Array(m).fill(0), len = 0, i = 1;
+            while (i < m) {
+                if (pat[i] === pat[len]) { len++; lps[i] = len; i++; }
+                else { if (len !== 0) len = lps[len - 1]; else { lps[i] = 0; i++; } }
             }
+            return lps;
+        }
 
-            async function bruteSearch() {
-                const n = text.length;
-                const m = pattern.length;
-
-                for (let i = 0; i <= n - m; i++) {
-                    stepInfo.textContent = `Shift ${i}: Comparing pattern...`;
-                    let j;
-                    for (j = 0; j < m; j++) {
-                        drawState(i, j, -1, 'comparing'); // pass i as shift
-                        await sleep(300);
-
-                        if (text[i + j] !== pattern[j]) {
-                            stepInfo.textContent = `Mismatch at index ${j} (${text[i + j]} != ${pattern[j]}). Break.`;
-                            drawState(i, j, -1, 'mismatch');
-                            await sleep(500);
-                            break;
-                        }
-                    }
-                    if (j === m) {
-                        stepInfo.textContent = `Pattern found at index ${i}!`;
-                        drawState(i, m - 1, -1, 'found'); // hack visual
-                        // return; // Find all or one? Let's find one for clarity or continue
-                        await sleep(1000);
-                    }
-                }
-                stepInfo.textContent = "Search complete.";
+        async function rabinSearch() {
+            const n = text.length, m = pattern.length, d = 256, q = 101;
+            let p = 0, t = 0, h = 1;
+            for (let i = 0; i < m - 1; i++) h = (h * d) % q;
+            for (let i = 0; i < m; i++) {
+                p = (d * p + pattern.charCodeAt(i)) % q;
+                t = (d * t + text.charCodeAt(i)) % q;
             }
-
-            async function kmpSearch() {
-                const n = text.length;
-                const m = pattern.length;
-
-                // Calc LPS
-                stepInfo.textContent = "Computing LPS Array...";
-                const lps = computeLPS(pattern);
-                stepInfo.textContent = `LPS: [${lps.join(', ')}]`;
-                await sleep(1000);
-
-                let i = 0; // text idx
-                let j = 0; // pat idx
-
-                while (i < n) {
-                    stepInfo.textContent = `Comparing Text[${i}] (${text[i]}) vs Pattern[${j}] (${pattern[j]})`;
-                    drawState(i, j, -1, 'comp'); // i is real index
-                    await sleep(500);
-
-                    if (pattern[j] === text[i]) {
-                        i++; j++;
-                        if (j === m) {
-                            stepInfo.textContent = `Found pattern at index ${i - j}!`;
-                            j = lps[j - 1]; // continue searching
-                            await sleep(1000);
-                        }
-                    } else {
-                        stepInfo.textContent = `Mismatch!`;
-                        drawState(i, j, -1, 'mismatch');
-                        await sleep(500);
-
-                        if (j !== 0) {
-                            stepInfo.textContent = `Jumps j from ${j} to LPS[${j - 1}] = ${lps[j - 1]}`;
-                            j = lps[j - 1];
-                        } else {
-                            i++;
-                        }
-                    }
+            stepInfo.textContent = `Pat Hash: ${p}`; await sleep(1000);
+            for (let i = 0; i <= n - m; i++) {
+                stepInfo.textContent = `Shift ${i}: Hash T=${t}, P=${p}`;
+                drawState(i, -1, -1, 'hash');
+                const startX = 50, w = 40; ctx.strokeStyle = '#10b981'; ctx.lineWidth = 3; ctx.strokeRect(startX + i * w - 2, 78, m * w + 4, 40);
+                await sleep(500);
+                if (p === t) {
+                    stepInfo.textContent = "Hash Match! Verifying chars...";
+                    let match = true;
+                    for (let j = 0; j < m; j++) if (text[i + j] !== pattern[j]) { match = false; break; }
+                    if (match) { stepInfo.textContent = `Found at ${i}!`; await sleep(1000); }
                 }
-                stepInfo.textContent = "Search complete.";
+                if (i < n - m) {
+                    t = (d * (t - text.charCodeAt(i) * h) + text.charCodeAt(i + m)) % q;
+                    if (t < 0) t = (t + q);
+                }
             }
-
-            function computeLPS(pat) {
-                let m = pat.length;
-                let lps = Array(m).fill(0);
-                let len = 0;
-                let i = 1;
-                while (i < m) {
-                    if (pat[i] === pat[len]) {
-                        len++; lps[i] = len; i++;
-                    } else {
-                        if (len !== 0) len = lps[len - 1];
-                        else { lps[i] = 0; i++; }
-                    }
-                }
-                return lps;
-            }
-
-            async function rabinSearch() {
-                const n = text.length;
-                const m = pattern.length;
-                const d = 256;
-                const q = 101;
-
-                let p = 0; // hash pattern
-                let t = 0; // hash text
-                let h = 1;
-
-                for (let i = 0; i < m - 1; i++) h = (h * d) % q;
-
-                stepInfo.textContent = "Calculating initial hashes...";
-                for (let i = 0; i < m; i++) {
-                    p = (d * p + pattern.charCodeAt(i)) % q;
-                    t = (d * t + text.charCodeAt(i)) % q;
-                }
-                stepInfo.textContent = `Pattern Hash: ${p}`;
-                await sleep(1000);
-
-                for (let i = 0; i <= n - m; i++) {
-                    stepInfo.textContent = `Shift ${i}: Hash T=${t}, P=${p}`;
-                    drawState(i, -1, -1, 'hash'); // Simplistic draw
-
-                    // Highlight window
-                    const startX = 50; const w = 40;
-                    ctx.strokeStyle = '#10b981'; ctx.lineWidth = 3;
-                    ctx.strokeRect(startX + i * w - 2, 78, m * w + 4, 40);
-
-                    await sleep(500);
-
-                    if (p === t) {
-                        stepInfo.textContent = "Hashes match! Checking characters...";
-                        let match = true;
-                        for (let j = 0; j < m; j++) {
-                            if (text[i + j] !== pattern[j]) {
-                                match = false; break;
-                            }
-                        }
-                        if (match) {
-                            stepInfo.textContent = `Pattern found at index ${i}!`;
-                            await sleep(1000);
-                        }
-                    }
-
-                    if (i < n - m) {
-                        t = (d * (t - text.charCodeAt(i) * h) + text.charCodeAt(i + m)) % q;
-                        if (t < 0) t = (t + q);
-                    }
-                }
-                stepInfo.textContent = "Search complete.";
-            }
-
-            function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
-
-            switchAlgo('brute');
-        </script>
+            stepInfo.textContent = "Search complete.";
+        }
+        function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+        switchAlgo('brute');
+    </script>
 </body>
 
 </html>

@@ -17,6 +17,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: #f5f5f5;
             min-height: 100vh;
+            color: #333;
         }
 
         .nav-bar {
@@ -52,6 +53,7 @@
             display: grid;
             grid-template-columns: 1fr 380px;
             gap: 30px;
+            margin-bottom: 40px;
         }
 
         @media (max-width: 1100px) {
@@ -64,7 +66,7 @@
             background: white;
             border-radius: 16px;
             padding: 30px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             margin-bottom: 25px;
         }
 
@@ -150,17 +152,21 @@
             display: flex;
             gap: 10px;
             margin-bottom: 20px;
+            background: #e0e0e0;
+            padding: 5px;
+            border-radius: 10px;
         }
 
         .tab {
             flex: 1;
-            padding: 12px;
-            background: #e0e0e0;
+            padding: 10px;
+            background: transparent;
             border: none;
             border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
+            color: #555;
         }
 
         .tab.active {
@@ -168,15 +174,137 @@
             color: white;
         }
 
-        .code-box {
+        /* THEORY SECTION STYLES */
+        .theory-section {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            margin-top: 40px;
+        }
+
+        .theory-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .theory-header h2 {
+            font-size: 2.2em;
+            color: #1a1a2e;
+            margin-bottom: 10px;
+        }
+
+        .theory-header p {
+            color: #666;
+            font-size: 1.1em;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .theory-header::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: #e11d48;
+            margin: 20px auto 0;
+            border-radius: 2px;
+        }
+
+        .theory-block {
+            margin-bottom: 50px;
+        }
+
+        .theory-block h3 {
+            font-size: 1.6em;
+            color: #e11d48;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .theory-block p {
+            line-height: 1.7;
+            color: #444;
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+
+        .theory-block ul {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        .theory-block li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        .theory-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 800px) {
+            .theory-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .code-block {
             background: #1e1e1e;
             color: #d4d4d4;
-            padding: 20px;
-            border-radius: 8px;
-            font-family: 'Courier New', monospace;
-            font-size: 12px;
+            padding: 25px;
+            border-radius: 10px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9em;
             overflow-x: auto;
-            margin: 15px 0;
+            line-height: 1.5;
+            border: 1px solid #333;
+        }
+
+        .keyword {
+            color: #569cd6;
+        }
+
+        .type {
+            color: #4ec9b0;
+        }
+
+        .func {
+            color: #dcdcaa;
+        }
+
+        .comment {
+            color: #6a9955;
+        }
+
+        .complexity-card {
+            background: #fff1f2;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #e11d48;
+        }
+
+        .complexity-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #fecdd3;
+            padding-bottom: 5px;
+        }
+
+        .complexity-item:last-child {
+            border-bottom: none;
+        }
+
+        .complexity-val {
+            font-family: 'Courier New', monospace;
+            font-weight: 700;
+            color: #9f1239;
         }
     </style>
 </head>
@@ -213,27 +341,108 @@
 
             <div class="right-column">
                 <div class="card">
-                    <h2><i class="fas fa-lightbulb"></i> Concept</h2>
+                    <h2><i class="fas fa-lightbulb"></i> Concepts</h2>
                     <div id="infoContent">
-                        <h4>Activity Selection</h4>
-                        <p style="color: #555; margin-bottom: 10px;">Goal: Select maximum number of non-overlapping
-                            activities.</p>
-                        <p><strong>Greedy Strategy:</strong> Always pick the next activity that finishes earliest.</p>
-
-                        <div class="code-box">
-                            sort(activities, by=finish_time)
-                            last_finish = -1
-                            for(act in activities):
-                            if act.start >= last_finish:
-                            select(act)
-                            last_finish = act.finish
+                        <h4>Local Optimal = Global Optimal?</h4>
+                        <p style="color: #555; margin-bottom: 10px;">Greedy algorithms make the locally optimal choice
+                            at each step with the hope of finding a global optimum.</p>
+                        <div class="highlight-box" style="background: #fff1f2; padding: 10px; border-radius: 5px;">
+                            <strong>Strategy:</strong> Never look back. Make the best choice now.
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- Comprehensive Theory Section -->
+        <div class="theory-section">
+            <div class="theory-header">
+                <h2>Comprehensive Guide</h2>
+                <p>Greedy Choice Property & Optimal Substructure.</p>
+            </div>
+
+            <!-- Topic 1 -->
+            <div class="theory-block" id="theory-greedy-intro">
+                <h3><i class="fas fa-brain"></i> Understanding Greedy</h3>
+                <p>A greedy algorithm is an algorithmic paradigm that follows the problem-solving heuristic of making
+                    the <strong>locally optimal choice</strong> at each stage. In many problems, a greedy strategy does
+                    not produce an optimal solution, but a greedy heuristic may yield locally optimal solutions that
+                    approximate a globally optimal solution in a reasonable amount of time.</p>
+
+                <div class="theory-grid">
+                    <div>
+                        <h4>Two Properties Required</h4>
+                        <ul>
+                            <li><strong>Greedy Choice Property:</strong> A global optimum can be arrived at by selecting
+                                a local optimum.</li>
+                            <li><strong>Optimal Substructure:</strong> An optimal solution to the problem contains an
+                                optimal solution to subproblems.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>Greedy vs DP</h4>
+                        <p><strong>Greedy:</strong> Makes a choice and never reconsiders. Faster, simpler, but not
+                            always optimal (e.g., 0/1 Knapsack fails).</p>
+                        <p><strong>DP:</strong> Considers all possible choices (and their consequences) to find the true
+                            optimum.</p>
+                    </div>
+                </div>
+            </div>
+
+            <hr style="border:0; border-top:1px solid #eee; margin: 40px 0;">
+
+            <!-- Topic 2 -->
+            <div class="theory-block" id="theory-activity">
+                <h3><i class="fas fa-calendar-check"></i> Activity Selection Problem</h3>
+                <p>Given <code>N</code> activities with their start and finish times, select the maximum number of
+                    activities that can be performed by a single person, assuming that a person can only work on a
+                    single activity at a time.</p>
+
+                <div class="theory-grid">
+                    <div>
+                        <h4>The Strategy</h4>
+                        <ol>
+                            <li>Sort all activities by their <strong>Finish Time</strong>.</li>
+                            <li>Select the first activity.</li>
+                            <li>For remaining activities, select if
+                                <code>start_time >= last_selected_finish_time</code>.</li>
+                        </ol>
+                    </div>
+                    <div class="complexity-card">
+                        <h4>Complexity Analysis</h4>
+                        <div class="complexity-item"><span>Sorting</span> <span class="complexity-val">O(N log N)</span>
+                        </div>
+                        <div class="complexity-item"><span>Selection Scan</span> <span
+                                class="complexity-val">O(N)</span></div>
+                        <div class="complexity-item"><span>Total Time</span> <span class="complexity-val">O(N log
+                                N)</span></div>
+                    </div>
+                </div>
+
+                <h4>Implementation</h4>
+                <div class="code-block">
+                    <span class="type">void</span> <span class="func">selectActivities</span>(Activity[] acts) {
+                    <span class="comment">// 1. Sort by finish time</span>
+                    Arrays.sort(acts, (a,b) -> a.finish - b.finish);
+
+                    <span class="comment">// 2. Select first</span>
+                    print(acts[0]);
+                    <span class="type">int</span> lastFinish = acts[0].finish;
+
+                    <span class="comment">// 3. Scan rest</span>
+                    <span class="keyword">for</span> (<span class="type">int</span> i=1; i < acts.length; i++) { <span
+                        class="keyword">if</span> (acts[i].start >= lastFinish) {
+                        print(acts[i]);
+                        lastFinish = acts[i].finish;
+                        }
+                        }
+                        }
+                </div>
+            </div>
+        </div>
     </div>
 
+    <!-- Script Kept Intact -->
     <script>
         const canvas = document.getElementById('mainCanvas');
         const ctx = canvas.getContext('2d');
@@ -242,11 +451,8 @@
         let mode = 'activity';
         let isRunning = false;
 
-        // Activity State
         let activities = [];
-
-        // Knapsack State
-        let items = []; // {val, wt, ratio}
+        let items = [];
         let capacity = 50;
         let currentLoad = 0;
         let currentValue = 0;
@@ -268,14 +474,12 @@
 
         function reset() {
             if (mode === 'activity') {
-                // Generate random start/end times
                 activities = [];
                 for (let i = 0; i < 6; i++) {
                     let start = Math.floor(Math.random() * 10);
                     let duration = Math.floor(Math.random() * 4) + 1;
                     activities.push({ id: i, start, end: start + duration, selected: false, current: false });
                 }
-                // Initial unsorted draw
                 drawActivities();
             } else {
                 items = [];
@@ -291,33 +495,25 @@
             stepInfo.textContent = "Ready.";
         }
 
-        // --- DRAWING ACTIVITES ---
         function drawActivities() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const timeScale = 50, rowHeight = 50, startX = 50, startY = 80;
 
-            const timeScale = 50;
-            const rowHeight = 50;
-            const startX = 50;
-            const startY = 80;
-
-            // Draw Timeline
             ctx.beginPath();
             ctx.moveTo(startX, 350);
             ctx.lineTo(startX + 14 * timeScale, 350);
             ctx.stroke();
-            for (let t = 0; t <= 14; t++) {
-                ctx.fillText(t, startX + t * timeScale, 370);
-            }
+            for (let t = 0; t <= 14; t++) ctx.fillText(t, startX + t * timeScale, 370);
 
             activities.forEach((act, i) => {
                 const y = startY + i * rowHeight;
                 const width = (act.end - act.start) * timeScale;
                 const x = startX + act.start * timeScale;
 
-                let color = '#dbeafe'; // default
-                if (act.current) color = '#fef08a'; // checking
-                else if (act.selected === true) color = '#86efac'; // selected
-                else if (act.selected === 'rejected') color = '#f3f4f6'; // rejected
+                let color = '#dbeafe';
+                if (act.current) color = '#fef08a';
+                else if (act.selected === true) color = '#86efac';
+                else if (act.selected === 'rejected') color = '#f3f4f6';
 
                 ctx.fillStyle = color;
                 ctx.fillRect(x, y, width, 30);
@@ -331,63 +527,33 @@
             });
         }
 
-        // --- DRAWING KNAPSACK ---
         function drawKnapsack() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            // Draw Items
-            const startX = 50;
-            const startY = 50;
+            const startX = 50, startY = 50;
             items.forEach((item, i) => {
                 const x = startX + i * 110;
+                ctx.fillStyle = '#fff'; ctx.fillRect(x, startY, 80, 80);
+                ctx.strokeStyle = '#333'; ctx.strokeRect(x, startY, 80, 80);
 
-                // Box
-                ctx.fillStyle = '#fff';
-                ctx.fillRect(x, startY, 80, 80);
-                ctx.strokeStyle = '#333';
-                ctx.strokeRect(x, startY, 80, 80);
+                ctx.fillStyle = '#333'; ctx.textAlign = 'center';
+                ctx.font = 'bold 16px Segoe UI'; ctx.fillText(`$${item.val}`, x + 40, startY + 30);
+                ctx.font = '14px Segoe UI'; ctx.fillText(`${item.wt}kg`, x + 40, startY + 60);
+                ctx.fillStyle = '#e11d48'; ctx.font = 'bold 12px Segoe UI'; ctx.fillText(`R: ${item.ratio}`, x + 40, startY - 10);
 
-                // Info
-                ctx.fillStyle = '#333';
-                ctx.textAlign = 'center';
-                ctx.font = 'bold 16px Segoe UI';
-                ctx.fillText(`$${item.val}`, x + 40, startY + 30);
-                ctx.font = '14px Segoe UI';
-                ctx.fillText(`${item.wt}kg`, x + 40, startY + 60);
-
-                // Ratio
-                ctx.fillStyle = '#e11d48';
-                ctx.font = 'bold 12px Segoe UI';
-                ctx.fillText(`R: ${item.ratio}`, x + 40, startY - 10);
-
-                // Taken portion
                 if (item.taken > 0) {
                     ctx.fillStyle = 'rgba(16, 185, 129, 0.5)';
                     ctx.fillRect(x, startY + 80 - (item.taken * 80), 80, item.taken * 80);
                 }
             });
 
-            // Draw Sack
-            const sackX = 300;
-            const sackY = 200;
-            const sackW = 200;
-            const sackH = 150;
-
-            // Sack background
-            ctx.fillStyle = '#e5e7eb';
-            ctx.fillRect(sackX, sackY, sackW, sackH);
-
-            // Fill
+            const sackX = 300, sackY = 200, sackW = 200, sackH = 150;
+            ctx.fillStyle = '#e5e7eb'; ctx.fillRect(sackX, sackY, sackW, sackH);
             const fillPct = currentLoad / capacity;
             ctx.fillStyle = '#86efac';
             ctx.fillRect(sackX, sackY + sackH - (fillPct * sackH), sackW, fillPct * sackH);
 
-            ctx.strokeStyle = '#333';
-            ctx.lineWidth = 3;
-            ctx.strokeRect(sackX, sackY, sackW, sackH);
-
-            ctx.fillStyle = '#333';
-            ctx.font = '18px Segoe UI';
+            ctx.strokeStyle = '#333'; ctx.lineWidth = 3; ctx.strokeRect(sackX, sackY, sackW, sackH);
+            ctx.fillStyle = '#333'; ctx.font = '18px Segoe UI';
             ctx.fillText(`Capacity: ${capacity}`, sackX + sackW / 2, sackY + sackH + 30);
             ctx.fillText(`Load: ${currentLoad.toFixed(1)} / Value: $${currentValue.toFixed(1)}`, sackX + sackW / 2, sackY + sackH + 60);
         }
@@ -397,18 +563,17 @@
             isRunning = true;
 
             if (mode === 'activity') {
-                // 1. Sort
                 stepInfo.textContent = "Sorting activities by FINISH time...";
                 activities.sort((a, b) => a.end - b.end);
                 drawActivities();
                 await sleep(1000);
 
-                // 2. Pick
                 let lastEnd = -1;
                 for (let i = 0; i < activities.length; i++) {
                     activities[i].current = true;
                     drawActivities();
                     stepInfo.textContent = `Checking A${activities[i].id} (Starts ${activities[i].start}). Last finish: ${lastEnd}`;
+                    activities[i].current = false;
                     await sleep(800);
 
                     if (activities[i].start >= lastEnd) {
@@ -417,16 +582,13 @@
                         stepInfo.textContent = `Selected A${activities[i].id}!`;
                     } else {
                         activities[i].selected = 'rejected';
-                        stepInfo.textContent = `Rejected A${activities[i].id} (Overlaps).`;
+                        stepInfo.textContent = `Rejected A${activities[i].id}.`;
                     }
-                    activities[i].current = false;
                     drawActivities();
                     await sleep(500);
                 }
                 stepInfo.textContent = "Finished Activity Selection.";
-
             } else {
-                // Knapsack
                 stepInfo.textContent = "Sorting items by Value/Weight Ratio...";
                 items.sort((a, b) => b.ratio - a.ratio);
                 drawKnapsack();
@@ -434,26 +596,21 @@
 
                 for (let i = 0; i < items.length; i++) {
                     if (currentLoad >= capacity) break;
-
                     let remaining = capacity - currentLoad;
                     let item = items[i];
 
-                    stepInfo.textContent = `Checking best remaining item ($${item.val}, ${item.wt}kg)...`;
+                    stepInfo.textContent = `Checking best item...`;
                     await sleep(800);
 
                     if (item.wt <= remaining) {
-                        // Take all
                         item.taken = 1;
                         currentLoad += item.wt;
                         currentValue += item.val;
-                        stepInfo.textContent = "Taking full item.";
                     } else {
-                        // Take fraction
                         let fraction = remaining / item.wt;
                         item.taken = fraction;
                         currentLoad += remaining;
                         currentValue += item.val * fraction;
-                        stepInfo.textContent = `Taking ${Math.round(fraction * 100)}% of item.`;
                     }
                     drawKnapsack();
                     await sleep(800);
@@ -464,7 +621,6 @@
         }
 
         function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
-
         switchMode('activity');
     </script>
 </body>

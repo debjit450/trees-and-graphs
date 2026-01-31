@@ -17,6 +17,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: #f5f5f5;
             min-height: 100vh;
+            color: #333;
         }
 
         .nav-bar {
@@ -52,6 +53,7 @@
             display: grid;
             grid-template-columns: 1fr 380px;
             gap: 30px;
+            margin-bottom: 40px;
         }
 
         @media (max-width: 1100px) {
@@ -64,7 +66,7 @@
             background: white;
             border-radius: 16px;
             padding: 30px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             margin-bottom: 25px;
         }
 
@@ -163,22 +165,159 @@
             display: flex;
             gap: 10px;
             margin-bottom: 20px;
+            background: #e0e0e0;
+            padding: 5px;
+            border-radius: 10px;
         }
 
         .tab {
             flex: 1;
-            padding: 12px;
-            background: #e0e0e0;
+            padding: 10px;
+            background: transparent;
             border: none;
             border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
+            color: #555;
         }
 
         .tab.active {
             background: #9333ea;
             color: white;
+        }
+
+        /* THEORY SECTION STYLES */
+        .theory-section {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            margin-top: 40px;
+        }
+
+        .theory-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .theory-header h2 {
+            font-size: 2.2em;
+            color: #1a1a2e;
+            margin-bottom: 10px;
+        }
+
+        .theory-header p {
+            color: #666;
+            font-size: 1.1em;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .theory-header::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: #9333ea;
+            margin: 20px auto 0;
+            border-radius: 2px;
+        }
+
+        .theory-block {
+            margin-bottom: 50px;
+        }
+
+        .theory-block h3 {
+            font-size: 1.6em;
+            color: #9333ea;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .theory-block p {
+            line-height: 1.7;
+            color: #444;
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+
+        .theory-block ul {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        .theory-block li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        .theory-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 800px) {
+            .theory-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 25px;
+            border-radius: 10px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+            line-height: 1.5;
+            border: 1px solid #333;
+        }
+
+        .keyword {
+            color: #569cd6;
+        }
+
+        .type {
+            color: #4ec9b0;
+        }
+
+        .func {
+            color: #dcdcaa;
+        }
+
+        .comment {
+            color: #6a9955;
+        }
+
+        .complexity-card {
+            background: #faf5ff;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #9333ea;
+        }
+
+        .complexity-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #e9d5ff;
+            padding-bottom: 5px;
+        }
+
+        .complexity-item:last-child {
+            border-bottom: none;
+        }
+
+        .complexity-val {
+            font-family: 'Courier New', monospace;
+            font-weight: 700;
+            color: #6b21a8;
         }
     </style>
 </head>
@@ -186,7 +325,7 @@
 <body>
     <div class="nav-bar">
         <a href="index.html"><i class="fas fa-home"></i> Home</a>
-        <h1><i class="fas fa-hashtag"></i> Hashing & Hash maps</h1>
+        <h1><i class="fas fa-hashtag"></i> Hashing & Hash Tables</h1>
         <a href="bit-manipulation.html">Next: Bit Manipulation <i class="fas fa-arrow-right"></i></a>
     </div>
 
@@ -219,21 +358,93 @@
 
             <div class="right-column">
                 <div class="card">
-                    <h2><i class="fas fa-info-circle"></i> Info</h2>
+                    <h2><i class="fas fa-lightbulb"></i> Concepts</h2>
                     <div id="infoContent">
-                        <h4>Collision Resolution</h4>
-                        <p style="color: #555; margin-bottom: 10px;">When two keys hash to the same index.</p>
-                        <ul>
-                            <li><strong>Chaining:</strong> Store collisions in a linked list at that index.</li>
-                            <li><strong>Open Addressing:</strong> Find the next available slot (probing).</li>
-                        </ul>
-                        <p style="margin-top: 10px;"><strong>Size:</strong> 7 slots</p>
+                        <h4>Direct Access</h4>
+                        <p style="color: #555; margin-bottom: 10px;">Hashing maps data of arbitrary size to fixed-size
+                            values (indices).</p>
+                        <div class="highlight-box" style="background: #faf5ff; padding: 10px; border-radius: 5px;">
+                            <strong>Goal:</strong> O(1) Average Search Time.
+                        </div>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comprehensive Theory Section -->
+        <div class="theory-section">
+            <div class="theory-header">
+                <h2>Comprehensive Guide</h2>
+                <p>The Magic of O(1) Lookups.</p>
+            </div>
+
+            <!-- Topic 1 -->
+            <div class="theory-block" id="theory-hashing-intro">
+                <h3><i class="fas fa-key"></i> Hash Functions</h3>
+                <p>A hash function takes an input (or 'key') and returns a fixed-size string of bytes, typically a
+                    digest that is unique to each unique input. In data structures, we map this digest to an integer
+                    index.</p>
+
+                <div class="theory-grid">
+                    <div>
+                        <h4>Key Components</h4>
+                        <ul>
+                            <li><strong>Hash Function:</strong> Converts Key → Integer Index.</li>
+                            <li><strong>Bucket Array:</strong> The array where data is stored.</li>
+                            <li><strong>Load Factor:</strong> (Number of Entries) / (Array Size). Impact performance.
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>Good Properties</h4>
+                        <p>A good hash function should uniformly distribute keys across the bucket array to minimize
+                            collisions (e.g., <code>key % prime_number</code>).</p>
+                    </div>
+                </div>
+            </div>
+
+            <hr style="border:0; border-top:1px solid #eee; margin: 40px 0;">
+
+            <!-- Topic 2 -->
+            <div class="theory-block" id="theory-collision">
+                <h3><i class="fas fa-random"></i> Collision Resolution</h3>
+                <p>Since the bucket array is finite, two different keys may hash to the same index (Pigeonhole
+                    Principle). We must handle this.</p>
+
+                <div class="theory-grid">
+                    <div>
+                        <h4>1. Separate Chaining</h4>
+                        <p>Each bucket stores a linked list (or dynamic array) of entries. If collision occurs, append
+                            to the list.</p>
+                        <p><strong>Pros:</strong> Simple, table never "fills up".<br><strong>Cons:</strong> Cache
+                            performance (pointers).</p>
+                    </div>
+                    <div>
+                        <h4>2. Open Addressing</h4>
+                        <p>All elements are stored in the hash table itself. If collision occurs, probe for next empty
+                            slot.</p>
+                        <ul>
+                            <li><strong>Linear Probing:</strong> Check i+1, i+2...</li>
+                            <li><strong>Quadratic Probing:</strong> Check i+1², i+2²...</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="complexity-card" style="margin-top: 20px;">
+                    <h4>Complexity Analysis</h4>
+                    <div class="complexity-item"><span>Average Search</span> <span class="complexity-val">O(1)</span>
+                    </div>
+                    <div class="complexity-item"><span>Average Insert</span> <span class="complexity-val">O(1)</span>
+                    </div>
+                    <div class="complexity-item"><span>Worst Case</span> <span class="complexity-val">O(N)</span></div>
+                    <div style="font-size: 0.8em; color: #666; margin-top: 5px;">Worst case happens if all keys hash to
+                        the same index.</div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Script Kept Intact -->
     <script>
         const canvas = document.getElementById('mainCanvas');
         const ctx = canvas.getContext('2d');
@@ -242,32 +453,24 @@
         const SIZE = 7;
         let mode = 'chaining';
         let isAnimating = false;
-
-        let table = []; // Array of Arrays for chaining, Array of Values for probing
+        let table = [];
 
         function switchMode(newMode) {
             mode = newMode;
             isAnimating = false;
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             event.target.classList.add('active');
-
             reset();
         }
 
         function reset() {
-            if (mode === 'chaining') {
-                table = Array.from({ length: SIZE }, () => []);
-            } else {
-                table = Array(SIZE).fill(null);
-            }
+            if (mode === 'chaining') table = Array.from({ length: SIZE }, () => []);
+            else table = Array(SIZE).fill(null);
             draw();
             stepInfo.textContent = "Hash Function: key % 7";
         }
 
-        // --- DRAWING ---
-        function clearCanvas() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-        }
+        function clearCanvas() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
 
         function drawBox(x, y, val, color = '#fff', label = '') {
             ctx.fillStyle = color;
@@ -282,42 +485,29 @@
                 ctx.textBaseline = 'middle';
                 ctx.fillText(val, x + 30, y + 25);
             }
-
             if (label) {
                 ctx.fillStyle = '#333';
                 ctx.font = '12px Segoe UI';
-                ctx.fillText(label, x + 30, y + 65); // index below
+                ctx.fillText(label, x + 30, y + 65);
             }
         }
 
         function drawArrow(x, y) {
             ctx.beginPath();
-            ctx.moveTo(x, y);
-            ctx.lineTo(x + 20, y);
-            ctx.strokeStyle = '#333';
-            ctx.lineWidth = 2;
-            ctx.stroke();
-            // arrow head
-            ctx.beginPath();
-            ctx.moveTo(x + 20, y);
-            ctx.lineTo(x + 15, y - 5);
-            ctx.lineTo(x + 15, y + 5);
-            ctx.fill();
+            ctx.moveTo(x, y); ctx.lineTo(x + 20, y);
+            ctx.strokeStyle = '#333'; ctx.lineWidth = 2; ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(x + 20, y); ctx.lineTo(x + 15, y - 5); ctx.lineTo(x + 15, y + 5); ctx.fill();
         }
 
         function draw(highlightIdx = -1, color = '#fef08a') {
             clearCanvas();
-            const startX = 100;
-            const startY = 50;
+            const startX = 100, startY = 50;
 
             if (mode === 'chaining') {
-                // Vertical Buckets
                 for (let i = 0; i < SIZE; i++) {
                     const y = startY + i * 55;
                     const isHigh = i === highlightIdx;
                     drawBox(startX, y, i, isHigh ? color : '#f3e8ff', '');
-
-                    // Draw Chain
                     let currX = startX + 80;
                     table[i].forEach((val) => {
                         drawArrow(currX - 20, y + 25);
@@ -326,7 +516,6 @@
                     });
                 }
             } else {
-                // Horizontal Array
                 const arrY = 150;
                 for (let i = 0; i < SIZE; i++) {
                     const x = startX + i * 70;
@@ -336,7 +525,6 @@
             }
         }
 
-        // --- OPERATIONS ---
         async function insert() {
             if (isAnimating) return;
             isAnimating = true;
@@ -346,51 +534,40 @@
             stepInfo.textContent = `Hash: ${val} % ${SIZE} = ${idx}`;
 
             if (mode === 'chaining') {
-                draw(idx);
-                await sleep(500);
+                draw(idx); await sleep(500);
                 table[idx].push(val);
                 draw(idx, '#86efac');
-
             } else {
-                // Linear Probing
                 let curr = idx;
                 let found = false;
-
                 for (let k = 0; k < SIZE; k++) {
-                    draw(curr);
-                    stepInfo.textContent = `Checking index ${curr}...`;
-                    await sleep(500);
-
+                    draw(curr); stepInfo.textContent = `Checking index ${curr}...`; await sleep(500);
                     if (table[curr] === null) {
                         table[curr] = val;
                         draw(curr, '#86efac');
                         stepInfo.textContent = `Inserted at ${curr}`;
-                        found = true;
-                        break;
+                        found = true; break;
                     } else {
                         stepInfo.textContent = `Collision at ${curr}. Probing next...`;
-                        draw(curr, '#fca5a5'); // red collision
+                        draw(curr, '#fca5a5');
                         await sleep(500);
                         curr = (curr + 1) % SIZE;
                     }
                 }
                 if (!found) stepInfo.textContent = "Table Full!";
             }
-
             isAnimating = false;
         }
 
         async function search() {
             if (isAnimating) return;
             isAnimating = true;
-
             const val = parseInt(document.getElementById('inputVal').value);
             const idx = val % SIZE;
             stepInfo.textContent = `Searching: ${val} % ${SIZE} = ${idx}`;
 
             if (mode === 'chaining') {
-                draw(idx);
-                await sleep(500);
+                draw(idx); await sleep(500);
                 if (table[idx].includes(val)) {
                     stepInfo.textContent = "Found in chain!";
                     draw(idx, '#86efac');
@@ -405,26 +582,21 @@
                     draw(curr);
                     if (table[curr] === val) {
                         stepInfo.textContent = `Found at index ${curr}!`;
-                        draw(curr, '#86efac');
-                        found = true;
-                        break;
+                        draw(curr, '#86efac'); found = true; break;
                     }
                     if (table[curr] === null) {
                         stepInfo.textContent = "Hit empty slot. Not found.";
-                        draw(curr, '#fca5a5'); // red
-                        break;
+                        draw(curr, '#fca5a5'); break;
                     }
                     curr = (curr + 1) % SIZE;
                     await sleep(300);
                 }
                 if (!found && table[curr] !== null) stepInfo.textContent = "Table traversed. Not found.";
             }
-
             isAnimating = false;
         }
 
         function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
-
         reset();
     </script>
 </body>

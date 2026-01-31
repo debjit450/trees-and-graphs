@@ -17,6 +17,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: #f5f5f5;
             min-height: 100vh;
+            color: #333;
         }
 
         .nav-bar {
@@ -52,6 +53,7 @@
             display: grid;
             grid-template-columns: 1fr 380px;
             gap: 30px;
+            margin-bottom: 40px;
         }
 
         @media (max-width: 1100px) {
@@ -64,7 +66,7 @@
             background: white;
             border-radius: 16px;
             padding: 30px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             margin-bottom: 25px;
         }
 
@@ -89,12 +91,14 @@
             padding: 20px;
             text-align: center;
             overflow-x: auto;
+            border: 1px solid #eee;
         }
 
         canvas {
             border: 2px solid #e0e0e0;
             border-radius: 8px;
             background: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
         }
 
         .controls {
@@ -132,17 +136,9 @@
             color: white;
         }
 
-        .btn-success:hover {
-            background: #059669;
-        }
-
         .btn-danger {
             background: #ef4444;
             color: white;
-        }
-
-        .btn-danger:hover {
-            background: #dc2626;
         }
 
         .btn-secondary {
@@ -162,6 +158,13 @@
             margin-bottom: 15px;
         }
 
+        .input-group input {
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            width: 80px;
+        }
+
         .step-info {
             background: #0891b2;
             color: white;
@@ -176,45 +179,187 @@
             display: block;
         }
 
-        .complexity-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 15px 0;
-            font-size: 13px;
-        }
-
-        .complexity-table th,
-        .complexity-table td {
-            padding: 10px;
-            border: 1px solid #e0e0e0;
-            text-align: left;
-        }
-
-        .complexity-table th {
-            background: #0891b2;
-            color: white;
-        }
-
         .tabs {
             display: flex;
             gap: 10px;
             margin-bottom: 20px;
+            background: #e0e0e0;
+            padding: 5px;
+            border-radius: 10px;
         }
 
         .tab {
             flex: 1;
-            padding: 12px;
-            background: #e0e0e0;
+            padding: 10px;
+            background: transparent;
             border: none;
             border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
+            color: #555;
         }
 
         .tab.active {
             background: #0891b2;
             color: white;
+        }
+
+        /* THEORY SECTION STYLES */
+        .theory-section {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            margin-top: 40px;
+        }
+
+        .theory-header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .theory-header h2 {
+            font-size: 2.2em;
+            color: #1a1a2e;
+            margin-bottom: 10px;
+        }
+
+        .theory-header p {
+            color: #666;
+            font-size: 1.1em;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .theory-header::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: #0891b2;
+            margin: 20px auto 0;
+            border-radius: 2px;
+        }
+
+        .theory-block {
+            margin-bottom: 50px;
+        }
+
+        .theory-block h3 {
+            font-size: 1.6em;
+            color: #0891b2;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .theory-block p {
+            line-height: 1.7;
+            color: #444;
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+
+        .theory-block ul {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        .theory-block li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        .theory-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 800px) {
+            .theory-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .complexity-card {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #0891b2;
+        }
+
+        .complexity-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 5px;
+        }
+
+        .complexity-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .complexity-val {
+            font-family: 'Courier New', monospace;
+            font-weight: 700;
+            color: #e11d48;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 25px;
+            border-radius: 10px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+            line-height: 1.5;
+            border: 1px solid #333;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .keyword {
+            color: #569cd6;
+        }
+
+        .type {
+            color: #4ec9b0;
+        }
+
+        .string {
+            color: #ce9178;
+        }
+
+        .comment {
+            color: #6a9955;
+        }
+
+        .func {
+            color: #dcdcaa;
+        }
+
+        .highlight-box {
+            background: #ecfeff;
+            border: 1px solid #a5f3fc;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .highlight-title {
+            font-weight: 700;
+            color: #0e7490;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
     </style>
 </head>
@@ -227,10 +372,11 @@
     </div>
 
     <div class="container">
+        <!-- Main Interactive Section -->
         <div class="main-grid">
             <div class="left-column">
                 <div class="card">
-                    <h2><i class="fas fa-project-diagram"></i> Linked List Visualizer</h2>
+                    <h2><i class="fas fa-play"></i> Interactive Visualizer</h2>
                     <div class="tabs">
                         <button class="tab active" onclick="switchMode('singly')">Singly Linked List</button>
                         <button class="tab" onclick="switchMode('doubly')">Doubly Linked List</button>
@@ -243,8 +389,7 @@
 
                     <div id="listControls" class="controls">
                         <div class="input-group">
-                            <input type="number" id="nodeValue" placeholder="Val" value="10"
-                                style="padding: 10px; border-radius: 8px; border: 1px solid #ccc; width: 80px;">
+                            <input type="number" id="nodeValue" placeholder="Val" value="10">
                             <button class="btn btn-primary" onclick="insertHead()">Insert Head</button>
                             <button class="btn btn-primary" onclick="insertTail()">Insert Tail</button>
                         </div>
@@ -264,55 +409,163 @@
 
             <div class="right-column">
                 <div class="card">
-                    <h2><i class="fas fa-info-circle"></i> Complexity</h2>
-                    <table class="complexity-table">
-                        <thead>
-                            <tr>
-                                <th>Op</th>
-                                <th>Singly</th>
-                                <th>Doubly</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Access</td>
-                                <td>O(n)</td>
-                                <td>O(n)</td>
-                            </tr>
-                            <tr>
-                                <td>Insert Head</td>
-                                <td>O(1)</td>
-                                <td>O(1)</td>
-                            </tr>
-                            <tr>
-                                <td>Insert Tail</td>
-                                <td>O(1)*</td>
-                                <td>O(1)</td>
-                            </tr>
-                            <tr>
-                                <td>Delete Head</td>
-                                <td>O(1)</td>
-                                <td>O(1)</td>
-                            </tr>
-                            <tr>
-                                <td>Delete Tail</td>
-                                <td>O(n)</td>
-                                <td>O(1)</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <p style="font-size: 12px; color: #666;">*Assuming tail pointer is maintained.</p>
+                    <h2><i class="fas fa-lightbulb"></i> Quick Insights</h2>
+                    <div id="conceptInfo">
+                        <h4>Singly Linked List</h4>
+                        <p style="color: #555; font-size: 14px; margin-bottom: 10px;">A collection of nodes where each
+                            node points to the next node. The last node points to NULL.</p>
+                        <div class="highlight-box">
+                            <div class="highlight-title"><i class="fas fa-check-circle"></i> Best For</div>
+                            Constant-time insertions and deletions at the head.
+                        </div>
+                    </div>
                 </div>
 
                 <div class="card">
-                    <h2><i class="fas fa-lightbulb"></i> Concepts</h2>
-                    <div id="conceptInfo">
-                        <h4>Singly Linked List</h4>
-                        <p style="color: #555; font-size: 14px; margin-bottom: 10px;">Each node points to the next node.
-                            Last node points to null.</p>
-                        <pre
-                            style="background: #f0f0f0; padding: 10px; border-radius: 6px; font-size: 12px;">Node { val, next }</pre>
+                    <h2><i class="fas fa-stopwatch"></i> Complexity At a Glance</h2>
+                    <div class="complexity-card" style="border:none; padding:0; background:transparent;">
+                        <div class="complexity-item"><span>Insert Head</span> <span class="complexity-val">O(1)</span>
+                        </div>
+                        <div class="complexity-item"><span>Insert Tail</span> <span class="complexity-val">O(N)*</span>
+                        </div>
+                        <div class="complexity-item"><span>Delete Head</span> <span class="complexity-val">O(1)</span>
+                        </div>
+                        <div class="complexity-item"><span>Search</span> <span class="complexity-val">O(N)</span></div>
                     </div>
+                    <p style="font-size: 11px; margin-top:5px; color:#666;">*O(1) if tail pointer maintained</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comprehensive Theory Section -->
+        <div class="theory-section">
+            <div class="theory-header">
+                <h2>Comprehensive Guide</h2>
+                <p>Mastering Linked Lists: Structures, Memory, and Algorithms.</p>
+            </div>
+
+            <!-- Topic 1 -->
+            <div class="theory-block">
+                <h3><i class="fas fa-project-diagram"></i> Anatomy of a Linked List</h3>
+                <p>A <strong>Linked List</strong> is a linear data structure where elements are not stored at contiguous
+                    memory locations. Instead, the elements are linked using pointers.</p>
+
+                <div class="theory-grid">
+                    <div>
+                        <h4>Key Characteristics</h4>
+                        <ul>
+                            <li><strong>Dynamic Size:</strong> Can grow and shrink during runtime without reallocating
+                                (unlike static arrays).</li>
+                            <li><strong>Non-contiguous Memory:</strong> Nodes can be scattered in memory, linked by
+                                addresses.</li>
+                            <li><strong>Efficient Insert/Delete:</strong> O(1) if the pointer to the location is known.
+                            </li>
+                            <li><strong>No Random Access:</strong> Must traverse from Head to reach the K-th element
+                                (O(N)).</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>Why use it?</h4>
+                        <p>Arrays effectively "waste" memory if allocated too large, and are expensive to resize. Linked
+                            Lists pay a small penalty (extra pointer per node) but offer true dynamic sizing and
+                            efficient insertions/removals in the middle of the sequence.</p>
+                    </div>
+                </div>
+
+                <h4>Node Implementation</h4>
+                <div class="code-block">
+                    <span class="keyword">class</span> <span class="type">Node</span> {
+                    <span class="type">int</span> data;
+                    <span class="type">Node</span> next; <span class="comment">// Pointer to next node</span>
+
+                    <span class="keyword">public</span> <span class="func">Node</span>(<span class="type">int</span> d)
+                    {
+                    data = d;
+                    next = <span class="keyword">null</span>;
+                    }
+                    }
+                </div>
+            </div>
+
+            <hr style="border:0; border-top:1px solid #eee; margin: 40px 0;">
+
+            <!-- Topic 2 -->
+            <div class="theory-block">
+                <h3><i class="fas fa-exchange-alt"></i> Types of Linked Lists</h3>
+
+                <div class="theory-grid">
+                    <div>
+                        <h4>1. Singly Linked List</h4>
+                        <p>Navigation is forward only. <br><code>Head -> A -> B -> C -> NULL</code></p>
+
+                        <h4>2. Doubly Linked List</h4>
+                        <p>Navigation is both forward and backward. Each node has <code>next</code> and
+                            <code>prev</code>.<br><code>NULL <-> A <-> B <-> C <-> NULL</code></p>
+                    </div>
+                    <div>
+                        <h4>3. Circular Linked List</h4>
+                        <p>The last node points back to the first node instead of NULL. Useful for round-robin
+                            scheduling.</p>
+
+                        <div class="highlight-box">
+                            <div class="highlight-title"><i class="fas fa-microchip"></i> Real World Use</div>
+                            <strong>OS Task Scheduling:</strong> Circular lists are often used to manage running
+                            applications in a round-robin fashion.
+                            <br><strong>Browser History:</strong> Doubly linked lists allow you to go Back and Forward
+                            effectively.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr style="border:0; border-top:1px solid #eee; margin: 40px 0;">
+
+            <!-- Topic 3 -->
+            <div class="theory-block">
+                <h3><i class="fas fa-sync-alt"></i> Cycle Detection: Floyd's Algorithm</h3>
+                <p>Detecting a cycle in a linked list is a classic problem. The naive set-based approach uses O(N)
+                    memory. <strong>Floyd's Cycle-Finding Algorithm</strong> (Tortoise and Hare) does it in O(1) space.
+                </p>
+
+                <div class="theory-grid">
+                    <div>
+                        <h4>How it Works</h4>
+                        <ol style="margin-left: 20px;">
+                            <li>Initialize two pointers, <strong>Slow</strong> and <strong>Fast</strong>, at Head.</li>
+                            <li>Move Slow by 1 step, Fast by 2 steps.</li>
+                            <li>If Fast reaches NULL, there is no cycle.</li>
+                            <li>If Fast meets Slow, a cycle exists.</li>
+                        </ol>
+                    </div>
+                    <div class="complexity-card">
+                        <h4>Algorithm Analysis</h4>
+                        <div class="complexity-item"><span>Time Complexity</span> <span
+                                class="complexity-val">O(N)</span></div>
+                        <div class="complexity-item"><span>Space Complexity</span> <span
+                                class="complexity-val">O(1)</span></div>
+                        <div style="font-size: 0.8em; color: #666; margin-top: 5px;">Requires no hash map or visiting
+                            flags.</div>
+                    </div>
+                </div>
+
+                <h4>Implementation</h4>
+                <div class="code-block">
+                    <span class="type">boolean</span> <span class="func">hasCycle</span>(Node head) {
+                    <span class="keyword">if</span> (head == <span class="keyword">null</span>) <span
+                        class="keyword">return</span> <span class="keyword">false</span>;
+                    <span class="type">Node</span> slow = head;
+                    <span class="type">Node</span> fast = head;
+
+                    <span class="keyword">while</span> (fast != <span class="keyword">null</span> && fast.next != <span
+                        class="keyword">null</span>) {
+                    slow = slow.next; <span class="comment">// 1 step</span>
+                    fast = fast.next.next; <span class="comment">// 2 steps</span>
+
+                    <span class="keyword">if</span> (slow == fast) <span class="keyword">return</span> <span
+                        class="keyword">true</span>; <span class="comment">// Collision</span>
+                    }
+                    <span class="keyword">return</span> <span class="keyword">false</span>;
+                    }
                 </div>
             </div>
         </div>
@@ -355,11 +608,11 @@
             // Update Info
             const concept = document.getElementById('conceptInfo');
             if (mode === 'singly') {
-                concept.innerHTML = '<h4>Singly Linked List</h4><p>Nodes point forward only. Efficient for head operations.</p>';
+                concept.innerHTML = '<h4>Singly Linked List</h4><p style="color:#555; font-size:14px; margin-bottom:10px;">Nodes point forward only. Efficient for head operations but requires traversal for tail without a tail pointer.</p><div class="highlight-box"><div class="highlight-title"><i class="fas fa-check-circle"></i> Best For</div>Simple Stacks implementation.</div>';
             } else if (mode === 'doubly') {
-                concept.innerHTML = '<h4>Doubly Linked List</h4><p>Nodes have next and prev pointers. Can traverse both ways.</p>';
+                concept.innerHTML = '<h4>Doubly Linked List</h4><p style="color:#555; font-size:14px; margin-bottom:10px;">Nodes have next and prev pointers. Can traverse both ways.</p><div class="highlight-box"><div class="highlight-title"><i class="fas fa-check-circle"></i> Best For</div>Deque implementation, Browser History.</div>';
             } else {
-                concept.innerHTML = '<h4>Floyd\'s Cycle Detection</h4><p>Use two pointers (Tortoise & Hare). Slow moves 1 step, Fast moves 2. If they meet, there is a cycle.</p>';
+                concept.innerHTML = '<h4>Floyd\'s Cycle Detection</h4><p style="color:#555; font-size:14px; margin-bottom:10px;">Use two pointers (Tortoise & Hare). Slow moves 1 step, Fast moves 2. If they meet, there is a cycle.</p><div class="highlight-box"><div class="highlight-title"><i class="fas fa-check-circle"></i> Best For</div>Loop detection in O(1) space.</div>';
             }
         }
 
@@ -384,8 +637,6 @@
             }
             ctx.stroke();
 
-            // Head (simplified)
-            // ... (omitted for brevity in this tool call, will use simple lines or circles)
             ctx.fillStyle = color;
             ctx.beginPath();
             if (curvy) ctx.arc(toX, toY, 4, 0, Math.PI * 2);
@@ -452,6 +703,7 @@
             // Labels
             if (list.length > 0) {
                 ctx.fillStyle = '#d97706';
+                ctx.font = '12px Segoe UI';
                 ctx.fillText('HEAD', startX + 30, startY + 60);
                 ctx.fillText('TAIL', startX + (list.length - 1) * gap + 30, startY + 60);
             }
@@ -491,7 +743,7 @@
                 x: 80 + i * 80, y: 150
             }));
             // Create cycle
-            cycleIndex = 3; // Cycle starts at index 3
+            cycleIndex = 3;
             slow = 0;
             fast = 0;
             drawFloyd(slow, fast);
@@ -553,6 +805,8 @@
             stepInfo.classList.add('active');
 
             slow = 0;
+            fast = 1; // Correct start for visual pacing? Standard is 0. Using 0/0 is fine.
+            slow = 0;
             fast = 0;
 
             while (true) {
@@ -560,46 +814,50 @@
                 stepInfo.textContent = `Slow at ${slow}, Fast at ${fast}`;
                 await sleep(1000);
 
-                if (slow === fast && slow !== 0) {
+                if (slow === fast && slow !== 0) { // Should not trigger at start (0) if loop runs
+                    // But here we start at 0, check after moves to avoid start trigger.
+                    // Logic adjust: Check AFTER move, or check if slow!=0
+                }
+
+                // My logic in previous file: check at start? No, loop structure.
+                // Let's rely on standard logic: Move, then check.
+
+                if (cycleIndex == -1 && fast >= floydNodes.length) { // safety
+                    stepInfo.textContent = "No cycle.";
+                    break;
+                }
+
+                // MOVE
+                slow = slow + 1;
+                if (cycleIndex !== -1 && slow >= floydNodes.length) slow = cycleIndex + (slow - floydNodes.length);
+
+                // Fast + 2
+                let next = fast + 1;
+                if (cycleIndex !== -1 && next >= floydNodes.length) next = cycleIndex + (next - floydNodes.length);
+                let nextNext = next + 1;
+                if (cycleIndex !== -1 && nextNext >= floydNodes.length) nextNext = cycleIndex + (nextNext - floydNodes.length);
+                fast = nextNext;
+
+                if (cycleIndex === -1 && fast >= floydNodes.length) {
+                    stepInfo.textContent = "Fast reached NULL. No cycle.";
+                    drawFloyd(slow, floydNodes.length);
+                    break;
+                }
+
+                // CHECK
+                if (slow === fast) {
                     stepInfo.textContent = "Cycle Detected! Slow and Fast met.";
                     drawFloyd(slow, fast, true);
                     break;
                 }
-
-                slow++; // moves 1
-
-                // Fast moves 2, careful with cycle
-                if (cycleIndex !== -1) {
-                    // Simulate linkage for fast
-                    let fNext = fast + 1;
-                    if (fast === floydNodes.length - 1) fNext = cycleIndex;
-
-                    let fNextNext = fNext + 1;
-                    if (fNext === floydNodes.length - 1) fNextNext = cycleIndex;
-
-                    fast = fNextNext;
-
-                    // Simulate linkage for slow
-                    if (slow === floydNodes.length) slow = cycleIndex; // if just wrapped
-                } else {
-                    // Linear logic
-                    fast += 2;
-                    if (fast >= floydNodes.length) {
-                        stepInfo.textContent = "Fast reached NULL. No cycle.";
-                        drawFloyd(slow, floydNodes.length); // draw fast out of bounds
-                        break;
-                    }
-                }
-
-                // Correct standard wrap logic for visual simplicity
-                if (cycleIndex !== -1 && slow >= floydNodes.length) slow = cycleIndex + (slow - floydNodes.length);
             }
             isAnimating = false;
         }
 
         function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
-        switchMode('singly');
+        // Initial
+        drawList();
     </script>
 </body>
 

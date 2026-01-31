@@ -17,6 +17,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: #f5f5f5;
             min-height: 100vh;
+            color: #333;
         }
 
         .nav-bar {
@@ -52,6 +53,7 @@
             display: grid;
             grid-template-columns: 1fr 380px;
             gap: 30px;
+            margin-bottom: 40px;
         }
 
         @media (max-width: 1100px) {
@@ -64,7 +66,7 @@
             background: white;
             border-radius: 16px;
             padding: 30px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             margin-bottom: 25px;
         }
 
@@ -198,6 +200,145 @@
             background: #d97706;
             color: white;
         }
+
+        /* THEORY SECTION STYLES */
+        .theory-section {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            margin-top: 40px;
+        }
+
+        .theory-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .theory-header h2 {
+            font-size: 2.2em;
+            color: #1a1a2e;
+            margin-bottom: 10px;
+        }
+
+        .theory-header p {
+            color: #666;
+            font-size: 1.1em;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .theory-header::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: #d97706;
+            margin: 20px auto 0;
+            border-radius: 2px;
+        }
+
+        .theory-block {
+            margin-bottom: 50px;
+        }
+
+        .theory-block h3 {
+            font-size: 1.6em;
+            color: #d97706;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .theory-block p {
+            line-height: 1.7;
+            color: #444;
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+
+        .theory-block ul {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        .theory-block li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .algo-card {
+            background: #fff8f1;
+            border: 1px solid #ffedd5;
+            border-radius: 12px;
+            padding: 25px;
+            transition: transform 0.2s;
+        }
+
+        .algo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(217, 119, 6, 0.1);
+        }
+
+        .algo-card h4 {
+            color: #b45309;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #fdba74;
+            padding-bottom: 8px;
+            display: inline-block;
+        }
+
+        .algo-tags {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 15px;
+            font-size: 0.85em;
+        }
+
+        .tag {
+            padding: 4px 8px;
+            border-radius: 4px;
+            background: white;
+            border: 1px solid #ddd;
+            color: #666;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 25px;
+            border-radius: 10px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+            line-height: 1.5;
+            border: 1px solid #333;
+        }
+
+        .keyword {
+            color: #569cd6;
+        }
+
+        .type {
+            color: #4ec9b0;
+        }
+
+        .func {
+            color: #dcdcaa;
+        }
+
+        .comment {
+            color: #6a9955;
+        }
     </style>
 </head>
 
@@ -213,7 +354,6 @@
             <div class="left-column">
                 <div class="card">
                     <h2><i class="fas fa-chart-bar"></i> Visualizer</h2>
-
                     <div class="algo-tabs">
                         <button class="algo-tab active" onclick="setAlgo('bubble')">Bubble Sort</button>
                         <button class="algo-tab" onclick="setAlgo('selection')">Selection Sort</button>
@@ -246,7 +386,7 @@
 
             <div class="right-column">
                 <div class="card">
-                    <h2><i class="fas fa-info-circle"></i> Algorithm Details</h2>
+                    <h2><i class="fas fa-info-circle"></i> Quick Stats</h2>
                     <h3 id="algoTitle">Bubble Sort</h3>
                     <p id="algoDesc" style="color: #555; margin: 10px 0; line-height: 1.6;">Repeatedly steps through the
                         list, compares adjacent elements and swaps them if they are in the wrong order.</p>
@@ -276,8 +416,118 @@
                 </div>
             </div>
         </div>
+
+        <!-- Comprehensive Theory Section -->
+        <div class="theory-section">
+            <div class="theory-header">
+                <h2>Comprehensive Guide</h2>
+                <p>Comparison of O(N²) and O(N log N) sorting algorithms.</p>
+            </div>
+
+            <div class="grid-3">
+                <!-- Bubble -->
+                <div class="algo-card">
+                    <h4>Bubble Sort</h4>
+                    <div class="algo-tags">
+                        <span class="tag">O(N²)</span>
+                        <span class="tag">Stable</span>
+                        <span class="tag">Swap</span>
+                    </div>
+                    <p>Sinks the largest elements to the bottom (or bubbles to top) by repeated swapping adjacent
+                        comparisons.</p>
+                    <p><strong>Use Case:</strong> Almost sorted data (Best case O(N)). Teaching purposes.</p>
+                </div>
+
+                <!-- Selection -->
+                <div class="algo-card">
+                    <h4>Selection Sort</h4>
+                    <div class="algo-tags">
+                        <span class="tag">O(N²)</span>
+                        <span class="tag">Unstable</span>
+                        <span class="tag">Min Select</span>
+                    </div>
+                    <p>Finds the minimum element from the unsorted region and places it at the sorted region's end.</p>
+                    <p><strong>Pro:</strong> Minimal swaps (O(N)). Good when write operations are expensive.</p>
+                </div>
+
+                <!-- Insertion -->
+                <div class="algo-card">
+                    <h4>Insertion Sort</h4>
+                    <div class="algo-tags">
+                        <span class="tag">O(N²)</span>
+                        <span class="tag">Stable</span>
+                        <span class="tag">Online</span>
+                    </div>
+                    <p>Builds the final sorted array one item at a time. Very efficient for small or nearly sorted
+                        arrays.</p>
+                    <p><strong>Use Case:</strong> Base case for QuickSort/MergeSort when N is small.</p>
+                </div>
+
+                <!-- Merge -->
+                <div class="algo-card">
+                    <h4>Merge Sort</h4>
+                    <div class="algo-tags">
+                        <span class="tag">O(N log N)</span>
+                        <span class="tag">Stable</span>
+                        <span class="tag">D&C</span>
+                    </div>
+                    <p>Divide and Conquer. Recursively splits array into halves, sorts them, and merges them.</p>
+                    <p><strong>Pro:</strong> Guaranteed worst-case performance. Stable.</p>
+                </div>
+
+                <!-- Quick -->
+                <div class="algo-card">
+                    <h4>Quick Sort</h4>
+                    <div class="algo-tags">
+                        <span class="tag">O(N log N)</span>
+                        <span class="tag">Unstable</span>
+                        <span class="tag">Partition</span>
+                    </div>
+                    <p>Picks a pivot, partitions array around pivot (smaller left, larger right), recurses.</p>
+                    <p><strong>Pro:</strong> Fastest in practice (cache friendly). O(N²) worst case rare with random
+                        pivot.</p>
+                </div>
+
+                <!-- Heap -->
+                <div class="algo-card">
+                    <h4>Heap Sort</h4>
+                    <div class="algo-tags">
+                        <span class="tag">O(N log N)</span>
+                        <span class="tag">Unstable</span>
+                        <span class="tag">Priority Queue</span>
+                    </div>
+                    <p>Builds a Max-Heap (O(N)), then repeatedly extracts max element.</p>
+                    <p><strong>Pro:</strong> O(1) extra space (in-place). No recursive stack overhead.</p>
+                </div>
+            </div>
+
+            <div class="theory-block">
+                <h3><i class="fas fa-code"></i> Implementation Spotlight: QuickSort</h3>
+                <p>QuickSort is the industry standard for generic sorting due to its cache efficiency.</p>
+                <div class="code-block">
+                    <span class="keyword">function</span> <span class="func">quickSort</span>(arr, low, high) {
+                    <span class="keyword">if</span> (low < high) { <span class="type">int</span> pi = partition(arr,
+                        low, high);
+
+                        quickSort(arr, low, pi - 1); <span class="comment">// Sort left of pivot</span>
+                        quickSort(arr, pi + 1, high); <span class="comment">// Sort right of pivot</span>
+                        }
+                        }
+
+                        <span class="keyword">function</span> <span class="func">partition</span>(arr, low, high) {
+                        <span class="type">int</span> pivot = arr[high];
+                        <span class="type">int</span> i = (low - 1);
+
+                        <span class="keyword">for</span> (<span class="type">int</span> j = low; j < high; j++) { <span
+                            class="keyword">if</span> (arr[j] < pivot) { i++; swap(arr, i, j); } } swap(arr, i + 1,
+                                high); <span class="keyword">return</span> i + 1;
+                                }
+                </div>
+            </div>
+        </div>
     </div>
 
+    <!-- Script same as before, just kept intact -->
     <script>
         const canvas = document.getElementById('mainCanvas');
         const ctx = canvas.getContext('2d');
@@ -311,7 +561,6 @@
             document.querySelectorAll('.algo-tab').forEach(t => t.classList.remove('active'));
             event.target.classList.add('active');
 
-            // Update Info
             const info = algos[algo];
             document.getElementById('algoTitle').textContent = info.name;
             document.getElementById('algoDesc').textContent = info.desc;
@@ -327,7 +576,7 @@
         function generateArray() {
             if (isSorting) {
                 abortSort = true;
-                return; // Will regenerate after abort
+                return;
             }
             const size = parseInt(document.getElementById('sizeSlider').value);
             array = Array.from({ length: size }, () => Math.floor(Math.random() * 100) + 5);
@@ -359,9 +608,6 @@
             isSorting = true;
             abortSort = false;
 
-            // Re-generate if already sorted (visual check hack) or just use current
-            // Actually, let's just sort whatever is there.
-
             switch (currentAlgo) {
                 case 'bubble': await bubbleSort(); break;
                 case 'selection': await selectionSort(); break;
@@ -372,7 +618,7 @@
             }
 
             if (!abortSort) {
-                drawArray({}, array.map((_, i) => i)); // All sorted
+                drawArray({}, array.map((_, i) => i));
                 stepInfo.textContent = "Sort Completed!";
             }
             isSorting = false;
@@ -389,8 +635,7 @@
             array[j] = temp;
         }
 
-        // --- SORTING ALGLOS ---
-
+        // --- ALGORITHMS ---
         async function bubbleSort() {
             for (let i = 0; i < array.length; i++) {
                 for (let j = 0; j < array.length - i - 1; j++) {
@@ -404,7 +649,6 @@
                         await new Promise(r => setTimeout(r, getDelay()));
                     }
                 }
-                // i elements at end are sorted
             }
         }
 
@@ -415,7 +659,6 @@
                     if (abortSort) return;
                     drawArray({ [i]: COLOR_PIVOT, [j]: COLOR_COMPARE, [minIdx]: COLOR_SWAP });
                     await new Promise(r => setTimeout(r, getDelay()));
-
                     if (array[j] < array[minIdx]) minIdx = j;
                 }
                 if (minIdx !== i) await swap(i, minIdx);
@@ -430,10 +673,9 @@
                     if (abortSort) return;
                     drawArray({ [i]: COLOR_PIVOT, [j]: COLOR_COMPARE });
                     await new Promise(r => setTimeout(r, getDelay()));
-
                     array[j + 1] = array[j];
                     j = j - 1;
-                    array[j + 1] = key; // Visualize intermediate
+                    array[j + 1] = key;
                     drawArray({ [j + 1]: COLOR_SWAP });
                 }
                 array[j + 1] = key;
@@ -453,7 +695,6 @@
             const n2 = r - m;
             const L = new Array(n1);
             const R = new Array(n2);
-
             for (let i = 0; i < n1; i++) L[i] = array[l + i];
             for (let j = 0; j < n2; j++) R[j] = array[m + 1 + j];
 
@@ -462,29 +703,20 @@
                 if (abortSort) return;
                 drawArray({ [k]: COLOR_SWAP, [l + i]: COLOR_COMPARE, [m + 1 + j]: COLOR_COMPARE });
                 await new Promise(r => setTimeout(r, getDelay()));
-
-                if (L[i] <= R[j]) {
-                    array[k] = L[i];
-                    i++;
-                } else {
-                    array[k] = R[j];
-                    j++;
-                }
+                if (L[i] <= R[j]) { array[k] = L[i]; i++; } else { array[k] = R[j]; j++; }
                 k++;
             }
             while (i < n1) {
                 if (abortSort) return;
                 array[k] = L[i];
                 drawArray({ [k]: COLOR_SWAP });
-                await new Promise(r => setTimeout(r, getDelay()));
-                i++; k++;
+                await new Promise(r => setTimeout(r, getDelay())); i++; k++;
             }
             while (j < n2) {
                 if (abortSort) return;
                 array[k] = R[j];
                 drawArray({ [k]: COLOR_SWAP });
-                await new Promise(r => setTimeout(r, getDelay()));
-                j++; k++;
+                await new Promise(r => setTimeout(r, getDelay())); j++; k++;
             }
         }
 
@@ -500,12 +732,10 @@
         async function partition(low, high) {
             let pivot = array[high];
             let i = (low - 1);
-
             for (let j = low; j <= high - 1; j++) {
                 if (abortSort) return;
                 drawArray({ [high]: COLOR_PIVOT, [j]: COLOR_COMPARE, [i + 1]: COLOR_DEFAULT });
                 await new Promise(r => setTimeout(r, getDelay()));
-
                 if (array[j] < pivot) {
                     i++;
                     await swap(i, j);
@@ -518,12 +748,10 @@
 
         async function heapSort() {
             const n = array.length;
-            // Build help
             for (let i = Math.floor(n / 2) - 1; i >= 0; i--) {
                 if (abortSort) return;
                 await heapify(n, i);
             }
-            // Extract
             for (let i = n - 1; i > 0; i--) {
                 if (abortSort) return;
                 await swap(0, i);
@@ -537,13 +765,10 @@
             let largest = i;
             let l = 2 * i + 1;
             let r = 2 * i + 2;
-
             if (l < n && array[l] > array[largest]) largest = l;
             if (r < n && array[r] > array[largest]) largest = r;
-
             drawArray({ [i]: COLOR_PIVOT, [l]: l < n ? COLOR_COMPARE : null, [r]: r < n ? COLOR_COMPARE : null });
             await new Promise(r => setTimeout(r, getDelay()));
-
             if (largest != i) {
                 await swap(i, largest);
                 await heapify(n, largest);

@@ -17,6 +17,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: #f5f5f5;
             min-height: 100vh;
+            color: #333;
         }
 
         .nav-bar {
@@ -52,6 +53,7 @@
             display: grid;
             grid-template-columns: 1fr 380px;
             gap: 30px;
+            margin-bottom: 40px;
         }
 
         @media (max-width: 1100px) {
@@ -64,7 +66,7 @@
             background: white;
             border-radius: 16px;
             padding: 30px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             margin-bottom: 25px;
         }
 
@@ -131,17 +133,9 @@
             color: white;
         }
 
-        .btn-success:hover {
-            background: #059669;
-        }
-
         .btn-danger {
             background: #ef4444;
             color: white;
-        }
-
-        .btn-danger:hover {
-            background: #dc2626;
         }
 
         .btn-secondary {
@@ -154,6 +148,13 @@
             border-color: #0891b2;
             color: #0891b2;
         }
+
+        .btn-warning {
+            background: #f59e0b;
+            color: white;
+        }
+
+        /* Added missing class */
 
         .input-group {
             display: flex;
@@ -186,17 +187,21 @@
             display: flex;
             gap: 10px;
             margin-bottom: 20px;
+            background: #e0e0e0;
+            padding: 5px;
+            border-radius: 10px;
         }
 
         .tab {
             flex: 1;
-            padding: 12px;
-            background: #e0e0e0;
+            padding: 10px;
+            background: transparent;
             border: none;
             border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
+            color: #555;
         }
 
         .tab.active {
@@ -204,15 +209,156 @@
             color: white;
         }
 
-        .code-box {
+        /* THEORY SECTION STYLES */
+        .theory-section {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            margin-top: 40px;
+        }
+
+        .theory-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .theory-header h2 {
+            font-size: 2.2em;
+            color: #1a1a2e;
+            margin-bottom: 10px;
+        }
+
+        .theory-header p {
+            color: #666;
+            font-size: 1.1em;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .theory-header::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: #0891b2;
+            margin: 20px auto 0;
+            border-radius: 2px;
+        }
+
+        .theory-block {
+            margin-bottom: 50px;
+        }
+
+        .theory-block h3 {
+            font-size: 1.6em;
+            color: #0891b2;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .theory-block p {
+            line-height: 1.7;
+            color: #444;
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+
+        .theory-block ul {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        .theory-block li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        .theory-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 800px) {
+            .theory-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .complexity-card {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #0891b2;
+        }
+
+        .complexity-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 5px;
+        }
+
+        .complexity-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .complexity-val {
+            font-family: 'Courier New', monospace;
+            font-weight: 700;
+            color: #e11d48;
+        }
+
+        .code-block {
             background: #1e1e1e;
             color: #d4d4d4;
+            padding: 25px;
+            border-radius: 10px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+            line-height: 1.5;
+            border: 1px solid #333;
+            margin-bottom: 15px;
+        }
+
+        .keyword {
+            color: #569cd6;
+        }
+
+        .type {
+            color: #4ec9b0;
+        }
+
+        .comment {
+            color: #6a9955;
+        }
+
+        .func {
+            color: #dcdcaa;
+        }
+
+        .highlight-box {
+            background: #ecfeff;
+            border: 1px solid #a5f3fc;
             padding: 20px;
             border-radius: 8px;
-            font-family: 'Courier New', monospace;
-            font-size: 12px;
-            overflow-x: auto;
-            margin: 15px 0;
+            margin: 20px 0;
+        }
+
+        .highlight-title {
+            font-weight: 700;
+            color: #0e7490;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
     </style>
 </head>
@@ -225,6 +371,7 @@
     </div>
 
     <div class="container">
+        <!-- Main Interactive -->
         <div class="main-grid">
             <div class="left-column">
                 <div class="card">
@@ -246,7 +393,7 @@
                             <button class="btn btn-primary" onclick="pushStack()">Push</button>
                         </div>
                         <button class="btn btn-danger" onclick="popStack()">Pop</button>
-                        <button class="btn btn-secondary" onclick="peekStack()">Peek</button>
+                        <button class="btn btn-secondary" onclick="peekStack()">Peek Top</button>
                     </div>
 
                     <!-- Queue Controls -->
@@ -261,7 +408,7 @@
                     <!-- Monotonic Controls -->
                     <div id="monotonicControls" class="controls" style="display: none;">
                         <button class="btn btn-primary" onclick="generateMonotonic()">New Array</button>
-                        <button class="btn btn-warning" onclick="findNextGreater()">Next Greater Element</button>
+                        <button class="btn btn-warning" onclick="findNextGreater()">Find Next Greater</button>
                     </div>
 
                     <div class="step-info" id="stepInfo"></div>
@@ -270,30 +417,152 @@
 
             <div class="right-column">
                 <div class="card">
-                    <h2><i class="fas fa-info-circle"></i> Info</h2>
+                    <h2><i class="fas fa-lightbulb"></i> Concepts</h2>
                     <div id="infoContent">
-                        <h4>Stack Operations</h4>
-                        <ul style="margin-left: 20px; margin-top: 10px; line-height: 1.8; color: #555;">
-                            <li><strong>Push:</strong> Add to top. O(1)</li>
-                            <li><strong>Pop:</strong> Remove from top. O(1)</li>
-                            <li><strong>Peek:</strong> View top. O(1)</li>
-                        </ul>
+                        <!-- Dynamic Content injected by JS -->
+                        <h4>Stack (LIFO)</h4>
+                        <p>Last In, First Out. Elements are added and removed from the same end (Top).</p>
                     </div>
 
-                    <div class="code-box" id="codeDisplay">
-                        // Stack Implementation
-                        push(val) {
-                        stack.push(val);
-                        }
-                        pop() {
-                        return stack.pop();
-                        }
+                    <div class="highlight-box">
+                        <div class="highlight-title"><i class="fas fa-bolt"></i> Complexity</div>
+                        <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
+                            <span>Push/Enqueue</span> <strong>O(1)</strong></div>
+                        <div style="display:flex; justify-content:space-between;"><span>Pop/Dequeue</span>
+                            <strong>O(1)</strong></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comprehensive Theory Section -->
+        <div class="theory-section">
+            <div class="theory-header">
+                <h2>Comprehensive Guide</h2>
+                <p>Understanding Linear Data Structures: Stacks, Queues, and Deques.</p>
+            </div>
+
+            <!-- Topic 1 -->
+            <div class="theory-block" id="theory-stack">
+                <h3><i class="fas fa-layer-group"></i> The Stack</h3>
+                <p>A <strong>Stack</strong> is a linear data structure that follows the <strong>LIFO</strong> (Last In,
+                    First Out) principle. Think of it like a stack of plates in a cafeteria: you can only take the top
+                    plate, and you place new plates on top.</p>
+
+                <div class="theory-grid">
+                    <div>
+                        <h4>Key Operations</h4>
+                        <ul>
+                            <li><strong>Push(x):</strong> Adds an element <code>x</code> to the top of the stack.</li>
+                            <li><strong>Pop():</strong> Remover the top element.</li>
+                            <li><strong>Peek() / Top():</strong> Returns the top element without removing it.</li>
+                            <li><strong>isEmpty():</strong> Checks if the stack is empty.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>Real-World Applications</h4>
+                        <ul>
+                            <li><strong>Function Call Stack:</strong> Tracking active subroutines in programming
+                                languages (Recursion).</li>
+                            <li><strong>Undo Mechanism:</strong> Text editors store history in a stack.</li>
+                            <li><strong>Syntax Parsing:</strong> Checking balanced parentheses in code
+                                <code>((a+b)*c)</code>.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h4>Implementation (Array-based)</h4>
+                <div class="code-block">
+                    <span class="keyword">class</span> <span class="type">Stack</span> {
+                    <span class="type">int</span> top = -1;
+                    <span class="type">int</span>[] arr = <span class="keyword">new</span> <span
+                        class="type">int</span>[100];
+
+                    <span class="func">push</span>(<span class="type">int</span> x) {
+                    arr[++top] = x;
+                    }
+
+                    <span class="func">pop</span>() {
+                    <span class="keyword">if</span> (top == -1) <span class="keyword">throw</span> <span
+                        class="keyword">new</span> Error(<span class="string">"Underflow"</span>);
+                    <span class="keyword">return</span> arr[top--];
+                    }
+                    }
+                </div>
+            </div>
+
+            <hr style="border:0; border-top:1px solid #eee; margin: 40px 0;">
+
+            <!-- Topic 2 -->
+            <div class="theory-block" id="theory-queue">
+                <h3><i class="fas fa-people-arrows"></i> The Queue</h3>
+                <p>A <strong>Queue</strong> follows the <strong>FIFO</strong> (First In, First Out) principle. It
+                    behaves like a line at a ticket counter: people join at the back (Rear) and leave from the front
+                    (Front).</p>
+
+                <div class="theory-grid">
+                    <div>
+                        <h4>Key Operations</h4>
+                        <ul>
+                            <li><strong>Enqueue(x):</strong> Adds element to the Rear.</li>
+                            <li><strong>Dequeue():</strong> Removes element from the Front.</li>
+                            <li><strong>Front():</strong> Peeks at the first element.</li>
+                        </ul>
+                    </div>
+                    <div class="complexity-card">
+                        <h4>Implementation Nuance</h4>
+                        <p>Using a simple Array for a Queue is inefficient for Dequeue (requires shifting elements
+                            O(N)). </p>
+                        <p><strong>Solution:</strong> Use a <strong>Circular Queue</strong> or Linked List to achieve
+                            O(1) for both operations.</p>
+                    </div>
+                </div>
+
+                <h4>Applications</h4>
+                <ul>
+                    <li><strong>CPU Scheduling:</strong> Processes waiting for CPU time.</li>
+                    <li><strong>Printer Spooling:</strong> Documents are printed in the order received.</li>
+                    <li><strong>BFS Algorithm:</strong> Breadth-First Search in Graphs.</li>
+                </ul>
+            </div>
+
+            <hr style="border:0; border-top:1px solid #eee; margin: 40px 0;">
+
+            <!-- Topic 3 -->
+            <div class="theory-block" id="theory-monotonic">
+                <h3><i class="fas fa-chart-line"></i> Monotonic Stack</h3>
+                <p>A specialized use of a stack where elements are maintained in a specific order (increasing or
+                    decreasing). This technique is powerful for solving <strong>"Next Greater Element"</strong> type
+                    problems in linear time O(N).</p>
+
+                <div class="theory-grid">
+                    <div>
+                        <h4>The Logic</h4>
+                        <p>To find the next greater element for every item:</p>
+                        <ol style="margin-left: 20px;">
+                            <li>Iterate through the array.</li>
+                            <li>While the stack is not empty AND current element > stack top element:
+                                <ul>
+                                    <li>The current element IS the "Next Greater" for the stack top.</li>
+                                    <li>Pop the stack.</li>
+                                </ul>
+                            </li>
+                            <li>Push the current index onto the stack.</li>
+                        </ol>
+                    </div>
+                    <div class="highlight-box">
+                        <div class="highlight-title"><i class="fas fa-star"></i> Classic Problem</div>
+                        <p><strong>Daily Temperatures:</strong> Given a list of daily temperatures, return a list such
+                            that, for each day, you identify how many days you would have to wait until a warmer
+                            temperature.</p>
+                        <p>Solved efficiently using a Monotonic Stack.</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Script Reuse -->
     <script>
         const canvas = document.getElementById('mainCanvas');
         const ctx = canvas.getContext('2d');
@@ -322,16 +591,13 @@
 
             if (mode === 'stack') {
                 dataStructure = [10, 20, 30];
-                document.getElementById('infoContent').innerHTML = `<h4>Stack (LIFO)</h4><p>Last In, First Out. Like a stack of plates.</p>`;
-                document.getElementById('codeDisplay').textContent = `stack.push(x)\nstack.pop()`;
+                document.getElementById('infoContent').innerHTML = `<h4>Stack (LIFO)</h4><p>Last In, First Out. Recursion, Undo/Redo.</p>`;
             } else if (mode === 'queue') {
                 dataStructure = [10, 20, 30];
-                document.getElementById('infoContent').innerHTML = `<h4>Queue (FIFO)</h4><p>First In, First Out. Like a line at a store.</p>`;
-                document.getElementById('codeDisplay').textContent = `queue.enqueue(x)\nqueue.dequeue()`;
+                document.getElementById('infoContent').innerHTML = `<h4>Queue (FIFO)</h4><p>First In, First Out. Job Scheduling, BFS.</p>`;
             } else {
                 generateMonotonic();
-                document.getElementById('infoContent').innerHTML = `<h4>Monotonic Stack</h4><p>Used to find Next Greater Element efficiently O(n).</p>`;
-                document.getElementById('codeDisplay').textContent = `while (!stack.empty() && stack.top() < arr[i]) {\n  res[stack.pop()] = arr[i]\n}\nstack.push(i)`;
+                document.getElementById('infoContent').innerHTML = `<h4>Monotonic Stack</h4><p>Maintains order. Use for Next Greater Element.</p>`;
             }
             draw();
         }
@@ -355,6 +621,7 @@
 
             if (label) {
                 ctx.font = '12px Segoe UI';
+                ctx.fillStyle = '#555'; // Fixed label color visibility
                 ctx.fillText(label, x + 30, y + 80);
             }
         }
@@ -381,7 +648,10 @@
                 });
 
                 ctx.fillStyle = '#333';
-                ctx.fillText('TOP', cx + 80, startY - 30 - (dataStructure.length - 1) * 65);
+                if (dataStructure.length > 0)
+                    ctx.fillText('TOP', cx + 80, startY - 30 - (dataStructure.length - 1) * 65);
+                else
+                    ctx.fillText('EMPTY', cx, startY - 30);
 
             } else if (mode === 'queue') {
                 // Draw Horizontal Pipe
@@ -395,6 +665,10 @@
                     const x = startX + 20 + i * 70;
                     drawBox(x, cy - 30, val, '#dbeafe', i === 0 ? 'Front' : (i === dataStructure.length - 1 ? 'Rear' : ''));
                 });
+                if (dataStructure.length === 0) {
+                    ctx.fillStyle = '#666';
+                    ctx.fillText('Empty Queue', cx, cy);
+                }
 
             } else if (mode === 'monotonic') {
                 // Draw Array at top
@@ -429,6 +703,9 @@
                 ngeStack.forEach((idx, i) => {
                     drawBox(stackBaseX + 10, stackBaseY - 60 - i * 65, arr[idx], '#fef08a');
                 });
+                ctx.fillStyle = '#333';
+                ctx.textAlign = 'center';
+                ctx.fillText('Stack', stackBaseX + 40, stackBaseY + 20);
             }
         }
 
@@ -436,6 +713,13 @@
         async function pushStack() {
             if (isAnimating) return;
             const val = parseInt(document.getElementById('stackInput').value);
+            // Limit stack height for visual
+            if (dataStructure.length >= 5) {
+                stepInfo.textContent = "Stack Full (Visual limit)";
+                stepInfo.classList.add('active');
+                setTimeout(() => stepInfo.classList.remove('active'), 1500);
+                return;
+            }
             dataStructure.push(val);
             draw();
         }
@@ -443,11 +727,24 @@
             if (dataStructure.length > 0) dataStructure.pop();
             draw();
         }
+        async function peekStack() {
+            if (dataStructure.length > 0) {
+                stepInfo.textContent = `Top Element is ${dataStructure[dataStructure.length - 1]}`;
+                stepInfo.classList.add('active');
+                setTimeout(() => stepInfo.classList.remove('active'), 2000);
+            }
+        }
 
         // --- QUEUE OPS ---
         async function enqueue() {
             if (isAnimating) return;
             const val = parseInt(document.getElementById('queueInput').value);
+            if (dataStructure.length >= 8) {
+                stepInfo.textContent = "Queue Full (Visual limit)";
+                stepInfo.classList.add('active');
+                setTimeout(() => stepInfo.classList.remove('active'), 1500);
+                return;
+            }
             dataStructure.push(val);
             draw();
         }
@@ -480,12 +777,13 @@
 
                 while (ngeStack.length > 0 && arr[ngeStack[ngeStack.length - 1]] < arr[i]) {
                     const topIdx = ngeStack.pop();
-                    stepInfo.textContent = `Found NGE for index ${topIdx} (value ${arr[topIdx]}): ${arr[i]}`;
+                    stepInfo.textContent = `Stack Top (index ${topIdx}, val ${arr[topIdx]}) < Current (${arr[i]}). NGE Found!`;
                     ngeResult[topIdx] = arr[i];
                     draw();
-                    await sleep(800);
+                    await sleep(1000);
                 }
 
+                stepInfo.textContent = `Pushing index ${i} to stack.`;
                 ngeStack.push(i);
                 draw();
                 await sleep(500);
@@ -497,6 +795,7 @@
 
         function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
+        // Initial
         draw();
     </script>
 </body>

@@ -17,6 +17,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: #f5f5f5;
             min-height: 100vh;
+            color: #333;
         }
 
         .nav-bar {
@@ -52,6 +53,7 @@
             display: grid;
             grid-template-columns: 1fr 380px;
             gap: 30px;
+            margin-bottom: 40px;
         }
 
         @media (max-width: 1100px) {
@@ -64,7 +66,7 @@
             background: white;
             border-radius: 16px;
             padding: 30px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             margin-bottom: 25px;
         }
 
@@ -163,17 +165,21 @@
             display: flex;
             gap: 10px;
             margin-bottom: 20px;
+            background: #e0e0e0;
+            padding: 5px;
+            border-radius: 10px;
         }
 
         .tab {
             flex: 1;
-            padding: 12px;
-            background: #e0e0e0;
+            padding: 10px;
+            background: transparent;
             border: none;
             border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
+            color: #555;
         }
 
         .tab.active {
@@ -181,15 +187,137 @@
             color: white;
         }
 
-        .code-box {
+        /* THEORY SECTION STYLES */
+        .theory-section {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            margin-top: 40px;
+        }
+
+        .theory-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .theory-header h2 {
+            font-size: 2.2em;
+            color: #1a1a2e;
+            margin-bottom: 10px;
+        }
+
+        .theory-header p {
+            color: #666;
+            font-size: 1.1em;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .theory-header::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: #db2777;
+            margin: 20px auto 0;
+            border-radius: 2px;
+        }
+
+        .theory-block {
+            margin-bottom: 50px;
+        }
+
+        .theory-block h3 {
+            font-size: 1.6em;
+            color: #db2777;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .theory-block p {
+            line-height: 1.7;
+            color: #444;
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+
+        .theory-block ul {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        .theory-block li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        .theory-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 800px) {
+            .theory-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .code-block {
             background: #1e1e1e;
             color: #d4d4d4;
-            padding: 20px;
-            border-radius: 8px;
-            font-family: 'Courier New', monospace;
-            font-size: 12px;
+            padding: 25px;
+            border-radius: 10px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9em;
             overflow-x: auto;
-            margin: 15px 0;
+            line-height: 1.5;
+            border: 1px solid #333;
+        }
+
+        .keyword {
+            color: #569cd6;
+        }
+
+        .type {
+            color: #4ec9b0;
+        }
+
+        .func {
+            color: #dcdcaa;
+        }
+
+        .comment {
+            color: #6a9955;
+        }
+
+        .complexity-card {
+            background: #fdf2f8;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #db2777;
+        }
+
+        .complexity-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #f9a8d4;
+            padding-bottom: 5px;
+        }
+
+        .complexity-item:last-child {
+            border-bottom: none;
+        }
+
+        .complexity-val {
+            font-family: 'Courier New', monospace;
+            font-weight: 700;
+            color: #be185d;
         }
     </style>
 </head>
@@ -239,23 +367,84 @@
 
             <div class="right-column">
                 <div class="card">
-                    <h2><i class="fas fa-brain"></i> Concept</h2>
+                    <h2><i class="fas fa-lightbulb"></i> Concepts</h2>
                     <div id="infoContent">
-                        <h4>Sieve of Eratosthenes</h4>
-                        <p style="color: #555; margin-bottom: 10px;">Efficiently find all prime numbers up to N.</p>
-                        <ol style="margin-left: 20px; color: #444;">
-                            <li>Start with all numbers marked prime.</li>
-                            <li>Pick next prime P (start 2).</li>
-                            <li>Mark all multiples of P as composite.</li>
-                            <li>Repeat until sqrt(N).</li>
+                        <h4>Prime Numbers</h4>
+                        <p style="color: #555; margin-bottom: 10px;">Numbers divisible only by 1 and themselves.</p>
+                        <div class="highlight-box" style="background: #fdf2f8; padding: 10px; border-radius: 5px;">
+                            <strong>GCD:</strong> Greatest Common Divisor.<br>
+                            <strong>LCM:</strong> Least Common Multiple.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comprehensive Theory Section -->
+        <div class="theory-section">
+            <div class="theory-header">
+                <h2>Comprehensive Guide</h2>
+                <p>Number Theory Fundamentals for CS.</p>
+            </div>
+
+            <!-- Topic 1 -->
+            <div class="theory-block" id="theory-sieve">
+                <h3><i class="fas fa-filter"></i> Sieve of Eratosthenes</h3>
+                <p>The efficient way to find all prime numbers up to a limit <code>N</code>. Instead of testing
+                    primality for each number individually (O(N√N)), we iteratively mark the multiples of each prime as
+                    composite.</p>
+
+                <div class="theory-grid">
+                    <div>
+                        <h4>The Algorithm</h4>
+                        <ol>
+                            <li>Create boolean array <code>isPrime[0..N]</code>, init true.</li>
+                            <li>Loop <code>i</code> from 2 to √N.</li>
+                            <li>If <code>isPrime[i]</code> is true, mark all multiples of <code>i</code> (starting from
+                                i²) as false.</li>
                         </ol>
-                        <p style="margin-top: 10px;"><strong>Complexity:</strong> O(N log log N)</p>
+                    </div>
+                    <div>
+                        <h4>Complexity Analysis</h4>
+                        <div class="complexity-card">
+                            <div class="complexity-item"><span>Time Complexity</span> <span class="complexity-val">O(N
+                                    log log N)</span></div>
+                            <div class="complexity-item"><span>Space Complexity</span> <span
+                                    class="complexity-val">O(N)</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr style="border:0; border-top:1px solid #eee; margin: 40px 0;">
+
+            <!-- Topic 2 -->
+            <div class="theory-block" id="theory-gcd">
+                <h3><i class="fas fa-exchange-alt"></i> Euclidean Algorithm (GCD)</h3>
+                <p>The Euclidean algorithm finds the Greatest Common Divisor (GCD) of two numbers efficiently using the
+                    principle: <code>GCD(a, b) = GCD(b, a % b)</code>.</p>
+
+                <div class="theory-grid">
+                    <div>
+                        <h4>GCD & LCM Relation</h4>
+                        <p>Once you have the GCD, finding the Least Common Multiple (LCM) is trivial:</p>
+                        <div class="code-block">LCM(a, b) = (a * b) / GCD(a, b)</div>
+                    </div>
+                    <div>
+                        <h4>Recursive Implementation</h4>
+                        <div class="code-block">
+                            int gcd(int a, int b) {
+                            if (b == 0) return a;
+                            return gcd(b, a % b);
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Script Kept Intact -->
     <script>
         const canvas = document.getElementById('mainCanvas');
         const ctx = canvas.getContext('2d');
@@ -275,7 +464,7 @@
 
             if (mode === 'sieve') {
                 document.getElementById('infoContent').innerHTML = `<h4>Sieve of Eratosthenes</h4><p>Eliminate multiples of each prime starting from 2.</p>`;
-                runSieve(true); // static draw
+                runSieve(true);
             } else {
                 document.getElementById('infoContent').innerHTML = `<h4>Euclidean GCD</h4><p>GCD(a, b) = GCD(b, a % b). Repeat until b is 0.</p>`;
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -283,18 +472,11 @@
             }
         }
 
-        // --- DRAWING ---
-        function clearCanvas() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-        }
+        function clearCanvas() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
 
         function drawGrid(n, primes, current = -1, multiples = []) {
             clearCanvas();
-            const cols = 10;
-            const size = 40;
-            const startX = 50;
-            const startY = 20;
-
+            const cols = 10; const startX = 50, startY = 20;
             for (let i = 1; i <= n; i++) {
                 const r = Math.floor((i - 1) / cols);
                 const c = (i - 1) % cols;
@@ -303,90 +485,52 @@
 
                 let color = '#fff';
                 let borderColor = '#ddd';
+                if (i === 1) color = '#f3f4f6';
+                else if (primes[i] === false) color = '#fca5a5';
+                else if (primes[i] === true) color = '#fff';
 
-                if (i === 1) color = '#f3f4f6'; // 1 is not prime
-                else if (primes[i] === false) color = '#fca5a5'; // composite (marked false)
-                else if (primes[i] === true) color = '#fff'; // potential prime
+                if (i === current) { color = '#fcd34d'; borderColor = '#d97706'; }
+                if (multiples.includes(i)) color = '#f87171';
+                if (primes[i] === 'confirmed') color = '#86efac';
 
-                // Visual states
-                if (i === current) {
-                    color = '#fcd34d'; // currently checking
-                    borderColor = '#d97706';
-                }
-                if (multiples.includes(i)) {
-                    color = '#f87171'; // just marked
-                }
-                if (primes[i] === 'confirmed') {
-                    color = '#86efac'; // confirmed prime
-                }
-
-                ctx.fillStyle = color;
-                ctx.fillRect(x, y, 40, 40);
-                ctx.strokeStyle = borderColor;
-                ctx.lineWidth = 2;
-                ctx.strokeRect(x, y, 40, 40);
-
-                ctx.fillStyle = '#333';
-                ctx.font = '14px Segoe UI';
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-                ctx.fillText(i, x + 20, y + 20);
+                ctx.fillStyle = color; ctx.fillRect(x, y, 40, 40);
+                ctx.strokeStyle = borderColor; ctx.lineWidth = 2; ctx.strokeRect(x, y, 40, 40);
+                ctx.fillStyle = '#333'; ctx.font = '14px Segoe UI'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(i, x + 20, y + 20);
             }
         }
 
         async function runSieve(staticDraw = false) {
             if (isRunning) return;
             if (!staticDraw) isRunning = true;
-
             const n = parseInt(document.getElementById('sieveN').value);
-            // primes array: true = prime, false = composite
             let primes = Array(n + 1).fill(true);
             primes[0] = primes[1] = false;
 
-            if (staticDraw) {
-                drawGrid(n, primes);
-                return;
-            }
+            if (staticDraw) { drawGrid(n, primes); return; }
 
             for (let p = 2; p * p <= n; p++) {
                 stepInfo.textContent = `Checking number ${p}...`;
-                drawGrid(n, primes, p);
-                await sleep(500);
-
+                drawGrid(n, primes, p); await sleep(500);
                 if (primes[p] === true) {
                     stepInfo.textContent = `${p} is Prime! Marking multiples...`;
                     let mults = [];
                     for (let i = p * p; i <= n; i += p) {
-                        primes[i] = false;
-                        mults.push(i);
-                        drawGrid(n, primes, p, mults); // highlight multiples
-                        await sleep(100);
+                        primes[i] = false; mults.push(i);
+                        drawGrid(n, primes, p, mults); await sleep(100);
                     }
-                    primes[p] = 'confirmed'; // mark as processed prime
-                    drawGrid(n, primes);
-                    await sleep(500);
+                    primes[p] = 'confirmed'; drawGrid(n, primes); await sleep(500);
                 }
             }
-
-            // Mark remaining as confirmed
-            for (let i = 2; i <= n; i++) {
-                if (primes[i] === true) primes[i] = 'confirmed';
-            }
-            drawGrid(n, primes);
-            stepInfo.textContent = "Sieve Complete! Green numbers are Primes.";
+            for (let i = 2; i <= n; i++) if (primes[i] === true) primes[i] = 'confirmed';
+            drawGrid(n, primes); stepInfo.textContent = "Sieve Complete! Green numbers are Primes.";
             isRunning = false;
         }
 
-        // --- GCD ---
         function drawBar(val, x, y, width, color, label) {
-            const h = val * 5; // scale height
-            ctx.fillStyle = color;
-            ctx.fillRect(x, y - h, width, h);
-            ctx.strokeStyle = '#333';
-            ctx.strokeRect(x, y - h, width, h);
-
-            ctx.fillStyle = '#333';
-            ctx.textAlign = 'center';
+            const h = val * 5;
+            ctx.fillStyle = color; ctx.fillRect(x, y - h, width, h);
+            ctx.strokeStyle = '#333'; ctx.strokeRect(x, y - h, width, h);
+            ctx.fillStyle = '#333'; ctx.textAlign = 'center';
             ctx.fillText(label, x + width / 2, y + 20);
             ctx.fillText(val, x + width / 2, y - h - 10);
         }
@@ -394,42 +538,26 @@
         async function runGCD() {
             if (isRunning) return;
             isRunning = true;
-
             let a = parseInt(document.getElementById('gcdA').value);
             let b = parseInt(document.getElementById('gcdB').value);
-
             stepInfo.textContent = `Computing GCD(${a}, ${b})`;
 
             while (b !== 0) {
                 clearCanvas();
-                const startX = 200;
-                const groundY = 300;
-
-                // Draw A and B as bars
+                const startX = 200, groundY = 300;
                 drawBar(a, startX, groundY, 60, '#fcd34d', 'A');
                 drawBar(b, startX + 100, groundY, 60, '#db2777', 'B');
-
                 stepInfo.textContent = `${a} % ${b} = ${a % b}`;
                 await sleep(1500);
-
-                let temp = b;
-                b = a % b;
-                a = temp;
-
-                // Animate transition (visual swap/reduce)
+                let temp = b; b = a % b; a = temp;
             }
-
             clearCanvas();
-            const startX = 200;
-            const groundY = 300;
-            drawBar(a, startX, groundY, 60, '#86efac', 'Result');
+            drawBar(a, 200, 300, 60, '#86efac', 'Result');
             stepInfo.textContent = `GCD is ${a}`;
-
             isRunning = false;
         }
 
         function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
-
         switchMode('sieve');
     </script>
 </body>
