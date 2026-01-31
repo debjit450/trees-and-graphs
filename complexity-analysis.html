@@ -20,7 +20,7 @@
         }
 
         .nav-bar {
-            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
             padding: 15px 30px;
             display: flex;
             align-items: center;
@@ -43,9 +43,21 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 40px 20px;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 30px;
+        }
+
+        @media (max-width: 1100px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         .card {
@@ -57,154 +69,286 @@
         }
 
         .card h2 {
-            font-size: 1.8em;
+            font-size: 1.5em;
             color: #1a1a2e;
             margin-bottom: 20px;
-            border-bottom: 3px solid #16a34a;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 3px solid #8b5cf6;
             padding-bottom: 10px;
         }
 
-        .card h3 {
-            font-size: 1.3em;
+        .card h2 i {
+            color: #8b5cf6;
+        }
+
+        .canvas-container {
+            background: #f8f8f8;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        canvas {
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background: white;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-primary {
+            background: #8b5cf6;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #7c3aed;
+        }
+
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+        }
+
+        .btn-warning {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .btn-warning:hover {
+            background: #d97706;
+        }
+
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        .btn-secondary {
+            background: white;
             color: #1a1a2e;
-            margin: 25px 0 15px 0;
+            border-color: #e0e0e0;
         }
 
-        .card p {
-            color: #555;
-            line-height: 1.8;
-            margin-bottom: 15px;
-        }
-
-        .card ul,
-        .card ol {
-            margin-left: 25px;
-            color: #555;
-            line-height: 1.8;
-            margin-bottom: 15px;
-        }
-
-        .card li {
-            margin-bottom: 8px;
+        .btn-secondary:hover {
+            border-color: #8b5cf6;
+            color: #8b5cf6;
         }
 
         .info-box {
-            background: #f0fdf4;
-            border: 2px solid #16a34a;
+            background: #f3e8ff;
+            border: 2px solid #8b5cf6;
             border-radius: 8px;
             padding: 20px;
             margin: 20px 0;
         }
 
         .info-box h4 {
-            color: #16a34a;
+            color: #6d28d9;
             margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .info-box p,
         .info-box li {
-            color: #166534;
+            color: #5b21b6;
             line-height: 1.6;
         }
 
-        .info-box ul {
-            margin-left: 20px;
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 15px;
         }
 
-        .comparison-table {
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+        }
+
+        .legend-color {
+            width: 30px;
+            height: 4px;
+            border-radius: 2px;
+        }
+
+        .complexity-table {
             width: 100%;
             border-collapse: collapse;
-            margin: 20px 0;
-            font-size: 0.95em;
+            margin: 15px 0;
+            font-size: 13px;
         }
 
-        .comparison-table th,
-        .comparison-table td {
-            padding: 10px 12px;
+        .complexity-table th,
+        .complexity-table td {
+            padding: 12px;
             border: 1px solid #e0e0e0;
             text-align: left;
         }
 
-        .comparison-table th {
-            background: #16a34a;
+        .complexity-table th {
+            background: #8b5cf6;
             color: white;
         }
 
-        .comparison-table tr:nth-child(even) {
-            background: #f8f8f8;
+        .complexity-table tr:nth-child(even) {
+            background: #f3e8ff;
         }
 
-        .comparison-table .good {
-            color: #16a34a;
-            font-weight: 600;
+        .complexity-table code {
+            background: #e0e0e0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 12px;
         }
 
-        .comparison-table .ok {
-            color: #ca8a04;
-            font-weight: 600;
-        }
-
-        .comparison-table .bad {
-            color: #dc2626;
-            font-weight: 600;
-        }
-
-        .nav-buttons {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 40px;
-            padding-top: 30px;
-            border-top: 2px solid #e0e0e0;
-        }
-
-        .btn {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-        }
-
-        .btn-primary {
-            background: #16a34a;
-            color: white;
-        }
-
-        .btn-secondary {
-            background: white;
-            color: #1a1a2e;
-            border: 2px solid #e0e0e0;
-        }
-
-        .concept-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
+        .slider-group {
             margin: 20px 0;
         }
 
-        .concept-card {
-            background: #f0fdf4;
-            border-left: 4px solid #16a34a;
-            padding: 15px;
-            border-radius: 0 8px 8px 0;
-        }
-
-        .concept-card h4 {
-            color: #166534;
+        .slider-group label {
+            font-weight: 600;
+            color: #1a1a2e;
+            display: block;
             margin-bottom: 8px;
-            font-size: 1em;
         }
 
-        .concept-card p {
-            color: #15803d;
-            margin: 0;
-            font-size: 0.9em;
+        .slider-group input {
+            width: 100%;
+        }
+
+        .slider-value {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .comparison-card {
+            background: #f8f8f8;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .comparison-card h3 {
+            color: #1a1a2e;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .comp-item {
+            text-align: center;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+        }
+
+        .comp-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: #8b5cf6;
+        }
+
+        .comp-label {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        ul.concept-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        ul.concept-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 14px;
+        }
+
+        ul.concept-list li:last-child {
+            border-bottom: none;
+        }
+
+        .big-o {
+            font-family: 'Courier New', monospace;
+            background: #f3e8ff;
+            padding: 4px 8px;
+            border-radius: 4px;
+            color: #6d28d9;
+            font-weight: bold;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 20px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 12px;
+            background: #e0e0e0;
+            border: none;
+            border-radius: 8px 8px 0 0;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            background: #8b5cf6;
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
         }
     </style>
 </head>
@@ -213,620 +357,414 @@
     <div class="nav-bar">
         <a href="index.html"><i class="fas fa-home"></i> Home</a>
         <h1><i class="fas fa-chart-line"></i> Complexity Analysis</h1>
+        <a href="bst-interactive.html">Back to BST <i class="fas fa-arrow-right"></i></a>
     </div>
 
     <div class="container">
-        <div class="card">
-            <h2>Big O Notation Review</h2>
-            <p>Big O notation describes the upper bound of an algorithm's growth rate as input size increases.</p>
+        <div class="main-grid">
+            <div class="left-column">
+                <div class="card">
+                    <h2><i class="fas fa-chart-area"></i> Growth Rate Comparison</h2>
 
-            <div class="concept-grid">
-                <div class="concept-card">
-                    <h4>O(1)</h4>
-                    <p>Constant time</p>
+                    <div class="tabs">
+                        <button class="tab active" onclick="showTab('growth')">Growth Curves</button>
+                        <button class="tab" onclick="showTab('practical')">Practical Times</button>
+                    </div>
+
+                    <div id="growthTab" class="tab-content active">
+                        <div class="canvas-container">
+                            <canvas id="growthCanvas" width="750" height="400"></canvas>
+                        </div>
+
+                        <div class="slider-group">
+                            <label>Max Input Size (n): <span id="nValue">100</span></label>
+                            <input type="range" id="nSlider" min="10" max="500" value="100"
+                                oninput="updateGrowthChart()">
+                        </div>
+
+                        <div class="legend">
+                            <div class="legend-item">
+                                <div class="legend-color" style="background: #10b981;"></div> O(1) - Constant
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color" style="background: #0ea5e9;"></div> O(log n) - Logarithmic
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color" style="background: #6366f1;"></div> O(n) - Linear
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color" style="background: #8b5cf6;"></div> O(n log n) - Linearithmic
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color" style="background: #f59e0b;"></div> O(n²) - Quadratic
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color" style="background: #ef4444;"></div> O(2ⁿ) - Exponential
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="practicalTab" class="tab-content">
+                        <div class="canvas-container">
+                            <canvas id="timeCanvas" width="750" height="400"></canvas>
+                        </div>
+
+                        <div class="slider-group">
+                            <label>Input Size (n): <span id="inputValue">1000</span></label>
+                            <input type="range" id="inputSlider" min="100" max="100000" value="1000" step="100"
+                                oninput="updateTimeChart()">
+                        </div>
+
+                        <div class="comparison-grid" style="margin-top: 20px;">
+                            <div class="comp-item">
+                                <div class="comp-value" id="timeLog">-</div>
+                                <div class="comp-label">O(log n)</div>
+                            </div>
+                            <div class="comp-item">
+                                <div class="comp-value" id="timeLinear">-</div>
+                                <div class="comp-label">O(n)</div>
+                            </div>
+                            <div class="comp-item">
+                                <div class="comp-value" id="timeQuad">-</div>
+                                <div class="comp-label">O(n²)</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="concept-card">
-                    <h4>O(log n)</h4>
-                    <p>Logarithmic</p>
-                </div>
-                <div class="concept-card">
-                    <h4>O(n)</h4>
-                    <p>Linear</p>
-                </div>
-                <div class="concept-card">
-                    <h4>O(n log n)</h4>
-                    <p>Linearithmic</p>
-                </div>
-                <div class="concept-card">
-                    <h4>O(n²)</h4>
-                    <p>Quadratic</p>
-                </div>
-                <div class="concept-card">
-                    <h4>O(2ⁿ)</h4>
-                    <p>Exponential</p>
+
+                <div class="card">
+                    <h2><i class="fas fa-table"></i> Algorithm Complexities</h2>
+
+                    <table class="complexity-table">
+                        <thead>
+                            <tr>
+                                <th>Algorithm</th>
+                                <th>Best</th>
+                                <th>Average</th>
+                                <th>Worst</th>
+                                <th>Space</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Binary Search</strong></td>
+                                <td><code>O(1)</code></td>
+                                <td><code>O(log n)</code></td>
+                                <td><code>O(log n)</code></td>
+                                <td><code>O(1)</code></td>
+                            </tr>
+                            <tr>
+                                <td><strong>BST Search</strong></td>
+                                <td><code>O(1)</code></td>
+                                <td><code>O(log n)</code></td>
+                                <td><code>O(n)</code></td>
+                                <td><code>O(1)</code></td>
+                            </tr>
+                            <tr>
+                                <td><strong>BFS/DFS</strong></td>
+                                <td colspan="3" style="text-align: center;"><code>O(V + E)</code></td>
+                                <td><code>O(V)</code></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Dijkstra (heap)</strong></td>
+                                <td colspan="3" style="text-align: center;"><code>O((V + E) log V)</code></td>
+                                <td><code>O(V)</code></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Floyd-Warshall</strong></td>
+                                <td colspan="3" style="text-align: center;"><code>O(V³)</code></td>
+                                <td><code>O(V²)</code></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Merge Sort</strong></td>
+                                <td colspan="3" style="text-align: center;"><code>O(n log n)</code></td>
+                                <td><code>O(n)</code></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Quick Sort</strong></td>
+                                <td><code>O(n log n)</code></td>
+                                <td><code>O(n log n)</code></td>
+                                <td><code>O(n²)</code></td>
+                                <td><code>O(log n)</code></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
-            <div class="info-box">
-                <h4><i class="fas fa-sort-amount-up"></i> Growth Rate Order</h4>
-                <p>O(1) < O(log n) < O(n) < O(n log n) < O(n²) < O(n³) < O(2ⁿ) < O(n!)</p>
+            <div class="right-column">
+                <div class="card">
+                    <h2><i class="fas fa-info-circle"></i> Big-O Notation</h2>
+                    <div class="info-box">
+                        <h4><i class="fas fa-key"></i> Definition</h4>
+                        <p>Big-O notation describes the <strong>upper bound</strong> of an algorithm's growth rate. We
+                            drop constants and lower-order terms.</p>
+                    </div>
+                    <ul class="concept-list">
+                        <li><span class="big-o">O(1)</span> - Array access, hash lookup</li>
+                        <li><span class="big-o">O(log n)</span> - Binary search, balanced BST</li>
+                        <li><span class="big-o">O(n)</span> - Linear search, single loop</li>
+                        <li><span class="big-o">O(n log n)</span> - Merge sort, heap sort</li>
+                        <li><span class="big-o">O(n²)</span> - Bubble sort, nested loops</li>
+                        <li><span class="big-o">O(2ⁿ)</span> - Recursive fibonacci, subsets</li>
+                        <li><span class="big-o">O(n!)</span> - Permutations, brute force TSP</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h2><i class="fas fa-lightbulb"></i> Quick Rules</h2>
+                    <div class="info-box">
+                        <h4><i class="fas fa-cogs"></i> Identifying Complexity</h4>
+                        <ul style="margin-left: 20px; margin-top: 10px;">
+                            <li><strong>Single loop</strong> → O(n)</li>
+                            <li><strong>Nested loops</strong> → O(n²), O(n³)...</li>
+                            <li><strong>Divide in half</strong> → O(log n)</li>
+                            <li><strong>Divide + merge</strong> → O(n log n)</li>
+                            <li><strong>Each element twice</strong> → still O(n)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2><i class="fas fa-tachometer-alt"></i> Practical Limits</h2>
+                    <table class="complexity-table">
+                        <tr>
+                            <th>Complexity</th>
+                            <th>n ≤ 10⁶</th>
+                        </tr>
+                        <tr>
+                            <td><code>O(1)</code></td>
+                            <td>✓ Always</td>
+                        </tr>
+                        <tr>
+                            <td><code>O(log n)</code></td>
+                            <td>✓ ~20 ops</td>
+                        </tr>
+                        <tr>
+                            <td><code>O(n)</code></td>
+                            <td>✓ ~1M ops</td>
+                        </tr>
+                        <tr>
+                            <td><code>O(n log n)</code></td>
+                            <td>✓ ~20M ops</td>
+                        </tr>
+                        <tr>
+                            <td><code>O(n²)</code></td>
+                            <td>⚠ n ≤ 10⁴</td>
+                        </tr>
+                        <tr>
+                            <td><code>O(n³)</code></td>
+                            <td>⚠ n ≤ 500</td>
+                        </tr>
+                        <tr>
+                            <td><code>O(2ⁿ)</code></td>
+                            <td>⚠ n ≤ 25</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="card">
+                    <h2><i class="fas fa-memory"></i> Space Complexity</h2>
+                    <div class="info-box">
+                        <p><strong>Auxiliary space</strong> = extra space beyond input</p>
+                        <p style="margin-top: 10px;"><strong>Total space</strong> = auxiliary + input</p>
+                    </div>
+                    <ul class="concept-list" style="margin-top: 15px;">
+                        <li><span class="big-o">O(1)</span> - In-place algorithms</li>
+                        <li><span class="big-o">O(log n)</span> - Recursive call stack</li>
+                        <li><span class="big-o">O(n)</span> - Linear data structures</li>
+                        <li><span class="big-o">O(n²)</span> - 2D matrices</li>
+                    </ul>
+                </div>
             </div>
-        </div>
-
-        <div class="card">
-            <h2>Tree Data Structures</h2>
-            <table class="comparison-table">
-                <tr>
-                    <th>Data Structure</th>
-                    <th>Search</th>
-                    <th>Insert</th>
-                    <th>Delete</th>
-                    <th>Space</th>
-                </tr>
-                <tr>
-                    <td><strong>Binary Search Tree (avg)</strong></td>
-                    <td class="good">O(log n)</td>
-                    <td class="good">O(log n)</td>
-                    <td class="good">O(log n)</td>
-                    <td>O(n)</td>
-                </tr>
-                <tr>
-                    <td><strong>Binary Search Tree (worst)</strong></td>
-                    <td class="bad">O(n)</td>
-                    <td class="bad">O(n)</td>
-                    <td class="bad">O(n)</td>
-                    <td>O(n)</td>
-                </tr>
-                <tr>
-                    <td><strong>AVL Tree</strong></td>
-                    <td class="good">O(log n)</td>
-                    <td class="good">O(log n)</td>
-                    <td class="good">O(log n)</td>
-                    <td>O(n)</td>
-                </tr>
-                <tr>
-                    <td><strong>Red-Black Tree</strong></td>
-                    <td class="good">O(log n)</td>
-                    <td class="good">O(log n)</td>
-                    <td class="good">O(log n)</td>
-                    <td>O(n)</td>
-                </tr>
-                <tr>
-                    <td><strong>B-Tree (order m)</strong></td>
-                    <td class="good">O(log n)</td>
-                    <td class="good">O(log n)</td>
-                    <td class="good">O(log n)</td>
-                    <td>O(n)</td>
-                </tr>
-                <tr>
-                    <td><strong>Heap (Min/Max)</strong></td>
-                    <td class="bad">O(n)</td>
-                    <td class="good">O(log n)</td>
-                    <td class="good">O(log n)</td>
-                    <td>O(n)</td>
-                </tr>
-                <tr>
-                    <td><strong>Heap (Find Min/Max)</strong></td>
-                    <td class="good">O(1)</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>O(n)</td>
-                </tr>
-                <tr>
-                    <td><strong>Trie</strong></td>
-                    <td class="good">O(m)*</td>
-                    <td class="good">O(m)*</td>
-                    <td class="good">O(m)*</td>
-                    <td class="ok">O(ALPHABET × m × n)</td>
-                </tr>
-            </table>
-            <p><small>* m = length of key/string</small></p>
-        </div>
-
-        <div class="card">
-            <h2>Advanced Tree Algorithms</h2>
-            <table class="comparison-table">
-                <tr>
-                    <th>Algorithm</th>
-                    <th>Preprocessing</th>
-                    <th>Query</th>
-                    <th>Space</th>
-                </tr>
-                <tr>
-                    <td><strong>LCA (Naive)</strong></td>
-                    <td>-</td>
-                    <td class="bad">O(n)</td>
-                    <td>O(1)</td>
-                </tr>
-                <tr>
-                    <td><strong>LCA (Binary Lifting)</strong></td>
-                    <td class="ok">O(n log n)</td>
-                    <td class="good">O(log n)</td>
-                    <td>O(n log n)</td>
-                </tr>
-                <tr>
-                    <td><strong>LCA (Euler Tour + RMQ)</strong></td>
-                    <td class="ok">O(n log n)</td>
-                    <td class="good">O(1)</td>
-                    <td>O(n log n)</td>
-                </tr>
-                <tr>
-                    <td><strong>Tree Diameter (2 BFS)</strong></td>
-                    <td>-</td>
-                    <td class="good">O(n)</td>
-                    <td>O(n)</td>
-                </tr>
-                <tr>
-                    <td><strong>Centroid Decomposition</strong></td>
-                    <td class="ok">O(n log n)</td>
-                    <td class="good">O(log n)</td>
-                    <td>O(n)</td>
-                </tr>
-                <tr>
-                    <td><strong>Heavy-Light Decomposition</strong></td>
-                    <td class="ok">O(n)</td>
-                    <td class="ok">O(log² n)</td>
-                    <td>O(n)</td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="card">
-            <h2>Range Query Data Structures</h2>
-            <table class="comparison-table">
-                <tr>
-                    <th>Data Structure</th>
-                    <th>Build</th>
-                    <th>Point Update</th>
-                    <th>Range Query</th>
-                    <th>Space</th>
-                </tr>
-                <tr>
-                    <td><strong>Prefix Sum Array</strong></td>
-                    <td class="good">O(n)</td>
-                    <td class="bad">O(n)</td>
-                    <td class="good">O(1)</td>
-                    <td>O(n)</td>
-                </tr>
-                <tr>
-                    <td><strong>Segment Tree</strong></td>
-                    <td class="good">O(n)</td>
-                    <td class="good">O(log n)</td>
-                    <td class="good">O(log n)</td>
-                    <td>O(n)</td>
-                </tr>
-                <tr>
-                    <td><strong>Segment Tree (Lazy)</strong></td>
-                    <td class="good">O(n)</td>
-                    <td class="good">O(log n)*</td>
-                    <td class="good">O(log n)</td>
-                    <td>O(n)</td>
-                </tr>
-                <tr>
-                    <td><strong>Fenwick Tree (BIT)</strong></td>
-                    <td class="good">O(n)</td>
-                    <td class="good">O(log n)</td>
-                    <td class="good">O(log n)</td>
-                    <td>O(n)</td>
-                </tr>
-                <tr>
-                    <td><strong>Sparse Table (RMQ)</strong></td>
-                    <td class="ok">O(n log n)</td>
-                    <td class="bad">N/A</td>
-                    <td class="good">O(1)</td>
-                    <td>O(n log n)</td>
-                </tr>
-                <tr>
-                    <td><strong>Sqrt Decomposition</strong></td>
-                    <td class="good">O(n)</td>
-                    <td class="good">O(1)</td>
-                    <td class="ok">O(√n)</td>
-                    <td>O(n)</td>
-                </tr>
-            </table>
-            <p><small>* With lazy propagation, range updates are also O(log n)</small></p>
-        </div>
-
-        <div class="card">
-            <h2>Graph Traversal & Basic Algorithms</h2>
-            <table class="comparison-table">
-                <tr>
-                    <th>Algorithm</th>
-                    <th>Time</th>
-                    <th>Space</th>
-                    <th>Notes</th>
-                </tr>
-                <tr>
-                    <td><strong>BFS</strong></td>
-                    <td class="good">O(V + E)</td>
-                    <td>O(V)</td>
-                    <td>Unweighted shortest path</td>
-                </tr>
-                <tr>
-                    <td><strong>DFS</strong></td>
-                    <td class="good">O(V + E)</td>
-                    <td>O(V)</td>
-                    <td>Recursion stack</td>
-                </tr>
-                <tr>
-                    <td><strong>Topological Sort (Kahn's)</strong></td>
-                    <td class="good">O(V + E)</td>
-                    <td>O(V)</td>
-                    <td>BFS-based</td>
-                </tr>
-                <tr>
-                    <td><strong>Topological Sort (DFS)</strong></td>
-                    <td class="good">O(V + E)</td>
-                    <td>O(V)</td>
-                    <td>DFS-based</td>
-                </tr>
-                <tr>
-                    <td><strong>Cycle Detection (undirected)</strong></td>
-                    <td class="good">O(V + E)</td>
-                    <td>O(V)</td>
-                    <td>DFS or Union-Find</td>
-                </tr>
-                <tr>
-                    <td><strong>Cycle Detection (directed)</strong></td>
-                    <td class="good">O(V + E)</td>
-                    <td>O(V)</td>
-                    <td>DFS with colors</td>
-                </tr>
-                <tr>
-                    <td><strong>Connected Components</strong></td>
-                    <td class="good">O(V + E)</td>
-                    <td>O(V)</td>
-                    <td>DFS/BFS</td>
-                </tr>
-                <tr>
-                    <td><strong>Bipartite Check</strong></td>
-                    <td class="good">O(V + E)</td>
-                    <td>O(V)</td>
-                    <td>BFS/DFS 2-coloring</td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="card">
-            <h2>Shortest Path Algorithms</h2>
-            <table class="comparison-table">
-                <tr>
-                    <th>Algorithm</th>
-                    <th>Time</th>
-                    <th>Space</th>
-                    <th>Use Case</th>
-                </tr>
-                <tr>
-                    <td><strong>BFS</strong></td>
-                    <td class="good">O(V + E)</td>
-                    <td>O(V)</td>
-                    <td>Unweighted graphs</td>
-                </tr>
-                <tr>
-                    <td><strong>Dijkstra (binary heap)</strong></td>
-                    <td class="ok">O((V + E) log V)</td>
-                    <td>O(V)</td>
-                    <td>Non-negative weights</td>
-                </tr>
-                <tr>
-                    <td><strong>Dijkstra (Fibonacci heap)</strong></td>
-                    <td class="good">O(E + V log V)</td>
-                    <td>O(V)</td>
-                    <td>Dense graphs</td>
-                </tr>
-                <tr>
-                    <td><strong>Bellman-Ford</strong></td>
-                    <td class="ok">O(V × E)</td>
-                    <td>O(V)</td>
-                    <td>Negative weights, cycle detection</td>
-                </tr>
-                <tr>
-                    <td><strong>Floyd-Warshall</strong></td>
-                    <td class="bad">O(V³)</td>
-                    <td class="ok">O(V²)</td>
-                    <td>All-pairs shortest path</td>
-                </tr>
-                <tr>
-                    <td><strong>Johnson's Algorithm</strong></td>
-                    <td class="ok">O(V² log V + VE)</td>
-                    <td class="ok">O(V²)</td>
-                    <td>All-pairs, sparse graphs</td>
-                </tr>
-                <tr>
-                    <td><strong>A* Search</strong></td>
-                    <td>O(E)* </td>
-                    <td>O(V)</td>
-                    <td>With good heuristic</td>
-                </tr>
-            </table>
-            <p><small>* A* depends heavily on heuristic quality</small></p>
-        </div>
-
-        <div class="card">
-            <h2>Minimum Spanning Tree</h2>
-            <table class="comparison-table">
-                <tr>
-                    <th>Algorithm</th>
-                    <th>Time</th>
-                    <th>Space</th>
-                    <th>Approach</th>
-                </tr>
-                <tr>
-                    <td><strong>Kruskal's</strong></td>
-                    <td class="ok">O(E log E)</td>
-                    <td>O(E)</td>
-                    <td>Sort edges + Union-Find</td>
-                </tr>
-                <tr>
-                    <td><strong>Prim's (binary heap)</strong></td>
-                    <td class="ok">O((V + E) log V)</td>
-                    <td>O(V)</td>
-                    <td>Greedy with priority queue</td>
-                </tr>
-                <tr>
-                    <td><strong>Prim's (Fibonacci heap)</strong></td>
-                    <td class="good">O(E + V log V)</td>
-                    <td>O(V)</td>
-                    <td>Better for dense graphs</td>
-                </tr>
-                <tr>
-                    <td><strong>Borůvka's</strong></td>
-                    <td class="ok">O(E log V)</td>
-                    <td>O(V + E)</td>
-                    <td>Parallelizable</td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="card">
-            <h2>Advanced Graph Algorithms</h2>
-            <table class="comparison-table">
-                <tr>
-                    <th>Algorithm</th>
-                    <th>Time</th>
-                    <th>Space</th>
-                </tr>
-                <tr>
-                    <td><strong>SCC - Kosaraju's</strong></td>
-                    <td class="good">O(V + E)</td>
-                    <td>O(V + E)</td>
-                </tr>
-                <tr>
-                    <td><strong>SCC - Tarjan's</strong></td>
-                    <td class="good">O(V + E)</td>
-                    <td>O(V)</td>
-                </tr>
-                <tr>
-                    <td><strong>Articulation Points</strong></td>
-                    <td class="good">O(V + E)</td>
-                    <td>O(V)</td>
-                </tr>
-                <tr>
-                    <td><strong>Bridges</strong></td>
-                    <td class="good">O(V + E)</td>
-                    <td>O(V)</td>
-                </tr>
-                <tr>
-                    <td><strong>Eulerian Path (Hierholzer's)</strong></td>
-                    <td class="good">O(E)</td>
-                    <td>O(E)</td>
-                </tr>
-                <tr>
-                    <td><strong>Hamiltonian Path (Backtracking)</strong></td>
-                    <td class="bad">O(n!)</td>
-                    <td>O(n)</td>
-                </tr>
-                <tr>
-                    <td><strong>Hamiltonian (Held-Karp DP)</strong></td>
-                    <td class="bad">O(2ⁿ × n²)</td>
-                    <td class="bad">O(2ⁿ × n)</td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="card">
-            <h2>Network Flow Algorithms</h2>
-            <table class="comparison-table">
-                <tr>
-                    <th>Algorithm</th>
-                    <th>Time</th>
-                    <th>Space</th>
-                    <th>Notes</th>
-                </tr>
-                <tr>
-                    <td><strong>Ford-Fulkerson (DFS)</strong></td>
-                    <td class="bad">O(E × max_flow)</td>
-                    <td>O(V + E)</td>
-                    <td>Can be slow for large capacities</td>
-                </tr>
-                <tr>
-                    <td><strong>Edmonds-Karp (BFS)</strong></td>
-                    <td class="ok">O(V × E²)</td>
-                    <td>O(V + E)</td>
-                    <td>Polynomial guarantee</td>
-                </tr>
-                <tr>
-                    <td><strong>Dinic's</strong></td>
-                    <td class="ok">O(V² × E)</td>
-                    <td>O(V + E)</td>
-                    <td>O(E√V) for unit capacity</td>
-                </tr>
-                <tr>
-                    <td><strong>Push-Relabel (FIFO)</strong></td>
-                    <td class="ok">O(V³)</td>
-                    <td>O(V + E)</td>
-                    <td>Good for dense graphs</td>
-                </tr>
-                <tr>
-                    <td><strong>Bipartite Matching (Hopcroft-Karp)</strong></td>
-                    <td class="good">O(E√V)</td>
-                    <td>O(V)</td>
-                    <td>Maximum matching</td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="card">
-            <h2>Union-Find (Disjoint Set Union)</h2>
-            <table class="comparison-table">
-                <tr>
-                    <th>Operation</th>
-                    <th>Without Optimizations</th>
-                    <th>With Union by Rank</th>
-                    <th>With Path Compression + Rank</th>
-                </tr>
-                <tr>
-                    <td><strong>Find</strong></td>
-                    <td class="bad">O(n)</td>
-                    <td class="ok">O(log n)</td>
-                    <td class="good">O(α(n))*</td>
-                </tr>
-                <tr>
-                    <td><strong>Union</strong></td>
-                    <td class="bad">O(n)</td>
-                    <td class="ok">O(log n)</td>
-                    <td class="good">O(α(n))*</td>
-                </tr>
-                <tr>
-                    <td><strong>Space</strong></td>
-                    <td>O(n)</td>
-                    <td>O(n)</td>
-                    <td>O(n)</td>
-                </tr>
-            </table>
-            <p><small>* α(n) is the inverse Ackermann function, effectively constant (≤ 4 for practical n)</small></p>
-        </div>
-
-        <div class="card">
-            <h2>Sparse vs Dense Graphs</h2>
-            <p>Algorithm choice often depends on graph density:</p>
-
-            <table class="comparison-table">
-                <tr>
-                    <th>Graph Type</th>
-                    <th>Edges (E)</th>
-                    <th>Best Representation</th>
-                    <th>Good Algorithms</th>
-                </tr>
-                <tr>
-                    <td><strong>Sparse</strong></td>
-                    <td>E ≈ O(V)</td>
-                    <td>Adjacency List</td>
-                    <td>Kruskal's MST, Dijkstra with heap</td>
-                </tr>
-                <tr>
-                    <td><strong>Dense</strong></td>
-                    <td>E ≈ O(V²)</td>
-                    <td>Adjacency Matrix</td>
-                    <td>Prim's MST, Floyd-Warshall</td>
-                </tr>
-            </table>
-
-            <div class="info-box">
-                <h4><i class="fas fa-lightbulb"></i> When to Use What</h4>
-                <ul>
-                    <li><strong>Adjacency List:</strong> O(V + E) space — use for sparse graphs</li>
-                    <li><strong>Adjacency Matrix:</strong> O(V²) space — use for dense graphs or when O(1) edge lookup
-                        needed</li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="card">
-            <h2>NP-Complete Graph Problems</h2>
-            <p>These problems have no known polynomial-time algorithm:</p>
-
-            <table class="comparison-table">
-                <tr>
-                    <th>Problem</th>
-                    <th>Decision Version</th>
-                    <th>Best Known</th>
-                </tr>
-                <tr>
-                    <td><strong>Hamiltonian Path/Cycle</strong></td>
-                    <td>Does a path visiting all vertices exist?</td>
-                    <td>O(2ⁿ × n²) DP</td>
-                </tr>
-                <tr>
-                    <td><strong>Traveling Salesman</strong></td>
-                    <td>Is there a tour of cost ≤ k?</td>
-                    <td>O(2ⁿ × n²) DP</td>
-                </tr>
-                <tr>
-                    <td><strong>Graph Coloring (k ≥ 3)</strong></td>
-                    <td>Can graph be colored with k colors?</td>
-                    <td>Exponential</td>
-                </tr>
-                <tr>
-                    <td><strong>Clique</strong></td>
-                    <td>Is there a clique of size k?</td>
-                    <td>O(2ⁿ) brute force</td>
-                </tr>
-                <tr>
-                    <td><strong>Vertex Cover</strong></td>
-                    <td>Is there a vertex cover of size k?</td>
-                    <td>O(2ᵏ × poly(n))</td>
-                </tr>
-                <tr>
-                    <td><strong>Graph Isomorphism</strong></td>
-                    <td>Are two graphs identical?</td>
-                    <td>Quasipolynomial (Babai 2015)</td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="card">
-            <h2>Decision Guide: Choosing the Right Data Structure</h2>
-            <table class="comparison-table">
-                <tr>
-                    <th>Need</th>
-                    <th>Best Choice</th>
-                    <th>Why</th>
-                </tr>
-                <tr>
-                    <td>Ordered elements with fast search/insert</td>
-                    <td>Red-Black Tree or AVL</td>
-                    <td>Guaranteed O(log n)</td>
-                </tr>
-                <tr>
-                    <td>Priority queue (min/max)</td>
-                    <td>Binary Heap</td>
-                    <td>O(1) find-min, O(log n) operations</td>
-                </tr>
-                <tr>
-                    <td>Range sum/min queries with updates</td>
-                    <td>Segment Tree or BIT</td>
-                    <td>O(log n) query and update</td>
-                </tr>
-                <tr>
-                    <td>Static range minimum queries</td>
-                    <td>Sparse Table</td>
-                    <td>O(1) query after preprocessing</td>
-                </tr>
-                <tr>
-                    <td>Dictionary with string keys</td>
-                    <td>Trie</td>
-                    <td>O(m) per operation, prefix queries</td>
-                </tr>
-                <tr>
-                    <td>Dynamic connectivity</td>
-                    <td>Union-Find (DSU)</td>
-                    <td>Near O(1) amortized</td>
-                </tr>
-                <tr>
-                    <td>Database indexing</td>
-                    <td>B-Tree / B+ Tree</td>
-                    <td>Optimized for disk access</td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="nav-buttons">
-            <a href="articulation-bridges.html" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Articulation
-                & Bridges</a>
-            <a href="index.html" class="btn btn-primary">Back to Home <i class="fas fa-home"></i></a>
         </div>
     </div>
+
+    <script>
+        const growthCanvas = document.getElementById('growthCanvas');
+        const growthCtx = growthCanvas.getContext('2d');
+        const timeCanvas = document.getElementById('timeCanvas');
+        const timeCtx = timeCanvas.getContext('2d');
+
+        const colors = {
+            constant: '#10b981',
+            log: '#0ea5e9',
+            linear: '#6366f1',
+            nlogn: '#8b5cf6',
+            quadratic: '#f59e0b',
+            exponential: '#ef4444'
+        };
+
+        function showTab(tab) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+            if (tab === 'growth') {
+                document.querySelectorAll('.tab')[0].classList.add('active');
+                document.getElementById('growthTab').classList.add('active');
+                updateGrowthChart();
+            } else {
+                document.querySelectorAll('.tab')[1].classList.add('active');
+                document.getElementById('practicalTab').classList.add('active');
+                updateTimeChart();
+            }
+        }
+
+        function updateGrowthChart() {
+            const maxN = parseInt(document.getElementById('nSlider').value);
+            document.getElementById('nValue').textContent = maxN;
+
+            const padding = 60;
+            const width = growthCanvas.width - 2 * padding;
+            const height = growthCanvas.height - 2 * padding;
+
+            // Calculate max Y for scaling (excluding exponential if too large)
+            let maxY = maxN * Math.log2(maxN);
+            if (maxN <= 20) maxY = Math.max(maxY, Math.pow(2, maxN) / 10);
+
+            growthCtx.clearRect(0, 0, growthCanvas.width, growthCanvas.height);
+
+            // Draw axes
+            growthCtx.strokeStyle = '#333';
+            growthCtx.lineWidth = 2;
+            growthCtx.beginPath();
+            growthCtx.moveTo(padding, padding);
+            growthCtx.lineTo(padding, growthCanvas.height - padding);
+            growthCtx.lineTo(growthCanvas.width - padding, growthCanvas.height - padding);
+            growthCtx.stroke();
+
+            // Labels
+            growthCtx.font = '14px Segoe UI';
+            growthCtx.fillStyle = '#333';
+            growthCtx.textAlign = 'center';
+            growthCtx.fillText('Input Size (n)', growthCanvas.width / 2, growthCanvas.height - 15);
+
+            growthCtx.save();
+            growthCtx.translate(20, growthCanvas.height / 2);
+            growthCtx.rotate(-Math.PI / 2);
+            growthCtx.fillText('Operations', 0, 0);
+            growthCtx.restore();
+
+            // X-axis ticks
+            for (let i = 0; i <= 5; i++) {
+                const x = padding + (width * i / 5);
+                const n = Math.round(maxN * i / 5);
+                growthCtx.fillText(n, x, growthCanvas.height - padding + 20);
+            }
+
+            // Functions to plot
+            const functions = [
+                { name: 'O(1)', fn: n => 10, color: colors.constant },
+                { name: 'O(log n)', fn: n => 10 * Math.log2(Math.max(1, n)), color: colors.log },
+                { name: 'O(n)', fn: n => n, color: colors.linear },
+                { name: 'O(n log n)', fn: n => n * Math.log2(Math.max(1, n)), color: colors.nlogn },
+                { name: 'O(n²)', fn: n => n * n / maxN, color: colors.quadratic }
+            ];
+
+            // Add exponential only for small n
+            if (maxN <= 25) {
+                functions.push({ name: 'O(2ⁿ)', fn: n => Math.pow(2, n) / Math.pow(2, maxN) * maxY, color: colors.exponential });
+            }
+
+            // Plot each function
+            functions.forEach(func => {
+                growthCtx.strokeStyle = func.color;
+                growthCtx.lineWidth = 3;
+                growthCtx.beginPath();
+
+                let first = true;
+                for (let i = 0; i <= width; i++) {
+                    const n = (i / width) * maxN;
+                    let y = func.fn(n);
+
+                    // Clamp y
+                    const plotY = Math.min(y / maxY * height, height);
+                    const canvasY = growthCanvas.height - padding - plotY;
+                    const canvasX = padding + i;
+
+                    if (first) {
+                        growthCtx.moveTo(canvasX, canvasY);
+                        first = false;
+                    } else {
+                        growthCtx.lineTo(canvasX, canvasY);
+                    }
+                }
+                growthCtx.stroke();
+            });
+        }
+
+        function updateTimeChart() {
+            const n = parseInt(document.getElementById('inputSlider').value);
+            document.getElementById('inputValue').textContent = n.toLocaleString();
+
+            // Assume 1 operation = 1 nanosecond
+            const log = Math.log2(n);
+            const linear = n;
+            const nlogn = n * Math.log2(n);
+            const quad = n * n;
+
+            function formatTime(ops) {
+                if (ops < 1000) return ops.toFixed(0) + ' ns';
+                if (ops < 1e6) return (ops / 1e3).toFixed(1) + ' µs';
+                if (ops < 1e9) return (ops / 1e6).toFixed(1) + ' ms';
+                if (ops < 1e12) return (ops / 1e9).toFixed(1) + ' s';
+                return (ops / 1e12).toFixed(1) + ' min';
+            }
+
+            document.getElementById('timeLog').textContent = formatTime(log);
+            document.getElementById('timeLinear').textContent = formatTime(linear);
+            document.getElementById('timeQuad').textContent = formatTime(quad);
+
+            // Draw bar chart
+            const padding = 60;
+            const width = timeCanvas.width - 2 * padding;
+            const height = timeCanvas.height - 2 * padding;
+
+            timeCtx.clearRect(0, 0, timeCanvas.width, timeCanvas.height);
+
+            // Draw axes
+            timeCtx.strokeStyle = '#333';
+            timeCtx.lineWidth = 2;
+            timeCtx.beginPath();
+            timeCtx.moveTo(padding, padding);
+            timeCtx.lineTo(padding, timeCanvas.height - padding);
+            timeCtx.lineTo(timeCanvas.width - padding, timeCanvas.height - padding);
+            timeCtx.stroke();
+
+            const data = [
+                { name: 'O(1)', value: 10, color: colors.constant },
+                { name: 'O(log n)', value: log, color: colors.log },
+                { name: 'O(n)', value: linear, color: colors.linear },
+                { name: 'O(n log n)', value: nlogn, color: colors.nlogn },
+                { name: 'O(n²)', value: Math.min(quad, nlogn * 100), color: colors.quadratic }
+            ];
+
+            const maxVal = Math.max(...data.map(d => d.value));
+            const barWidth = width / data.length - 20;
+
+            data.forEach((d, i) => {
+                const barHeight = (d.value / maxVal) * height * 0.9;
+                const x = padding + i * (barWidth + 20) + 10;
+                const y = timeCanvas.height - padding - barHeight;
+
+                timeCtx.fillStyle = d.color;
+                timeCtx.fillRect(x, y, barWidth, barHeight);
+
+                timeCtx.fillStyle = '#333';
+                timeCtx.font = '12px Segoe UI';
+                timeCtx.textAlign = 'center';
+                timeCtx.fillText(d.name, x + barWidth / 2, timeCanvas.height - padding + 20);
+
+                // Value on top
+                timeCtx.fillStyle = d.color;
+                timeCtx.font = 'bold 10px Segoe UI';
+                timeCtx.fillText(formatTime(d.value), x + barWidth / 2, y - 5);
+            });
+        }
+
+        // Initial draws
+        updateGrowthChart();
+    </script>
 </body>
 
 </html>

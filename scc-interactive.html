@@ -20,7 +20,7 @@
         }
 
         .nav-bar {
-            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
             padding: 15px 30px;
             display: flex;
             align-items: center;
@@ -43,9 +43,21 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 40px 20px;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 30px;
+        }
+
+        @media (max-width: 1100px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         .card {
@@ -57,136 +69,238 @@
         }
 
         .card h2 {
-            font-size: 1.8em;
+            font-size: 1.6em;
             color: #1a1a2e;
             margin-bottom: 20px;
-            border-bottom: 3px solid #ef4444;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 3px solid #ec4899;
             padding-bottom: 10px;
         }
 
-        .card h3 {
-            font-size: 1.3em;
+        .card h2 i {
+            color: #ec4899;
+        }
+
+        .canvas-container {
+            background: #f8f8f8;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        canvas {
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background: white;
+            cursor: crosshair;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-primary {
+            background: #ec4899;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #db2777;
+        }
+
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+        }
+
+        .btn-warning {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .btn-warning:hover {
+            background: #d97706;
+        }
+
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        .btn-secondary {
+            background: white;
             color: #1a1a2e;
-            margin: 25px 0 15px 0;
+            border-color: #e0e0e0;
         }
 
-        .card p {
-            color: #555;
-            line-height: 1.8;
-            margin-bottom: 15px;
+        .btn-secondary:hover {
+            border-color: #ec4899;
+            color: #ec4899;
         }
 
-        .card ul,
-        .card ol {
-            margin-left: 25px;
-            color: #555;
-            line-height: 1.8;
-            margin-bottom: 15px;
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
 
-        .card li {
+        .mode-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .mode-btn {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .mode-btn.active {
+            border-color: #ec4899;
+            background: #fdf2f8;
+        }
+
+        .mode-btn i {
+            font-size: 24px;
+            display: block;
             margin-bottom: 8px;
+            color: #ec4899;
         }
 
         .info-box {
-            background: #fef2f2;
-            border: 2px solid #ef4444;
+            background: #fdf2f8;
+            border: 2px solid #ec4899;
             border-radius: 8px;
             padding: 20px;
             margin: 20px 0;
         }
 
         .info-box h4 {
-            color: #dc2626;
+            color: #db2777;
             margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .info-box p,
         .info-box li {
-            color: #991b1b;
+            color: #9d174d;
             line-height: 1.6;
         }
 
-        .info-box ul {
-            margin-left: 20px;
-        }
-
-        .algorithm-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            margin: 20px 0;
-        }
-
-        .algorithm-card {
-            background: #fef2f2;
-            border-left: 4px solid #ef4444;
-            padding: 20px;
-            border-radius: 0 8px 8px 0;
-        }
-
-        .algorithm-card h4 {
-            color: #991b1b;
-            margin-bottom: 10px;
-        }
-
-        .algorithm-card p {
-            color: #7f1d1d;
-            margin: 0;
-        }
-
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
-
-        .comparison-table th,
-        .comparison-table td {
-            padding: 12px 15px;
-            border: 1px solid #e0e0e0;
-            text-align: left;
-        }
-
-        .comparison-table th {
-            background: #ef4444;
-            color: white;
-        }
-
-        .comparison-table tr:nth-child(even) {
+        .output-box {
             background: #f8f8f8;
-        }
-
-        .nav-buttons {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 40px;
-            padding-top: 30px;
-            border-top: 2px solid #e0e0e0;
-        }
-
-        .btn {
-            padding: 12px 24px;
-            border: none;
             border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
+            padding: 20px;
+            margin-top: 20px;
+            border-left: 4px solid #ec4899;
         }
 
-        .btn-primary {
-            background: #ef4444;
-            color: white;
-        }
-
-        .btn-secondary {
-            background: white;
+        .output-box h3 {
+            font-size: 1.1em;
+            margin-bottom: 10px;
             color: #1a1a2e;
-            border: 2px solid #e0e0e0;
+        }
+
+        .output-content {
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            color: #ec4899;
+            min-height: 30px;
+            line-height: 1.8;
+        }
+
+        .step-info {
+            background: #ec4899;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            margin: 15px 0;
+            display: none;
+        }
+
+        .step-info.active {
+            display: block;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 15px;
+            background: #f8f8f8;
+            border-radius: 8px;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: #ec4899;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+        }
+
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 2px solid #333;
         }
 
         .code-box {
@@ -194,11 +308,10 @@
             color: #d4d4d4;
             padding: 20px;
             border-radius: 8px;
-            font-family: 'Consolas', 'Monaco', monospace;
-            font-size: 13px;
-            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
             overflow-x: auto;
-            line-height: 1.6;
+            margin: 15px 0;
         }
 
         .code-box .keyword {
@@ -213,47 +326,50 @@
             color: #dcdcaa;
         }
 
-        .code-box .number {
-            color: #b5cea8;
-        }
-
-        .diagram-box {
-            background: #f0f0f0;
-            border-radius: 8px;
-            padding: 20px;
-            margin: 20px 0;
-            text-align: center;
-            font-family: monospace;
-        }
-
-        .step-list {
-            counter-reset: step-counter;
+        ul.concept-list {
             list-style: none;
-            margin-left: 0;
+            padding: 0;
         }
 
-        .step-list li {
-            counter-increment: step-counter;
-            margin-bottom: 15px;
-            padding-left: 45px;
-            position: relative;
-        }
-
-        .step-list li::before {
-            content: counter(step-counter);
-            position: absolute;
-            left: 0;
-            top: 0;
-            background: #ef4444;
-            color: white;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
+        ul.concept-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #e0e0e0;
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 14px;
+            gap: 10px;
+        }
+
+        ul.concept-list li:last-child {
+            border-bottom: none;
+        }
+
+        ul.concept-list li i {
+            color: #ec4899;
+        }
+
+        .speed-control {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .speed-control label {
+            font-weight: 600;
+            color: #1a1a2e;
+        }
+
+        input[type="range"] {
+            width: 150px;
+        }
+
+        .scc-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin: 2px;
+            color: white;
         }
     </style>
 </head>
@@ -261,410 +377,680 @@
 <body>
     <div class="nav-bar">
         <a href="index.html"><i class="fas fa-home"></i> Home</a>
-        <h1><i class="fas fa-compress-arrows-alt"></i> Strongly Connected Components</h1>
-        <a href="flow-networks.html">Next: Flow Networks <i class="fas fa-arrow-right"></i></a>
+        <h1><i class="fas fa-object-group"></i> Strongly Connected Components</h1>
+        <a href="graph-coloring.html">Next: Graph Coloring <i class="fas fa-arrow-right"></i></a>
     </div>
 
     <div class="container">
-        <div class="card">
-            <h2>What are Strongly Connected Components?</h2>
-            <p>A <strong>Strongly Connected Component (SCC)</strong> of a directed graph is a maximal set of vertices
-                such that there is a path from every vertex to every other vertex in the set. In other words, all
-                vertices in an SCC can reach each other.</p>
+        <div class="main-grid">
+            <div class="left-column">
+                <div class="card">
+                    <h2><i class="fas fa-project-diagram"></i> Directed Graph Builder</h2>
 
-            <div class="info-box">
-                <h4><i class="fas fa-key"></i> Key Properties</h4>
-                <ul>
-                    <li>SCCs partition the graph — every vertex belongs to exactly one SCC</li>
-                    <li>A vertex with no edges forms its own SCC</li>
-                    <li>If we collapse each SCC to a single node, the resulting graph (condensation) is a DAG</li>
-                </ul>
-            </div>
+                    <div class="mode-selector">
+                        <div class="mode-btn active" data-mode="node" onclick="setMode('node')">
+                            <i class="fas fa-circle"></i>
+                            Add Node
+                        </div>
+                        <div class="mode-btn" data-mode="edge" onclick="setMode('edge')">
+                            <i class="fas fa-arrow-right"></i>
+                            Add Edge
+                        </div>
+                        <div class="mode-btn" data-mode="delete" onclick="setMode('delete')">
+                            <i class="fas fa-trash"></i>
+                            Delete
+                        </div>
+                    </div>
 
-            <div class="diagram-box">
-                <pre>
-Original Graph:                    SCCs Identified:
-                                   
-    1 → 2 → 3                     SCC1: {1, 2, 3}  (cycle)
-    ↑   ↓   ↓                     SCC2: {4}
-    └───┤   ↓                     SCC3: {5, 6}     (cycle)
-        ↓   ↓                     
-        4 → 5 ⟷ 6                 
-                                   Condensation Graph:
-                                   SCC1 → SCC2 → SCC3
-                </pre>
-            </div>
-        </div>
+                    <div class="canvas-container">
+                        <canvas id="graphCanvas" width="750" height="400"></canvas>
+                    </div>
 
-        <div class="card">
-            <h2>Applications</h2>
-            <div class="algorithm-grid">
-                <div class="algorithm-card">
-                    <h4><i class="fas fa-check-double"></i> 2-SAT Problems</h4>
-                    <p>Solving 2-satisfiability using implication graphs and SCCs.</p>
+                    <div class="controls" style="margin-top: 20px;">
+                        <button class="btn btn-primary" onclick="loadSampleGraph('simple')">
+                            <i class="fas fa-shapes"></i> Simple
+                        </button>
+                        <button class="btn btn-primary" onclick="loadSampleGraph('two-sccs')">
+                            <i class="fas fa-object-group"></i> Two SCCs
+                        </button>
+                        <button class="btn btn-primary" onclick="loadSampleGraph('complex')">
+                            <i class="fas fa-project-diagram"></i> Complex
+                        </button>
+                        <button class="btn btn-danger" onclick="clearGraph()">
+                            <i class="fas fa-trash-alt"></i> Clear
+                        </button>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-value" id="nodeCount">0</div>
+                            <div class="stat-label">Vertices</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="edgeCount">0</div>
+                            <div class="stat-label">Edges</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="sccCount">-</div>
+                            <div class="stat-label">SCCs Found</div>
+                        </div>
+                    </div>
+
+                    <div class="legend">
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #ec4899;"></div> Unvisited
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #f59e0b;"></div> In Stack
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #ef4444;"></div> Current
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #10b981;"></div> In SCC
+                        </div>
+                    </div>
                 </div>
-                <div class="algorithm-card">
-                    <h4><i class="fas fa-code"></i> Dead Code Detection</h4>
-                    <p>Finding unreachable code in control flow graphs.</p>
+
+                <div class="card">
+                    <h2><i class="fas fa-play-circle"></i> Find SCCs</h2>
+
+                    <div class="step-info" id="stepInfo"></div>
+
+                    <div class="controls">
+                        <button class="btn btn-success" onclick="runKosaraju()" id="btnKosaraju">
+                            <i class="fas fa-sync-alt"></i> Kosaraju's
+                        </button>
+                        <button class="btn btn-warning" onclick="runTarjan()" id="btnTarjan">
+                            <i class="fas fa-search"></i> Tarjan's
+                        </button>
+                        <button class="btn btn-secondary" onclick="resetGraph()">
+                            <i class="fas fa-undo"></i> Reset
+                        </button>
+                    </div>
+
+                    <div class="speed-control">
+                        <label>Animation Speed:</label>
+                        <input type="range" id="speedSlider" min="200" max="2000" value="600" step="100">
+                        <span id="speedLabel">0.6s</span>
+                    </div>
+
+                    <div class="output-box">
+                        <h3><i class="fas fa-object-group"></i> Strongly Connected Components</h3>
+                        <div class="output-content" id="sccOutput">-</div>
+                    </div>
                 </div>
-                <div class="algorithm-card">
-                    <h4><i class="fas fa-users"></i> Social Network Analysis</h4>
-                    <p>Finding communities where all members are mutually connected.</p>
+            </div>
+
+            <div class="right-column">
+                <div class="card">
+                    <h2><i class="fas fa-info-circle"></i> What is an SCC?</h2>
+                    <div class="info-box">
+                        <h4><i class="fas fa-key"></i> Definition</h4>
+                        <p>A maximal set of vertices where every vertex is reachable from every other vertex following
+                            directed edges.</p>
+                    </div>
+                    <p style="margin-top: 15px; color: #666;">Within an SCC, you can travel from any node to any other
+                        node. SCCs form the "strongly connected" parts of a directed graph.</p>
                 </div>
-                <div class="algorithm-card">
-                    <h4><i class="fas fa-project-diagram"></i> Compiler Optimization</h4>
-                    <p>Analyzing dependencies in program analysis.</p>
+
+                <div class="card">
+                    <h2><i class="fas fa-sync-alt"></i> Kosaraju's Algorithm</h2>
+                    <div class="info-box">
+                        <h4><i class="fas fa-lightbulb"></i> Key Idea</h4>
+                        <p>Two DFS passes: first to get finish order, second on reversed graph.</p>
+                    </div>
+                    <div class="code-box">
+                        <span class="keyword">function</span> <span class="function">kosaraju</span>(graph):
+                        <span class="comment">// Pass 1: Get finish order</span>
+                        stack = []
+                        <span class="keyword">for</span> node <span class="keyword">in</span> graph:
+                        <span class="keyword">if</span> not visited[node]:
+                        <span class="function">dfs1</span>(node, stack)
+
+                        <span class="comment">// Pass 2: DFS on reversed graph</span>
+                        reversed = reverseGraph(graph)
+                        sccs = []
+
+                        <span class="keyword">while</span> stack not empty:
+                        node = stack.pop()
+                        <span class="keyword">if</span> not visited2[node]:
+                        scc = []
+                        <span class="function">dfs2</span>(node, reversed, scc)
+                        sccs.add(scc)
+
+                        <span class="keyword">return</span> sccs
+                    </div>
+                    <p style="margin-top: 10px; color: #666;"><strong>Time:</strong> O(V + E)</p>
+                </div>
+
+                <div class="card">
+                    <h2><i class="fas fa-search"></i> Tarjan's Algorithm</h2>
+                    <div class="info-box">
+                        <h4><i class="fas fa-lightbulb"></i> Key Idea</h4>
+                        <p>Single DFS using discovery times and lowlink values to identify SCC roots.</p>
+                    </div>
+                    <div class="code-box">
+                        <span class="keyword">function</span> <span class="function">tarjan</span>(node):
+                        disc[node] = low[node] = time++
+                        stack.push(node)
+                        onStack[node] = true
+
+                        <span class="keyword">for</span> neighbor <span class="keyword">in</span> adj[node]:
+                        <span class="keyword">if</span> disc[neighbor] == -1:
+                        <span class="function">tarjan</span>(neighbor)
+                        low[node] = min(low[node], low[neighbor])
+                        <span class="keyword">else if</span> onStack[neighbor]:
+                        low[node] = min(low[node], disc[neighbor])
+
+                        <span class="comment">// If node is root of SCC</span>
+                        <span class="keyword">if</span> low[node] == disc[node]:
+                        scc = []
+                        <span class="keyword">while</span> true:
+                        w = stack.pop()
+                        onStack[w] = false
+                        scc.add(w)
+                        <span class="keyword">if</span> w == node: <span class="keyword">break</span>
+                    </div>
+                    <p style="margin-top: 10px; color: #666;"><strong>Time:</strong> O(V + E), single pass!</p>
+                </div>
+
+                <div class="card">
+                    <h2><i class="fas fa-rocket"></i> Applications</h2>
+                    <ul class="concept-list">
+                        <li><i class="fas fa-puzzle-piece"></i> <strong>2-SAT problem</strong></li>
+                        <li><i class="fas fa-sitemap"></i> <strong>Graph condensation</strong></li>
+                        <li><i class="fas fa-globe"></i> <strong>Web page clustering</strong></li>
+                        <li><i class="fas fa-users"></i> <strong>Social network analysis</strong></li>
+                        <li><i class="fas fa-code-branch"></i> <strong>Compiler optimization</strong></li>
+                    </ul>
                 </div>
             </div>
-        </div>
-
-        <div class="card">
-            <h2>Kosaraju's Algorithm</h2>
-            <p>Kosaraju's algorithm finds SCCs using <strong>two DFS passes</strong> — one on the original graph and one
-                on the reversed graph.</p>
-
-            <h3>Algorithm Steps</h3>
-            <ol class="step-list">
-                <li><strong>First DFS:</strong> Perform DFS on the original graph, recording vertices by finish time
-                    (push to stack when done)</li>
-                <li><strong>Reverse the graph:</strong> Create a graph with all edges reversed (transposed)</li>
-                <li><strong>Second DFS:</strong> Process vertices in decreasing finish time order (pop from stack), run
-                    DFS on reversed graph. Each DFS tree is one SCC.</li>
-            </ol>
-
-            <div class="info-box">
-                <h4><i class="fas fa-lightbulb"></i> Why It Works</h4>
-                <p>In the first DFS, vertices in "sink" SCCs (no outgoing edges to other SCCs) finish last. When we
-                    reverse edges, these become "source" SCCs. Processing in reverse finish time order ensures we visit
-                    complete SCCs before jumping to others.</p>
-            </div>
-
-            <div class="code-box">
-                <span class="keyword">function</span> <span class="function">kosaraju</span>(graph, n):
-                visited = [<span class="keyword">false</span>] * n
-                stack = []
-
-                <span class="comment">// Step 1: First DFS to fill stack by finish time</span>
-                <span class="keyword">for</span> v = <span class="number">0</span> <span class="keyword">to</span>
-                n-<span class="number">1</span>:
-                <span class="keyword">if not</span> visited[v]:
-                <span class="function">dfs1</span>(v, graph, visited, stack)
-
-                <span class="comment">// Step 2: Create reversed graph</span>
-                reversed = <span class="function">reverseGraph</span>(graph, n)
-
-                <span class="comment">// Step 3: Second DFS in stack order</span>
-                visited = [<span class="keyword">false</span>] * n
-                sccs = []
-
-                <span class="keyword">while</span> stack <span class="keyword">not</span> empty:
-                v = stack.pop()
-                <span class="keyword">if not</span> visited[v]:
-                component = []
-                <span class="function">dfs2</span>(v, reversed, visited, component)
-                sccs.append(component)
-
-                <span class="keyword">return</span> sccs
-
-                <span class="keyword">function</span> <span class="function">dfs1</span>(v, graph, visited, stack):
-                visited[v] = <span class="keyword">true</span>
-                <span class="keyword">for</span> u <span class="keyword">in</span> graph[v]:
-                <span class="keyword">if not</span> visited[u]:
-                <span class="function">dfs1</span>(u, graph, visited, stack)
-                stack.push(v) <span class="comment">// Add when finished</span>
-
-                <span class="keyword">function</span> <span class="function">dfs2</span>(v, reversed, visited,
-                component):
-                visited[v] = <span class="keyword">true</span>
-                component.append(v)
-                <span class="keyword">for</span> u <span class="keyword">in</span> reversed[v]:
-                <span class="keyword">if not</span> visited[u]:
-                <span class="function">dfs2</span>(u, reversed, visited, component)
-
-                <span class="keyword">function</span> <span class="function">reverseGraph</span>(graph, n):
-                reversed = [[] <span class="keyword">for</span> _ <span class="keyword">in</span> range(n)]
-                <span class="keyword">for</span> v = <span class="number">0</span> <span class="keyword">to</span>
-                n-<span class="number">1</span>:
-                <span class="keyword">for</span> u <span class="keyword">in</span> graph[v]:
-                reversed[u].append(v)
-                <span class="keyword">return</span> reversed
-            </div>
-        </div>
-
-        <div class="card">
-            <h2>Tarjan's Algorithm</h2>
-            <p>Tarjan's algorithm finds SCCs in a <strong>single DFS pass</strong> using the concept of <strong>low-link
-                    values</strong>.</p>
-
-            <h3>Key Concepts</h3>
-            <ul>
-                <li><strong>Discovery Time (disc):</strong> When a vertex is first visited</li>
-                <li><strong>Low-Link Value (low):</strong> Lowest discovery time reachable from subtree</li>
-                <li><strong>Stack:</strong> Keeps track of vertices in current SCC being built</li>
-            </ul>
-
-            <div class="info-box">
-                <h4><i class="fas fa-key"></i> SCC Root Detection</h4>
-                <p>A vertex v is the root of an SCC when disc[v] == low[v]. At this point, all vertices on the stack up
-                    to and including v form one SCC.</p>
-            </div>
-
-            <div class="code-box">
-                time = <span class="number">0</span>
-                disc = [-<span class="number">1</span>] * n
-                low = [-<span class="number">1</span>] * n
-                onStack = [<span class="keyword">false</span>] * n
-                stack = []
-                sccs = []
-
-                <span class="keyword">function</span> <span class="function">tarjan</span>(graph, n):
-                <span class="keyword">for</span> v = <span class="number">0</span> <span class="keyword">to</span>
-                n-<span class="number">1</span>:
-                <span class="keyword">if</span> disc[v] == -<span class="number">1</span>:
-                <span class="function">dfs</span>(v, graph)
-                <span class="keyword">return</span> sccs
-
-                <span class="keyword">function</span> <span class="function">dfs</span>(v, graph):
-                <span class="keyword">global</span> time
-                disc[v] = low[v] = time
-                time++
-                stack.push(v)
-                onStack[v] = <span class="keyword">true</span>
-
-                <span class="keyword">for</span> u <span class="keyword">in</span> graph[v]:
-                <span class="keyword">if</span> disc[u] == -<span class="number">1</span>: <span class="comment">// Not
-                    visited</span>
-                <span class="function">dfs</span>(u, graph)
-                low[v] = min(low[v], low[u])
-                <span class="keyword">else if</span> onStack[u]: <span class="comment">// Back edge to stack
-                    vertex</span>
-                low[v] = min(low[v], disc[u])
-
-                <span class="comment">// If v is root of SCC (low[v] == disc[v])</span>
-                <span class="keyword">if</span> low[v] == disc[v]:
-                component = []
-                <span class="keyword">while</span> <span class="keyword">true</span>:
-                u = stack.pop()
-                onStack[u] = <span class="keyword">false</span>
-                component.append(u)
-                <span class="keyword">if</span> u == v:
-                <span class="keyword">break</span>
-                sccs.append(component)
-            </div>
-        </div>
-
-        <div class="card">
-            <h2>Trace Example: Tarjan's Algorithm</h2>
-            <div class="diagram-box">
-                <pre>
-Graph:  0 → 1 → 2
-        ↑       ↓
-        └───────3
-
-Edges: 0→1, 1→2, 2→3, 3→0
-                </pre>
-            </div>
-
-            <table class="comparison-table">
-                <tr>
-                    <th>Step</th>
-                    <th>Visit</th>
-                    <th>disc[]</th>
-                    <th>low[]</th>
-                    <th>Stack</th>
-                    <th>Action</th>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>0</td>
-                    <td>[0,-,-,-]</td>
-                    <td>[0,-,-,-]</td>
-                    <td>[0]</td>
-                    <td>Visit 0</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>1</td>
-                    <td>[0,1,-,-]</td>
-                    <td>[0,1,-,-]</td>
-                    <td>[0,1]</td>
-                    <td>Visit 1</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>2</td>
-                    <td>[0,1,2,-]</td>
-                    <td>[0,1,2,-]</td>
-                    <td>[0,1,2]</td>
-                    <td>Visit 2</td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>3</td>
-                    <td>[0,1,2,3]</td>
-                    <td>[0,1,2,3]</td>
-                    <td>[0,1,2,3]</td>
-                    <td>Visit 3</td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>3→0</td>
-                    <td>[0,1,2,3]</td>
-                    <td>[0,1,2,0]</td>
-                    <td>[0,1,2,3]</td>
-                    <td>Back edge to 0</td>
-                </tr>
-                <tr>
-                    <td>6</td>
-                    <td>↑</td>
-                    <td>[0,1,2,3]</td>
-                    <td>[0,1,0,0]</td>
-                    <td>[0,1,2,3]</td>
-                    <td>Update low[2]</td>
-                </tr>
-                <tr>
-                    <td>7</td>
-                    <td>↑</td>
-                    <td>[0,1,2,3]</td>
-                    <td>[0,0,0,0]</td>
-                    <td>[0,1,2,3]</td>
-                    <td>Update low[1,0]</td>
-                </tr>
-                <tr>
-                    <td>8</td>
-                    <td>-</td>
-                    <td>[0,1,2,3]</td>
-                    <td>[0,0,0,0]</td>
-                    <td>[]</td>
-                    <td>low[0]==disc[0], pop SCC: {3,2,1,0}</td>
-                </tr>
-            </table>
-            <p><strong>Result:</strong> One SCC containing all vertices {0, 1, 2, 3}</p>
-        </div>
-
-        <div class="card">
-            <h2>Condensation Graph</h2>
-            <p>The <strong>condensation graph</strong> (or meta-graph) is formed by collapsing each SCC into a single
-                vertex. This graph is always a <strong>DAG</strong>.</p>
-
-            <div class="diagram-box">
-                <pre>
-Original:                Condensation:
-                         
-┌───────────┐            
-│ 1 ⟷ 2 ⟷ 3 │───→ 4     SCC{1,2,3} → SCC{4} → SCC{5,6}
-└───────────┘     │      
-                  ↓      (This is a DAG!)
-            ┌─→ 5 ⟷ 6 ─┐
-            └──────────┘
-                </pre>
-            </div>
-
-            <h3>Building the Condensation Graph</h3>
-            <ol>
-                <li>Find all SCCs and assign each vertex to its SCC ID</li>
-                <li>For each edge (u, v) in original graph, if SCC[u] ≠ SCC[v], add edge SCC[u] → SCC[v]</li>
-                <li>Remove duplicate edges</li>
-            </ol>
-        </div>
-
-        <div class="card">
-            <h2>Comparison: Kosaraju vs Tarjan</h2>
-            <table class="comparison-table">
-                <tr>
-                    <th>Aspect</th>
-                    <th>Kosaraju's</th>
-                    <th>Tarjan's</th>
-                </tr>
-                <tr>
-                    <td>DFS Passes</td>
-                    <td>2 passes</td>
-                    <td>1 pass</td>
-                </tr>
-                <tr>
-                    <td>Requires Graph Reversal</td>
-                    <td>Yes</td>
-                    <td>No</td>
-                </tr>
-                <tr>
-                    <td>Extra Data Structures</td>
-                    <td>Reversed graph + stack</td>
-                    <td>disc[], low[], stack</td>
-                </tr>
-                <tr>
-                    <td>Time Complexity</td>
-                    <td>O(V + E)</td>
-                    <td>O(V + E)</td>
-                </tr>
-                <tr>
-                    <td>Space Complexity</td>
-                    <td>O(V + E)</td>
-                    <td>O(V)</td>
-                </tr>
-                <tr>
-                    <td>Implementation</td>
-                    <td>Easier to understand</td>
-                    <td>More complex</td>
-                </tr>
-                <tr>
-                    <td>Constant Factor</td>
-                    <td>Higher (2 DFS)</td>
-                    <td>Lower (1 DFS)</td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="card">
-            <h2>2-SAT Application</h2>
-            <p>Strongly Connected Components are crucial for solving 2-SAT (2-Satisfiability) problems:</p>
-
-            <h3>How 2-SAT Uses SCCs</h3>
-            <ol>
-                <li>Build implication graph: (x ∨ y) becomes (¬x → y) and (¬y → x)</li>
-                <li>Find SCCs of the implication graph</li>
-                <li>If any variable x and ¬x are in the same SCC → UNSATISFIABLE</li>
-                <li>Otherwise, assign values based on SCC topological order</li>
-            </ol>
-
-            <div class="info-box">
-                <h4><i class="fas fa-check-circle"></i> Why It Works</h4>
-                <p>If x and ¬x are in the same SCC, there's a path x → ¬x and ¬x → x, meaning x implies ¬x and ¬x
-                    implies x — a contradiction!</p>
-            </div>
-        </div>
-
-        <div class="card">
-            <h2>Time and Space Complexity</h2>
-            <table class="comparison-table">
-                <tr>
-                    <th>Algorithm</th>
-                    <th>Time</th>
-                    <th>Space</th>
-                </tr>
-                <tr>
-                    <td>Kosaraju's Algorithm</td>
-                    <td>O(V + E)</td>
-                    <td>O(V + E)</td>
-                </tr>
-                <tr>
-                    <td>Tarjan's Algorithm</td>
-                    <td>O(V + E)</td>
-                    <td>O(V)</td>
-                </tr>
-                <tr>
-                    <td>Build Condensation Graph</td>
-                    <td>O(V + E)</td>
-                    <td>O(V + E)</td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="nav-buttons">
-            <a href="mst-interactive.html" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Minimum Spanning
-                Tree</a>
-            <a href="flow-networks.html" class="btn btn-primary">Flow Networks <i class="fas fa-arrow-right"></i></a>
         </div>
     </div>
+
+    <script>
+        const canvas = document.getElementById('graphCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let nodes = [];
+        let edges = [];
+        let currentMode = 'node';
+        let selectedNode = null;
+        let nodeIdCounter = 0;
+        let isAnimating = false;
+        let animationSpeed = 600;
+
+        const nodeLabels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const sccColors = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4', '#84cc16', '#f97316'];
+
+        document.getElementById('speedSlider').addEventListener('input', function (e) {
+            animationSpeed = parseInt(e.target.value);
+            document.getElementById('speedLabel').textContent = (animationSpeed / 1000).toFixed(1) + 's';
+        });
+
+        function setMode(mode) {
+            currentMode = mode;
+            document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`[data-mode="${mode}"]`).classList.add('active');
+            selectedNode = null;
+            drawGraph();
+        }
+
+        canvas.addEventListener('click', function (e) {
+            if (isAnimating) return;
+
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const clickedNode = getNodeAt(x, y);
+
+            if (currentMode === 'node') {
+                if (!clickedNode && nodes.length < 26) {
+                    nodes.push({
+                        id: nodeIdCounter,
+                        label: nodeLabels[nodes.length],
+                        x: x,
+                        y: y,
+                        state: 'unvisited',
+                        sccId: -1
+                    });
+                    nodeIdCounter++;
+                    updateStats();
+                }
+            } else if (currentMode === 'edge') {
+                if (clickedNode) {
+                    if (!selectedNode) {
+                        selectedNode = clickedNode;
+                    } else if (selectedNode !== clickedNode) {
+                        const exists = edges.some(e => e.from === selectedNode.id && e.to === clickedNode.id);
+                        if (!exists) {
+                            edges.push({ from: selectedNode.id, to: clickedNode.id, state: 'normal' });
+                            updateStats();
+                        }
+                        selectedNode = null;
+                    }
+                }
+            } else if (currentMode === 'delete') {
+                if (clickedNode) {
+                    nodes = nodes.filter(n => n.id !== clickedNode.id);
+                    edges = edges.filter(e => e.from !== clickedNode.id && e.to !== clickedNode.id);
+                    updateStats();
+                }
+            }
+
+            drawGraph();
+        });
+
+        function getNodeAt(x, y) {
+            for (let node of nodes) {
+                const dx = x - node.x;
+                const dy = y - node.y;
+                if (dx * dx + dy * dy <= 625) return node;
+            }
+            return null;
+        }
+
+        function getNodeById(id) {
+            return nodes.find(n => n.id === id);
+        }
+
+        function updateStats() {
+            document.getElementById('nodeCount').textContent = nodes.length;
+            document.getElementById('edgeCount').textContent = edges.length;
+        }
+
+        function drawGraph() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            if (nodes.length === 0) {
+                ctx.font = '16px Segoe UI';
+                ctx.fillStyle = '#666';
+                ctx.textAlign = 'center';
+                ctx.fillText('Click to add nodes, or load a sample graph', canvas.width / 2, canvas.height / 2);
+                return;
+            }
+
+            // Draw edges
+            edges.forEach(edge => {
+                const from = getNodeById(edge.from);
+                const to = getNodeById(edge.to);
+                if (!from || !to) return;
+
+                const angle = Math.atan2(to.y - from.y, to.x - from.x);
+                const startX = from.x + 25 * Math.cos(angle);
+                const startY = from.y + 25 * Math.sin(angle);
+                const endX = to.x - 25 * Math.cos(angle);
+                const endY = to.y - 25 * Math.sin(angle);
+
+                ctx.beginPath();
+                ctx.moveTo(startX, startY);
+                ctx.lineTo(endX, endY);
+
+                if (edge.state === 'traversed') {
+                    ctx.strokeStyle = '#10b981';
+                    ctx.lineWidth = 3;
+                } else if (edge.state === 'current') {
+                    ctx.strokeStyle = '#ef4444';
+                    ctx.lineWidth = 4;
+                } else if (edge.state === 'reversed') {
+                    ctx.strokeStyle = '#8b5cf6';
+                    ctx.lineWidth = 2;
+                    ctx.setLineDash([5, 5]);
+                } else {
+                    ctx.strokeStyle = '#333';
+                    ctx.lineWidth = 2;
+                }
+                ctx.stroke();
+                ctx.setLineDash([]);
+
+                // Arrow
+                const arrowLen = 12;
+                ctx.beginPath();
+                ctx.moveTo(endX, endY);
+                ctx.lineTo(endX - arrowLen * Math.cos(angle - 0.3), endY - arrowLen * Math.sin(angle - 0.3));
+                ctx.lineTo(endX - arrowLen * Math.cos(angle + 0.3), endY - arrowLen * Math.sin(angle + 0.3));
+                ctx.closePath();
+                ctx.fillStyle = edge.state === 'traversed' ? '#10b981' : (edge.state === 'current' ? '#ef4444' : '#333');
+                ctx.fill();
+            });
+
+            // Draw nodes
+            nodes.forEach(node => {
+                ctx.beginPath();
+                ctx.arc(node.x, node.y, 25, 0, 2 * Math.PI);
+
+                let color = '#ec4899';
+                if (node.sccId >= 0) {
+                    color = sccColors[node.sccId % sccColors.length];
+                } else if (node.state === 'current') {
+                    color = '#ef4444';
+                } else if (node.state === 'inStack') {
+                    color = '#f59e0b';
+                } else if (node.state === 'visited') {
+                    color = '#6b7280';
+                } else if (selectedNode === node) {
+                    color = '#3b82f6';
+                }
+
+                ctx.fillStyle = color;
+                ctx.fill();
+                ctx.strokeStyle = '#1a1a2e';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                ctx.font = 'bold 18px Segoe UI';
+                ctx.fillStyle = 'white';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(node.label, node.x, node.y);
+            });
+        }
+
+        function loadSampleGraph(type) {
+            clearGraph();
+
+            if (type === 'simple') {
+                nodes = [
+                    { id: 0, label: 'A', x: 200, y: 100, state: 'unvisited', sccId: -1 },
+                    { id: 1, label: 'B', x: 400, y: 100, state: 'unvisited', sccId: -1 },
+                    { id: 2, label: 'C', x: 300, y: 250, state: 'unvisited', sccId: -1 }
+                ];
+                edges = [
+                    { from: 0, to: 1, state: 'normal' },
+                    { from: 1, to: 2, state: 'normal' },
+                    { from: 2, to: 0, state: 'normal' }
+                ];
+            } else if (type === 'two-sccs') {
+                nodes = [
+                    { id: 0, label: 'A', x: 150, y: 150, state: 'unvisited', sccId: -1 },
+                    { id: 1, label: 'B', x: 300, y: 80, state: 'unvisited', sccId: -1 },
+                    { id: 2, label: 'C', x: 300, y: 220, state: 'unvisited', sccId: -1 },
+                    { id: 3, label: 'D', x: 500, y: 150, state: 'unvisited', sccId: -1 },
+                    { id: 4, label: 'E', x: 650, y: 80, state: 'unvisited', sccId: -1 },
+                    { id: 5, label: 'F', x: 650, y: 220, state: 'unvisited', sccId: -1 }
+                ];
+                edges = [
+                    { from: 0, to: 1, state: 'normal' },
+                    { from: 1, to: 2, state: 'normal' },
+                    { from: 2, to: 0, state: 'normal' },
+                    { from: 2, to: 3, state: 'normal' },
+                    { from: 3, to: 4, state: 'normal' },
+                    { from: 4, to: 5, state: 'normal' },
+                    { from: 5, to: 3, state: 'normal' }
+                ];
+            } else if (type === 'complex') {
+                nodes = [
+                    { id: 0, label: 'A', x: 100, y: 100, state: 'unvisited', sccId: -1 },
+                    { id: 1, label: 'B', x: 250, y: 60, state: 'unvisited', sccId: -1 },
+                    { id: 2, label: 'C', x: 250, y: 180, state: 'unvisited', sccId: -1 },
+                    { id: 3, label: 'D', x: 400, y: 100, state: 'unvisited', sccId: -1 },
+                    { id: 4, label: 'E', x: 500, y: 200, state: 'unvisited', sccId: -1 },
+                    { id: 5, label: 'F', x: 550, y: 100, state: 'unvisited', sccId: -1 },
+                    { id: 6, label: 'G', x: 650, y: 200, state: 'unvisited', sccId: -1 },
+                    { id: 7, label: 'H', x: 700, y: 100, state: 'unvisited', sccId: -1 }
+                ];
+                edges = [
+                    { from: 0, to: 1, state: 'normal' },
+                    { from: 1, to: 2, state: 'normal' },
+                    { from: 2, to: 0, state: 'normal' },
+                    { from: 1, to: 3, state: 'normal' },
+                    { from: 3, to: 4, state: 'normal' },
+                    { from: 4, to: 5, state: 'normal' },
+                    { from: 5, to: 3, state: 'normal' },
+                    { from: 5, to: 6, state: 'normal' },
+                    { from: 6, to: 7, state: 'normal' },
+                    { from: 7, to: 6, state: 'normal' }
+                ];
+            }
+
+            nodeIdCounter = nodes.length;
+            updateStats();
+            drawGraph();
+        }
+
+        function clearGraph() {
+            nodes = [];
+            edges = [];
+            nodeIdCounter = 0;
+            selectedNode = null;
+            document.getElementById('sccOutput').textContent = '-';
+            document.getElementById('sccCount').textContent = '-';
+            document.getElementById('stepInfo').classList.remove('active');
+            updateStats();
+            drawGraph();
+        }
+
+        function resetGraph() {
+            nodes.forEach(n => { n.state = 'unvisited'; n.sccId = -1; });
+            edges.forEach(e => e.state = 'normal');
+            document.getElementById('sccOutput').textContent = '-';
+            document.getElementById('sccCount').textContent = '-';
+            document.getElementById('stepInfo').classList.remove('active');
+            drawGraph();
+        }
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        // Kosaraju's Algorithm
+        async function runKosaraju() {
+            if (isAnimating || nodes.length === 0) return;
+            isAnimating = true;
+            resetGraph();
+
+            const stepInfo = document.getElementById('stepInfo');
+            stepInfo.classList.add('active');
+            stepInfo.style.background = '#ec4899';
+
+            // Build adjacency list
+            const adj = {};
+            const radj = {}; // Reversed graph
+            nodes.forEach(n => { adj[n.id] = []; radj[n.id] = []; });
+            edges.forEach(e => {
+                adj[e.from].push(e.to);
+                radj[e.to].push(e.from);
+            });
+
+            // Phase 1: Get finish order
+            stepInfo.textContent = 'Phase 1: DFS to get finish order';
+            await sleep(animationSpeed);
+
+            const visited = new Set();
+            const finishStack = [];
+
+            async function dfs1(nodeId) {
+                const node = getNodeById(nodeId);
+                visited.add(nodeId);
+                node.state = 'current';
+                drawGraph();
+                await sleep(animationSpeed / 2);
+
+                for (let neighborId of adj[nodeId]) {
+                    const edge = edges.find(e => e.from === nodeId && e.to === neighborId);
+                    if (!visited.has(neighborId)) {
+                        if (edge) edge.state = 'current';
+                        drawGraph();
+                        await dfs1(neighborId);
+                        if (edge) edge.state = 'traversed';
+                    }
+                }
+
+                node.state = 'visited';
+                finishStack.push(nodeId);
+                stepInfo.textContent = `Finished ${node.label}, pushed to stack`;
+                drawGraph();
+                await sleep(animationSpeed / 2);
+            }
+
+            for (let node of nodes) {
+                if (!visited.has(node.id)) {
+                    await dfs1(node.id);
+                }
+            }
+
+            // Phase 2: DFS on reversed graph
+            stepInfo.textContent = 'Phase 2: DFS on reversed graph in finish order';
+            await sleep(animationSpeed);
+
+            // Reset states
+            nodes.forEach(n => n.state = 'unvisited');
+            edges.forEach(e => e.state = 'normal');
+            drawGraph();
+
+            const visited2 = new Set();
+            const sccs = [];
+            let sccId = 0;
+
+            async function dfs2(nodeId, scc) {
+                const node = getNodeById(nodeId);
+                visited2.add(nodeId);
+                node.state = 'current';
+                scc.push(node.label);
+                drawGraph();
+                await sleep(animationSpeed / 2);
+
+                for (let neighborId of radj[nodeId]) {
+                    if (!visited2.has(neighborId)) {
+                        await dfs2(neighborId, scc);
+                    }
+                }
+
+                node.sccId = sccId;
+                drawGraph();
+            }
+
+            while (finishStack.length > 0) {
+                const nodeId = finishStack.pop();
+                if (!visited2.has(nodeId)) {
+                    const scc = [];
+                    stepInfo.textContent = `Finding SCC ${sccId + 1} starting from ${getNodeById(nodeId).label}`;
+                    await dfs2(nodeId, scc);
+                    sccs.push(scc);
+                    sccId++;
+                    await sleep(animationSpeed);
+                }
+            }
+
+            // Display results
+            displaySCCs(sccs);
+            stepInfo.textContent = `Found ${sccs.length} strongly connected component(s)!`;
+            document.getElementById('sccCount').textContent = sccs.length;
+
+            isAnimating = false;
+        }
+
+        // Tarjan's Algorithm
+        async function runTarjan() {
+            if (isAnimating || nodes.length === 0) return;
+            isAnimating = true;
+            resetGraph();
+
+            const stepInfo = document.getElementById('stepInfo');
+            stepInfo.classList.add('active');
+            stepInfo.style.background = '#f59e0b';
+
+            // Build adjacency list
+            const adj = {};
+            nodes.forEach(n => adj[n.id] = []);
+            edges.forEach(e => adj[e.from].push(e.to));
+
+            const disc = {};
+            const low = {};
+            const onStack = {};
+            const stack = [];
+            let time = 0;
+            const sccs = [];
+            let sccId = 0;
+
+            nodes.forEach(n => {
+                disc[n.id] = -1;
+                low[n.id] = -1;
+                onStack[n.id] = false;
+            });
+
+            async function tarjan(nodeId) {
+                const node = getNodeById(nodeId);
+                disc[nodeId] = low[nodeId] = time++;
+                stack.push(nodeId);
+                onStack[nodeId] = true;
+
+                node.state = 'inStack';
+                stepInfo.textContent = `Visiting ${node.label}: disc=${disc[nodeId]}, low=${low[nodeId]}`;
+                drawGraph();
+                await sleep(animationSpeed);
+
+                for (let neighborId of adj[nodeId]) {
+                    const edge = edges.find(e => e.from === nodeId && e.to === neighborId);
+
+                    if (disc[neighborId] === -1) {
+                        if (edge) edge.state = 'current';
+                        drawGraph();
+                        await tarjan(neighborId);
+                        if (edge) edge.state = 'traversed';
+                        low[nodeId] = Math.min(low[nodeId], low[neighborId]);
+                    } else if (onStack[neighborId]) {
+                        low[nodeId] = Math.min(low[nodeId], disc[neighborId]);
+                        stepInfo.textContent = `Back edge to ${getNodeById(neighborId).label}! Updated low[${node.label}]=${low[nodeId]}`;
+                        drawGraph();
+                        await sleep(animationSpeed / 2);
+                    }
+                }
+
+                // Check if node is root of SCC
+                if (low[nodeId] === disc[nodeId]) {
+                    const scc = [];
+                    stepInfo.textContent = `${node.label} is SCC root (low == disc). Popping SCC...`;
+                    await sleep(animationSpeed);
+
+                    while (stack.length > 0) {
+                        const w = stack.pop();
+                        onStack[w] = false;
+                        const wNode = getNodeById(w);
+                        wNode.sccId = sccId;
+                        scc.push(wNode.label);
+                        drawGraph();
+                        await sleep(animationSpeed / 3);
+                        if (w === nodeId) break;
+                    }
+
+                    sccs.push(scc);
+                    sccId++;
+                }
+            }
+
+            for (let node of nodes) {
+                if (disc[node.id] === -1) {
+                    await tarjan(node.id);
+                }
+            }
+
+            // Display results
+            displaySCCs(sccs);
+            stepInfo.textContent = `Found ${sccs.length} strongly connected component(s)!`;
+            document.getElementById('sccCount').textContent = sccs.length;
+
+            isAnimating = false;
+        }
+
+        function displaySCCs(sccs) {
+            const output = document.getElementById('sccOutput');
+            output.innerHTML = '';
+            sccs.forEach((scc, i) => {
+                const badge = document.createElement('span');
+                badge.className = 'scc-badge';
+                badge.style.background = sccColors[i % sccColors.length];
+                badge.textContent = `SCC ${i + 1}: {${scc.join(', ')}}`;
+                output.appendChild(badge);
+                output.appendChild(document.createTextNode(' '));
+            });
+        }
+
+        // Initial draw
+        drawGraph();
+    </script>
 </body>
 
 </html>

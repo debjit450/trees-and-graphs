@@ -20,7 +20,7 @@
         }
 
         .nav-bar {
-            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
             padding: 15px 30px;
             display: flex;
             align-items: center;
@@ -43,9 +43,21 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 40px 20px;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 30px;
+        }
+
+        @media (max-width: 1100px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         .card {
@@ -57,153 +69,272 @@
         }
 
         .card h2 {
-            font-size: 1.8em;
+            font-size: 1.6em;
             color: #1a1a2e;
             margin-bottom: 20px;
-            border-bottom: 3px solid #2563eb;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 3px solid #14b8a6;
             padding-bottom: 10px;
         }
 
-        .card h3 {
-            font-size: 1.3em;
+        .card h2 i {
+            color: #14b8a6;
+        }
+
+        .canvas-container {
+            background: #f8f8f8;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        canvas {
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background: white;
+            cursor: crosshair;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-primary {
+            background: #14b8a6;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #0d9488;
+        }
+
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+        }
+
+        .btn-warning {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .btn-warning:hover {
+            background: #d97706;
+        }
+
+        .btn-info {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .btn-info:hover {
+            background: #2563eb;
+        }
+
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        .btn-secondary {
+            background: white;
             color: #1a1a2e;
-            margin: 25px 0 15px 0;
+            border-color: #e0e0e0;
         }
 
-        .card p {
-            color: #555;
-            line-height: 1.8;
-            margin-bottom: 15px;
+        .btn-secondary:hover {
+            border-color: #14b8a6;
+            color: #14b8a6;
         }
 
-        .card ul,
-        .card ol {
-            margin-left: 25px;
-            color: #555;
-            line-height: 1.8;
-            margin-bottom: 15px;
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
 
-        .card li {
+        .mode-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .mode-btn {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .mode-btn.active {
+            border-color: #14b8a6;
+            background: #f0fdfa;
+        }
+
+        .mode-btn i {
+            font-size: 24px;
+            display: block;
             margin-bottom: 8px;
+            color: #14b8a6;
         }
 
         .info-box {
-            background: #eff6ff;
-            border: 2px solid #2563eb;
+            background: #f0fdfa;
+            border: 2px solid #14b8a6;
             border-radius: 8px;
             padding: 20px;
             margin: 20px 0;
         }
 
         .info-box h4 {
-            color: #1d4ed8;
+            color: #0d9488;
             margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .info-box p,
         .info-box li {
-            color: #1e40af;
+            color: #115e59;
             line-height: 1.6;
         }
 
-        .info-box ul {
-            margin-left: 20px;
+        .info-box.success {
+            background: #f0fdf4;
+            border-color: #10b981;
         }
 
-        .warning-box {
+        .info-box.success h4 {
+            color: #059669;
+        }
+
+        .info-box.success p {
+            color: #166534;
+        }
+
+        .info-box.error {
             background: #fef2f2;
-            border: 2px solid #ef4444;
-            border-radius: 8px;
-            padding: 20px;
-            margin: 20px 0;
+            border-color: #ef4444;
         }
 
-        .warning-box h4 {
+        .info-box.error h4 {
             color: #dc2626;
-            margin-bottom: 10px;
         }
 
-        .warning-box p {
+        .info-box.error p {
             color: #991b1b;
         }
 
-        .concept-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            margin: 20px 0;
-        }
-
-        .concept-card {
-            background: #eff6ff;
-            border-left: 4px solid #2563eb;
-            padding: 20px;
-            border-radius: 0 8px 8px 0;
-        }
-
-        .concept-card h4 {
-            color: #1d4ed8;
-            margin-bottom: 10px;
-        }
-
-        .concept-card p {
-            color: #1e40af;
-            margin: 0;
-        }
-
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
-
-        .comparison-table th,
-        .comparison-table td {
-            padding: 12px 15px;
-            border: 1px solid #e0e0e0;
-            text-align: left;
-        }
-
-        .comparison-table th {
-            background: #2563eb;
-            color: white;
-        }
-
-        .comparison-table tr:nth-child(even) {
+        .output-box {
             background: #f8f8f8;
-        }
-
-        .nav-buttons {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 40px;
-            padding-top: 30px;
-            border-top: 2px solid #e0e0e0;
-        }
-
-        .btn {
-            padding: 12px 24px;
-            border: none;
             border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
+            padding: 20px;
+            margin-top: 20px;
+            border-left: 4px solid #14b8a6;
         }
 
-        .btn-primary {
-            background: #2563eb;
-            color: white;
-        }
-
-        .btn-secondary {
-            background: white;
+        .output-box h3 {
+            font-size: 1.1em;
+            margin-bottom: 10px;
             color: #1a1a2e;
-            border: 2px solid #e0e0e0;
+        }
+
+        .output-content {
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            color: #14b8a6;
+            min-height: 30px;
+        }
+
+        .step-info {
+            background: #14b8a6;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            margin: 15px 0;
+            display: none;
+        }
+
+        .step-info.active {
+            display: block;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 15px;
+            background: #f8f8f8;
+            border-radius: 8px;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: #14b8a6;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+        }
+
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 2px solid #333;
         }
 
         .code-box {
@@ -211,11 +342,10 @@
             color: #d4d4d4;
             padding: 20px;
             border-radius: 8px;
-            font-family: 'Consolas', 'Monaco', monospace;
+            font-family: 'Courier New', monospace;
             font-size: 13px;
-            margin: 15px 0;
             overflow-x: auto;
-            line-height: 1.6;
+            margin: 15px 0;
         }
 
         .code-box .keyword {
@@ -230,37 +360,62 @@
             color: #dcdcaa;
         }
 
-        .code-box .number {
-            color: #b5cea8;
+        ul.concept-list {
+            list-style: none;
+            padding: 0;
         }
 
-        .diagram-box {
-            background: #f0f0f0;
-            border-radius: 8px;
-            padding: 20px;
-            margin: 20px 0;
-            text-align: center;
-            font-family: monospace;
-        }
-
-        .color-demo {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin: 20px 0;
-        }
-
-        .color-node {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
+        ul.concept-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #e0e0e0;
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            color: white;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            gap: 10px;
+        }
+
+        ul.concept-list li:last-child {
+            border-bottom: none;
+        }
+
+        ul.concept-list li i {
+            color: #14b8a6;
+        }
+
+        .speed-control {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .speed-control label {
+            font-weight: 600;
+            color: #1a1a2e;
+        }
+
+        input[type="range"] {
+            width: 150px;
+        }
+
+        .color-palette {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+
+        .color-swatch {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .color-swatch.used {
+            border-color: #1a1a2e;
+            transform: scale(1.1);
         }
     </style>
 </head>
@@ -269,342 +424,635 @@
     <div class="nav-bar">
         <a href="index.html"><i class="fas fa-home"></i> Home</a>
         <h1><i class="fas fa-palette"></i> Graph Coloring</h1>
-        <a href="eulerian-hamiltonian.html">Next: Eulerian & Hamiltonian <i class="fas fa-arrow-right"></i></a>
+        <a href="eulerian-hamiltonian.html">Next: Euler & Hamilton <i class="fas fa-arrow-right"></i></a>
     </div>
 
     <div class="container">
-        <div class="card">
-            <h2>What is Graph Coloring?</h2>
-            <p><strong>Graph coloring</strong> is the assignment of labels (called "colors") to vertices of a graph such
-                that no two adjacent vertices share the same color. This is known as <strong>vertex coloring</strong>.
-            </p>
+        <div class="main-grid">
+            <div class="left-column">
+                <div class="card">
+                    <h2><i class="fas fa-project-diagram"></i> Graph Builder</h2>
 
-            <div class="diagram-box">
-                <pre>
-Valid 3-coloring:          Invalid coloring:
-                           
-   (R)───(B)                  (R)───(R)  ✗
-   / \   / \                  / \   / \
- (B) (G)─(R)                (B) (G)─(R)
-                           
-R=Red, B=Blue, G=Green     Adjacent vertices same color!
-                </pre>
-            </div>
+                    <div class="mode-selector">
+                        <div class="mode-btn active" data-mode="node" onclick="setMode('node')">
+                            <i class="fas fa-circle"></i>
+                            Add Node
+                        </div>
+                        <div class="mode-btn" data-mode="edge" onclick="setMode('edge')">
+                            <i class="fas fa-minus"></i>
+                            Add Edge
+                        </div>
+                        <div class="mode-btn" data-mode="delete" onclick="setMode('delete')">
+                            <i class="fas fa-trash"></i>
+                            Delete
+                        </div>
+                    </div>
 
-            <div class="info-box">
-                <h4><i class="fas fa-lightbulb"></i> Key Insight</h4>
-                <p>The minimum number of colors needed to color a graph is called its <strong>chromatic number</strong>,
-                    denoted χ(G). Finding the chromatic number is NP-hard for general graphs.</p>
-            </div>
-        </div>
+                    <div class="canvas-container">
+                        <canvas id="graphCanvas" width="750" height="400"></canvas>
+                    </div>
 
-        <div class="card">
-            <h2>Key Concepts</h2>
-            <div class="concept-grid">
-                <div class="concept-card">
-                    <h4><i class="fas fa-palette"></i> Chromatic Number χ(G)</h4>
-                    <p>The minimum number of colors needed to properly color a graph.</p>
+                    <div class="controls" style="margin-top: 20px;">
+                        <button class="btn btn-primary" onclick="loadSampleGraph('bipartite')">
+                            <i class="fas fa-columns"></i> Bipartite
+                        </button>
+                        <button class="btn btn-primary" onclick="loadSampleGraph('triangle')">
+                            <i class="fas fa-draw-polygon"></i> Triangle
+                        </button>
+                        <button class="btn btn-primary" onclick="loadSampleGraph('petersen')">
+                            <i class="fas fa-star"></i> Petersen
+                        </button>
+                        <button class="btn btn-primary" onclick="loadSampleGraph('wheel')">
+                            <i class="fas fa-circle-notch"></i> Wheel
+                        </button>
+                        <button class="btn btn-danger" onclick="clearGraph()">
+                            <i class="fas fa-trash-alt"></i> Clear
+                        </button>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-value" id="nodeCount">0</div>
+                            <div class="stat-label">Vertices</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="edgeCount">0</div>
+                            <div class="stat-label">Edges</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="chromaticNum">-</div>
+                            <div class="stat-label">Colors Used</div>
+                        </div>
+                    </div>
+
+                    <div class="color-palette" id="colorPalette"></div>
                 </div>
-                <div class="concept-card">
-                    <h4><i class="fas fa-check-circle"></i> k-Colorable</h4>
-                    <p>A graph is k-colorable if it can be properly colored using at most k colors.</p>
-                </div>
-                <div class="concept-card">
-                    <h4><i class="fas fa-divide"></i> Bipartite = 2-Colorable</h4>
-                    <p>A graph is bipartite if and only if it's 2-colorable (no odd-length cycles).</p>
-                </div>
-                <div class="concept-card">
-                    <h4><i class="fas fa-network-wired"></i> Complete Graph K<sub>n</sub></h4>
-                    <p>Requires exactly n colors (every vertex connected to every other).</p>
-                </div>
-            </div>
-        </div>
 
-        <div class="card">
-            <h2>Bipartite Graph Check (2-Coloring)</h2>
-            <p>A graph is <strong>bipartite</strong> if we can partition its vertices into two sets such that every edge
-                connects a vertex in one set to a vertex in the other. This is equivalent to being 2-colorable.</p>
+                <div class="card">
+                    <h2><i class="fas fa-play-circle"></i> Coloring Algorithms</h2>
 
-            <h3>BFS-based Bipartite Check</h3>
-            <div class="code-box">
-                <span class="keyword">function</span> <span class="function">isBipartite</span>(graph, n):
-                color = [-<span class="number">1</span>] * n <span class="comment">// -1 = uncolored, 0 or 1 =
-                    color</span>
+                    <div class="step-info" id="stepInfo"></div>
 
-                <span class="keyword">for</span> start = <span class="number">0</span> <span class="keyword">to</span>
-                n-<span class="number">1</span>:
-                <span class="keyword">if</span> color[start] == -<span class="number">1</span>:
-                <span class="comment">// BFS from this uncolored vertex</span>
-                queue = [start]
-                color[start] = <span class="number">0</span>
+                    <div class="controls">
+                        <button class="btn btn-info" onclick="checkBipartite()" id="btnBipartite">
+                            <i class="fas fa-columns"></i> Check Bipartite
+                        </button>
+                        <button class="btn btn-success" onclick="runGreedyColoring()" id="btnGreedy">
+                            <i class="fas fa-palette"></i> Greedy Color
+                        </button>
+                        <button class="btn btn-secondary" onclick="resetGraph()">
+                            <i class="fas fa-undo"></i> Reset Colors
+                        </button>
+                    </div>
 
-                <span class="keyword">while</span> queue <span class="keyword">not</span> empty:
-                u = queue.dequeue()
+                    <div class="speed-control">
+                        <label>Animation Speed:</label>
+                        <input type="range" id="speedSlider" min="200" max="2000" value="500" step="100">
+                        <span id="speedLabel">0.5s</span>
+                    </div>
 
-                <span class="keyword">for</span> v <span class="keyword">in</span> graph[u]:
-                <span class="keyword">if</span> color[v] == -<span class="number">1</span>:
-                <span class="comment">// Color with opposite color</span>
-                color[v] = <span class="number">1</span> - color[u]
-                queue.enqueue(v)
-                <span class="keyword">else if</span> color[v] == color[u]:
-                <span class="comment">// Same color = not bipartite!</span>
-                <span class="keyword">return</span> <span class="keyword">false</span>
-
-                <span class="keyword">return</span> <span class="keyword">true</span>
-            </div>
-
-            <h3>DFS-based Bipartite Check</h3>
-            <div class="code-box">
-                <span class="keyword">function</span> <span class="function">isBipartiteDFS</span>(graph, n):
-                color = [-<span class="number">1</span>] * n
-
-                <span class="keyword">for</span> v = <span class="number">0</span> <span class="keyword">to</span>
-                n-<span class="number">1</span>:
-                <span class="keyword">if</span> color[v] == -<span class="number">1</span>:
-                <span class="keyword">if not</span> <span class="function">dfs</span>(v, <span class="number">0</span>,
-                graph, color):
-                <span class="keyword">return</span> <span class="keyword">false</span>
-                <span class="keyword">return</span> <span class="keyword">true</span>
-
-                <span class="keyword">function</span> <span class="function">dfs</span>(u, c, graph, color):
-                color[u] = c
-
-                <span class="keyword">for</span> v <span class="keyword">in</span> graph[u]:
-                <span class="keyword">if</span> color[v] == -<span class="number">1</span>:
-                <span class="keyword">if not</span> <span class="function">dfs</span>(v, <span class="number">1</span> -
-                c, graph, color):
-                <span class="keyword">return</span> <span class="keyword">false</span>
-                <span class="keyword">else if</span> color[v] == c:
-                <span class="keyword">return</span> <span class="keyword">false</span>
-
-                <span class="keyword">return</span> <span class="keyword">true</span>
-            </div>
-
-            <div class="info-box">
-                <h4><i class="fas fa-info-circle"></i> Bipartite Condition</h4>
-                <p>A graph is bipartite if and only if it contains no odd-length cycles. If we find an edge where both
-                    endpoints have the same color during BFS/DFS, we've found an odd cycle.</p>
-            </div>
-        </div>
-
-        <div class="card">
-            <h2>Greedy Coloring Algorithm</h2>
-            <p>The greedy algorithm colors vertices one by one, assigning each vertex the smallest available color that
-                doesn't conflict with already-colored neighbors.</p>
-
-            <div class="code-box">
-                <span class="keyword">function</span> <span class="function">greedyColoring</span>(graph, n):
-                color = [-<span class="number">1</span>] * n <span class="comment">// -1 = uncolored</span>
-
-                <span class="keyword">for</span> u = <span class="number">0</span> <span class="keyword">to</span>
-                n-<span class="number">1</span>:
-                <span class="comment">// Find colors used by neighbors</span>
-                usedColors = set()
-                <span class="keyword">for</span> v <span class="keyword">in</span> graph[u]:
-                <span class="keyword">if</span> color[v] != -<span class="number">1</span>:
-                usedColors.add(color[v])
-
-                <span class="comment">// Find smallest unused color</span>
-                c = <span class="number">0</span>
-                <span class="keyword">while</span> c <span class="keyword">in</span> usedColors:
-                c++
-
-                color[u] = c
-
-                <span class="keyword">return</span> color
-            </div>
-
-            <h3>Properties of Greedy Coloring</h3>
-            <ul>
-                <li><strong>Time Complexity:</strong> O(V + E)</li>
-                <li><strong>Colors Used:</strong> At most Δ + 1 (Δ = maximum degree)</li>
-                <li><strong>Not Optimal:</strong> May use more colors than chromatic number</li>
-                <li><strong>Order Matters:</strong> Different vertex orderings give different results</li>
-            </ul>
-
-            <div class="warning-box">
-                <h4><i class="fas fa-exclamation-triangle"></i> Not Always Optimal</h4>
-                <p>Greedy coloring doesn't always find the minimum number of colors. The result depends on the order in
-                    which vertices are processed. However, it's guaranteed to use at most Δ + 1 colors.</p>
-            </div>
-        </div>
-
-        <div class="card">
-            <h2>Special Graph Classes</h2>
-            <table class="comparison-table">
-                <tr>
-                    <th>Graph Type</th>
-                    <th>Chromatic Number</th>
-                    <th>Notes</th>
-                </tr>
-                <tr>
-                    <td>Tree</td>
-                    <td>2 (if |V| ≥ 2)</td>
-                    <td>Trees are bipartite</td>
-                </tr>
-                <tr>
-                    <td>Cycle C<sub>n</sub></td>
-                    <td>2 if n even, 3 if n odd</td>
-                    <td>Even cycles are bipartite</td>
-                </tr>
-                <tr>
-                    <td>Complete Graph K<sub>n</sub></td>
-                    <td>n</td>
-                    <td>Every vertex adjacent to all others</td>
-                </tr>
-                <tr>
-                    <td>Complete Bipartite K<sub>m,n</sub></td>
-                    <td>2</td>
-                    <td>Bipartite = 2-colorable</td>
-                </tr>
-                <tr>
-                    <td>Wheel W<sub>n</sub></td>
-                    <td>3 if n even, 4 if n odd</td>
-                    <td>Hub + cycle</td>
-                </tr>
-                <tr>
-                    <td>Planar Graph</td>
-                    <td>≤ 4</td>
-                    <td>Four Color Theorem</td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="card">
-            <h2>The Four Color Theorem</h2>
-            <p>The <strong>Four Color Theorem</strong> states that any planar graph (a graph that can be drawn on a
-                plane without edge crossings) can be colored with at most 4 colors.</p>
-
-            <div class="info-box">
-                <h4><i class="fas fa-map"></i> Map Coloring</h4>
-                <p>This theorem originated from map coloring: any map can be colored with 4 colors such that no two
-                    adjacent regions share the same color. This was proven in 1976 using computer assistance — one of
-                    the first major theorems proved with computers.</p>
-            </div>
-        </div>
-
-        <div class="card">
-            <h2>Applications</h2>
-            <div class="concept-grid">
-                <div class="concept-card">
-                    <h4><i class="fas fa-calendar-alt"></i> Scheduling</h4>
-                    <p>Exam scheduling where conflicting exams (shared students) need different time slots.</p>
-                </div>
-                <div class="concept-card">
-                    <h4><i class="fas fa-microchip"></i> Register Allocation</h4>
-                    <p>Assigning CPU registers to variables in compilers.</p>
-                </div>
-                <div class="concept-card">
-                    <h4><i class="fas fa-map-marked-alt"></i> Map Coloring</h4>
-                    <p>Coloring regions on a map so adjacent regions have different colors.</p>
-                </div>
-                <div class="concept-card">
-                    <h4><i class="fas fa-broadcast-tower"></i> Frequency Assignment</h4>
-                    <p>Assigning radio frequencies to transmitters to avoid interference.</p>
-                </div>
-                <div class="concept-card">
-                    <h4><i class="fas fa-puzzle-piece"></i> Sudoku</h4>
-                    <p>Sudoku can be modeled as a graph coloring problem with 9 colors.</p>
-                </div>
-                <div class="concept-card">
-                    <h4><i class="fas fa-project-diagram"></i> Pattern Matching</h4>
-                    <p>Graph isomorphism and subgraph matching algorithms.</p>
+                    <div id="resultBox"></div>
                 </div>
             </div>
-        </div>
 
-        <div class="card">
-            <h2>Computational Complexity</h2>
-            <table class="comparison-table">
-                <tr>
-                    <th>Problem</th>
-                    <th>Complexity</th>
-                    <th>Notes</th>
-                </tr>
-                <tr>
-                    <td>2-Colorability (Bipartite Check)</td>
-                    <td>O(V + E)</td>
-                    <td>BFS/DFS</td>
-                </tr>
-                <tr>
-                    <td>3-Colorability</td>
-                    <td>NP-Complete</td>
-                    <td>Decision problem</td>
-                </tr>
-                <tr>
-                    <td>k-Colorability (k ≥ 3)</td>
-                    <td>NP-Complete</td>
-                    <td>Decision problem</td>
-                </tr>
-                <tr>
-                    <td>Finding Chromatic Number</td>
-                    <td>NP-Hard</td>
-                    <td>Optimization problem</td>
-                </tr>
-                <tr>
-                    <td>Greedy Coloring</td>
-                    <td>O(V + E)</td>
-                    <td>Polynomial but not optimal</td>
-                </tr>
-            </table>
+            <div class="right-column">
+                <div class="card">
+                    <h2><i class="fas fa-info-circle"></i> Graph Coloring</h2>
+                    <div class="info-box">
+                        <h4><i class="fas fa-key"></i> Problem</h4>
+                        <p>Assign colors to vertices so that no two adjacent vertices share the same color, using
+                            minimum colors.</p>
+                    </div>
+                    <p style="margin-top: 15px; color: #666;"><strong>Chromatic Number χ(G):</strong> The minimum number
+                        of colors needed to properly color graph G.</p>
+                </div>
 
-            <div class="warning-box">
-                <h4><i class="fas fa-skull-crossbones"></i> NP-Completeness</h4>
-                <p>Determining whether a graph can be colored with exactly k colors (for k ≥ 3) is NP-complete. This
-                    means no known polynomial-time algorithm exists, and finding one would prove P = NP!</p>
+                <div class="card">
+                    <h2><i class="fas fa-columns"></i> Bipartite Graphs</h2>
+                    <div class="info-box">
+                        <h4><i class="fas fa-lightbulb"></i> Key Insight</h4>
+                        <p>A graph is bipartite if and only if it can be 2-colored (χ(G) ≤ 2). Equivalently, it contains
+                            no odd-length cycles.</p>
+                    </div>
+                    <div class="code-box">
+                        <span class="keyword">function</span> <span class="function">isBipartite</span>(graph):
+                        color = {}
+
+                        <span class="keyword">for</span> node <span class="keyword">in</span> graph:
+                        <span class="keyword">if</span> node not colored:
+                        <span class="keyword">if</span> not <span class="function">bfsColor</span>(node):
+                        <span class="keyword">return</span> false
+                        <span class="keyword">return</span> true
+
+                        <span class="keyword">function</span> <span class="function">bfsColor</span>(start):
+                        queue = [start]
+                        color[start] = 0
+
+                        <span class="keyword">while</span> queue not empty:
+                        node = queue.dequeue()
+                        <span class="keyword">for</span> neighbor <span class="keyword">in</span> adj[node]:
+                        <span class="keyword">if</span> color[neighbor] == color[node]:
+                        <span class="keyword">return</span> false <span class="comment">// Odd cycle!</span>
+                        <span class="keyword">if</span> neighbor not colored:
+                        color[neighbor] = 1 - color[node]
+                        queue.enqueue(neighbor)
+                        <span class="keyword">return</span> true
+                    </div>
+                    <p style="margin-top: 10px; color: #666;"><strong>Time:</strong> O(V + E)</p>
+                </div>
+
+                <div class="card">
+                    <h2><i class="fas fa-palette"></i> Greedy Coloring</h2>
+                    <div class="info-box">
+                        <h4><i class="fas fa-lightbulb"></i> Algorithm</h4>
+                        <p>For each vertex, assign the smallest color not used by its neighbors.</p>
+                    </div>
+                    <div class="code-box">
+                        <span class="keyword">function</span> <span class="function">greedyColor</span>(graph):
+                        color = {}
+
+                        <span class="keyword">for</span> node <span class="keyword">in</span> graph:
+                        usedColors = set()
+                        <span class="keyword">for</span> neighbor <span class="keyword">in</span> adj[node]:
+                        <span class="keyword">if</span> neighbor <span class="keyword">in</span> color:
+                        usedColors.add(color[neighbor])
+
+                        <span class="comment">// Find smallest available color</span>
+                        c = 0
+                        <span class="keyword">while</span> c <span class="keyword">in</span> usedColors:
+                        c++
+                        color[node] = c
+
+                        <span class="keyword">return</span> max(color.values()) + 1
+                    </div>
+                    <p style="margin-top: 10px; color: #666;"><strong>Note:</strong> Greedy gives at most Δ+1 colors (Δ
+                        = max degree), but may not be optimal.</p>
+                </div>
+
+                <div class="card">
+                    <h2><i class="fas fa-rocket"></i> Applications</h2>
+                    <ul class="concept-list">
+                        <li><i class="fas fa-calendar"></i> <strong>Scheduling</strong> (exams, meetings)</li>
+                        <li><i class="fas fa-microchip"></i> <strong>Register allocation</strong></li>
+                        <li><i class="fas fa-map"></i> <strong>Map coloring</strong></li>
+                        <li><i class="fas fa-broadcast-tower"></i> <strong>Frequency assignment</strong></li>
+                        <li><i class="fas fa-puzzle-piece"></i> <strong>Sudoku solving</strong></li>
+                    </ul>
+                </div>
             </div>
-        </div>
-
-        <div class="card">
-            <h2>Edge Coloring</h2>
-            <p>Besides vertex coloring, there's also <strong>edge coloring</strong>: assigning colors to edges such that
-                no two edges sharing a vertex have the same color.</p>
-
-            <h3>Vizing's Theorem</h3>
-            <p>For any simple graph G with maximum degree Δ, the edges can be colored with either Δ or Δ + 1 colors.</p>
-            <ul>
-                <li><strong>Class 1 graphs:</strong> Can be edge-colored with Δ colors</li>
-                <li><strong>Class 2 graphs:</strong> Require Δ + 1 colors</li>
-            </ul>
-        </div>
-
-        <div class="card">
-            <h2>Time and Space Complexity Summary</h2>
-            <table class="comparison-table">
-                <tr>
-                    <th>Algorithm</th>
-                    <th>Time</th>
-                    <th>Space</th>
-                    <th>Optimal?</th>
-                </tr>
-                <tr>
-                    <td>Bipartite Check (BFS/DFS)</td>
-                    <td>O(V + E)</td>
-                    <td>O(V)</td>
-                    <td>Yes (for 2-coloring)</td>
-                </tr>
-                <tr>
-                    <td>Greedy Coloring</td>
-                    <td>O(V + E)</td>
-                    <td>O(V)</td>
-                    <td>No</td>
-                </tr>
-                <tr>
-                    <td>Exact Chromatic Number</td>
-                    <td>Exponential</td>
-                    <td>-</td>
-                    <td>Yes</td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="nav-buttons">
-            <a href="scc-interactive.html" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Strongly
-                Connected Components</a>
-            <a href="eulerian-hamiltonian.html" class="btn btn-primary">Eulerian & Hamiltonian <i
-                    class="fas fa-arrow-right"></i></a>
         </div>
     </div>
+
+    <script>
+        const canvas = document.getElementById('graphCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let nodes = [];
+        let edges = [];
+        let currentMode = 'node';
+        let selectedNode = null;
+        let nodeIdCounter = 0;
+        let isAnimating = false;
+        let animationSpeed = 500;
+
+        const nodeLabels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const colors = ['#ef4444', '#3b82f6', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899', '#06b6d4', '#84cc16'];
+        const colorNames = ['Red', 'Blue', 'Green', 'Orange', 'Purple', 'Pink', 'Cyan', 'Lime'];
+
+        // Initialize color palette
+        function initColorPalette() {
+            const palette = document.getElementById('colorPalette');
+            palette.innerHTML = '';
+            colors.forEach((color, i) => {
+                const swatch = document.createElement('div');
+                swatch.className = 'color-swatch';
+                swatch.style.background = color;
+                swatch.title = colorNames[i];
+                palette.appendChild(swatch);
+            });
+        }
+        initColorPalette();
+
+        function updateColorPalette(usedColors) {
+            const swatches = document.querySelectorAll('.color-swatch');
+            swatches.forEach((swatch, i) => {
+                if (usedColors.has(i)) {
+                    swatch.classList.add('used');
+                } else {
+                    swatch.classList.remove('used');
+                }
+            });
+        }
+
+        document.getElementById('speedSlider').addEventListener('input', function (e) {
+            animationSpeed = parseInt(e.target.value);
+            document.getElementById('speedLabel').textContent = (animationSpeed / 1000).toFixed(1) + 's';
+        });
+
+        function setMode(mode) {
+            currentMode = mode;
+            document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`[data-mode="${mode}"]`).classList.add('active');
+            selectedNode = null;
+            drawGraph();
+        }
+
+        canvas.addEventListener('click', function (e) {
+            if (isAnimating) return;
+
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const clickedNode = getNodeAt(x, y);
+
+            if (currentMode === 'node') {
+                if (!clickedNode && nodes.length < 26) {
+                    nodes.push({
+                        id: nodeIdCounter,
+                        label: nodeLabels[nodes.length],
+                        x: x,
+                        y: y,
+                        color: -1
+                    });
+                    nodeIdCounter++;
+                    updateStats();
+                }
+            } else if (currentMode === 'edge') {
+                if (clickedNode) {
+                    if (!selectedNode) {
+                        selectedNode = clickedNode;
+                    } else if (selectedNode !== clickedNode) {
+                        const exists = edges.some(e =>
+                            (e.from === selectedNode.id && e.to === clickedNode.id) ||
+                            (e.from === clickedNode.id && e.to === selectedNode.id)
+                        );
+                        if (!exists) {
+                            edges.push({ from: selectedNode.id, to: clickedNode.id, state: 'normal' });
+                            updateStats();
+                        }
+                        selectedNode = null;
+                    }
+                }
+            } else if (currentMode === 'delete') {
+                if (clickedNode) {
+                    nodes = nodes.filter(n => n.id !== clickedNode.id);
+                    edges = edges.filter(e => e.from !== clickedNode.id && e.to !== clickedNode.id);
+                    updateStats();
+                }
+            }
+
+            drawGraph();
+        });
+
+        function getNodeAt(x, y) {
+            for (let node of nodes) {
+                const dx = x - node.x;
+                const dy = y - node.y;
+                if (dx * dx + dy * dy <= 625) return node;
+            }
+            return null;
+        }
+
+        function getNodeById(id) {
+            return nodes.find(n => n.id === id);
+        }
+
+        function updateStats() {
+            document.getElementById('nodeCount').textContent = nodes.length;
+            document.getElementById('edgeCount').textContent = edges.length;
+        }
+
+        function drawGraph() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            if (nodes.length === 0) {
+                ctx.font = '16px Segoe UI';
+                ctx.fillStyle = '#666';
+                ctx.textAlign = 'center';
+                ctx.fillText('Click to add nodes, or load a sample graph', canvas.width / 2, canvas.height / 2);
+                return;
+            }
+
+            // Draw edges
+            edges.forEach(edge => {
+                const from = getNodeById(edge.from);
+                const to = getNodeById(edge.to);
+                if (!from || !to) return;
+
+                ctx.beginPath();
+                ctx.moveTo(from.x, from.y);
+                ctx.lineTo(to.x, to.y);
+
+                if (edge.state === 'conflict') {
+                    ctx.strokeStyle = '#ef4444';
+                    ctx.lineWidth = 4;
+                } else if (edge.state === 'checking') {
+                    ctx.strokeStyle = '#f59e0b';
+                    ctx.lineWidth = 3;
+                } else {
+                    ctx.strokeStyle = '#333';
+                    ctx.lineWidth = 2;
+                }
+                ctx.stroke();
+            });
+
+            // Draw nodes
+            nodes.forEach(node => {
+                ctx.beginPath();
+                ctx.arc(node.x, node.y, 25, 0, 2 * Math.PI);
+
+                let fillColor = '#9ca3af'; // Gray uncolored
+                if (node.color >= 0 && node.color < colors.length) {
+                    fillColor = colors[node.color];
+                }
+                if (selectedNode === node) {
+                    fillColor = '#1a1a2e';
+                }
+
+                ctx.fillStyle = fillColor;
+                ctx.fill();
+                ctx.strokeStyle = '#1a1a2e';
+                ctx.lineWidth = 3;
+                ctx.stroke();
+
+                ctx.font = 'bold 18px Segoe UI';
+                ctx.fillStyle = 'white';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(node.label, node.x, node.y);
+            });
+        }
+
+        function loadSampleGraph(type) {
+            clearGraph();
+
+            if (type === 'bipartite') {
+                nodes = [
+                    { id: 0, label: 'A', x: 150, y: 100, color: -1 },
+                    { id: 1, label: 'B', x: 150, y: 200, color: -1 },
+                    { id: 2, label: 'C', x: 150, y: 300, color: -1 },
+                    { id: 3, label: 'D', x: 450, y: 100, color: -1 },
+                    { id: 4, label: 'E', x: 450, y: 200, color: -1 },
+                    { id: 5, label: 'F', x: 450, y: 300, color: -1 }
+                ];
+                edges = [
+                    { from: 0, to: 3, state: 'normal' },
+                    { from: 0, to: 4, state: 'normal' },
+                    { from: 1, to: 4, state: 'normal' },
+                    { from: 1, to: 5, state: 'normal' },
+                    { from: 2, to: 3, state: 'normal' },
+                    { from: 2, to: 5, state: 'normal' }
+                ];
+            } else if (type === 'triangle') {
+                nodes = [
+                    { id: 0, label: 'A', x: 300, y: 80, color: -1 },
+                    { id: 1, label: 'B', x: 150, y: 280, color: -1 },
+                    { id: 2, label: 'C', x: 450, y: 280, color: -1 }
+                ];
+                edges = [
+                    { from: 0, to: 1, state: 'normal' },
+                    { from: 1, to: 2, state: 'normal' },
+                    { from: 2, to: 0, state: 'normal' }
+                ];
+            } else if (type === 'petersen') {
+                // Simplified version
+                const cx = 375, cy = 200;
+                const outerR = 150, innerR = 70;
+                nodes = [];
+                for (let i = 0; i < 5; i++) {
+                    const angle = (i * 72 - 90) * Math.PI / 180;
+                    nodes.push({ id: i, label: nodeLabels[i], x: cx + outerR * Math.cos(angle), y: cy + outerR * Math.sin(angle), color: -1 });
+                }
+                for (let i = 0; i < 5; i++) {
+                    const angle = (i * 72 - 90) * Math.PI / 180;
+                    nodes.push({ id: i + 5, label: nodeLabels[i + 5], x: cx + innerR * Math.cos(angle), y: cy + innerR * Math.sin(angle), color: -1 });
+                }
+                edges = [
+                    // Outer pentagon
+                    { from: 0, to: 1, state: 'normal' }, { from: 1, to: 2, state: 'normal' },
+                    { from: 2, to: 3, state: 'normal' }, { from: 3, to: 4, state: 'normal' },
+                    { from: 4, to: 0, state: 'normal' },
+                    // Inner star
+                    { from: 5, to: 7, state: 'normal' }, { from: 7, to: 9, state: 'normal' },
+                    { from: 9, to: 6, state: 'normal' }, { from: 6, to: 8, state: 'normal' },
+                    { from: 8, to: 5, state: 'normal' },
+                    // Spokes
+                    { from: 0, to: 5, state: 'normal' }, { from: 1, to: 6, state: 'normal' },
+                    { from: 2, to: 7, state: 'normal' }, { from: 3, to: 8, state: 'normal' },
+                    { from: 4, to: 9, state: 'normal' }
+                ];
+            } else if (type === 'wheel') {
+                const cx = 375, cy = 200, r = 140;
+                nodes = [{ id: 0, label: 'A', x: cx, y: cy, color: -1 }]; // Center
+                for (let i = 0; i < 6; i++) {
+                    const angle = (i * 60 - 90) * Math.PI / 180;
+                    nodes.push({ id: i + 1, label: nodeLabels[i + 1], x: cx + r * Math.cos(angle), y: cy + r * Math.sin(angle), color: -1 });
+                }
+                edges = [];
+                // Spokes
+                for (let i = 1; i <= 6; i++) {
+                    edges.push({ from: 0, to: i, state: 'normal' });
+                }
+                // Rim
+                for (let i = 1; i <= 6; i++) {
+                    edges.push({ from: i, to: i === 6 ? 1 : i + 1, state: 'normal' });
+                }
+            }
+
+            nodeIdCounter = nodes.length;
+            updateStats();
+            drawGraph();
+        }
+
+        function clearGraph() {
+            nodes = [];
+            edges = [];
+            nodeIdCounter = 0;
+            selectedNode = null;
+            document.getElementById('chromaticNum').textContent = '-';
+            document.getElementById('stepInfo').classList.remove('active');
+            document.getElementById('resultBox').innerHTML = '';
+            updateColorPalette(new Set());
+            updateStats();
+            drawGraph();
+        }
+
+        function resetGraph() {
+            nodes.forEach(n => n.color = -1);
+            edges.forEach(e => e.state = 'normal');
+            document.getElementById('chromaticNum').textContent = '-';
+            document.getElementById('stepInfo').classList.remove('active');
+            document.getElementById('resultBox').innerHTML = '';
+            updateColorPalette(new Set());
+            drawGraph();
+        }
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        function getNeighbors(nodeId) {
+            const neighbors = [];
+            edges.forEach(e => {
+                if (e.from === nodeId) neighbors.push(e.to);
+                if (e.to === nodeId) neighbors.push(e.from);
+            });
+            return neighbors;
+        }
+
+        // Check if graph is bipartite (2-colorable)
+        async function checkBipartite() {
+            if (isAnimating || nodes.length === 0) return;
+            isAnimating = true;
+            resetGraph();
+
+            const stepInfo = document.getElementById('stepInfo');
+            stepInfo.classList.add('active');
+            stepInfo.style.background = '#3b82f6';
+
+            const colorMap = {};
+            let isBipartite = true;
+            let conflictEdge = null;
+
+            async function bfs(startId) {
+                const queue = [startId];
+                colorMap[startId] = 0;
+                getNodeById(startId).color = 0;
+                drawGraph();
+
+                while (queue.length > 0 && isBipartite) {
+                    const nodeId = queue.shift();
+                    const node = getNodeById(nodeId);
+                    stepInfo.textContent = `Processing ${node.label} (color ${colorMap[nodeId] === 0 ? 'Red' : 'Blue'})`;
+
+                    for (let neighborId of getNeighbors(nodeId)) {
+                        const edge = edges.find(e =>
+                            (e.from === nodeId && e.to === neighborId) ||
+                            (e.to === nodeId && e.from === neighborId)
+                        );
+
+                        if (colorMap[neighborId] === undefined) {
+                            colorMap[neighborId] = 1 - colorMap[nodeId];
+                            getNodeById(neighborId).color = colorMap[neighborId];
+                            queue.push(neighborId);
+                            if (edge) edge.state = 'checking';
+                            drawGraph();
+                            await sleep(animationSpeed);
+                            if (edge) edge.state = 'normal';
+                        } else if (colorMap[neighborId] === colorMap[nodeId]) {
+                            isBipartite = false;
+                            conflictEdge = edge;
+                            if (edge) edge.state = 'conflict';
+                            stepInfo.textContent = `Conflict! ${node.label} and ${getNodeById(neighborId).label} have same color`;
+                            stepInfo.style.background = '#ef4444';
+                            drawGraph();
+                            return;
+                        }
+                    }
+                    drawGraph();
+                }
+            }
+
+            for (let node of nodes) {
+                if (colorMap[node.id] === undefined && isBipartite) {
+                    await bfs(node.id);
+                }
+            }
+
+            const resultBox = document.getElementById('resultBox');
+            if (isBipartite) {
+                resultBox.innerHTML = `
+                    <div class="info-box success">
+                        <h4><i class="fas fa-check-circle"></i> Bipartite!</h4>
+                        <p>This graph can be 2-colored. It contains no odd-length cycles.</p>
+                    </div>
+                `;
+                document.getElementById('chromaticNum').textContent = '2';
+                updateColorPalette(new Set([0, 1]));
+            } else {
+                resultBox.innerHTML = `
+                    <div class="info-box error">
+                        <h4><i class="fas fa-times-circle"></i> Not Bipartite!</h4>
+                        <p>This graph cannot be 2-colored. It contains an odd-length cycle.</p>
+                    </div>
+                `;
+            }
+
+            isAnimating = false;
+        }
+
+        // Greedy coloring algorithm
+        async function runGreedyColoring() {
+            if (isAnimating || nodes.length === 0) return;
+            isAnimating = true;
+            resetGraph();
+
+            const stepInfo = document.getElementById('stepInfo');
+            stepInfo.classList.add('active');
+            stepInfo.style.background = '#10b981';
+
+            let maxColor = 0;
+
+            for (let node of nodes) {
+                stepInfo.textContent = `Coloring ${node.label}...`;
+
+                // Find colors used by neighbors
+                const usedColors = new Set();
+                for (let neighborId of getNeighbors(node.id)) {
+                    const neighbor = getNodeById(neighborId);
+                    if (neighbor.color >= 0) {
+                        usedColors.add(neighbor.color);
+                    }
+
+                    // Highlight edges being checked
+                    const edge = edges.find(e =>
+                        (e.from === node.id && e.to === neighborId) ||
+                        (e.to === node.id && e.from === neighborId)
+                    );
+                    if (edge) edge.state = 'checking';
+                }
+                drawGraph();
+                await sleep(animationSpeed / 2);
+
+                // Reset edge states
+                edges.forEach(e => e.state = 'normal');
+
+                // Find smallest available color
+                let color = 0;
+                while (usedColors.has(color)) {
+                    color++;
+                }
+
+                node.color = color;
+                maxColor = Math.max(maxColor, color);
+
+                stepInfo.textContent = `${node.label} assigned ${colorNames[color]} (neighbors use: ${[...usedColors].map(c => colorNames[c]).join(', ') || 'none'})`;
+
+                const allUsedColors = new Set(nodes.filter(n => n.color >= 0).map(n => n.color));
+                updateColorPalette(allUsedColors);
+                drawGraph();
+                await sleep(animationSpeed);
+            }
+
+            const colorsUsed = maxColor + 1;
+            document.getElementById('chromaticNum').textContent = colorsUsed;
+
+            const resultBox = document.getElementById('resultBox');
+            resultBox.innerHTML = `
+                <div class="info-box success">
+                    <h4><i class="fas fa-check-circle"></i> Coloring Complete!</h4>
+                    <p>Used ${colorsUsed} color(s): ${[...new Set(nodes.map(n => colorNames[n.color]))].join(', ')}</p>
+                </div>
+            `;
+
+            stepInfo.textContent = `Done! Greedy coloring used ${colorsUsed} color(s)`;
+            isAnimating = false;
+        }
+
+        // Initial draw
+        drawGraph();
+    </script>
 </body>
 
 </html>

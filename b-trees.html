@@ -1,313 +1,953 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>B-Trees & B+ Trees - Interactive Learning</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f5f5; min-height: 100vh; }
-        .nav-bar { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); padding: 15px 30px; display: flex; align-items: center; gap: 20px; }
-        .nav-bar a { color: white; text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 8px; }
-        .nav-bar h1 { color: white; font-size: 1.5em; flex: 1; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
-        .card { background: white; border-radius: 16px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); margin-bottom: 25px; }
-        .card h2 { font-size: 1.8em; color: #1a1a2e; margin-bottom: 20px; border-bottom: 3px solid #ef4444; padding-bottom: 10px; }
-        .card h3 { font-size: 1.3em; color: #1a1a2e; margin: 25px 0 15px 0; }
-        .card p { color: #555; line-height: 1.8; margin-bottom: 15px; }
-        .card ul, .card ol { margin-left: 25px; color: #555; line-height: 1.8; margin-bottom: 15px; }
-        .card li { margin-bottom: 8px; }
-        .property-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin: 20px 0; }
-        .property-card { background: #fef2f2; border-left: 4px solid #ef4444; padding: 20px; border-radius: 0 8px 8px 0; }
-        .property-card h4 { color: #991b1b; margin-bottom: 10px; }
-        .property-card p { color: #7f1d1d; margin: 0; }
-        .info-box { background: #fef2f2; border: 2px solid #ef4444; border-radius: 8px; padding: 20px; margin: 20px 0; }
-        .info-box h4 { color: #dc2626; margin-bottom: 10px; }
-        .info-box p, .info-box li { color: #991b1b; line-height: 1.6; }
-        .info-box ul { margin-left: 20px; }
-        .comparison-table { width: 100%; border-collapse: collapse; margin: 20px 0; overflow-x: auto; display: block; }
-        .comparison-table th, .comparison-table td { padding: 12px 15px; border: 1px solid #e0e0e0; text-align: left; white-space: nowrap; }
-        .comparison-table th { background: #ef4444; color: white; }
-        .comparison-table tr:nth-child(even) { background: #f8f8f8; }
-        .nav-buttons { display: flex; justify-content: space-between; margin-top: 40px; padding-top: 30px; border-top: 2px solid #e0e0e0; }
-        .btn { padding: 12px 24px; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; }
-        .btn-primary { background: #ef4444; color: white; }
-        .btn-secondary { background: white; color: #1a1a2e; border: 2px solid #e0e0e0; }
-        .code-box { background: #1e1e1e; color: #d4d4d4; padding: 20px; border-radius: 8px; font-family: 'Consolas', 'Monaco', monospace; font-size: 13px; margin: 15px 0; overflow-x: auto; line-height: 1.6; }
-        .code-box .keyword { color: #569cd6; }
-        .code-box .comment { color: #6a9955; }
-        .code-box .function { color: #dcdcaa; }
-        .code-box .string { color: #ce9178; }
-        .code-box .number { color: #b5cea8; }
-        .diagram-box { background: #f0f0f0; border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; font-family: monospace; }
-        .step-list { counter-reset: step-counter; list-style: none; margin-left: 0; }
-        .step-list li { counter-increment: step-counter; margin-bottom: 15px; padding-left: 45px; position: relative; }
-        .step-list li::before { content: counter(step-counter); position: absolute; left: 0; top: 0; background: #ef4444; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 14px; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+        }
+
+        .nav-bar {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-bar a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-bar h1 {
+            color: white;
+            font-size: 1.5em;
+            flex: 1;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 30px;
+        }
+
+        @media (max-width: 1100px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 25px;
+        }
+
+        .card h2 {
+            font-size: 1.5em;
+            color: #1a1a2e;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 3px solid #059669;
+            padding-bottom: 10px;
+        }
+
+        .card h2 i {
+            color: #059669;
+        }
+
+        .canvas-container {
+            background: #f8f8f8;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            overflow-x: auto;
+        }
+
+        canvas {
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background: white;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-primary {
+            background: #059669;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #047857;
+        }
+
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+        }
+
+        .btn-warning {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .btn-warning:hover {
+            background: #d97706;
+        }
+
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #1a1a2e;
+            border-color: #e0e0e0;
+        }
+
+        .btn-secondary:hover {
+            border-color: #059669;
+            color: #059669;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .input-group input {
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            width: 120px;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #059669;
+        }
+
+        .info-box {
+            background: #ecfdf5;
+            border: 2px solid #059669;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .info-box h4 {
+            color: #047857;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-box p,
+        .info-box li {
+            color: #065f46;
+            line-height: 1.6;
+        }
+
+        .step-info {
+            background: #059669;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            margin: 15px 0;
+            display: none;
+        }
+
+        .step-info.active {
+            display: block;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 15px;
+            background: #f8f8f8;
+            border-radius: 8px;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #059669;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            border: 2px solid #333;
+        }
+
+        .code-box {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+
+        .code-box .keyword {
+            color: #569cd6;
+        }
+
+        .code-box .comment {
+            color: #6a9955;
+        }
+
+        .code-box .function {
+            color: #dcdcaa;
+        }
+
+        ul.concept-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        ul.concept-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 14px;
+        }
+
+        ul.concept-list li:last-child {
+            border-bottom: none;
+        }
+
+        ul.concept-list li i {
+            color: #059669;
+            margin-top: 3px;
+        }
+
+        .order-selector {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f8f8;
+            border-radius: 8px;
+        }
+
+        .order-selector label {
+            font-weight: 600;
+            color: #1a1a2e;
+        }
+
+        .order-selector select {
+            padding: 8px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 13px;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 10px;
+            border: 1px solid #e0e0e0;
+            text-align: left;
+        }
+
+        .comparison-table th {
+            background: #059669;
+            color: white;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: #ecfdf5;
+        }
     </style>
 </head>
+
 <body>
     <div class="nav-bar">
         <a href="index.html"><i class="fas fa-home"></i> Home</a>
         <h1><i class="fas fa-database"></i> B-Trees & B+ Trees</h1>
-        <a href="graph-foundations.html">Next: Graph Foundations <i class="fas fa-arrow-right"></i></a>
+        <a href="tree-algorithms.html">Next: Tree Algorithms <i class="fas fa-arrow-right"></i></a>
     </div>
 
     <div class="container">
-        <div class="card">
-            <h2>What is a B-Tree?</h2>
-            <p>A <strong>B-Tree</strong> is a self-balancing search tree designed to work efficiently on storage systems that read and write large blocks of data, such as hard drives and databases. Unlike binary trees, B-Trees can have multiple keys per node and multiple children.</p>
-            
-            <div class="info-box">
-                <h4><i class="fas fa-lightbulb"></i> Key Insight</h4>
-                <p>B-Trees minimize disk I/O operations by keeping nodes large (typically matching disk block size) and the tree height low. This makes them ideal for database indexes and file systems.</p>
+        <div class="main-grid">
+            <div class="left-column">
+                <div class="card">
+                    <h2><i class="fas fa-sitemap"></i> B-Tree Visualizer</h2>
+
+                    <div class="order-selector">
+                        <label>Tree Order (t):</label>
+                        <select id="orderSelect" onchange="changeOrder()">
+                            <option value="2">t = 2 (2-3-4 Tree)</option>
+                            <option value="3" selected>t = 3</option>
+                            <option value="4">t = 4</option>
+                        </select>
+                        <span style="color: #666; font-size: 13px;">Min keys: t-1, Max keys: 2t-1</span>
+                    </div>
+
+                    <div class="canvas-container">
+                        <canvas id="treeCanvas" width="900" height="350"></canvas>
+                    </div>
+
+                    <div class="input-group" style="margin-top: 20px;">
+                        <input type="number" id="valueInput" placeholder="Value" min="1" max="999">
+                        <button class="btn btn-success" onclick="insertValue()">
+                            <i class="fas fa-plus"></i> Insert
+                        </button>
+                        <button class="btn btn-warning" onclick="searchValue()">
+                            <i class="fas fa-search"></i> Search
+                        </button>
+                        <button class="btn btn-danger" onclick="deleteValue()">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                    </div>
+
+                    <div class="controls">
+                        <button class="btn btn-primary" onclick="loadSample('sequential')">
+                            <i class="fas fa-sort-numeric-down"></i> Sequential
+                        </button>
+                        <button class="btn btn-primary" onclick="loadSample('random')">
+                            <i class="fas fa-random"></i> Random
+                        </button>
+                        <button class="btn btn-primary" onclick="loadSample('split')">
+                            <i class="fas fa-code-branch"></i> Demo Split
+                        </button>
+                        <button class="btn btn-secondary" onclick="clearTree()">
+                            <i class="fas fa-trash-alt"></i> Clear
+                        </button>
+                    </div>
+
+                    <div class="step-info" id="stepInfo"></div>
+
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-value" id="keyCount">0</div>
+                            <div class="stat-label">Total Keys</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="nodeCount">0</div>
+                            <div class="stat-label">Nodes</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="treeHeight">0</div>
+                            <div class="stat-label">Height</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="lastOp">-</div>
+                            <div class="stat-label">Last Operation</div>
+                        </div>
+                    </div>
+
+                    <div class="legend">
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #059669;"></div> Normal
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #f59e0b;"></div> Searching
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #3b82f6;"></div> Found
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #ef4444;"></div> Splitting
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <h3>B-Tree of Order m (or Minimum Degree t)</h3>
-            <p>A B-Tree of minimum degree <strong>t</strong> has the following properties:</p>
-            <ul>
-                <li>Every node has at most <strong>2t - 1</strong> keys</li>
-                <li>Every non-root node has at least <strong>t - 1</strong> keys</li>
-                <li>Root can have minimum 1 key (if tree is non-empty)</li>
-                <li>Every internal node with <strong>k</strong> keys has exactly <strong>k + 1</strong> children</li>
-                <li>All leaves appear at the same level (perfectly balanced)</li>
-            </ul>
-        </div>
-
-        <div class="card">
-            <h2>B-Tree Properties</h2>
-            <div class="property-grid">
-                <div class="property-card">
-                    <h4><i class="fas fa-layer-group"></i> Multi-way Branching</h4>
-                    <p>Each node can have many keys and children, reducing tree height significantly.</p>
+            <div class="right-column">
+                <div class="card">
+                    <h2><i class="fas fa-info-circle"></i> B-Tree Properties</h2>
+                    <div class="info-box">
+                        <h4><i class="fas fa-key"></i> Definition</h4>
+                        <p>A B-tree of order t is a self-balancing tree where:</p>
+                        <ul style="margin-left: 20px; margin-top: 10px;">
+                            <li>Every node has at most <strong>2t-1</strong> keys</li>
+                            <li>Every non-root node has at least <strong>t-1</strong> keys</li>
+                            <li>Root has at least <strong>1</strong> key</li>
+                            <li>All leaves are at the <strong>same level</strong></li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="property-card">
-                    <h4><i class="fas fa-balance-scale"></i> Balanced Height</h4>
-                    <p>All leaf nodes are at the same depth, guaranteeing O(log n) operations.</p>
-                </div>
-                <div class="property-card">
-                    <h4><i class="fas fa-sort"></i> Sorted Keys</h4>
-                    <p>Keys within each node are stored in sorted order for binary search.</p>
-                </div>
-                <div class="property-card">
-                    <h4><i class="fas fa-hdd"></i> Disk-Optimized</h4>
-                    <p>Node size matches disk block size, minimizing I/O operations.</p>
-                </div>
-            </div>
-        </div>
 
-        <div class="card">
-            <h2>B-Tree Structure Example</h2>
-            <p>A B-Tree of minimum degree t=2 (each node has 1-3 keys, 2-4 children):</p>
-            <div class="diagram-box">
-                <pre>
-                        [  8  | 16  ]
-                       /     |      \
-                      /      |       \
-              [2|4|6]    [10|12|14]    [18|20]
-                </pre>
-            </div>
-            <ul>
-                <li>Root has 2 keys (8, 16) and 3 children</li>
-                <li>Left subtree contains keys less than 8</li>
-                <li>Middle subtree contains keys between 8 and 16</li>
-                <li>Right subtree contains keys greater than 16</li>
-            </ul>
-        </div>
+                <div class="card">
+                    <h2><i class="fas fa-plus"></i> Insertion</h2>
+                    <div class="code-box">
+                        <span class="keyword">function</span> <span class="function">insert</span>(key):
+                        <span class="keyword">if</span> root is full:
+                        <span class="comment">// Split root, tree grows up</span>
+                        newRoot = new Node()
+                        newRoot.children[0] = root
+                        <span class="function">splitChild</span>(newRoot, 0)
+                        root = newRoot
 
-        <div class="card">
-            <h2>Search Operation</h2>
-            <p>Searching in a B-Tree is similar to BST search, but at each node we search among multiple keys:</p>
-            <div class="code-box">
-<span class="keyword">function</span> <span class="function">search</span>(node, key):
-    i = <span class="number">0</span>
-    <span class="comment">// Find first key >= search key</span>
-    <span class="keyword">while</span> i < node.numKeys <span class="keyword">and</span> key > node.keys[i]:
-        i = i + <span class="number">1</span>
-    
-    <span class="comment">// Check if key found</span>
-    <span class="keyword">if</span> i < node.numKeys <span class="keyword">and</span> key == node.keys[i]:
-        <span class="keyword">return</span> (node, i)  <span class="comment">// Found!</span>
-    
-    <span class="comment">// If leaf, key not in tree</span>
-    <span class="keyword">if</span> node.isLeaf:
-        <span class="keyword">return</span> null
-    
-    <span class="comment">// Recurse to appropriate child</span>
-    <span class="keyword">return</span> <span class="function">search</span>(node.children[i], key)
-            </div>
-            <p><strong>Time Complexity:</strong> O(t · log<sub>t</sub> n) = O(log n)</p>
-        </div>
+                        <span class="function">insertNonFull</span>(root, key)
 
-        <div class="card">
-            <h2>Insertion Operation</h2>
-            <p>Insertion in B-Trees follows a proactive splitting approach to ensure nodes never exceed capacity:</p>
-            
-            <ol class="step-list">
-                <li><strong>Find the leaf:</strong> Navigate to the appropriate leaf node where the key should be inserted.</li>
-                <li><strong>Insert if room:</strong> If the leaf has fewer than 2t-1 keys, insert the key in sorted order.</li>
-                <li><strong>Split if full:</strong> If the node is full, split it before insertion:
-                    <ul style="margin-top: 10px;">
-                        <li>Middle key moves up to parent</li>
-                        <li>Left half stays, right half becomes new node</li>
-                        <li>If parent overflows, recursively split upward</li>
+                        <span class="keyword">function</span> <span class="function">splitChild</span>(parent, i):
+                        <span class="comment">// Split child at index i</span>
+                        <span class="comment">// Move median up to parent</span>
+                        <span class="comment">// Create new sibling</span>
+                    </div>
+                    <p style="margin-top: 10px; color: #666;"><strong>Key insight:</strong> Always split full nodes
+                        proactively during descent.</p>
+                </div>
+
+                <div class="card">
+                    <h2><i class="fas fa-balance-scale"></i> B-Tree vs B+ Tree</h2>
+                    <table class="comparison-table">
+                        <tr>
+                            <th>Feature</th>
+                            <th>B-Tree</th>
+                            <th>B+ Tree</th>
+                        </tr>
+                        <tr>
+                            <td>Data storage</td>
+                            <td>All nodes</td>
+                            <td>Leaves only</td>
+                        </tr>
+                        <tr>
+                            <td>Leaf links</td>
+                            <td>None</td>
+                            <td>Linked list</td>
+                        </tr>
+                        <tr>
+                            <td>Range queries</td>
+                            <td>Slower</td>
+                            <td>Fast</td>
+                        </tr>
+                        <tr>
+                            <td>Internal nodes</td>
+                            <td>Data + keys</td>
+                            <td>Keys only</td>
+                        </tr>
+                        <tr>
+                            <td>Disk usage</td>
+                            <td>Higher</td>
+                            <td>Lower</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="card">
+                    <h2><i class="fas fa-rocket"></i> Applications</h2>
+                    <ul class="concept-list">
+                        <li><i class="fas fa-database"></i> <strong>Database indexes</strong> (MySQL, PostgreSQL)</li>
+                        <li><i class="fas fa-hdd"></i> <strong>File systems</strong> (NTFS, ext4)</li>
+                        <li><i class="fas fa-folder"></i> <strong>Directory structures</strong></li>
+                        <li><i class="fas fa-key"></i> <strong>Key-value stores</strong></li>
                     </ul>
-                </li>
-            </ol>
-
-            <h3>Node Splitting</h3>
-            <div class="diagram-box">
-                <pre>
-Before split (t=2, max 3 keys):      After split:
-                                            [3]
-     [1 | 2 | 3 | 4]         →         /         \
-                                    [1|2]       [4]
-                </pre>
-            </div>
-
-            <div class="code-box">
-<span class="keyword">function</span> <span class="function">insert</span>(tree, key):
-    root = tree.root
-    <span class="keyword">if</span> root.numKeys == <span class="number">2</span>*t - <span class="number">1</span>:  <span class="comment">// Root is full</span>
-        newRoot = <span class="function">createNode</span>()
-        newRoot.isLeaf = <span class="keyword">false</span>
-        newRoot.children[<span class="number">0</span>] = root
-        <span class="function">splitChild</span>(newRoot, <span class="number">0</span>)
-        tree.root = newRoot
-        <span class="function">insertNonFull</span>(newRoot, key)
-    <span class="keyword">else</span>:
-        <span class="function">insertNonFull</span>(root, key)
-
-<span class="keyword">function</span> <span class="function">insertNonFull</span>(node, key):
-    i = node.numKeys - <span class="number">1</span>
-    <span class="keyword">if</span> node.isLeaf:
-        <span class="comment">// Shift keys and insert</span>
-        <span class="keyword">while</span> i >= <span class="number">0</span> <span class="keyword">and</span> key < node.keys[i]:
-            node.keys[i + <span class="number">1</span>] = node.keys[i]
-            i = i - <span class="number">1</span>
-        node.keys[i + <span class="number">1</span>] = key
-        node.numKeys++
-    <span class="keyword">else</span>:
-        <span class="comment">// Find child to descend</span>
-        <span class="keyword">while</span> i >= <span class="number">0</span> <span class="keyword">and</span> key < node.keys[i]:
-            i = i - <span class="number">1</span>
-        i = i + <span class="number">1</span>
-        <span class="keyword">if</span> node.children[i].numKeys == <span class="number">2</span>*t - <span class="number">1</span>:
-            <span class="function">splitChild</span>(node, i)
-            <span class="keyword">if</span> key > node.keys[i]:
-                i = i + <span class="number">1</span>
-        <span class="function">insertNonFull</span>(node.children[i], key)
-            </div>
-        </div>
-
-        <div class="card">
-            <h2>Deletion Operation</h2>
-            <p>Deletion is more complex and ensures nodes don't fall below minimum capacity:</p>
-            
-            <h3>Case 1: Key in Leaf Node</h3>
-            <p>Simply remove the key if the node has more than t-1 keys.</p>
-
-            <h3>Case 2: Key in Internal Node</h3>
-            <ul>
-                <li><strong>2a:</strong> If predecessor child has ≥ t keys, replace with predecessor and delete predecessor</li>
-                <li><strong>2b:</strong> If successor child has ≥ t keys, replace with successor and delete successor</li>
-                <li><strong>2c:</strong> If both children have t-1 keys, merge children with key, then delete from merged node</li>
-            </ul>
-
-            <h3>Case 3: Key Not in Current Node</h3>
-            <p>Before descending to child, ensure child has at least t keys:</p>
-            <ul>
-                <li><strong>Borrow:</strong> If sibling has ≥ t keys, borrow from sibling through parent</li>
-                <li><strong>Merge:</strong> If no sibling has extra keys, merge child with sibling</li>
-            </ul>
-        </div>
-
-        <div class="card">
-            <h2>B+ Trees</h2>
-            <p>A <strong>B+ Tree</strong> is a variation of B-Tree commonly used in databases and file systems:</p>
-            
-            <div class="property-grid">
-                <div class="property-card">
-                    <h4><i class="fas fa-leaf"></i> Data in Leaves Only</h4>
-                    <p>All actual data records are stored in leaf nodes. Internal nodes only contain keys for navigation.</p>
                 </div>
-                <div class="property-card">
-                    <h4><i class="fas fa-link"></i> Linked Leaves</h4>
-                    <p>Leaf nodes are linked together, enabling efficient range queries and sequential access.</p>
-                </div>
-                <div class="property-card">
-                    <h4><i class="fas fa-copy"></i> Duplicate Keys</h4>
-                    <p>Keys in internal nodes are copies of keys in leaves, acting as separators.</p>
-                </div>
-                <div class="property-card">
-                    <h4><i class="fas fa-tachometer-alt"></i> More Keys per Node</h4>
-                    <p>Since internal nodes don't store data, they can hold more keys, reducing height.</p>
+
+                <div class="card">
+                    <h2><i class="fas fa-clock"></i> Complexity</h2>
+                    <div class="info-box">
+                        <p><strong>Search/Insert/Delete:</strong> O(log n)</p>
+                        <p style="margin-top: 8px;"><strong>Space:</strong> O(n)</p>
+                        <p style="margin-top: 8px;">All operations require O(log<sub>t</sub> n) disk accesses in
+                            practice.</p>
+                    </div>
                 </div>
             </div>
-
-            <h3>B+ Tree Structure</h3>
-            <div class="diagram-box">
-                <pre>
-Internal:           [  8  |  16  ]
-                   /      |       \
-                  /       |        \
-Leaves:     [2|4|6|8] → [10|12|14|16] → [18|20|22]
-             (linked list of leaves for range queries)
-                </pre>
-            </div>
-        </div>
-
-        <div class="card">
-            <h2>B-Tree vs B+ Tree</h2>
-            <table class="comparison-table">
-                <tr><th>Feature</th><th>B-Tree</th><th>B+ Tree</th></tr>
-                <tr><td>Data storage</td><td>In all nodes</td><td>Only in leaves</td></tr>
-                <tr><td>Leaf linking</td><td>Not linked</td><td>Linked list</td></tr>
-                <tr><td>Range queries</td><td>Need tree traversal</td><td>Follow leaf links</td></tr>
-                <tr><td>Duplicate keys</td><td>None</td><td>In internal nodes</td></tr>
-                <tr><td>Search always reaches leaf</td><td>No (can find early)</td><td>Yes (always)</td></tr>
-                <tr><td>Keys per internal node</td><td>Fewer (store data)</td><td>More (keys only)</td></tr>
-                <tr><td>Primary use</td><td>General indexing</td><td>Database indexes</td></tr>
-            </table>
-        </div>
-
-        <div class="card">
-            <h2>Time and Space Complexity</h2>
-            <table class="comparison-table">
-                <tr><th>Operation</th><th>Time Complexity</th><th>Notes</th></tr>
-                <tr><td>Search</td><td>O(log n)</td><td>Height is O(log<sub>t</sub> n)</td></tr>
-                <tr><td>Insert</td><td>O(log n)</td><td>May require splits up to root</td></tr>
-                <tr><td>Delete</td><td>O(log n)</td><td>May require merges/borrows</td></tr>
-                <tr><td>Range Query (B+ Tree)</td><td>O(log n + k)</td><td>k = number of results</td></tr>
-            </table>
-            <p><strong>Space Complexity:</strong> O(n) where n is the number of keys</p>
-            <p><strong>Height:</strong> O(log<sub>t</sub> n) where t is the minimum degree</p>
-        </div>
-
-        <div class="card">
-            <h2>Real-World Applications</h2>
-            <ul>
-                <li><strong>Database Indexes:</strong> MySQL InnoDB, PostgreSQL, Oracle use B+ Trees for indexing</li>
-                <li><strong>File Systems:</strong> NTFS, HFS+, ext4 use B-Trees for directory indexing</li>
-                <li><strong>Key-Value Stores:</strong> LevelDB, RocksDB use B+ Tree variants</li>
-                <li><strong>MongoDB:</strong> Uses B-Trees for its WiredTiger storage engine</li>
-            </ul>
-
-            <div class="info-box">
-                <h4><i class="fas fa-database"></i> Why Databases Love B+ Trees</h4>
-                <ul>
-                    <li>Node size matches disk page size (4KB - 16KB)</li>
-                    <li>Low height means few disk reads (typically 3-4 levels for millions of records)</li>
-                    <li>Sequential leaf access is cache-friendly</li>
-                    <li>Supports both point queries and range scans efficiently</li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="nav-buttons">
-            <a href="tries.html" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Tries</a>
-            <a href="graph-foundations.html" class="btn btn-primary">Graph Foundations <i class="fas fa-arrow-right"></i></a>
         </div>
     </div>
+
+    <script>
+        const canvas = document.getElementById('treeCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let t = 3; // Minimum degree
+        let root = null;
+        let animationSpeed = 300;
+        let isAnimating = false;
+
+        class BTreeNode {
+            constructor(leaf = true) {
+                this.keys = [];
+                this.children = [];
+                this.leaf = leaf;
+                this.state = 'normal'; // normal, searching, found, splitting
+            }
+        }
+
+        function changeOrder() {
+            t = parseInt(document.getElementById('orderSelect').value);
+            clearTree();
+        }
+
+        function clearTree() {
+            root = null;
+            document.getElementById('stepInfo').classList.remove('active');
+            updateStats();
+            drawTree();
+        }
+
+        function updateStats() {
+            let keyCount = 0;
+            let nodeCount = 0;
+            let height = 0;
+
+            function traverse(node, level) {
+                if (!node) return;
+                nodeCount++;
+                keyCount += node.keys.length;
+                height = Math.max(height, level);
+                node.children.forEach(child => traverse(child, level + 1));
+            }
+
+            traverse(root, 1);
+
+            document.getElementById('keyCount').textContent = keyCount;
+            document.getElementById('nodeCount').textContent = nodeCount;
+            document.getElementById('treeHeight').textContent = height;
+        }
+
+        function drawTree() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            if (!root) {
+                ctx.font = '16px Segoe UI';
+                ctx.fillStyle = '#666';
+                ctx.textAlign = 'center';
+                ctx.fillText('B-Tree is empty. Insert values to build the tree.', canvas.width / 2, canvas.height / 2);
+                return;
+            }
+
+            // Calculate layout
+            const nodeHeight = 40;
+            const levelGap = 70;
+            const keyWidth = 35;
+
+            function getNodeWidth(node) {
+                return Math.max(keyWidth * node.keys.length, 50);
+            }
+
+            function calculatePositions(node, x, y, availableWidth) {
+                if (!node) return;
+
+                node.x = x;
+                node.y = y;
+                node.width = getNodeWidth(node);
+
+                if (!node.leaf && node.children.length > 0) {
+                    const childWidths = node.children.map(c => getSubtreeWidth(c));
+                    const totalWidth = childWidths.reduce((a, b) => a + b, 0) + (node.children.length - 1) * 20;
+                    let startX = x - totalWidth / 2;
+
+                    node.children.forEach((child, i) => {
+                        const childX = startX + childWidths[i] / 2;
+                        calculatePositions(child, childX, y + levelGap, childWidths[i]);
+                        startX += childWidths[i] + 20;
+                    });
+                }
+            }
+
+            function getSubtreeWidth(node) {
+                if (!node) return 0;
+                if (node.leaf) return getNodeWidth(node) + 30;
+
+                const childWidths = node.children.reduce((sum, child) => sum + getSubtreeWidth(child), 0);
+                return Math.max(getNodeWidth(node), childWidths + (node.children.length - 1) * 20) + 30;
+            }
+
+            calculatePositions(root, canvas.width / 2, 50, canvas.width);
+
+            // Draw tree
+            function drawNode(node) {
+                if (!node) return;
+
+                // Draw connections to children
+                if (!node.leaf) {
+                    node.children.forEach(child => {
+                        if (child) {
+                            ctx.beginPath();
+                            ctx.moveTo(node.x, node.y + nodeHeight / 2);
+                            ctx.lineTo(child.x, child.y - nodeHeight / 2);
+                            ctx.strokeStyle = '#666';
+                            ctx.lineWidth = 2;
+                            ctx.stroke();
+                        }
+                    });
+                }
+
+                // Draw node box
+                const boxWidth = node.width;
+                const boxX = node.x - boxWidth / 2;
+                const boxY = node.y - nodeHeight / 2;
+
+                // Background color based on state
+                let bgColor = '#059669';
+                if (node.state === 'searching') bgColor = '#f59e0b';
+                else if (node.state === 'found') bgColor = '#3b82f6';
+                else if (node.state === 'splitting') bgColor = '#ef4444';
+
+                ctx.fillStyle = bgColor;
+                ctx.beginPath();
+                ctx.roundRect(boxX, boxY, boxWidth, nodeHeight, 6);
+                ctx.fill();
+
+                ctx.strokeStyle = '#1a1a2e';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                // Draw keys with separators
+                const keyW = boxWidth / node.keys.length;
+                node.keys.forEach((key, i) => {
+                    // Separator line
+                    if (i > 0) {
+                        ctx.beginPath();
+                        ctx.moveTo(boxX + i * keyW, boxY);
+                        ctx.lineTo(boxX + i * keyW, boxY + nodeHeight);
+                        ctx.strokeStyle = 'rgba(255,255,255,0.5)';
+                        ctx.lineWidth = 1;
+                        ctx.stroke();
+                    }
+
+                    // Key value
+                    ctx.font = 'bold 14px Segoe UI';
+                    ctx.fillStyle = 'white';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText(key.toString(), boxX + (i + 0.5) * keyW, node.y);
+                });
+
+                // Draw children
+                node.children.forEach(child => drawNode(child));
+            }
+
+            drawNode(root);
+        }
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        async function insertValue() {
+            const input = document.getElementById('valueInput');
+            const value = parseInt(input.value);
+            if (isNaN(value)) return;
+
+            if (isAnimating) return;
+            isAnimating = true;
+
+            const stepInfo = document.getElementById('stepInfo');
+            stepInfo.classList.add('active');
+
+            await insert(value);
+
+            document.getElementById('lastOp').textContent = 'Insert';
+            input.value = '';
+            updateStats();
+
+            isAnimating = false;
+        }
+
+        async function insert(key) {
+            const stepInfo = document.getElementById('stepInfo');
+
+            if (!root) {
+                root = new BTreeNode(true);
+                root.keys.push(key);
+                stepInfo.textContent = `Created root with key ${key}`;
+                drawTree();
+                await sleep(animationSpeed);
+                return;
+            }
+
+            // If root is full, split it
+            if (root.keys.length === 2 * t - 1) {
+                stepInfo.textContent = `Root is full! Creating new root and splitting...`;
+                root.state = 'splitting';
+                drawTree();
+                await sleep(animationSpeed);
+
+                const newRoot = new BTreeNode(false);
+                newRoot.children.push(root);
+                await splitChild(newRoot, 0);
+                root = newRoot;
+            }
+
+            await insertNonFull(root, key);
+            resetStates(root);
+            drawTree();
+        }
+
+        async function splitChild(parent, i) {
+            const stepInfo = document.getElementById('stepInfo');
+            const y = parent.children[i];
+            const z = new BTreeNode(y.leaf);
+
+            // Move half the keys to new node
+            const medianKey = y.keys[t - 1];
+
+            z.keys = y.keys.splice(t);
+            y.keys.pop(); // Remove median
+
+            if (!y.leaf) {
+                z.children = y.children.splice(t);
+            }
+
+            parent.children.splice(i + 1, 0, z);
+            parent.keys.splice(i, 0, medianKey);
+
+            stepInfo.textContent = `Split: moved median ${medianKey} up`;
+            y.state = 'normal';
+            drawTree();
+            await sleep(animationSpeed);
+        }
+
+        async function insertNonFull(node, key) {
+            const stepInfo = document.getElementById('stepInfo');
+            node.state = 'searching';
+            stepInfo.textContent = `Searching in node [${node.keys.join(', ')}] for position to insert ${key}`;
+            drawTree();
+            await sleep(animationSpeed);
+
+            let i = node.keys.length - 1;
+
+            if (node.leaf) {
+                // Find position and insert
+                while (i >= 0 && key < node.keys[i]) {
+                    i--;
+                }
+                node.keys.splice(i + 1, 0, key);
+                node.state = 'found';
+                stepInfo.textContent = `Inserted ${key} in leaf node`;
+                drawTree();
+                await sleep(animationSpeed);
+            } else {
+                // Find child to descend to
+                while (i >= 0 && key < node.keys[i]) {
+                    i--;
+                }
+                i++;
+
+                // Check if child is full
+                if (node.children[i].keys.length === 2 * t - 1) {
+                    stepInfo.textContent = `Child is full, splitting before descent`;
+                    node.children[i].state = 'splitting';
+                    drawTree();
+                    await sleep(animationSpeed);
+
+                    await splitChild(node, i);
+
+                    if (key > node.keys[i]) {
+                        i++;
+                    }
+                }
+
+                node.state = 'normal';
+                await insertNonFull(node.children[i], key);
+            }
+        }
+
+        async function searchValue() {
+            const input = document.getElementById('valueInput');
+            const value = parseInt(input.value);
+            if (isNaN(value) || !root) return;
+
+            if (isAnimating) return;
+            isAnimating = true;
+
+            const stepInfo = document.getElementById('stepInfo');
+            stepInfo.classList.add('active');
+
+            resetStates(root);
+            const found = await search(root, value);
+
+            if (found) {
+                stepInfo.textContent = `Found ${value}!`;
+            } else {
+                stepInfo.textContent = `${value} not found in tree`;
+            }
+
+            document.getElementById('lastOp').textContent = 'Search';
+
+            setTimeout(() => {
+                resetStates(root);
+                drawTree();
+            }, 1500);
+
+            isAnimating = false;
+        }
+
+        async function search(node, key) {
+            if (!node) return false;
+
+            const stepInfo = document.getElementById('stepInfo');
+            node.state = 'searching';
+            stepInfo.textContent = `Searching for ${key} in [${node.keys.join(', ')}]`;
+            drawTree();
+            await sleep(animationSpeed);
+
+            let i = 0;
+            while (i < node.keys.length && key > node.keys[i]) {
+                i++;
+            }
+
+            if (i < node.keys.length && key === node.keys[i]) {
+                node.state = 'found';
+                drawTree();
+                await sleep(animationSpeed);
+                return true;
+            }
+
+            if (node.leaf) {
+                node.state = 'normal';
+                return false;
+            }
+
+            node.state = 'normal';
+            return await search(node.children[i], key);
+        }
+
+        async function deleteValue() {
+            const input = document.getElementById('valueInput');
+            const value = parseInt(input.value);
+            if (isNaN(value) || !root) return;
+
+            const stepInfo = document.getElementById('stepInfo');
+            stepInfo.classList.add('active');
+            stepInfo.textContent = `Delete operation for ${value} (simplified demo - rebuild tree recommended)`;
+
+            // For demo purposes, just show that delete exists
+            // Full delete is complex with borrowing and merging
+            document.getElementById('lastOp').textContent = 'Delete';
+            input.value = '';
+        }
+
+        function resetStates(node) {
+            if (!node) return;
+            node.state = 'normal';
+            node.children.forEach(child => resetStates(child));
+        }
+
+        function loadSample(type) {
+            clearTree();
+
+            let values = [];
+            if (type === 'sequential') {
+                values = [10, 20, 30, 40, 50, 60, 70, 80, 90];
+            } else if (type === 'random') {
+                values = [50, 25, 75, 10, 35, 60, 90, 5, 15, 30, 40];
+            } else if (type === 'split') {
+                // Values that will cause interesting splits
+                values = [10, 20, 30, 40, 50];
+            }
+
+            (async () => {
+                for (let v of values) {
+                    await insert(v);
+                    await sleep(100);
+                }
+                updateStats();
+            })();
+        }
+
+        // Initial draw
+        drawTree();
+    </script>
 </body>
+
 </html>

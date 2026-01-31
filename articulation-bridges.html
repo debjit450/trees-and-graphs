@@ -20,7 +20,7 @@
         }
 
         .nav-bar {
-            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
             padding: 15px 30px;
             display: flex;
             align-items: center;
@@ -38,14 +38,26 @@
 
         .nav-bar h1 {
             color: white;
-            font-size: 1.5em;
+            font-size: 1.4em;
             flex: 1;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 40px 20px;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 30px;
+        }
+
+        @media (max-width: 1100px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         .card {
@@ -57,61 +69,137 @@
         }
 
         .card h2 {
-            font-size: 1.8em;
+            font-size: 1.5em;
             color: #1a1a2e;
             margin-bottom: 20px;
-            border-bottom: 3px solid #2563eb;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 3px solid #ef4444;
             padding-bottom: 10px;
         }
 
-        .card h3 {
-            font-size: 1.3em;
+        .card h2 i {
+            color: #ef4444;
+        }
+
+        .canvas-container {
+            background: #f8f8f8;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        canvas {
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background: white;
+            cursor: crosshair;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-primary {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #dc2626;
+        }
+
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+        }
+
+        .btn-warning {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .btn-warning:hover {
+            background: #d97706;
+        }
+
+        .btn-danger {
+            background: #dc2626;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #b91c1c;
+        }
+
+        .btn-secondary {
+            background: white;
             color: #1a1a2e;
-            margin: 25px 0 15px 0;
+            border-color: #e0e0e0;
         }
 
-        .card p {
-            color: #555;
-            line-height: 1.8;
-            margin-bottom: 15px;
+        .btn-secondary:hover {
+            border-color: #ef4444;
+            color: #ef4444;
         }
 
-        .card ul,
-        .card ol {
-            margin-left: 25px;
-            color: #555;
-            line-height: 1.8;
-            margin-bottom: 15px;
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
 
-        .card li {
+        .mode-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .mode-btn {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .mode-btn.active {
+            border-color: #ef4444;
+            background: #fef2f2;
+        }
+
+        .mode-btn i {
+            font-size: 24px;
+            display: block;
             margin-bottom: 8px;
+            color: #ef4444;
         }
 
         .info-box {
-            background: #eff6ff;
-            border: 2px solid #2563eb;
-            border-radius: 8px;
-            padding: 20px;
-            margin: 20px 0;
-        }
-
-        .info-box h4 {
-            color: #1d4ed8;
-            margin-bottom: 10px;
-        }
-
-        .info-box p,
-        .info-box li {
-            color: #1e40af;
-            line-height: 1.6;
-        }
-
-        .info-box ul {
-            margin-left: 20px;
-        }
-
-        .warning-box {
             background: #fef2f2;
             border: 2px solid #ef4444;
             border-radius: 8px;
@@ -119,91 +207,108 @@
             margin: 20px 0;
         }
 
-        .warning-box h4 {
+        .info-box h4 {
             color: #dc2626;
             margin-bottom: 10px;
-        }
-
-        .warning-box p {
-            color: #991b1b;
-        }
-
-        .concept-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            margin: 20px 0;
-        }
-
-        .concept-card {
-            background: #eff6ff;
-            border-left: 4px solid #2563eb;
-            padding: 20px;
-            border-radius: 0 8px 8px 0;
-        }
-
-        .concept-card h4 {
-            color: #1d4ed8;
-            margin-bottom: 10px;
-        }
-
-        .concept-card p {
-            color: #1e40af;
-            margin: 0;
-        }
-
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
-
-        .comparison-table th,
-        .comparison-table td {
-            padding: 12px 15px;
-            border: 1px solid #e0e0e0;
-            text-align: left;
-        }
-
-        .comparison-table th {
-            background: #2563eb;
-            color: white;
-        }
-
-        .comparison-table tr:nth-child(even) {
-            background: #f8f8f8;
-        }
-
-        .nav-buttons {
             display: flex;
-            justify-content: space-between;
-            margin-top: 40px;
-            padding-top: 30px;
-            border-top: 2px solid #e0e0e0;
-        }
-
-        .btn {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            display: inline-flex;
             align-items: center;
             gap: 8px;
-            text-decoration: none;
         }
 
-        .btn-primary {
-            background: #2563eb;
-            color: white;
+        .info-box p,
+        .info-box li {
+            color: #991b1b;
+            line-height: 1.6;
         }
 
-        .btn-secondary {
-            background: white;
+        .output-box {
+            background: #f8f8f8;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            border-left: 4px solid #ef4444;
+        }
+
+        .output-box h3 {
+            font-size: 1.1em;
+            margin-bottom: 10px;
             color: #1a1a2e;
-            border: 2px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .output-content {
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            color: #ef4444;
+            min-height: 24px;
+        }
+
+        .step-info {
+            background: #ef4444;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            margin: 15px 0;
+            display: none;
+        }
+
+        .step-info.active {
+            display: block;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 15px;
+            background: #f8f8f8;
+            border-radius: 8px;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #ef4444;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+        }
+
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 2px solid #333;
+        }
+
+        .legend-line {
+            width: 30px;
+            height: 4px;
+            border-radius: 2px;
         }
 
         .code-box {
@@ -211,11 +316,10 @@
             color: #d4d4d4;
             padding: 20px;
             border-radius: 8px;
-            font-family: 'Consolas', 'Monaco', monospace;
-            font-size: 13px;
-            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
             overflow-x: auto;
-            line-height: 1.6;
+            margin: 15px 0;
         }
 
         .code-box .keyword {
@@ -230,17 +334,66 @@
             color: #dcdcaa;
         }
 
-        .code-box .number {
-            color: #b5cea8;
+        ul.concept-list {
+            list-style: none;
+            padding: 0;
         }
 
-        .diagram-box {
-            background: #f0f0f0;
-            border-radius: 8px;
-            padding: 20px;
+        ul.concept-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 14px;
+        }
+
+        ul.concept-list li:last-child {
+            border-bottom: none;
+        }
+
+        ul.concept-list li i {
+            color: #ef4444;
+            margin-top: 3px;
+        }
+
+        .speed-control {
+            display: flex;
+            align-items: center;
+            gap: 15px;
             margin: 20px 0;
+        }
+
+        .speed-control label {
+            font-weight: 600;
+            color: #1a1a2e;
+        }
+
+        input[type="range"] {
+            width: 150px;
+        }
+
+        .disc-low-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 13px;
+        }
+
+        .disc-low-table th,
+        .disc-low-table td {
+            padding: 8px 12px;
+            border: 1px solid #e0e0e0;
             text-align: center;
-            font-family: monospace;
+        }
+
+        .disc-low-table th {
+            background: #ef4444;
+            color: white;
+        }
+
+        .disc-low-table tr:nth-child(even) {
+            background: #fef2f2;
         }
     </style>
 </head>
@@ -249,433 +402,635 @@
     <div class="nav-bar">
         <a href="index.html"><i class="fas fa-home"></i> Home</a>
         <h1><i class="fas fa-unlink"></i> Articulation Points & Bridges</h1>
-        <a href="complexity-analysis.html">Next: Complexity Analysis <i class="fas fa-arrow-right"></i></a>
+        <a href="complexity-analysis.html">Next: Complexity <i class="fas fa-arrow-right"></i></a>
     </div>
 
     <div class="container">
-        <div class="card">
-            <h2>What are Articulation Points and Bridges?</h2>
-            <p>In an undirected connected graph:</p>
+        <div class="main-grid">
+            <div class="left-column">
+                <div class="card">
+                    <h2><i class="fas fa-project-diagram"></i> Graph Builder</h2>
 
-            <div class="concept-grid">
-                <div class="concept-card">
-                    <h4><i class="fas fa-circle"></i> Articulation Point (Cut Vertex)</h4>
-                    <p>A vertex whose removal disconnects the graph. Removing it increases the number of connected
-                        components.</p>
+                    <div class="mode-selector">
+                        <div class="mode-btn active" data-mode="node" onclick="setMode('node')">
+                            <i class="fas fa-circle"></i>
+                            Add Node
+                        </div>
+                        <div class="mode-btn" data-mode="edge" onclick="setMode('edge')">
+                            <i class="fas fa-minus"></i>
+                            Add Edge
+                        </div>
+                        <div class="mode-btn" data-mode="delete" onclick="setMode('delete')">
+                            <i class="fas fa-trash"></i>
+                            Delete
+                        </div>
+                    </div>
+
+                    <div class="canvas-container">
+                        <canvas id="graphCanvas" width="750" height="380"></canvas>
+                    </div>
+
+                    <div class="controls" style="margin-top: 20px;">
+                        <button class="btn btn-primary" onclick="loadSampleGraph('simple')">
+                            <i class="fas fa-shapes"></i> Simple
+                        </button>
+                        <button class="btn btn-primary" onclick="loadSampleGraph('chain')">
+                            <i class="fas fa-link"></i> Chain
+                        </button>
+                        <button class="btn btn-primary" onclick="loadSampleGraph('tree')">
+                            <i class="fas fa-sitemap"></i> Tree
+                        </button>
+                        <button class="btn btn-primary" onclick="loadSampleGraph('complex')">
+                            <i class="fas fa-project-diagram"></i> Complex
+                        </button>
+                        <button class="btn btn-danger" onclick="clearGraph()">
+                            <i class="fas fa-trash-alt"></i> Clear
+                        </button>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-value" id="nodeCount">0</div>
+                            <div class="stat-label">Vertices</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="edgeCount">0</div>
+                            <div class="stat-label">Edges</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="artCount">-</div>
+                            <div class="stat-label">Articulation Pts</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="bridgeCount">-</div>
+                            <div class="stat-label">Bridges</div>
+                        </div>
+                    </div>
+
+                    <div class="legend">
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #ef4444;"></div> Articulation Point
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #6366f1;"></div> Normal Node
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-line" style="background: #ef4444;"></div> Bridge
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-line" style="background: #333;"></div> Normal Edge
+                        </div>
+                    </div>
                 </div>
-                <div class="concept-card">
-                    <h4><i class="fas fa-link"></i> Bridge (Cut Edge)</h4>
-                    <p>An edge whose removal disconnects the graph. It's the only path between some pair of vertices.
-                    </p>
+
+                <div class="card">
+                    <h2><i class="fas fa-play-circle"></i> Find Articulation Points & Bridges</h2>
+
+                    <div class="step-info" id="stepInfo"></div>
+
+                    <div class="controls">
+                        <button class="btn btn-success" onclick="runTarjan()" id="btnTarjan">
+                            <i class="fas fa-search"></i> Run Tarjan's Algorithm
+                        </button>
+                        <button class="btn btn-secondary" onclick="resetGraph()">
+                            <i class="fas fa-undo"></i> Reset
+                        </button>
+                    </div>
+
+                    <div class="speed-control">
+                        <label>Animation Speed:</label>
+                        <input type="range" id="speedSlider" min="200" max="2000" value="500" step="100">
+                        <span id="speedLabel">0.5s</span>
+                    </div>
+
+                    <div class="output-box">
+                        <h3><i class="fas fa-dot-circle"></i> Articulation Points</h3>
+                        <div class="output-content" id="artOutput">-</div>
+                    </div>
+
+                    <div class="output-box">
+                        <h3><i class="fas fa-unlink"></i> Bridges</h3>
+                        <div class="output-content" id="bridgeOutput">-</div>
+                    </div>
+
+                    <div id="discLowTable" style="display: none;">
+                        <h3 style="margin: 20px 0 10px; color: #1a1a2e;"><i class="fas fa-table"></i> Discovery & Low
+                            Values</h3>
+                        <table class="disc-low-table">
+                            <thead>
+                                <tr>
+                                    <th>Node</th>
+                                    <th>disc[]</th>
+                                    <th>low[]</th>
+                                </tr>
+                            </thead>
+                            <tbody id="discLowBody"></tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
-            <div class="diagram-box">
-                <pre>
-Example Graph:
-                     
-    1 ─── 2 ─── 3 ─── 4
-          │           │
-          5 ────────── 6
-                     
-Articulation Points: {2, 3}
-  - Removing 2 disconnects {1} from rest
-  - Removing 3 disconnects {4,6} from rest
-  
-Bridges: {(1,2), (2,3), (3,4), (3,6)} 
-  - Wait, let's check: 3-6 exists but 4-6 also exists
-  
-Actually:
-    1 ─── 2 ─── 3 ─── 4
-          │           │
-          5           6
-          
-Bridges: {(1,2), (2,5), (2,3), (3,4), (3,6)}
-All edges are bridges in a tree!
-                </pre>
-            </div>
-        </div>
-
-        <div class="card">
-            <h2>Why Are They Important?</h2>
-            <div class="concept-grid">
-                <div class="concept-card">
-                    <h4><i class="fas fa-network-wired"></i> Network Reliability</h4>
-                    <p>Critical points in computer/communication networks. Failure = network split.</p>
+            <div class="right-column">
+                <div class="card">
+                    <h2><i class="fas fa-info-circle"></i> Definitions</h2>
+                    <div class="info-box">
+                        <h4><i class="fas fa-dot-circle"></i> Articulation Point</h4>
+                        <p>A vertex whose removal disconnects the graph (increases number of components).</p>
+                    </div>
+                    <div class="info-box">
+                        <h4><i class="fas fa-unlink"></i> Bridge</h4>
+                        <p>An edge whose removal disconnects the graph.</p>
+                    </div>
+                    <p style="margin-top: 15px; color: #666;">These are critical points in network design - they
+                        represent single points of failure!</p>
                 </div>
-                <div class="concept-card">
-                    <h4><i class="fas fa-road"></i> Infrastructure Planning</h4>
-                    <p>Critical roads/bridges in transportation networks.</p>
+
+                <div class="card">
+                    <h2><i class="fas fa-search"></i> Tarjan's Algorithm</h2>
+                    <div class="info-box">
+                        <h4><i class="fas fa-key"></i> Key Values</h4>
+                        <ul style="margin-left: 20px; margin-top: 10px;">
+                            <li><strong>disc[u]:</strong> Discovery time of node u</li>
+                            <li><strong>low[u]:</strong> Lowest disc reachable from subtree of u</li>
+                        </ul>
+                    </div>
+                    <div class="code-box">
+                        <span class="keyword">function</span> <span class="function">tarjan</span>(u, parent):
+                        disc[u] = low[u] = time++
+                        children = 0
+
+                        <span class="keyword">for</span> v <span class="keyword">in</span> adj[u]:
+                        <span class="keyword">if</span> disc[v] == -1: <span class="comment">// Unvisited</span>
+                        children++
+                        <span class="function">tarjan</span>(v, u)
+                        low[u] = min(low[u], low[v])
+
+                        <span class="comment">// Check articulation point</span>
+                        <span class="keyword">if</span> parent == null && children > 1:
+                        u is articulation point
+                        <span class="keyword">if</span> parent != null && low[v] >= disc[u]:
+                        u is articulation point
+
+                        <span class="comment">// Check bridge</span>
+                        <span class="keyword">if</span> low[v] > disc[u]:
+                        (u, v) is bridge
+
+                        <span class="keyword">else if</span> v != parent:
+                        low[u] = min(low[u], disc[v])
+                    </div>
+                    <p style="margin-top: 10px; color: #666;"><strong>Time:</strong> O(V + E)</p>
                 </div>
-                <div class="concept-card">
-                    <h4><i class="fas fa-shield-alt"></i> Attack Vulnerability</h4>
-                    <p>Identifying weak points that adversaries might target.</p>
-                </div>
-                <div class="concept-card">
-                    <h4><i class="fas fa-project-diagram"></i> Graph Decomposition</h4>
-                    <p>Finding biconnected components for graph analysis.</p>
-                </div>
-            </div>
-        </div>
 
-        <div class="card">
-            <h2>Key Concepts</h2>
-
-            <h3>Discovery Time (disc)</h3>
-            <p>The timestamp when a vertex is first visited during DFS.</p>
-
-            <h3>Low Value (low)</h3>
-            <p>The minimum discovery time reachable from the subtree rooted at this vertex, including via back edges.
-            </p>
-
-            <div class="info-box">
-                <h4><i class="fas fa-lightbulb"></i> Low Value Definition</h4>
-                <p>low[v] = min(disc[v], disc[ancestor reachable via back edge], low[children])</p>
-                <p>Intuitively: the "earliest" vertex we can reach from v's subtree through back edges.</p>
-            </div>
-
-            <h3>Back Edge</h3>
-            <p>An edge to an already-visited ancestor in the DFS tree (creates a cycle).</p>
-        </div>
-
-        <div class="card">
-            <h2>Finding Articulation Points</h2>
-
-            <h3>Conditions for Articulation Point</h3>
-            <p>A vertex u is an articulation point if:</p>
-            <ol>
-                <li><strong>u is root of DFS tree</strong> AND has 2+ children</li>
-                <li><strong>u is not root</strong> AND has a child v where low[v] ≥ disc[u]
-                    <ul>
-                        <li>This means v's subtree cannot reach any ancestor of u</li>
-                        <li>Removing u disconnects v's subtree from the rest</li>
+                <div class="card">
+                    <h2><i class="fas fa-lightbulb"></i> Key Insights</h2>
+                    <ul class="concept-list">
+                        <li><i class="fas fa-arrow-up"></i> <strong>Root is AP</strong> if it has ≥2 children in DFS
+                            tree</li>
+                        <li><i class="fas fa-arrow-down"></i> <strong>Non-root u is AP</strong> if child v has low[v] ≥
+                            disc[u]</li>
+                        <li><i class="fas fa-unlink"></i> <strong>(u,v) is bridge</strong> if low[v] > disc[u]</li>
+                        <li><i class="fas fa-redo"></i> <strong>Back edges</strong> help lower the low[] values</li>
                     </ul>
-                </li>
-            </ol>
+                </div>
 
-            <div class="code-box">
-                time = <span class="number">0</span>
-                disc = [-<span class="number">1</span>] * n
-                low = [-<span class="number">1</span>] * n
-                parent = [-<span class="number">1</span>] * n
-                articulationPoints = set()
-
-                <span class="keyword">function</span> <span class="function">findArticulationPoints</span>(graph, n):
-                <span class="keyword">for</span> v = <span class="number">0</span> <span class="keyword">to</span>
-                n-<span class="number">1</span>:
-                <span class="keyword">if</span> disc[v] == -<span class="number">1</span>:
-                <span class="function">dfs</span>(v, graph)
-                <span class="keyword">return</span> articulationPoints
-
-                <span class="keyword">function</span> <span class="function">dfs</span>(u, graph):
-                <span class="keyword">global</span> time
-                children = <span class="number">0</span>
-                disc[u] = low[u] = time
-                time++
-
-                <span class="keyword">for</span> v <span class="keyword">in</span> graph[u]:
-                <span class="keyword">if</span> disc[v] == -<span class="number">1</span>: <span class="comment">// Not
-                    visited (tree edge)</span>
-                children++
-                parent[v] = u
-                <span class="function">dfs</span>(v, graph)
-
-                <span class="comment">// Update low value from child</span>
-                low[u] = min(low[u], low[v])
-
-                <span class="comment">// Check articulation point conditions</span>
-                <span class="keyword">if</span> parent[u] == -<span class="number">1</span> <span
-                    class="keyword">and</span> children > <span class="number">1</span>:
-                <span class="comment">// Root with 2+ children</span>
-                articulationPoints.add(u)
-
-                <span class="keyword">if</span> parent[u] != -<span class="number">1</span> <span
-                    class="keyword">and</span> low[v] >= disc[u]:
-                <span class="comment">// Non-root with cut condition</span>
-                articulationPoints.add(u)
-
-                <span class="keyword">else if</span> v != parent[u]: <span class="comment">// Back edge (not to
-                    parent)</span>
-                low[u] = min(low[u], disc[v])
+                <div class="card">
+                    <h2><i class="fas fa-rocket"></i> Applications</h2>
+                    <ul class="concept-list">
+                        <li><i class="fas fa-network-wired"></i> <strong>Network reliability</strong> - finding weak
+                            points</li>
+                        <li><i class="fas fa-road"></i> <strong>Transportation</strong> - critical roads/intersections
+                        </li>
+                        <li><i class="fas fa-sitemap"></i> <strong>Biconnected components</strong></li>
+                        <li><i class="fas fa-server"></i> <strong>Server redundancy</strong> planning</li>
+                    </ul>
+                </div>
             </div>
-        </div>
-
-        <div class="card">
-            <h2>Finding Bridges</h2>
-
-            <h3>Condition for Bridge</h3>
-            <p>An edge (u, v) is a bridge if: low[v] > disc[u]</p>
-            <p>This means v's subtree has NO back edge to u or any ancestor of u. The edge (u,v) is the only connection.
-            </p>
-
-            <div class="info-box">
-                <h4><i class="fas fa-exclamation-circle"></i> Difference from Articulation Points</h4>
-                <p><strong>Bridge:</strong> low[v] > disc[u] (strictly greater)</p>
-                <p><strong>Articulation Point:</strong> low[v] ≥ disc[u] (greater or equal)</p>
-                <p>If low[v] = disc[u], there's a back edge to u itself — edge (u,v) is not a bridge, but u might be an
-                    articulation point.</p>
-            </div>
-
-            <div class="code-box">
-                time = <span class="number">0</span>
-                disc = [-<span class="number">1</span>] * n
-                low = [-<span class="number">1</span>] * n
-                parent = [-<span class="number">1</span>] * n
-                bridges = []
-
-                <span class="keyword">function</span> <span class="function">findBridges</span>(graph, n):
-                <span class="keyword">for</span> v = <span class="number">0</span> <span class="keyword">to</span>
-                n-<span class="number">1</span>:
-                <span class="keyword">if</span> disc[v] == -<span class="number">1</span>:
-                <span class="function">dfs</span>(v, graph)
-                <span class="keyword">return</span> bridges
-
-                <span class="keyword">function</span> <span class="function">dfs</span>(u, graph):
-                <span class="keyword">global</span> time
-                disc[u] = low[u] = time
-                time++
-
-                <span class="keyword">for</span> v <span class="keyword">in</span> graph[u]:
-                <span class="keyword">if</span> disc[v] == -<span class="number">1</span>: <span class="comment">// Tree
-                    edge</span>
-                parent[v] = u
-                <span class="function">dfs</span>(v, graph)
-
-                low[u] = min(low[u], low[v])
-
-                <span class="comment">// Bridge condition: strictly greater</span>
-                <span class="keyword">if</span> low[v] > disc[u]:
-                bridges.append((u, v))
-
-                <span class="keyword">else if</span> v != parent[u]: <span class="comment">// Back edge</span>
-                low[u] = min(low[u], disc[v])
-            </div>
-        </div>
-
-        <div class="card">
-            <h2>Trace Example</h2>
-            <div class="diagram-box">
-                <pre>
-Graph:
-    0 ─── 1 ─── 2
-          │
-          3 ─── 4
-              
-Edges: (0,1), (1,2), (1,3), (3,4)
-                </pre>
-            </div>
-
-            <table class="comparison-table">
-                <tr>
-                    <th>Step</th>
-                    <th>Visit</th>
-                    <th>disc[]</th>
-                    <th>low[]</th>
-                    <th>Action</th>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>0</td>
-                    <td>[0,-,-,-,-]</td>
-                    <td>[0,-,-,-,-]</td>
-                    <td>Start DFS from 0</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>1</td>
-                    <td>[0,1,-,-,-]</td>
-                    <td>[0,1,-,-,-]</td>
-                    <td>Visit 1 from 0</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>2</td>
-                    <td>[0,1,2,-,-]</td>
-                    <td>[0,1,2,-,-]</td>
-                    <td>Visit 2 from 1</td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>-</td>
-                    <td>[0,1,2,-,-]</td>
-                    <td>[0,1,2,-,-]</td>
-                    <td>2 done, low[2]=2>disc[1]=1 → (1,2) bridge</td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>3</td>
-                    <td>[0,1,2,3,-]</td>
-                    <td>[0,1,2,3,-]</td>
-                    <td>Visit 3 from 1</td>
-                </tr>
-                <tr>
-                    <td>6</td>
-                    <td>4</td>
-                    <td>[0,1,2,3,4]</td>
-                    <td>[0,1,2,3,4]</td>
-                    <td>Visit 4 from 3</td>
-                </tr>
-                <tr>
-                    <td>7</td>
-                    <td>-</td>
-                    <td>[0,1,2,3,4]</td>
-                    <td>[0,1,2,3,4]</td>
-                    <td>4 done, low[4]=4>disc[3]=3 → (3,4) bridge</td>
-                </tr>
-                <tr>
-                    <td>8</td>
-                    <td>-</td>
-                    <td>[0,1,2,3,4]</td>
-                    <td>[0,1,2,3,3]</td>
-                    <td>low[3]=3>disc[1]=1 → (1,3) bridge</td>
-                </tr>
-                <tr>
-                    <td>9</td>
-                    <td>-</td>
-                    <td>[0,1,2,3,4]</td>
-                    <td>[0,1,2,3,3]</td>
-                    <td>low[1]=1>disc[0]=0 → (0,1) bridge</td>
-                </tr>
-            </table>
-
-            <p><strong>Bridges Found:</strong> (1,2), (3,4), (1,3), (0,1) — all edges in this tree are bridges!</p>
-            <p><strong>Articulation Points:</strong> {1, 3} — removing either disconnects the graph</p>
-        </div>
-
-        <div class="card">
-            <h2>Biconnected Components</h2>
-            <p>A <strong>biconnected component</strong> is a maximal subgraph with no articulation points. It cannot be
-                disconnected by removing any single vertex.</p>
-
-            <h3>Properties</h3>
-            <ul>
-                <li>A graph is biconnected if it has no articulation points</li>
-                <li>Bridges form their own biconnected components</li>
-                <li>Articulation points can belong to multiple biconnected components</li>
-            </ul>
-
-            <div class="diagram-box">
-                <pre>
-Graph:
-    1 ─── 2 ─── 3
-    │     │     
-    └──── 4 ─── 5
-    
-Biconnected Components:
-BC1: {1, 2, 4} (cycle)
-BC2: {2, 3} (edge, 2 is articulation point)
-BC3: {4, 5} (edge, 4 is articulation point)
-                </pre>
-            </div>
-
-            <h3>Finding Biconnected Components</h3>
-            <p>Use a stack during DFS to collect edges. When an articulation point is found, pop edges to form a
-                component.</p>
-        </div>
-
-        <div class="card">
-            <h2>Handling Multiple Edges</h2>
-            <div class="warning-box">
-                <h4><i class="fas fa-exclamation-triangle"></i> Multiple Edges Between Same Vertices</h4>
-                <p>If there are multiple edges between u and v, the edge (u,v) is NOT a bridge — removing one edge still
-                    leaves another. Track edge indices instead of just checking if v ≠ parent[u].</p>
-            </div>
-
-            <p>For multigraphs, instead of <code>v != parent[u]</code>, track the edge ID and ensure we don't go back on
-                the same edge we came from:</p>
-
-            <div class="code-box">
-                <span class="comment">// For multigraphs: track edge ID</span>
-                <span class="keyword">function</span> <span class="function">dfs</span>(u, parentEdge, graph):
-                disc[u] = low[u] = time++
-
-                <span class="keyword">for</span> (v, edgeId) <span class="keyword">in</span> graph[u]:
-                <span class="keyword">if</span> disc[v] == -<span class="number">1</span>:
-                <span class="function">dfs</span>(v, edgeId, graph)
-                low[u] = min(low[u], low[v])
-                <span class="keyword">if</span> low[v] > disc[u]:
-                bridges.add(edgeId)
-                <span class="keyword">else if</span> edgeId != parentEdge: <span class="comment">// Different
-                    edge</span>
-                low[u] = min(low[u], disc[v])
-            </div>
-        </div>
-
-        <div class="card">
-            <h2>Time and Space Complexity</h2>
-            <table class="comparison-table">
-                <tr>
-                    <th>Operation</th>
-                    <th>Time</th>
-                    <th>Space</th>
-                </tr>
-                <tr>
-                    <td>Find Articulation Points</td>
-                    <td>O(V + E)</td>
-                    <td>O(V)</td>
-                </tr>
-                <tr>
-                    <td>Find Bridges</td>
-                    <td>O(V + E)</td>
-                    <td>O(V)</td>
-                </tr>
-                <tr>
-                    <td>Find Biconnected Components</td>
-                    <td>O(V + E)</td>
-                    <td>O(V + E)</td>
-                </tr>
-            </table>
-            <p>All operations use a single DFS traversal, visiting each vertex and edge exactly once.</p>
-        </div>
-
-        <div class="card">
-            <h2>Comparison Summary</h2>
-            <table class="comparison-table">
-                <tr>
-                    <th>Aspect</th>
-                    <th>Articulation Point</th>
-                    <th>Bridge</th>
-                </tr>
-                <tr>
-                    <td>What is it?</td>
-                    <td>Critical vertex</td>
-                    <td>Critical edge</td>
-                </tr>
-                <tr>
-                    <td>Removal effect</td>
-                    <td>Graph disconnects</td>
-                    <td>Graph disconnects</td>
-                </tr>
-                <tr>
-                    <td>Condition</td>
-                    <td>low[v] ≥ disc[u]</td>
-                    <td>low[v] > disc[u]</td>
-                </tr>
-                <tr>
-                    <td>Root special case</td>
-                    <td>Yes (2+ children)</td>
-                    <td>No</td>
-                </tr>
-                <tr>
-                    <td>In a tree</td>
-                    <td>All internal nodes</td>
-                    <td>All edges</td>
-                </tr>
-                <tr>
-                    <td>In a cycle</td>
-                    <td>None</td>
-                    <td>None</td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="nav-buttons">
-            <a href="eulerian-hamiltonian.html" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Eulerian &
-                Hamiltonian</a>
-            <a href="complexity-analysis.html" class="btn btn-primary">Complexity Analysis <i
-                    class="fas fa-arrow-right"></i></a>
         </div>
     </div>
+
+    <script>
+        const canvas = document.getElementById('graphCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let nodes = [];
+        let edges = [];
+        let currentMode = 'node';
+        let selectedNode = null;
+        let nodeIdCounter = 0;
+        let isAnimating = false;
+        let animationSpeed = 500;
+
+        const nodeLabels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+        document.getElementById('speedSlider').addEventListener('input', function (e) {
+            animationSpeed = parseInt(e.target.value);
+            document.getElementById('speedLabel').textContent = (animationSpeed / 1000).toFixed(1) + 's';
+        });
+
+        function setMode(mode) {
+            currentMode = mode;
+            document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`[data-mode="${mode}"]`).classList.add('active');
+            selectedNode = null;
+            drawGraph();
+        }
+
+        canvas.addEventListener('click', function (e) {
+            if (isAnimating) return;
+
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const clickedNode = getNodeAt(x, y);
+
+            if (currentMode === 'node') {
+                if (!clickedNode && nodes.length < 26) {
+                    nodes.push({
+                        id: nodeIdCounter,
+                        label: nodeLabels[nodes.length],
+                        x: x,
+                        y: y,
+                        isArticulation: false,
+                        state: 'unvisited',
+                        disc: -1,
+                        low: -1
+                    });
+                    nodeIdCounter++;
+                    updateStats();
+                }
+            } else if (currentMode === 'edge') {
+                if (clickedNode) {
+                    if (!selectedNode) {
+                        selectedNode = clickedNode;
+                    } else if (selectedNode !== clickedNode) {
+                        const exists = edges.some(e =>
+                            (e.from === selectedNode.id && e.to === clickedNode.id) ||
+                            (e.from === clickedNode.id && e.to === selectedNode.id)
+                        );
+                        if (!exists) {
+                            edges.push({ from: selectedNode.id, to: clickedNode.id, isBridge: false, state: 'normal' });
+                            updateStats();
+                        }
+                        selectedNode = null;
+                    }
+                }
+            } else if (currentMode === 'delete') {
+                if (clickedNode) {
+                    nodes = nodes.filter(n => n.id !== clickedNode.id);
+                    edges = edges.filter(e => e.from !== clickedNode.id && e.to !== clickedNode.id);
+                    updateStats();
+                }
+            }
+
+            drawGraph();
+        });
+
+        function getNodeAt(x, y) {
+            for (let node of nodes) {
+                const dx = x - node.x;
+                const dy = y - node.y;
+                if (dx * dx + dy * dy <= 625) return node;
+            }
+            return null;
+        }
+
+        function getNodeById(id) {
+            return nodes.find(n => n.id === id);
+        }
+
+        function updateStats() {
+            document.getElementById('nodeCount').textContent = nodes.length;
+            document.getElementById('edgeCount').textContent = edges.length;
+        }
+
+        function drawGraph() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            if (nodes.length === 0) {
+                ctx.font = '16px Segoe UI';
+                ctx.fillStyle = '#666';
+                ctx.textAlign = 'center';
+                ctx.fillText('Click to add nodes, or load a sample graph', canvas.width / 2, canvas.height / 2);
+                return;
+            }
+
+            // Draw edges
+            edges.forEach(edge => {
+                const from = getNodeById(edge.from);
+                const to = getNodeById(edge.to);
+                if (!from || !to) return;
+
+                ctx.beginPath();
+                ctx.moveTo(from.x, from.y);
+                ctx.lineTo(to.x, to.y);
+
+                if (edge.isBridge) {
+                    ctx.strokeStyle = '#ef4444';
+                    ctx.lineWidth = 5;
+                } else if (edge.state === 'current') {
+                    ctx.strokeStyle = '#f59e0b';
+                    ctx.lineWidth = 4;
+                } else if (edge.state === 'dfs') {
+                    ctx.strokeStyle = '#10b981';
+                    ctx.lineWidth = 3;
+                } else {
+                    ctx.strokeStyle = '#333';
+                    ctx.lineWidth = 2;
+                }
+                ctx.stroke();
+
+                // Bridge label
+                if (edge.isBridge) {
+                    const midX = (from.x + to.x) / 2;
+                    const midY = (from.y + to.y) / 2;
+                    ctx.font = 'bold 10px Segoe UI';
+                    ctx.fillStyle = '#ef4444';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('BRIDGE', midX, midY - 10);
+                }
+            });
+
+            // Draw nodes
+            nodes.forEach(node => {
+                ctx.beginPath();
+                ctx.arc(node.x, node.y, 25, 0, 2 * Math.PI);
+
+                let color = '#6366f1';
+                if (node.isArticulation) color = '#ef4444';
+                else if (node.state === 'current') color = '#f59e0b';
+                else if (node.state === 'visited') color = '#10b981';
+                else if (selectedNode === node) color = '#1a1a2e';
+
+                ctx.fillStyle = color;
+                ctx.fill();
+                ctx.strokeStyle = '#1a1a2e';
+                ctx.lineWidth = node.isArticulation ? 4 : 2;
+                ctx.stroke();
+
+                ctx.font = 'bold 18px Segoe UI';
+                ctx.fillStyle = 'white';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(node.label, node.x, node.y);
+
+                // Show disc/low values if computed
+                if (node.disc >= 0) {
+                    ctx.font = '10px Segoe UI';
+                    ctx.fillStyle = '#666';
+                    ctx.fillText(`${node.disc}/${node.low}`, node.x, node.y + 38);
+                }
+            });
+        }
+
+        function loadSampleGraph(type) {
+            clearGraph();
+
+            if (type === 'simple') {
+                nodes = [
+                    { id: 0, label: 'A', x: 150, y: 190, isArticulation: false, state: 'unvisited', disc: -1, low: -1 },
+                    { id: 1, label: 'B', x: 300, y: 100, isArticulation: false, state: 'unvisited', disc: -1, low: -1 },
+                    { id: 2, label: 'C', x: 300, y: 280, isArticulation: false, state: 'unvisited', disc: -1, low: -1 },
+                    { id: 3, label: 'D', x: 450, y: 190, isArticulation: false, state: 'unvisited', disc: -1, low: -1 },
+                    { id: 4, label: 'E', x: 600, y: 190, isArticulation: false, state: 'unvisited', disc: -1, low: -1 }
+                ];
+                edges = [
+                    { from: 0, to: 1, isBridge: false, state: 'normal' },
+                    { from: 0, to: 2, isBridge: false, state: 'normal' },
+                    { from: 1, to: 2, isBridge: false, state: 'normal' },
+                    { from: 1, to: 3, isBridge: false, state: 'normal' },
+                    { from: 3, to: 4, isBridge: false, state: 'normal' }
+                ];
+            } else if (type === 'chain') {
+                nodes = [
+                    { id: 0, label: 'A', x: 100, y: 190, isArticulation: false, state: 'unvisited', disc: -1, low: -1 },
+                    { id: 1, label: 'B', x: 250, y: 190, isArticulation: false, state: 'unvisited', disc: -1, low: -1 },
+                    { id: 2, label: 'C', x: 400, y: 190, isArticulation: false, state: 'unvisited', disc: -1, low: -1 },
+                    { id: 3, label: 'D', x: 550, y: 190, isArticulation: false, state: 'unvisited', disc: -1, low: -1 }
+                ];
+                edges = [
+                    { from: 0, to: 1, isBridge: false, state: 'normal' },
+                    { from: 1, to: 2, isBridge: false, state: 'normal' },
+                    { from: 2, to: 3, isBridge: false, state: 'normal' }
+                ];
+            } else if (type === 'tree') {
+                nodes = [
+                    { id: 0, label: 'A', x: 375, y: 60, isArticulation: false, state: 'unvisited', disc: -1, low: -1 },
+                    { id: 1, label: 'B', x: 225, y: 160, isArticulation: false, state: 'unvisited', disc: -1, low: -1 },
+                    { id: 2, label: 'C', x: 525, y: 160, isArticulation: false, state: 'unvisited', disc: -1, low: -1 },
+                    { id: 3, label: 'D', x: 150, y: 280, isArticulation: false, state: 'unvisited', disc: -1, low: -1 },
+                    { id: 4, label: 'E', x: 300, y: 280, isArticulation: false, state: 'unvisited', disc: -1, low: -1 },
+                    { id: 5, label: 'F', x: 525, y: 280, isArticulation: false, state: 'unvisited', disc: -1, low: -1 }
+                ];
+                edges = [
+                    { from: 0, to: 1, isBridge: false, state: 'normal' },
+                    { from: 0, to: 2, isBridge: false, state: 'normal' },
+                    { from: 1, to: 3, isBridge: false, state: 'normal' },
+                    { from: 1, to: 4, isBridge: false, state: 'normal' },
+                    { from: 2, to: 5, isBridge: false, state: 'normal' }
+                ];
+            } else if (type === 'complex') {
+                nodes = [
+                    { id: 0, label: 'A', x: 100, y: 150, isArticulation: false, state: 'unvisited', disc: -1, low: -1 },
+                    { id: 1, label: 'B', x: 200, y: 80, isArticulation: false, state: 'unvisited', disc: -1, low: -1 },
+                    { id: 2, label: 'C', x: 200, y: 220, isArticulation: false, state: 'unvisited', disc: -1, low: -1 },
+                    { id: 3, label: 'D', x: 350, y: 150, isArticulation: false, state: 'unvisited', disc: -1, low: -1 },
+                    { id: 4, label: 'E', x: 500, y: 80, isArticulation: false, state: 'unvisited', disc: -1, low: -1 },
+                    { id: 5, label: 'F', x: 500, y: 220, isArticulation: false, state: 'unvisited', disc: -1, low: -1 },
+                    { id: 6, label: 'G', x: 600, y: 150, isArticulation: false, state: 'unvisited', disc: -1, low: -1 },
+                    { id: 7, label: 'H', x: 700, y: 150, isArticulation: false, state: 'unvisited', disc: -1, low: -1 }
+                ];
+                edges = [
+                    { from: 0, to: 1, isBridge: false, state: 'normal' },
+                    { from: 0, to: 2, isBridge: false, state: 'normal' },
+                    { from: 1, to: 2, isBridge: false, state: 'normal' },
+                    { from: 1, to: 3, isBridge: false, state: 'normal' },
+                    { from: 3, to: 4, isBridge: false, state: 'normal' },
+                    { from: 3, to: 5, isBridge: false, state: 'normal' },
+                    { from: 4, to: 5, isBridge: false, state: 'normal' },
+                    { from: 4, to: 6, isBridge: false, state: 'normal' },
+                    { from: 5, to: 6, isBridge: false, state: 'normal' },
+                    { from: 6, to: 7, isBridge: false, state: 'normal' }
+                ];
+            }
+
+            nodeIdCounter = nodes.length;
+            updateStats();
+            drawGraph();
+        }
+
+        function clearGraph() {
+            nodes = [];
+            edges = [];
+            nodeIdCounter = 0;
+            selectedNode = null;
+            document.getElementById('artOutput').textContent = '-';
+            document.getElementById('bridgeOutput').textContent = '-';
+            document.getElementById('artCount').textContent = '-';
+            document.getElementById('bridgeCount').textContent = '-';
+            document.getElementById('stepInfo').classList.remove('active');
+            document.getElementById('discLowTable').style.display = 'none';
+            updateStats();
+            drawGraph();
+        }
+
+        function resetGraph() {
+            nodes.forEach(n => {
+                n.isArticulation = false;
+                n.state = 'unvisited';
+                n.disc = -1;
+                n.low = -1;
+            });
+            edges.forEach(e => {
+                e.isBridge = false;
+                e.state = 'normal';
+            });
+            document.getElementById('artOutput').textContent = '-';
+            document.getElementById('bridgeOutput').textContent = '-';
+            document.getElementById('artCount').textContent = '-';
+            document.getElementById('bridgeCount').textContent = '-';
+            document.getElementById('stepInfo').classList.remove('active');
+            document.getElementById('discLowTable').style.display = 'none';
+            drawGraph();
+        }
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        function getNeighbors(nodeId) {
+            const neighbors = [];
+            edges.forEach((e, idx) => {
+                if (e.from === nodeId) neighbors.push({ nodeId: e.to, edgeIdx: idx });
+                if (e.to === nodeId) neighbors.push({ nodeId: e.from, edgeIdx: idx });
+            });
+            return neighbors;
+        }
+
+        function updateDiscLowTable() {
+            const tbody = document.getElementById('discLowBody');
+            tbody.innerHTML = '';
+            nodes.forEach(n => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><strong>${n.label}</strong></td>
+                    <td>${n.disc >= 0 ? n.disc : '-'}</td>
+                    <td>${n.low >= 0 ? n.low : '-'}</td>
+                `;
+                if (n.isArticulation) row.style.background = '#fef2f2';
+                tbody.appendChild(row);
+            });
+            document.getElementById('discLowTable').style.display = 'block';
+        }
+
+        async function runTarjan() {
+            if (isAnimating || nodes.length === 0) return;
+            isAnimating = true;
+            resetGraph();
+
+            const stepInfo = document.getElementById('stepInfo');
+            stepInfo.classList.add('active');
+
+            const articulations = new Set();
+            const bridges = [];
+            let time = 0;
+
+            async function dfs(nodeId, parentId) {
+                const node = getNodeById(nodeId);
+                node.disc = node.low = time++;
+                node.state = 'current';
+                let children = 0;
+
+                stepInfo.textContent = `Visiting ${node.label}: disc=${node.disc}, low=${node.low}`;
+                updateDiscLowTable();
+                drawGraph();
+                await sleep(animationSpeed);
+
+                const neighbors = getNeighbors(nodeId);
+
+                for (let n of neighbors) {
+                    const neighbor = getNodeById(n.nodeId);
+
+                    if (neighbor.disc === -1) {
+                        // Unvisited - tree edge
+                        children++;
+                        edges[n.edgeIdx].state = 'current';
+                        drawGraph();
+                        await sleep(animationSpeed / 2);
+
+                        await dfs(n.nodeId, nodeId);
+
+                        edges[n.edgeIdx].state = 'dfs';
+
+                        // Update low value
+                        node.low = Math.min(node.low, neighbor.low);
+                        stepInfo.textContent = `Back at ${node.label}: updating low to min(${node.low}, ${neighbor.low}) = ${node.low}`;
+                        updateDiscLowTable();
+                        drawGraph();
+                        await sleep(animationSpeed / 2);
+
+                        // Check for articulation point (non-root)
+                        if (parentId !== null && neighbor.low >= node.disc) {
+                            articulations.add(nodeId);
+                            node.isArticulation = true;
+                            stepInfo.textContent = `${node.label} is articulation point! low[${neighbor.label}]=${neighbor.low} >= disc[${node.label}]=${node.disc}`;
+                            drawGraph();
+                            await sleep(animationSpeed);
+                        }
+
+                        // Check for bridge
+                        if (neighbor.low > node.disc) {
+                            edges[n.edgeIdx].isBridge = true;
+                            bridges.push(`${node.label}-${neighbor.label}`);
+                            stepInfo.textContent = `${node.label}-${neighbor.label} is a bridge! low[${neighbor.label}]=${neighbor.low} > disc[${node.label}]=${node.disc}`;
+                            drawGraph();
+                            await sleep(animationSpeed);
+                        }
+                    } else if (n.nodeId !== parentId) {
+                        // Back edge
+                        node.low = Math.min(node.low, neighbor.disc);
+                        stepInfo.textContent = `Back edge to ${neighbor.label}: low[${node.label}] = min(${node.low}, ${neighbor.disc})`;
+                        updateDiscLowTable();
+                        drawGraph();
+                        await sleep(animationSpeed / 2);
+                    }
+                }
+
+                // Check for articulation point (root with multiple children)
+                if (parentId === null && children > 1) {
+                    articulations.add(nodeId);
+                    node.isArticulation = true;
+                    stepInfo.textContent = `Root ${node.label} is articulation point! Has ${children} children`;
+                    drawGraph();
+                    await sleep(animationSpeed);
+                }
+
+                node.state = 'visited';
+                drawGraph();
+            }
+
+            // Run DFS from first unvisited node
+            for (let node of nodes) {
+                if (node.disc === -1) {
+                    await dfs(node.id, null);
+                }
+            }
+
+            // Display results
+            const artLabels = [...articulations].map(id => getNodeById(id).label).sort();
+            document.getElementById('artOutput').textContent = artLabels.length > 0 ? artLabels.join(', ') : 'None';
+            document.getElementById('bridgeOutput').textContent = bridges.length > 0 ? bridges.join(', ') : 'None';
+            document.getElementById('artCount').textContent = artLabels.length;
+            document.getElementById('bridgeCount').textContent = bridges.length;
+
+            stepInfo.textContent = `Done! Found ${artLabels.length} articulation point(s) and ${bridges.length} bridge(s)`;
+
+            isAnimating = false;
+        }
+
+        // Initial draw
+        drawGraph();
+    </script>
 </body>
 
 </html>

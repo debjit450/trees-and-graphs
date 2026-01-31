@@ -20,7 +20,7 @@
         }
 
         .nav-bar {
-            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
             padding: 15px 30px;
             display: flex;
             align-items: center;
@@ -43,9 +43,21 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 40px 20px;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 30px;
+        }
+
+        @media (max-width: 1100px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         .card {
@@ -57,172 +69,272 @@
         }
 
         .card h2 {
-            font-size: 1.8em;
+            font-size: 1.6em;
             color: #1a1a2e;
             margin-bottom: 20px;
-            border-bottom: 3px solid #ef4444;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 3px solid #f97316;
             padding-bottom: 10px;
         }
 
-        .card h3 {
-            font-size: 1.3em;
+        .card h2 i {
+            color: #f97316;
+        }
+
+        .canvas-container {
+            background: #f8f8f8;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        canvas {
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background: white;
+            cursor: crosshair;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-primary {
+            background: #f97316;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #ea580c;
+        }
+
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+        }
+
+        .btn-warning {
+            background: #eab308;
+            color: white;
+        }
+
+        .btn-warning:hover {
+            background: #ca8a04;
+        }
+
+        .btn-info {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .btn-info:hover {
+            background: #2563eb;
+        }
+
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        .btn-secondary {
+            background: white;
             color: #1a1a2e;
-            margin: 25px 0 15px 0;
+            border-color: #e0e0e0;
         }
 
-        .card p {
-            color: #555;
-            line-height: 1.8;
-            margin-bottom: 15px;
+        .btn-secondary:hover {
+            border-color: #f97316;
+            color: #f97316;
         }
 
-        .card ul,
-        .card ol {
-            margin-left: 25px;
-            color: #555;
-            line-height: 1.8;
-            margin-bottom: 15px;
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
 
-        .card li {
+        .mode-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .mode-btn {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .mode-btn.active {
+            border-color: #f97316;
+            background: #fff7ed;
+        }
+
+        .mode-btn i {
+            font-size: 24px;
+            display: block;
             margin-bottom: 8px;
+            color: #f97316;
         }
 
         .info-box {
-            background: #fef2f2;
-            border: 2px solid #ef4444;
+            background: #fff7ed;
+            border: 2px solid #f97316;
             border-radius: 8px;
             padding: 20px;
             margin: 20px 0;
         }
 
         .info-box h4 {
-            color: #dc2626;
+            color: #ea580c;
             margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .info-box p,
         .info-box li {
-            color: #991b1b;
+            color: #9a3412;
             line-height: 1.6;
         }
 
-        .info-box ul {
-            margin-left: 20px;
-        }
-
-        .success-box {
+        .info-box.success {
             background: #f0fdf4;
-            border: 2px solid #16a34a;
-            border-radius: 8px;
-            padding: 20px;
-            margin: 20px 0;
+            border-color: #10b981;
         }
 
-        .success-box h4 {
-            color: #16a34a;
-            margin-bottom: 10px;
+        .info-box.success h4 {
+            color: #059669;
         }
 
-        .success-box p,
-        .success-box li {
+        .info-box.success p {
             color: #166534;
-            line-height: 1.6;
         }
 
-        .warning-box {
-            background: #fffbeb;
-            border: 2px solid #f59e0b;
-            border-radius: 8px;
-            padding: 20px;
-            margin: 20px 0;
-        }
-
-        .warning-box h4 {
-            color: #d97706;
-            margin-bottom: 10px;
-        }
-
-        .warning-box p {
-            color: #92400e;
-        }
-
-        .concept-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            margin: 20px 0;
-        }
-
-        .concept-card {
+        .info-box.error {
             background: #fef2f2;
-            border-left: 4px solid #ef4444;
-            padding: 20px;
-            border-radius: 0 8px 8px 0;
+            border-color: #ef4444;
         }
 
-        .concept-card h4 {
+        .info-box.error h4 {
+            color: #dc2626;
+        }
+
+        .info-box.error p {
             color: #991b1b;
+        }
+
+        .output-box {
+            background: #f8f8f8;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            border-left: 4px solid #f97316;
+        }
+
+        .output-box h3 {
+            font-size: 1.1em;
             margin-bottom: 10px;
+            color: #1a1a2e;
         }
 
-        .concept-card p {
-            color: #7f1d1d;
-            margin: 0;
+        .output-content {
+            font-family: 'Courier New', monospace;
+            font-size: 18px;
+            color: #f97316;
+            min-height: 30px;
         }
 
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
+        .step-info {
+            background: #f97316;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            margin: 15px 0;
+            display: none;
+        }
+
+        .step-info.active {
+            display: block;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
             margin: 20px 0;
         }
 
-        .comparison-table th,
-        .comparison-table td {
-            padding: 12px 15px;
-            border: 1px solid #e0e0e0;
-            text-align: left;
-        }
-
-        .comparison-table th {
-            background: #ef4444;
-            color: white;
-        }
-
-        .comparison-table tr:nth-child(even) {
+        .stat-item {
+            text-align: center;
+            padding: 15px;
             background: #f8f8f8;
-        }
-
-        .nav-buttons {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 40px;
-            padding-top: 30px;
-            border-top: 2px solid #e0e0e0;
-        }
-
-        .btn {
-            padding: 12px 24px;
-            border: none;
             border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            display: inline-flex;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #f97316;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .legend-item {
+            display: flex;
             align-items: center;
-            gap: 8px;
-            text-decoration: none;
+            gap: 6px;
+            font-size: 14px;
         }
 
-        .btn-primary {
-            background: #ef4444;
-            color: white;
-        }
-
-        .btn-secondary {
-            background: white;
-            color: #1a1a2e;
-            border: 2px solid #e0e0e0;
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 2px solid #333;
         }
 
         .code-box {
@@ -230,11 +342,10 @@
             color: #d4d4d4;
             padding: 20px;
             border-radius: 8px;
-            font-family: 'Consolas', 'Monaco', monospace;
-            font-size: 13px;
-            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
             overflow-x: auto;
-            line-height: 1.6;
+            margin: 15px 0;
         }
 
         .code-box .keyword {
@@ -249,17 +360,65 @@
             color: #dcdcaa;
         }
 
-        .code-box .number {
-            color: #b5cea8;
+        ul.concept-list {
+            list-style: none;
+            padding: 0;
         }
 
-        .diagram-box {
-            background: #f0f0f0;
-            border-radius: 8px;
-            padding: 20px;
+        ul.concept-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+        }
+
+        ul.concept-list li:last-child {
+            border-bottom: none;
+        }
+
+        ul.concept-list li i {
+            color: #f97316;
+        }
+
+        .speed-control {
+            display: flex;
+            align-items: center;
+            gap: 15px;
             margin: 20px 0;
+        }
+
+        .speed-control label {
+            font-weight: 600;
+            color: #1a1a2e;
+        }
+
+        input[type="range"] {
+            width: 150px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 13px;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 10px;
+            border: 1px solid #e0e0e0;
             text-align: center;
-            font-family: monospace;
+        }
+
+        .comparison-table th {
+            background: #f97316;
+            color: white;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: #fff7ed;
         }
     </style>
 </head>
@@ -267,378 +426,775 @@
 <body>
     <div class="nav-bar">
         <a href="index.html"><i class="fas fa-home"></i> Home</a>
-        <h1><i class="fas fa-circle-notch"></i> Eulerian & Hamiltonian Paths</h1>
-        <a href="articulation-bridges.html">Next: Articulation & Bridges <i class="fas fa-arrow-right"></i></a>
+        <h1><i class="fas fa-route"></i> Eulerian & Hamiltonian Paths</h1>
+        <a href="flow-networks.html">Next: Flow Networks <i class="fas fa-arrow-right"></i></a>
     </div>
 
     <div class="container">
-        <div class="card">
-            <h2>Overview</h2>
-            <p>This topic covers two classic graph problems that ask whether we can traverse a graph in a specific way:
-            </p>
+        <div class="main-grid">
+            <div class="left-column">
+                <div class="card">
+                    <h2><i class="fas fa-project-diagram"></i> Graph Builder</h2>
 
-            <div class="concept-grid">
-                <div class="concept-card">
-                    <h4><i class="fas fa-route"></i> Eulerian Path/Circuit</h4>
-                    <p>Visit every <strong>edge</strong> exactly once. Named after Leonhard Euler (1736).</p>
+                    <div class="mode-selector">
+                        <div class="mode-btn active" data-mode="node" onclick="setMode('node')">
+                            <i class="fas fa-circle"></i>
+                            Add Node
+                        </div>
+                        <div class="mode-btn" data-mode="edge" onclick="setMode('edge')">
+                            <i class="fas fa-minus"></i>
+                            Add Edge
+                        </div>
+                        <div class="mode-btn" data-mode="delete" onclick="setMode('delete')">
+                            <i class="fas fa-trash"></i>
+                            Delete
+                        </div>
+                    </div>
+
+                    <div class="canvas-container">
+                        <canvas id="graphCanvas" width="750" height="380"></canvas>
+                    </div>
+
+                    <div class="controls" style="margin-top: 20px;">
+                        <button class="btn btn-primary" onclick="loadSampleGraph('euler-circuit')">
+                            <i class="fas fa-circle"></i> Euler Circuit
+                        </button>
+                        <button class="btn btn-primary" onclick="loadSampleGraph('euler-path')">
+                            <i class="fas fa-route"></i> Euler Path
+                        </button>
+                        <button class="btn btn-primary" onclick="loadSampleGraph('hamilton')">
+                            <i class="fas fa-draw-polygon"></i> Hamiltonian
+                        </button>
+                        <button class="btn btn-primary" onclick="loadSampleGraph('konigsberg')">
+                            <i class="fas fa-archway"></i> Königsberg
+                        </button>
+                        <button class="btn btn-danger" onclick="clearGraph()">
+                            <i class="fas fa-trash-alt"></i> Clear
+                        </button>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-value" id="nodeCount">0</div>
+                            <div class="stat-label">Vertices</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="edgeCount">0</div>
+                            <div class="stat-label">Edges</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="oddDegree">0</div>
+                            <div class="stat-label">Odd Degree</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="eulerStatus">-</div>
+                            <div class="stat-label">Euler Type</div>
+                        </div>
+                    </div>
+
+                    <div class="legend">
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #f97316;"></div> Unvisited
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #3b82f6;"></div> Current
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #10b981;"></div> In Path
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #9ca3af;"></div> Used Edge
+                        </div>
+                    </div>
                 </div>
-                <div class="concept-card">
-                    <h4><i class="fas fa-map-marker-alt"></i> Hamiltonian Path/Cycle</h4>
-                    <p>Visit every <strong>vertex</strong> exactly once. Named after William Hamilton (1857).</p>
+
+                <div class="card">
+                    <h2><i class="fas fa-play-circle"></i> Find Paths</h2>
+
+                    <div class="step-info" id="stepInfo"></div>
+
+                    <div class="controls">
+                        <button class="btn btn-success" onclick="checkEulerian()" id="btnCheck">
+                            <i class="fas fa-check"></i> Check Eulerian
+                        </button>
+                        <button class="btn btn-info" onclick="findEulerPath()" id="btnEuler">
+                            <i class="fas fa-route"></i> Find Euler Path
+                        </button>
+                        <button class="btn btn-warning" onclick="findHamiltonPath()" id="btnHamilton">
+                            <i class="fas fa-draw-polygon"></i> Find Hamilton Path
+                        </button>
+                        <button class="btn btn-secondary" onclick="resetGraph()">
+                            <i class="fas fa-undo"></i> Reset
+                        </button>
+                    </div>
+
+                    <div class="speed-control">
+                        <label>Animation Speed:</label>
+                        <input type="range" id="speedSlider" min="200" max="2000" value="500" step="100">
+                        <span id="speedLabel">0.5s</span>
+                    </div>
+
+                    <div class="output-box">
+                        <h3><i class="fas fa-route"></i> Path Found</h3>
+                        <div class="output-content" id="pathOutput">-</div>
+                    </div>
+
+                    <div id="resultBox"></div>
                 </div>
             </div>
 
-            <div class="info-box">
-                <h4><i class="fas fa-history"></i> Historical Note</h4>
-                <p>The Eulerian problem originated from the famous "Seven Bridges of Königsberg" puzzle. Euler proved it
-                    was impossible to walk through the city crossing each bridge exactly once, founding graph theory in
-                    the process!</p>
+            <div class="right-column">
+                <div class="card">
+                    <h2><i class="fas fa-info-circle"></i> Definitions</h2>
+                    <div class="info-box">
+                        <h4><i class="fas fa-route"></i> Eulerian Path</h4>
+                        <p>A path that visits <strong>every edge exactly once</strong>.</p>
+                    </div>
+                    <div class="info-box">
+                        <h4><i class="fas fa-circle"></i> Eulerian Circuit</h4>
+                        <p>An Eulerian path that starts and ends at the <strong>same vertex</strong>.</p>
+                    </div>
+                    <div class="info-box">
+                        <h4><i class="fas fa-draw-polygon"></i> Hamiltonian Path</h4>
+                        <p>A path that visits <strong>every vertex exactly once</strong>.</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2><i class="fas fa-route"></i> Euler Conditions</h2>
+                    <ul class="concept-list">
+                        <li><i class="fas fa-circle"></i> <strong>Circuit:</strong> All vertices have even degree</li>
+                        <li><i class="fas fa-route"></i> <strong>Path:</strong> Exactly 2 vertices have odd degree</li>
+                        <li><i class="fas fa-times"></i> <strong>Neither:</strong> More than 2 odd-degree vertices</li>
+                        <li><i class="fas fa-link"></i> <strong>Required:</strong> Graph must be connected</li>
+                    </ul>
+                    <div class="code-box">
+                        <span class="comment">// Hierholzer's Algorithm</span>
+                        <span class="keyword">function</span> <span class="function">findEulerPath</span>(start):
+                        stack = [start]
+                        path = []
+
+                        <span class="keyword">while</span> stack not empty:
+                        v = stack.top()
+                        <span class="keyword">if</span> v has unused edges:
+                        u = next neighbor with unused edge
+                        remove edge (v, u)
+                        stack.push(u)
+                        <span class="keyword">else</span>:
+                        path.prepend(stack.pop())
+
+                        <span class="keyword">return</span> path
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2><i class="fas fa-draw-polygon"></i> Hamiltonian</h2>
+                    <p style="margin-bottom: 15px; color: #666;">Finding Hamiltonian paths is
+                        <strong>NP-complete</strong>. We use backtracking.</p>
+                    <div class="code-box">
+                        <span class="keyword">function</span> <span class="function">hamiltonPath</span>(path, visited):
+                        <span class="keyword">if</span> len(path) == V:
+                        <span class="keyword">return</span> path <span class="comment">// Found!</span>
+
+                        v = path.last()
+                        <span class="keyword">for</span> neighbor <span class="keyword">in</span> adj[v]:
+                        <span class="keyword">if</span> neighbor not <span class="keyword">in</span> visited:
+                        visited.add(neighbor)
+                        path.push(neighbor)
+
+                        result = <span class="function">hamiltonPath</span>(path, visited)
+                        <span class="keyword">if</span> result: <span class="keyword">return</span> result
+
+                        path.pop() <span class="comment">// Backtrack</span>
+                        visited.remove(neighbor)
+
+                        <span class="keyword">return</span> null
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2><i class="fas fa-balance-scale"></i> Comparison</h2>
+                    <table class="comparison-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Eulerian</th>
+                            <th>Hamiltonian</th>
+                        </tr>
+                        <tr>
+                            <td>Visits</td>
+                            <td>Every Edge</td>
+                            <td>Every Vertex</td>
+                        </tr>
+                        <tr>
+                            <td>Condition</td>
+                            <td>Degree check</td>
+                            <td>No easy check</td>
+                        </tr>
+                        <tr>
+                            <td>Algorithm</td>
+                            <td>O(E)</td>
+                            <td>NP-Complete</td>
+                        </tr>
+                        <tr>
+                            <td>Existence</td>
+                            <td>Easy to verify</td>
+                            <td>Hard to verify</td>
+                        </tr>
+                    </table>
+                </div>
             </div>
-        </div>
-
-        <div class="card">
-            <h2>Eulerian Paths and Circuits</h2>
-
-            <h3>Definitions</h3>
-            <ul>
-                <li><strong>Eulerian Path:</strong> A path that visits every edge exactly once</li>
-                <li><strong>Eulerian Circuit (Cycle):</strong> An Eulerian path that starts and ends at the same vertex
-                </li>
-                <li><strong>Eulerian Graph:</strong> A graph that has an Eulerian circuit</li>
-                <li><strong>Semi-Eulerian Graph:</strong> A graph that has an Eulerian path but not a circuit</li>
-            </ul>
-
-            <div class="diagram-box">
-                <pre>
-Eulerian Circuit exists:        Eulerian Path exists (not circuit):
-                                
-    A ─── B                         A ─── B
-   /│\   /│                        /│\   /│
-  / │ \ / │                       / │ \ / │
- E──┼──C  │                      E──┼──C  │
-  \ │   \ │                        \ │   \ │
-   \│    \│                         \│    \│
-    D ─── F                          D ─── F
-                                
-All vertices even degree       Exactly 2 vertices odd degree
-                                (Start at one, end at other)
-                </pre>
-            </div>
-        </div>
-
-        <div class="card">
-            <h2>Conditions for Eulerian Paths/Circuits</h2>
-
-            <h3>Undirected Graphs</h3>
-            <div class="success-box">
-                <h4><i class="fas fa-check-circle"></i> Eulerian Circuit Condition</h4>
-                <p>An undirected connected graph has an Eulerian circuit if and only if <strong>every vertex has even
-                        degree</strong>.</p>
-            </div>
-
-            <div class="info-box">
-                <h4><i class="fas fa-route"></i> Eulerian Path Condition</h4>
-                <p>An undirected connected graph has an Eulerian path if and only if it has <strong>exactly 0 or 2
-                        vertices of odd degree</strong>. If 2 vertices have odd degree, the path must start at one and
-                    end at the other.</p>
-            </div>
-
-            <h3>Directed Graphs</h3>
-            <div class="success-box">
-                <h4><i class="fas fa-check-circle"></i> Eulerian Circuit Condition</h4>
-                <p>A directed graph has an Eulerian circuit if and only if:</p>
-                <ul>
-                    <li>The graph is strongly connected (ignoring edge directions for connectivity check)</li>
-                    <li>Every vertex has <strong>in-degree = out-degree</strong></li>
-                </ul>
-            </div>
-
-            <div class="info-box">
-                <h4><i class="fas fa-route"></i> Eulerian Path Condition</h4>
-                <p>A directed graph has an Eulerian path if:</p>
-                <ul>
-                    <li>At most one vertex has out-degree - in-degree = 1 (start vertex)</li>
-                    <li>At most one vertex has in-degree - out-degree = 1 (end vertex)</li>
-                    <li>All other vertices have in-degree = out-degree</li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="card">
-            <h2>Hierholzer's Algorithm</h2>
-            <p><strong>Hierholzer's Algorithm</strong> efficiently finds an Eulerian path or circuit in O(E) time by
-                building the path iteratively and inserting sub-circuits.</p>
-
-            <h3>Algorithm Steps</h3>
-            <ol>
-                <li>Start at any vertex (for circuit) or at a vertex with odd degree (for path)</li>
-                <li>Follow edges, removing them as you go, until you return to start</li>
-                <li>If there are remaining edges, find a vertex in current path with unused edges</li>
-                <li>Build a sub-circuit from that vertex and splice it into the main path</li>
-                <li>Repeat until all edges are used</li>
-            </ol>
-
-            <div class="code-box">
-                <span class="keyword">function</span> <span class="function">hierholzer</span>(graph, start):
-                stack = [start]
-                path = []
-
-                <span class="keyword">while</span> stack <span class="keyword">not</span> empty:
-                v = stack.top()
-
-                <span class="keyword">if</span> graph[v] <span class="keyword">has</span> edges:
-                <span class="comment">// Take any edge from v</span>
-                u = graph[v].pop()
-                <span class="comment">// Remove edge v→u (for undirected, also remove u→v)</span>
-                <span class="function">removeEdge</span>(graph, u, v) <span class="comment">// For undirected
-                    graphs</span>
-                stack.push(u)
-                <span class="keyword">else</span>:
-                <span class="comment">// No more edges from v, add to path</span>
-                path.append(stack.pop())
-
-                <span class="keyword">return</span> reverse(path)
-
-                <span class="comment">// For undirected graph: check condition first</span>
-                <span class="keyword">function</span> <span class="function">findEulerianPath</span>(graph):
-                oddDegree = []
-                <span class="keyword">for</span> v <span class="keyword">in</span> vertices:
-                <span class="keyword">if</span> degree[v] % <span class="number">2</span> == <span
-                    class="number">1</span>:
-                oddDegree.append(v)
-
-                <span class="keyword">if</span> len(oddDegree) == <span class="number">0</span>:
-                <span class="keyword">return</span> <span class="function">hierholzer</span>(graph, anyVertex) <span
-                    class="comment">// Circuit</span>
-                <span class="keyword">else if</span> len(oddDegree) == <span class="number">2</span>:
-                <span class="keyword">return</span> <span class="function">hierholzer</span>(graph, oddDegree[<span
-                    class="number">0</span>]) <span class="comment">// Path</span>
-                <span class="keyword">else</span>:
-                <span class="keyword">return</span> null <span class="comment">// No Eulerian path exists</span>
-            </div>
-
-            <p><strong>Time Complexity:</strong> O(E) — each edge processed exactly once</p>
-            <p><strong>Space Complexity:</strong> O(E) for path storage</p>
-        </div>
-
-        <div class="card">
-            <h2>Hamiltonian Paths and Cycles</h2>
-
-            <h3>Definitions</h3>
-            <ul>
-                <li><strong>Hamiltonian Path:</strong> A path that visits every vertex exactly once</li>
-                <li><strong>Hamiltonian Cycle:</strong> A Hamiltonian path that returns to the starting vertex</li>
-                <li><strong>Hamiltonian Graph:</strong> A graph that has a Hamiltonian cycle</li>
-            </ul>
-
-            <div class="diagram-box">
-                <pre>
-Hamiltonian Cycle:              No Hamiltonian Cycle:
-                                
-    A ─── B                         A ─── B
-    │     │                         │     │
-    │     │                         │     │
-    D ─── C                         D     C
-                                    │
-Path: A → B → C → D → A             E
-                                
-                                (Can't visit all and return)
-                </pre>
-            </div>
-        </div>
-
-        <div class="card">
-            <h2>Hamiltonian Problem Complexity</h2>
-
-            <div class="warning-box">
-                <h4><i class="fas fa-exclamation-triangle"></i> NP-Complete Problem</h4>
-                <p>Unlike Eulerian paths (polynomial time), determining whether a Hamiltonian path or cycle exists is
-                    <strong>NP-complete</strong>. There is no known polynomial-time algorithm!</p>
-            </div>
-
-            <h3>Why It's Hard</h3>
-            <ul>
-                <li>No simple degree-based conditions (unlike Eulerian)</li>
-                <li>Must potentially explore exponentially many paths</li>
-                <li>Related to the Traveling Salesman Problem (TSP)</li>
-            </ul>
-
-            <h3>Sufficient Conditions (Not Necessary)</h3>
-            <p>These conditions guarantee a Hamiltonian cycle exists, but graphs not meeting them may still have one:
-            </p>
-
-            <table class="comparison-table">
-                <tr>
-                    <th>Theorem</th>
-                    <th>Condition</th>
-                </tr>
-                <tr>
-                    <td>Dirac's Theorem (1952)</td>
-                    <td>If every vertex has degree ≥ n/2, graph has Hamiltonian cycle</td>
-                </tr>
-                <tr>
-                    <td>Ore's Theorem (1960)</td>
-                    <td>If deg(u) + deg(v) ≥ n for all non-adjacent u,v, graph has Hamiltonian cycle</td>
-                </tr>
-                <tr>
-                    <td>Complete Graph K<sub>n</sub></td>
-                    <td>Always has Hamiltonian cycle (for n ≥ 3)</td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="card">
-            <h2>Backtracking Algorithm for Hamiltonian</h2>
-            <p>The brute-force approach uses backtracking to explore all possible paths:</p>
-
-            <div class="code-box">
-                <span class="keyword">function</span> <span class="function">hamiltonianCycle</span>(graph, n):
-                path = [-<span class="number">1</span>] * n
-                path[<span class="number">0</span>] = <span class="number">0</span> <span class="comment">// Start from
-                    vertex 0</span>
-
-                <span class="keyword">if</span> <span class="function">backtrack</span>(graph, path, <span
-                    class="number">1</span>, n):
-                <span class="keyword">return</span> path
-                <span class="keyword">return</span> null <span class="comment">// No Hamiltonian cycle</span>
-
-                <span class="keyword">function</span> <span class="function">backtrack</span>(graph, path, pos, n):
-                <span class="comment">// Base case: all vertices included</span>
-                <span class="keyword">if</span> pos == n:
-                <span class="comment">// Check if cycle: edge from last to first</span>
-                <span class="keyword">return</span> graph[path[pos-<span class="number">1</span>]][path[<span
-                    class="number">0</span>]] == <span class="number">1</span>
-
-                <span class="comment">// Try each vertex as next in path</span>
-                <span class="keyword">for</span> v = <span class="number">1</span> <span class="keyword">to</span>
-                n-<span class="number">1</span>:
-                <span class="keyword">if</span> <span class="function">isSafe</span>(v, graph, path, pos):
-                path[pos] = v
-
-                <span class="keyword">if</span> <span class="function">backtrack</span>(graph, path, pos + <span
-                    class="number">1</span>, n):
-                <span class="keyword">return</span> <span class="keyword">true</span>
-
-                path[pos] = -<span class="number">1</span> <span class="comment">// Backtrack</span>
-
-                <span class="keyword">return</span> <span class="keyword">false</span>
-
-                <span class="keyword">function</span> <span class="function">isSafe</span>(v, graph, path, pos):
-                <span class="comment">// Check if v is adjacent to previous vertex</span>
-                <span class="keyword">if</span> graph[path[pos-<span class="number">1</span>]][v] == <span
-                    class="number">0</span>:
-                <span class="keyword">return</span> <span class="keyword">false</span>
-
-                <span class="comment">// Check if v already in path</span>
-                <span class="keyword">for</span> i = <span class="number">0</span> <span class="keyword">to</span>
-                pos-<span class="number">1</span>:
-                <span class="keyword">if</span> path[i] == v:
-                <span class="keyword">return</span> <span class="keyword">false</span>
-
-                <span class="keyword">return</span> <span class="keyword">true</span>
-            </div>
-
-            <p><strong>Time Complexity:</strong> O(n!) in worst case — exponential</p>
-        </div>
-
-        <div class="card">
-            <h2>Comparison: Eulerian vs Hamiltonian</h2>
-            <table class="comparison-table">
-                <tr>
-                    <th>Aspect</th>
-                    <th>Eulerian</th>
-                    <th>Hamiltonian</th>
-                </tr>
-                <tr>
-                    <td>Traverses</td>
-                    <td>Every <strong>edge</strong> once</td>
-                    <td>Every <strong>vertex</strong> once</td>
-                </tr>
-                <tr>
-                    <td>Existence Check</td>
-                    <td>Polynomial O(V + E)</td>
-                    <td>NP-Complete</td>
-                </tr>
-                <tr>
-                    <td>Finding Path</td>
-                    <td>O(E) - Hierholzer's</td>
-                    <td>O(n!) - Backtracking</td>
-                </tr>
-                <tr>
-                    <td>Sufficient Condition</td>
-                    <td>Degree parity (exact)</td>
-                    <td>Degree sums (not exact)</td>
-                </tr>
-                <tr>
-                    <td>Historic Problem</td>
-                    <td>Seven Bridges (1736)</td>
-                    <td>Icosian Game (1857)</td>
-                </tr>
-                <tr>
-                    <td>Related Problem</td>
-                    <td>Chinese Postman</td>
-                    <td>Traveling Salesman (TSP)</td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="card">
-            <h2>Applications</h2>
-
-            <h3>Eulerian Applications</h3>
-            <ul>
-                <li><strong>DNA Sequencing:</strong> Reconstructing DNA from fragments (de Bruijn graphs)</li>
-                <li><strong>Circuit Design:</strong> Testing all connections on a circuit board</li>
-                <li><strong>Snow Plow Routing:</strong> Covering all streets efficiently</li>
-                <li><strong>Network Routing:</strong> Visiting all network links</li>
-            </ul>
-
-            <h3>Hamiltonian Applications</h3>
-            <ul>
-                <li><strong>Traveling Salesman:</strong> Finding shortest tour visiting all cities</li>
-                <li><strong>Genome Assembly:</strong> Ordering contigs in sequencing</li>
-                <li><strong>Knight's Tour:</strong> Chess puzzle visiting all squares</li>
-                <li><strong>Manufacturing:</strong> Optimizing machine tool paths</li>
-            </ul>
-        </div>
-
-        <div class="card">
-            <h2>Complexity Summary</h2>
-            <table class="comparison-table">
-                <tr>
-                    <th>Problem</th>
-                    <th>Time Complexity</th>
-                    <th>Algorithm</th>
-                </tr>
-                <tr>
-                    <td>Check Eulerian (undirected)</td>
-                    <td>O(V + E)</td>
-                    <td>Degree counting</td>
-                </tr>
-                <tr>
-                    <td>Find Eulerian Path/Circuit</td>
-                    <td>O(E)</td>
-                    <td>Hierholzer's</td>
-                </tr>
-                <tr>
-                    <td>Check Hamiltonian</td>
-                    <td>NP-Complete</td>
-                    <td>Backtracking / DP</td>
-                </tr>
-                <tr>
-                    <td>Find Hamiltonian Path</td>
-                    <td>O(n! or 2ⁿ·n²)</td>
-                    <td>Backtracking / Held-Karp DP</td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="nav-buttons">
-            <a href="graph-coloring.html" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Graph Coloring</a>
-            <a href="articulation-bridges.html" class="btn btn-primary">Articulation & Bridges <i
-                    class="fas fa-arrow-right"></i></a>
         </div>
     </div>
+
+    <script>
+        const canvas = document.getElementById('graphCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let nodes = [];
+        let edges = [];
+        let currentMode = 'node';
+        let selectedNode = null;
+        let nodeIdCounter = 0;
+        let isAnimating = false;
+        let animationSpeed = 500;
+
+        const nodeLabels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+        document.getElementById('speedSlider').addEventListener('input', function (e) {
+            animationSpeed = parseInt(e.target.value);
+            document.getElementById('speedLabel').textContent = (animationSpeed / 1000).toFixed(1) + 's';
+        });
+
+        function setMode(mode) {
+            currentMode = mode;
+            document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`[data-mode="${mode}"]`).classList.add('active');
+            selectedNode = null;
+            drawGraph();
+        }
+
+        canvas.addEventListener('click', function (e) {
+            if (isAnimating) return;
+
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const clickedNode = getNodeAt(x, y);
+
+            if (currentMode === 'node') {
+                if (!clickedNode && nodes.length < 26) {
+                    nodes.push({
+                        id: nodeIdCounter,
+                        label: nodeLabels[nodes.length],
+                        x: x,
+                        y: y,
+                        state: 'unvisited'
+                    });
+                    nodeIdCounter++;
+                    updateStats();
+                }
+            } else if (currentMode === 'edge') {
+                if (clickedNode) {
+                    if (!selectedNode) {
+                        selectedNode = clickedNode;
+                    } else {
+                        // Allow multiple edges between same nodes (multigraph)
+                        edges.push({ from: selectedNode.id, to: clickedNode.id, state: 'normal', used: false });
+                        updateStats();
+                        selectedNode = null;
+                    }
+                }
+            } else if (currentMode === 'delete') {
+                if (clickedNode) {
+                    nodes = nodes.filter(n => n.id !== clickedNode.id);
+                    edges = edges.filter(e => e.from !== clickedNode.id && e.to !== clickedNode.id);
+                    updateStats();
+                }
+            }
+
+            drawGraph();
+        });
+
+        function getNodeAt(x, y) {
+            for (let node of nodes) {
+                const dx = x - node.x;
+                const dy = y - node.y;
+                if (dx * dx + dy * dy <= 625) return node;
+            }
+            return null;
+        }
+
+        function getNodeById(id) {
+            return nodes.find(n => n.id === id);
+        }
+
+        function getDegree(nodeId) {
+            return edges.filter(e => e.from === nodeId || e.to === nodeId).length;
+        }
+
+        function updateStats() {
+            document.getElementById('nodeCount').textContent = nodes.length;
+            document.getElementById('edgeCount').textContent = edges.length;
+
+            // Count odd degree vertices
+            let oddCount = 0;
+            nodes.forEach(n => {
+                if (getDegree(n.id) % 2 === 1) oddCount++;
+            });
+            document.getElementById('oddDegree').textContent = oddCount;
+
+            // Determine Euler type
+            let eulerStatus = '-';
+            if (nodes.length > 0 && edges.length > 0) {
+                if (oddCount === 0) eulerStatus = 'Circuit';
+                else if (oddCount === 2) eulerStatus = 'Path';
+                else eulerStatus = 'None';
+            }
+            document.getElementById('eulerStatus').textContent = eulerStatus;
+        }
+
+        function drawGraph() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            if (nodes.length === 0) {
+                ctx.font = '16px Segoe UI';
+                ctx.fillStyle = '#666';
+                ctx.textAlign = 'center';
+                ctx.fillText('Click to add nodes, or load a sample graph', canvas.width / 2, canvas.height / 2);
+                return;
+            }
+
+            // Draw edges
+            edges.forEach((edge, idx) => {
+                const from = getNodeById(edge.from);
+                const to = getNodeById(edge.to);
+                if (!from || !to) return;
+
+                // Handle self-loops and multiple edges
+                const sameEdges = edges.filter(e =>
+                    (e.from === edge.from && e.to === edge.to) ||
+                    (e.from === edge.to && e.to === edge.from)
+                );
+                const edgeIndex = sameEdges.indexOf(edge);
+                const offset = (edgeIndex - (sameEdges.length - 1) / 2) * 15;
+
+                ctx.beginPath();
+
+                if (from.id === to.id) {
+                    // Self-loop
+                    ctx.arc(from.x, from.y - 30, 20, 0, 2 * Math.PI);
+                } else {
+                    // Regular edge with curve offset
+                    const midX = (from.x + to.x) / 2;
+                    const midY = (from.y + to.y) / 2;
+                    const angle = Math.atan2(to.y - from.y, to.x - from.x) + Math.PI / 2;
+                    const ctrlX = midX + offset * Math.cos(angle);
+                    const ctrlY = midY + offset * Math.sin(angle);
+
+                    ctx.moveTo(from.x, from.y);
+                    ctx.quadraticCurveTo(ctrlX, ctrlY, to.x, to.y);
+                }
+
+                if (edge.state === 'current') {
+                    ctx.strokeStyle = '#3b82f6';
+                    ctx.lineWidth = 4;
+                } else if (edge.state === 'path') {
+                    ctx.strokeStyle = '#10b981';
+                    ctx.lineWidth = 3;
+                } else if (edge.used) {
+                    ctx.strokeStyle = '#9ca3af';
+                    ctx.lineWidth = 2;
+                } else {
+                    ctx.strokeStyle = '#333';
+                    ctx.lineWidth = 2;
+                }
+                ctx.stroke();
+            });
+
+            // Draw nodes
+            nodes.forEach(node => {
+                ctx.beginPath();
+                ctx.arc(node.x, node.y, 25, 0, 2 * Math.PI);
+
+                let color = '#f97316';
+                if (node.state === 'current') color = '#3b82f6';
+                else if (node.state === 'inPath') color = '#10b981';
+                else if (selectedNode === node) color = '#1a1a2e';
+
+                ctx.fillStyle = color;
+                ctx.fill();
+                ctx.strokeStyle = '#1a1a2e';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                // Show degree
+                const degree = getDegree(node.id);
+                ctx.font = '10px Segoe UI';
+                ctx.fillStyle = '#666';
+                ctx.textAlign = 'center';
+                ctx.fillText(`d=${degree}`, node.x, node.y + 40);
+
+                ctx.font = 'bold 18px Segoe UI';
+                ctx.fillStyle = 'white';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(node.label, node.x, node.y);
+            });
+        }
+
+        function loadSampleGraph(type) {
+            clearGraph();
+
+            if (type === 'euler-circuit') {
+                // All even degrees - has Euler circuit
+                nodes = [
+                    { id: 0, label: 'A', x: 375, y: 80, state: 'unvisited' },
+                    { id: 1, label: 'B', x: 200, y: 200, state: 'unvisited' },
+                    { id: 2, label: 'C', x: 550, y: 200, state: 'unvisited' },
+                    { id: 3, label: 'D', x: 375, y: 320, state: 'unvisited' }
+                ];
+                edges = [
+                    { from: 0, to: 1, state: 'normal', used: false },
+                    { from: 0, to: 2, state: 'normal', used: false },
+                    { from: 1, to: 2, state: 'normal', used: false },
+                    { from: 1, to: 3, state: 'normal', used: false },
+                    { from: 2, to: 3, state: 'normal', used: false },
+                    { from: 0, to: 3, state: 'normal', used: false }
+                ];
+            } else if (type === 'euler-path') {
+                // Exactly 2 odd degrees - has Euler path
+                nodes = [
+                    { id: 0, label: 'A', x: 150, y: 150, state: 'unvisited' },
+                    { id: 1, label: 'B', x: 300, y: 80, state: 'unvisited' },
+                    { id: 2, label: 'C', x: 450, y: 150, state: 'unvisited' },
+                    { id: 3, label: 'D', x: 300, y: 280, state: 'unvisited' }
+                ];
+                edges = [
+                    { from: 0, to: 1, state: 'normal', used: false },
+                    { from: 1, to: 2, state: 'normal', used: false },
+                    { from: 2, to: 3, state: 'normal', used: false },
+                    { from: 3, to: 0, state: 'normal', used: false },
+                    { from: 1, to: 3, state: 'normal', used: false }
+                ];
+            } else if (type === 'hamilton') {
+                // Has Hamiltonian path but not Euler
+                nodes = [
+                    { id: 0, label: 'A', x: 375, y: 60, state: 'unvisited' },
+                    { id: 1, label: 'B', x: 200, y: 180, state: 'unvisited' },
+                    { id: 2, label: 'C', x: 550, y: 180, state: 'unvisited' },
+                    { id: 3, label: 'D', x: 250, y: 320, state: 'unvisited' },
+                    { id: 4, label: 'E', x: 500, y: 320, state: 'unvisited' }
+                ];
+                edges = [
+                    { from: 0, to: 1, state: 'normal', used: false },
+                    { from: 0, to: 2, state: 'normal', used: false },
+                    { from: 1, to: 3, state: 'normal', used: false },
+                    { from: 2, to: 4, state: 'normal', used: false },
+                    { from: 3, to: 4, state: 'normal', used: false }
+                ];
+            } else if (type === 'konigsberg') {
+                // Famous Königsberg bridges - no Euler path (4 odd vertices)
+                nodes = [
+                    { id: 0, label: 'A', x: 150, y: 190, state: 'unvisited' },
+                    { id: 1, label: 'B', x: 375, y: 80, state: 'unvisited' },
+                    { id: 2, label: 'C', x: 375, y: 300, state: 'unvisited' },
+                    { id: 3, label: 'D', x: 600, y: 190, state: 'unvisited' }
+                ];
+                edges = [
+                    { from: 0, to: 1, state: 'normal', used: false },
+                    { from: 0, to: 1, state: 'normal', used: false }, // Double edge
+                    { from: 0, to: 2, state: 'normal', used: false },
+                    { from: 0, to: 2, state: 'normal', used: false }, // Double edge
+                    { from: 1, to: 2, state: 'normal', used: false },
+                    { from: 1, to: 3, state: 'normal', used: false },
+                    { from: 2, to: 3, state: 'normal', used: false }
+                ];
+            }
+
+            nodeIdCounter = nodes.length;
+            updateStats();
+            drawGraph();
+        }
+
+        function clearGraph() {
+            nodes = [];
+            edges = [];
+            nodeIdCounter = 0;
+            selectedNode = null;
+            document.getElementById('pathOutput').textContent = '-';
+            document.getElementById('stepInfo').classList.remove('active');
+            document.getElementById('resultBox').innerHTML = '';
+            updateStats();
+            drawGraph();
+        }
+
+        function resetGraph() {
+            nodes.forEach(n => n.state = 'unvisited');
+            edges.forEach(e => { e.state = 'normal'; e.used = false; });
+            document.getElementById('pathOutput').textContent = '-';
+            document.getElementById('stepInfo').classList.remove('active');
+            document.getElementById('resultBox').innerHTML = '';
+            drawGraph();
+        }
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        function getNeighbors(nodeId) {
+            const neighbors = [];
+            edges.forEach((e, idx) => {
+                if (e.from === nodeId) neighbors.push({ nodeId: e.to, edgeIdx: idx });
+                if (e.to === nodeId) neighbors.push({ nodeId: e.from, edgeIdx: idx });
+            });
+            return neighbors;
+        }
+
+        // Check Eulerian properties
+        function checkEulerian() {
+            if (nodes.length === 0) return;
+
+            let oddCount = 0;
+            const oddNodes = [];
+            nodes.forEach(n => {
+                if (getDegree(n.id) % 2 === 1) {
+                    oddCount++;
+                    oddNodes.push(n.label);
+                }
+            });
+
+            const resultBox = document.getElementById('resultBox');
+
+            if (oddCount === 0) {
+                resultBox.innerHTML = `
+                    <div class="info-box success">
+                        <h4><i class="fas fa-check-circle"></i> Euler Circuit Exists!</h4>
+                        <p>All vertices have even degree. You can traverse all edges and return to start.</p>
+                    </div>
+                `;
+            } else if (oddCount === 2) {
+                resultBox.innerHTML = `
+                    <div class="info-box success">
+                        <h4><i class="fas fa-check-circle"></i> Euler Path Exists!</h4>
+                        <p>Exactly 2 vertices (${oddNodes.join(', ')}) have odd degree. Start from one, end at the other.</p>
+                    </div>
+                `;
+            } else {
+                resultBox.innerHTML = `
+                    <div class="info-box error">
+                        <h4><i class="fas fa-times-circle"></i> No Euler Path!</h4>
+                        <p>${oddCount} vertices (${oddNodes.join(', ')}) have odd degree. Need 0 or 2.</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Find Euler path using Hierholzer's algorithm
+        async function findEulerPath() {
+            if (isAnimating || nodes.length === 0) return;
+
+            // Check if Euler path exists
+            let oddCount = 0;
+            let startNode = nodes[0];
+            nodes.forEach(n => {
+                if (getDegree(n.id) % 2 === 1) {
+                    oddCount++;
+                    startNode = n; // Start from odd degree vertex
+                }
+            });
+
+            if (oddCount !== 0 && oddCount !== 2) {
+                const resultBox = document.getElementById('resultBox');
+                resultBox.innerHTML = `
+                    <div class="info-box error">
+                        <h4><i class="fas fa-times-circle"></i> No Euler Path!</h4>
+                        <p>Graph has ${oddCount} odd-degree vertices. Cannot find Euler path.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            isAnimating = true;
+            resetGraph();
+
+            const stepInfo = document.getElementById('stepInfo');
+            stepInfo.classList.add('active');
+            stepInfo.style.background = '#10b981';
+
+            // Hierholzer's algorithm
+            const edgeUsed = new Array(edges.length).fill(false);
+            const stack = [startNode.id];
+            const path = [];
+
+            stepInfo.textContent = `Starting Hierholzer's from ${startNode.label}`;
+            startNode.state = 'current';
+            drawGraph();
+            await sleep(animationSpeed);
+
+            while (stack.length > 0) {
+                const currentId = stack[stack.length - 1];
+                const current = getNodeById(currentId);
+
+                // Find unused edge
+                let foundEdge = false;
+                const neighbors = getNeighbors(currentId);
+
+                for (let n of neighbors) {
+                    if (!edgeUsed[n.edgeIdx]) {
+                        edgeUsed[n.edgeIdx] = true;
+                        edges[n.edgeIdx].used = true;
+                        edges[n.edgeIdx].state = 'current';
+
+                        stack.push(n.nodeId);
+                        current.state = 'inPath';
+                        getNodeById(n.nodeId).state = 'current';
+
+                        stepInfo.textContent = `Traveling from ${current.label} to ${getNodeById(n.nodeId).label}`;
+                        drawGraph();
+                        await sleep(animationSpeed);
+
+                        edges[n.edgeIdx].state = 'path';
+                        foundEdge = true;
+                        break;
+                    }
+                }
+
+                if (!foundEdge) {
+                    const nodeId = stack.pop();
+                    path.unshift(getNodeById(nodeId).label);
+                    getNodeById(nodeId).state = 'inPath';
+                    stepInfo.textContent = `Backtracking, adding ${getNodeById(nodeId).label} to path`;
+                    drawGraph();
+                    await sleep(animationSpeed / 2);
+                }
+            }
+
+            document.getElementById('pathOutput').textContent = path.join(' → ');
+            stepInfo.textContent = `Done! Euler path: ${path.join(' → ')}`;
+
+            const resultBox = document.getElementById('resultBox');
+            resultBox.innerHTML = `
+                <div class="info-box success">
+                    <h4><i class="fas fa-check-circle"></i> Euler Path Found!</h4>
+                    <p>Visited all ${edges.length} edges exactly once.</p>
+                </div>
+            `;
+
+            isAnimating = false;
+        }
+
+        // Find Hamiltonian path using backtracking
+        async function findHamiltonPath() {
+            if (isAnimating || nodes.length === 0) return;
+            isAnimating = true;
+            resetGraph();
+
+            const stepInfo = document.getElementById('stepInfo');
+            stepInfo.classList.add('active');
+            stepInfo.style.background = '#eab308';
+
+            const visited = new Set();
+            let found = false;
+            let finalPath = [];
+
+            async function backtrack(path) {
+                if (found) return;
+
+                if (path.length === nodes.length) {
+                    found = true;
+                    finalPath = [...path];
+                    return;
+                }
+
+                const currentId = path[path.length - 1];
+                const current = getNodeById(currentId);
+                current.state = 'current';
+
+                stepInfo.textContent = `At ${current.label}, path: ${path.map(id => getNodeById(id).label).join(' → ')}`;
+                drawGraph();
+                await sleep(animationSpeed);
+
+                const neighbors = getNeighbors(currentId);
+                for (let n of neighbors) {
+                    if (!visited.has(n.nodeId) && !found) {
+                        visited.add(n.nodeId);
+                        path.push(n.nodeId);
+
+                        edges[n.edgeIdx].state = 'current';
+                        drawGraph();
+                        await sleep(animationSpeed / 2);
+
+                        await backtrack(path);
+
+                        if (!found) {
+                            stepInfo.textContent = `Backtracking from ${getNodeById(n.nodeId).label}`;
+                            edges[n.edgeIdx].state = 'normal';
+                            path.pop();
+                            visited.delete(n.nodeId);
+                            getNodeById(n.nodeId).state = 'unvisited';
+                            drawGraph();
+                            await sleep(animationSpeed / 3);
+                        }
+                    }
+                }
+
+                if (!found) {
+                    current.state = 'unvisited';
+                }
+            }
+
+            // Try starting from each node
+            for (let start of nodes) {
+                if (found) break;
+
+                visited.clear();
+                visited.add(start.id);
+                resetGraph();
+
+                stepInfo.textContent = `Trying to start from ${start.label}`;
+                await backtrack([start.id]);
+            }
+
+            if (found) {
+                // Mark final path
+                finalPath.forEach(id => getNodeById(id).state = 'inPath');
+                for (let i = 0; i < finalPath.length - 1; i++) {
+                    const edge = edges.find(e =>
+                        (e.from === finalPath[i] && e.to === finalPath[i + 1]) ||
+                        (e.to === finalPath[i] && e.from === finalPath[i + 1])
+                    );
+                    if (edge) edge.state = 'path';
+                }
+
+                const pathStr = finalPath.map(id => getNodeById(id).label).join(' → ');
+                document.getElementById('pathOutput').textContent = pathStr;
+                stepInfo.textContent = `Found! Hamilton path: ${pathStr}`;
+
+                document.getElementById('resultBox').innerHTML = `
+                    <div class="info-box success">
+                        <h4><i class="fas fa-check-circle"></i> Hamiltonian Path Found!</h4>
+                        <p>Visits all ${nodes.length} vertices exactly once.</p>
+                    </div>
+                `;
+            } else {
+                stepInfo.textContent = 'No Hamiltonian path exists!';
+                stepInfo.style.background = '#ef4444';
+
+                document.getElementById('resultBox').innerHTML = `
+                    <div class="info-box error">
+                        <h4><i class="fas fa-times-circle"></i> No Solution!</h4>
+                        <p>Explored all possibilities. No Hamiltonian path exists.</p>
+                    </div>
+                `;
+            }
+
+            drawGraph();
+            isAnimating = false;
+        }
+
+        // Initial draw
+        drawGraph();
+    </script>
 </body>
 
 </html>
