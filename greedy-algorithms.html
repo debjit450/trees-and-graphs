@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Greedy Algorithms - Master DSA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+        }
+
+        .nav-bar {
+            background: linear-gradient(135deg, #e11d48 0%, #be123c 100%);
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-bar a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-bar h1 {
+            color: white;
+            font-size: 1.5em;
+            flex: 1;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 30px;
+        }
+
+        @media (max-width: 1100px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 25px;
+        }
+
+        .card h2 {
+            font-size: 1.5em;
+            color: #1a1a2e;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 3px solid #e11d48;
+            padding-bottom: 10px;
+        }
+
+        .card h2 i {
+            color: #e11d48;
+        }
+
+        .canvas-container {
+            background: #fff1f2;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        canvas {
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background: white;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-primary {
+            background: #e11d48;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #9f1239;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #1a1a2e;
+            border-color: #e0e0e0;
+        }
+
+        .btn-secondary:hover {
+            border-color: #e11d48;
+            color: #e11d48;
+        }
+
+        .step-info {
+            background: #e11d48;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            margin: 15px 0;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 12px;
+            background: #e0e0e0;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            background: #e11d48;
+            color: white;
+        }
+
+        .code-box {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="nav-bar">
+        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+        <h1><i class="fas fa-pizza-slice"></i> Greedy Algorithms</h1>
+        <a href="hashing-interactive.html">Next: Advanced Topics <i class="fas fa-arrow-right"></i></a>
+    </div>
+
+    <div class="container">
+        <div class="main-grid">
+            <div class="left-column">
+                <div class="card">
+                    <h2><i class="fas fa-desktop"></i> Visualizer</h2>
+                    <div class="tabs">
+                        <button class="tab active" onclick="switchMode('activity')">Activity Selection</button>
+                        <button class="tab" onclick="switchMode('knapsack')">Fractional Knapsack</button>
+                    </div>
+
+                    <div class="canvas-container">
+                        <canvas id="mainCanvas" width="800" height="400"></canvas>
+                    </div>
+
+                    <div class="controls" id="controls">
+                        <button class="btn btn-primary" onclick="solve()">Solve Greedy</button>
+                        <button class="btn btn-secondary" onclick="reset()">New Problem</button>
+                    </div>
+
+                    <div class="step-info" id="stepInfo">Ready</div>
+                </div>
+            </div>
+
+            <div class="right-column">
+                <div class="card">
+                    <h2><i class="fas fa-lightbulb"></i> Concept</h2>
+                    <div id="infoContent">
+                        <h4>Activity Selection</h4>
+                        <p style="color: #555; margin-bottom: 10px;">Goal: Select maximum number of non-overlapping
+                            activities.</p>
+                        <p><strong>Greedy Strategy:</strong> Always pick the next activity that finishes earliest.</p>
+
+                        <div class="code-box">
+                            sort(activities, by=finish_time)
+                            last_finish = -1
+                            for(act in activities):
+                            if act.start >= last_finish:
+                            select(act)
+                            last_finish = act.finish
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('mainCanvas');
+        const ctx = canvas.getContext('2d');
+        const stepInfo = document.getElementById('stepInfo');
+
+        let mode = 'activity';
+        let isRunning = false;
+
+        // Activity State
+        let activities = [];
+
+        // Knapsack State
+        let items = []; // {val, wt, ratio}
+        let capacity = 50;
+        let currentLoad = 0;
+        let currentValue = 0;
+
+        function switchMode(newMode) {
+            mode = newMode;
+            isRunning = false;
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+
+            reset();
+
+            if (mode === 'activity') {
+                document.getElementById('infoContent').innerHTML = `<h4>Activity Selection</h4><p>Pick max non-overlapping intervals.</p><p><strong>Strategy:</strong> Sort by finish time.</p>`;
+            } else {
+                document.getElementById('infoContent').innerHTML = `<h4>Fractional Knapsack</h4><p>Fill knapsack to max value, taking fractions if needed.</p><p><strong>Strategy:</strong> Sort by Value/Weight ratio.</p>`;
+            }
+        }
+
+        function reset() {
+            if (mode === 'activity') {
+                // Generate random start/end times
+                activities = [];
+                for (let i = 0; i < 6; i++) {
+                    let start = Math.floor(Math.random() * 10);
+                    let duration = Math.floor(Math.random() * 4) + 1;
+                    activities.push({ id: i, start, end: start + duration, selected: false, current: false });
+                }
+                // Initial unsorted draw
+                drawActivities();
+            } else {
+                items = [];
+                for (let i = 0; i < 5; i++) {
+                    let wt = Math.floor(Math.random() * 20) + 5;
+                    let val = Math.floor(Math.random() * 60) + 10;
+                    items.push({ id: i, wt, val, ratio: (val / wt).toFixed(2), taken: 0 });
+                }
+                currentLoad = 0;
+                currentValue = 0;
+                drawKnapsack();
+            }
+            stepInfo.textContent = "Ready.";
+        }
+
+        // --- DRAWING ACTIVITES ---
+        function drawActivities() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const timeScale = 50;
+            const rowHeight = 50;
+            const startX = 50;
+            const startY = 80;
+
+            // Draw Timeline
+            ctx.beginPath();
+            ctx.moveTo(startX, 350);
+            ctx.lineTo(startX + 14 * timeScale, 350);
+            ctx.stroke();
+            for (let t = 0; t <= 14; t++) {
+                ctx.fillText(t, startX + t * timeScale, 370);
+            }
+
+            activities.forEach((act, i) => {
+                const y = startY + i * rowHeight;
+                const width = (act.end - act.start) * timeScale;
+                const x = startX + act.start * timeScale;
+
+                let color = '#dbeafe'; // default
+                if (act.current) color = '#fef08a'; // checking
+                else if (act.selected === true) color = '#86efac'; // selected
+                else if (act.selected === 'rejected') color = '#f3f4f6'; // rejected
+
+                ctx.fillStyle = color;
+                ctx.fillRect(x, y, width, 30);
+                ctx.strokeStyle = '#333';
+                ctx.strokeRect(x, y, width, 30);
+
+                ctx.fillStyle = '#333';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(`A${act.id} (${act.start}-${act.end})`, x + width / 2, y + 15);
+            });
+        }
+
+        // --- DRAWING KNAPSACK ---
+        function drawKnapsack() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw Items
+            const startX = 50;
+            const startY = 50;
+            items.forEach((item, i) => {
+                const x = startX + i * 110;
+
+                // Box
+                ctx.fillStyle = '#fff';
+                ctx.fillRect(x, startY, 80, 80);
+                ctx.strokeStyle = '#333';
+                ctx.strokeRect(x, startY, 80, 80);
+
+                // Info
+                ctx.fillStyle = '#333';
+                ctx.textAlign = 'center';
+                ctx.font = 'bold 16px Segoe UI';
+                ctx.fillText(`$${item.val}`, x + 40, startY + 30);
+                ctx.font = '14px Segoe UI';
+                ctx.fillText(`${item.wt}kg`, x + 40, startY + 60);
+
+                // Ratio
+                ctx.fillStyle = '#e11d48';
+                ctx.font = 'bold 12px Segoe UI';
+                ctx.fillText(`R: ${item.ratio}`, x + 40, startY - 10);
+
+                // Taken portion
+                if (item.taken > 0) {
+                    ctx.fillStyle = 'rgba(16, 185, 129, 0.5)';
+                    ctx.fillRect(x, startY + 80 - (item.taken * 80), 80, item.taken * 80);
+                }
+            });
+
+            // Draw Sack
+            const sackX = 300;
+            const sackY = 200;
+            const sackW = 200;
+            const sackH = 150;
+
+            // Sack background
+            ctx.fillStyle = '#e5e7eb';
+            ctx.fillRect(sackX, sackY, sackW, sackH);
+
+            // Fill
+            const fillPct = currentLoad / capacity;
+            ctx.fillStyle = '#86efac';
+            ctx.fillRect(sackX, sackY + sackH - (fillPct * sackH), sackW, fillPct * sackH);
+
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 3;
+            ctx.strokeRect(sackX, sackY, sackW, sackH);
+
+            ctx.fillStyle = '#333';
+            ctx.font = '18px Segoe UI';
+            ctx.fillText(`Capacity: ${capacity}`, sackX + sackW / 2, sackY + sackH + 30);
+            ctx.fillText(`Load: ${currentLoad.toFixed(1)} / Value: $${currentValue.toFixed(1)}`, sackX + sackW / 2, sackY + sackH + 60);
+        }
+
+        async function solve() {
+            if (isRunning) return;
+            isRunning = true;
+
+            if (mode === 'activity') {
+                // 1. Sort
+                stepInfo.textContent = "Sorting activities by FINISH time...";
+                activities.sort((a, b) => a.end - b.end);
+                drawActivities();
+                await sleep(1000);
+
+                // 2. Pick
+                let lastEnd = -1;
+                for (let i = 0; i < activities.length; i++) {
+                    activities[i].current = true;
+                    drawActivities();
+                    stepInfo.textContent = `Checking A${activities[i].id} (Starts ${activities[i].start}). Last finish: ${lastEnd}`;
+                    await sleep(800);
+
+                    if (activities[i].start >= lastEnd) {
+                        activities[i].selected = true;
+                        lastEnd = activities[i].end;
+                        stepInfo.textContent = `Selected A${activities[i].id}!`;
+                    } else {
+                        activities[i].selected = 'rejected';
+                        stepInfo.textContent = `Rejected A${activities[i].id} (Overlaps).`;
+                    }
+                    activities[i].current = false;
+                    drawActivities();
+                    await sleep(500);
+                }
+                stepInfo.textContent = "Finished Activity Selection.";
+
+            } else {
+                // Knapsack
+                stepInfo.textContent = "Sorting items by Value/Weight Ratio...";
+                items.sort((a, b) => b.ratio - a.ratio);
+                drawKnapsack();
+                await sleep(1000);
+
+                for (let i = 0; i < items.length; i++) {
+                    if (currentLoad >= capacity) break;
+
+                    let remaining = capacity - currentLoad;
+                    let item = items[i];
+
+                    stepInfo.textContent = `Checking best remaining item ($${item.val}, ${item.wt}kg)...`;
+                    await sleep(800);
+
+                    if (item.wt <= remaining) {
+                        // Take all
+                        item.taken = 1;
+                        currentLoad += item.wt;
+                        currentValue += item.val;
+                        stepInfo.textContent = "Taking full item.";
+                    } else {
+                        // Take fraction
+                        let fraction = remaining / item.wt;
+                        item.taken = fraction;
+                        currentLoad += remaining;
+                        currentValue += item.val * fraction;
+                        stepInfo.textContent = `Taking ${Math.round(fraction * 100)}% of item.`;
+                    }
+                    drawKnapsack();
+                    await sleep(800);
+                }
+                stepInfo.textContent = "Knapsack filled!";
+            }
+            isRunning = false;
+        }
+
+        function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+        switchMode('activity');
+    </script>
+</body>
+
+</html>

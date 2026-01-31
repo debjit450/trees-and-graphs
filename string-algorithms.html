@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>String Algorithms - Master DSA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+        }
+
+        .nav-bar {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-bar a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-bar h1 {
+            color: white;
+            font-size: 1.5em;
+            flex: 1;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 30px;
+        }
+
+        @media (max-width: 1100px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 25px;
+        }
+
+        .card h2 {
+            font-size: 1.5em;
+            color: #1a1a2e;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 3px solid #10b981;
+            padding-bottom: 10px;
+        }
+
+        .card h2 i {
+            color: #10b981;
+        }
+
+        .canvas-container {
+            background: #ecfdf5;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        canvas {
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background: white;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-primary {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #059669;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #1a1a2e;
+            border-color: #e0e0e0;
+        }
+
+        .btn-secondary:hover {
+            border-color: #10b981;
+            color: #10b981;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .input-group input {
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            flex: 1;
+        }
+
+        .step-info {
+            background: #10b981;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            margin: 15px 0;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 12px;
+            background: #e0e0e0;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            background: #10b981;
+            color: white;
+        }
+
+        .code-box {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="nav-bar">
+        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+        <h1><i class="fas fa-font"></i> String Algorithms</h1>
+        <a href="math-algorithms.html">Next: Math Algorithms <i class="fas fa-arrow-right"></i></a>
+    </div>
+
+    <div class="container">
+        <div class="main-grid">
+            <div class="left-column">
+                <div class="card">
+                    <h2><i class="fas fa-search"></i> Pattern Matching Visualizer</h2>
+                    <div class="tabs">
+                        <button class="tab active" onclick="switchAlgo('brute')">Brute Force</button>
+                        <button class="tab" onclick="switchAlgo('kmp')">KMP Algorithm</button>
+                        <button class="tab" onclick="switchAlgo('rabin')">Rabin-Karp</button>
+                    </div>
+
+                    <div class="canvas-container">
+                        <canvas id="mainCanvas" width="800" height="300"></canvas>
+                    </div>
+
+                    <div class="controls">
+                        <div class="input-group" style="width: 100%;">
+                            <input type="text" id="textInput" value="ABABDABACDABABCABAB" placeholder="Text">
+                            <input type="text" id="patternInput" value="ABABCABAB" placeholder="Pattern">
+                        </div>
+                        <button class="btn btn-primary" onclick="search()"><i class="fas fa-play"></i> Search</button>
+                        <button class="btn btn-secondary" onclick="generateRandom()"><i class="fas fa-random"></i>
+                            Random</button>
+                    </div>
+
+                    <div class="step-info" id="stepInfo">Ready</div>
+                </div>
+            </div>
+
+            <div class="right-column">
+                <div class="card">
+                    <h2><i class="fas fa-info-circle"></i> Understanding KMP</h2>
+                    <div id="infoContent">
+                        <h4>Knuth-Morris-Pratt (KMP)</h4>
+                        <p style="color: #555; margin-bottom: 10px;">Avoids redundant comparisons by using an LPS
+                            (Longest Prefix Suffix) array.</p>
+                        <p><strong>Time Comp:</strong> O(N + M)</p>
+                        <p><strong>Space Comp:</strong> O(M)</p>
+
+                        <div class="code-box">
+                            // LPS Construction
+                            len = 0; lps[0] = 0; i = 1;
+                            while(i < M) { if(pat[i]==pat[len]) { len++; lps[i]=len; i++; } else { if(len !=0)
+                                len=lps[len-1]; else { lps[i]=0; i++; } } } </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            const canvas = document.getElementById('mainCanvas');
+            const ctx = canvas.getContext('2d');
+            const stepInfo = document.getElementById('stepInfo');
+
+            let algo = 'brute';
+            let isSearching = false;
+
+            // State
+            let text = "ABABDABACDABABCABAB";
+            let pattern = "ABABCABAB";
+
+            function switchAlgo(newAlgo) {
+                algo = newAlgo;
+                isSearching = false;
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                event.target.classList.add('active');
+
+                if (algo === 'brute') {
+                    document.getElementById('infoContent').innerHTML = `<h4>Brute Force</h4><p class='text-sm text-gray-600'>Slide pattern one by one. O(N*M).</p>`;
+                } else if (algo === 'kmp') {
+                    document.getElementById('infoContent').innerHTML = `<h4>KMP Algorithm</h4><p>Uses LPS array to skip characters. O(N+M).</p>`;
+                } else {
+                    document.getElementById('infoContent').innerHTML = `<h4>Rabin-Karp</h4><p>Uses Rolling Hash to compare pattern. Efficient for multiple patterns. O(N+M) avg.</p>`;
+                }
+                drawStatic();
+            }
+
+            function generateRandom() {
+                const chars = "ABCD";
+                text = Array.from({ length: 20 }, () => chars[Math.floor(Math.random() * 4)]).join('');
+                pattern = Array.from({ length: 4 }, () => chars[Math.floor(Math.random() * 4)]).join('');
+                document.getElementById('textInput').value = text;
+                document.getElementById('patternInput').value = pattern;
+                drawStatic();
+            }
+
+            function drawStatic() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                drawState(-1, -1);
+            }
+
+            function drawBox(char, x, y, color = '#fff', label = '') {
+                ctx.fillStyle = color;
+                ctx.fillRect(x, y, 35, 35);
+                ctx.strokeStyle = '#999';
+                ctx.strokeRect(x, y, 35, 35);
+
+                ctx.fillStyle = '#111';
+                ctx.font = 'bold 18px Courier New';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(char, x + 17.5, y + 17.5);
+
+                if (label) {
+                    ctx.font = '10px sans-serif';
+                    ctx.fillText(label, x + 17.5, y + 45);
+                }
+            }
+
+            function drawState(txtIdx, patIdx, matchLen = -1, status = '') {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                const startX = 50;
+                const textY = 80;
+                const patY = 160;
+                const w = 40;
+
+                // Draw Text
+                ctx.font = "14px Segoe UI";
+                ctx.fillStyle = "#333";
+                ctx.textAlign = "left";
+                ctx.fillText("Text:", startX, textY - 10);
+
+                for (let i = 0; i < text.length; i++) {
+                    let color = '#fff';
+                    if (i === txtIdx) color = '#fcd34d'; // Analyzing
+                    if (status === 'found' && i >= txtIdx - pattern.length + 1 && i <= txtIdx) color = '#86efac';
+
+                    drawBox(text[i], startX + i * w, textY, color, i);
+                }
+
+                // Draw Pattern
+                if (patIdx !== -1 || algo === 'brute') {
+                    let pStart = (algo === 'brute') ? txtIdx - patIdx : txtIdx - patIdx;
+                    // For KMP visuals, we align pattern based on comparison
+
+                    const shift = (algo === 'kmp') ? (txtIdx - patIdx) : (txtIdx); // naive shift logic for brute
+                    const drawX = startX + shift * w; // This is simplistic, let's refine
+
+                    // Only draw pattern align
+                }
+
+                // Simplified display: Just show pattern below aligned correctly
+                // Alignment logic differs per algo visuals, but for clarity:
+                // In brute force loop: i is shift, j is pattern index
+                // In KMP: i is text index, j is pattern index
+
+                let alignIndex = 0;
+                if (algo === 'brute' && typeof patIdx === 'number') {
+                    alignIndex = txtIdx; // txtIdx here represents 'i' (shift) in brute
+                } else if (algo === 'kmp') {
+                    alignIndex = txtIdx - patIdx;
+                } else if (algo === 'rabin') {
+                    alignIndex = txtIdx;
+                }
+
+                ctx.fillText("Pattern:", startX, patY - 10);
+
+                // Draw pattern shifted
+                if (status !== 'init') {
+                    for (let j = 0; j < pattern.length; j++) {
+                        const x = startX + (alignIndex + j) * w;
+                        let color = '#fff';
+
+                        if (algo === 'brute') {
+                            if (j === patIdx) color = '#fcd34d'; // Comparing
+                            if (j < patIdx) color = '#86efac'; // Matched so far
+                        } else if (algo === 'kmp') {
+                            if (j === patIdx) color = '#fcd34d';
+                            if (j < patIdx) color = '#86efac';
+                        }
+
+                        drawBox(pattern[j], x, patY, color, j);
+                    }
+
+                    // Draw connecting line for current comparison
+                    if (patIdx >= 0 && patIdx < pattern.length) {
+                        const tx = startX + (alignIndex + patIdx) * w + 17.5;
+                        ctx.beginPath();
+                        ctx.moveTo(tx, textY + 35);
+                        ctx.lineTo(tx, patY);
+                        ctx.strokeStyle = status === 'mismatch' ? '#ef4444' : '#3b82f6';
+                        ctx.lineWidth = 2;
+                        ctx.stroke();
+                    }
+                } else {
+                    // Static pattern
+                    for (let j = 0; j < pattern.length; j++) {
+                        drawBox(pattern[j], startX + j * w, patY, '#fff', j);
+                    }
+                }
+            }
+
+            async function search() {
+                if (isSearching) return;
+                isSearching = true;
+
+                text = document.getElementById('textInput').value;
+                pattern = document.getElementById('patternInput').value;
+
+                if (algo === 'brute') await bruteSearch();
+                else if (algo === 'kmp') await kmpSearch();
+                else await rabinSearch();
+
+                isSearching = false;
+            }
+
+            async function bruteSearch() {
+                const n = text.length;
+                const m = pattern.length;
+
+                for (let i = 0; i <= n - m; i++) {
+                    stepInfo.textContent = `Shift ${i}: Comparing pattern...`;
+                    let j;
+                    for (j = 0; j < m; j++) {
+                        drawState(i, j, -1, 'comparing'); // pass i as shift
+                        await sleep(300);
+
+                        if (text[i + j] !== pattern[j]) {
+                            stepInfo.textContent = `Mismatch at index ${j} (${text[i + j]} != ${pattern[j]}). Break.`;
+                            drawState(i, j, -1, 'mismatch');
+                            await sleep(500);
+                            break;
+                        }
+                    }
+                    if (j === m) {
+                        stepInfo.textContent = `Pattern found at index ${i}!`;
+                        drawState(i, m - 1, -1, 'found'); // hack visual
+                        // return; // Find all or one? Let's find one for clarity or continue
+                        await sleep(1000);
+                    }
+                }
+                stepInfo.textContent = "Search complete.";
+            }
+
+            async function kmpSearch() {
+                const n = text.length;
+                const m = pattern.length;
+
+                // Calc LPS
+                stepInfo.textContent = "Computing LPS Array...";
+                const lps = computeLPS(pattern);
+                stepInfo.textContent = `LPS: [${lps.join(', ')}]`;
+                await sleep(1000);
+
+                let i = 0; // text idx
+                let j = 0; // pat idx
+
+                while (i < n) {
+                    stepInfo.textContent = `Comparing Text[${i}] (${text[i]}) vs Pattern[${j}] (${pattern[j]})`;
+                    drawState(i, j, -1, 'comp'); // i is real index
+                    await sleep(500);
+
+                    if (pattern[j] === text[i]) {
+                        i++; j++;
+                        if (j === m) {
+                            stepInfo.textContent = `Found pattern at index ${i - j}!`;
+                            j = lps[j - 1]; // continue searching
+                            await sleep(1000);
+                        }
+                    } else {
+                        stepInfo.textContent = `Mismatch!`;
+                        drawState(i, j, -1, 'mismatch');
+                        await sleep(500);
+
+                        if (j !== 0) {
+                            stepInfo.textContent = `Jumps j from ${j} to LPS[${j - 1}] = ${lps[j - 1]}`;
+                            j = lps[j - 1];
+                        } else {
+                            i++;
+                        }
+                    }
+                }
+                stepInfo.textContent = "Search complete.";
+            }
+
+            function computeLPS(pat) {
+                let m = pat.length;
+                let lps = Array(m).fill(0);
+                let len = 0;
+                let i = 1;
+                while (i < m) {
+                    if (pat[i] === pat[len]) {
+                        len++; lps[i] = len; i++;
+                    } else {
+                        if (len !== 0) len = lps[len - 1];
+                        else { lps[i] = 0; i++; }
+                    }
+                }
+                return lps;
+            }
+
+            async function rabinSearch() {
+                const n = text.length;
+                const m = pattern.length;
+                const d = 256;
+                const q = 101;
+
+                let p = 0; // hash pattern
+                let t = 0; // hash text
+                let h = 1;
+
+                for (let i = 0; i < m - 1; i++) h = (h * d) % q;
+
+                stepInfo.textContent = "Calculating initial hashes...";
+                for (let i = 0; i < m; i++) {
+                    p = (d * p + pattern.charCodeAt(i)) % q;
+                    t = (d * t + text.charCodeAt(i)) % q;
+                }
+                stepInfo.textContent = `Pattern Hash: ${p}`;
+                await sleep(1000);
+
+                for (let i = 0; i <= n - m; i++) {
+                    stepInfo.textContent = `Shift ${i}: Hash T=${t}, P=${p}`;
+                    drawState(i, -1, -1, 'hash'); // Simplistic draw
+
+                    // Highlight window
+                    const startX = 50; const w = 40;
+                    ctx.strokeStyle = '#10b981'; ctx.lineWidth = 3;
+                    ctx.strokeRect(startX + i * w - 2, 78, m * w + 4, 40);
+
+                    await sleep(500);
+
+                    if (p === t) {
+                        stepInfo.textContent = "Hashes match! Checking characters...";
+                        let match = true;
+                        for (let j = 0; j < m; j++) {
+                            if (text[i + j] !== pattern[j]) {
+                                match = false; break;
+                            }
+                        }
+                        if (match) {
+                            stepInfo.textContent = `Pattern found at index ${i}!`;
+                            await sleep(1000);
+                        }
+                    }
+
+                    if (i < n - m) {
+                        t = (d * (t - text.charCodeAt(i) * h) + text.charCodeAt(i + m)) % q;
+                        if (t < 0) t = (t + q);
+                    }
+                }
+                stepInfo.textContent = "Search complete.";
+            }
+
+            function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+            switchAlgo('brute');
+        </script>
+</body>
+
+</html>

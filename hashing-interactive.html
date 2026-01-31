@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hashing & Hash Tables - Master DSA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+        }
+
+        .nav-bar {
+            background: linear-gradient(135deg, #9333ea 0%, #7e22ce 100%);
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-bar a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-bar h1 {
+            color: white;
+            font-size: 1.5em;
+            flex: 1;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 30px;
+        }
+
+        @media (max-width: 1100px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 25px;
+        }
+
+        .card h2 {
+            font-size: 1.5em;
+            color: #1a1a2e;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 3px solid #9333ea;
+            padding-bottom: 10px;
+        }
+
+        .card h2 i {
+            color: #9333ea;
+        }
+
+        .canvas-container {
+            background: #faf5ff;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        canvas {
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background: white;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-primary {
+            background: #9333ea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #7e22ce;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #1a1a2e;
+            border-color: #e0e0e0;
+        }
+
+        .btn-secondary:hover {
+            border-color: #9333ea;
+            color: #9333ea;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .input-group input {
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            width: 100px;
+        }
+
+        .step-info {
+            background: #9333ea;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            margin: 15px 0;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 12px;
+            background: #e0e0e0;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            background: #9333ea;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="nav-bar">
+        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+        <h1><i class="fas fa-hashtag"></i> Hashing & Hash maps</h1>
+        <a href="bit-manipulation.html">Next: Bit Manipulation <i class="fas fa-arrow-right"></i></a>
+    </div>
+
+    <div class="container">
+        <div class="main-grid">
+            <div class="left-column">
+                <div class="card">
+                    <h2><i class="fas fa-database"></i> Hash Table Visualizer</h2>
+                    <div class="tabs">
+                        <button class="tab active" onclick="switchMode('chaining')">Chaining (Linked List)</button>
+                        <button class="tab" onclick="switchMode('probing')">Linear Probing</button>
+                    </div>
+
+                    <div class="canvas-container">
+                        <canvas id="mainCanvas" width="800" height="400"></canvas>
+                    </div>
+
+                    <div class="controls">
+                        <div class="input-group">
+                            <input type="number" id="inputVal" placeholder="Value" value="15">
+                            <button class="btn btn-primary" onclick="insert()">Insert</button>
+                            <button class="btn btn-secondary" onclick="search()">Search</button>
+                        </div>
+                        <button class="btn btn-secondary" onclick="reset()">Reset Table</button>
+                    </div>
+
+                    <div class="step-info" id="stepInfo">Hash Function: key % 7</div>
+                </div>
+            </div>
+
+            <div class="right-column">
+                <div class="card">
+                    <h2><i class="fas fa-info-circle"></i> Info</h2>
+                    <div id="infoContent">
+                        <h4>Collision Resolution</h4>
+                        <p style="color: #555; margin-bottom: 10px;">When two keys hash to the same index.</p>
+                        <ul>
+                            <li><strong>Chaining:</strong> Store collisions in a linked list at that index.</li>
+                            <li><strong>Open Addressing:</strong> Find the next available slot (probing).</li>
+                        </ul>
+                        <p style="margin-top: 10px;"><strong>Size:</strong> 7 slots</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('mainCanvas');
+        const ctx = canvas.getContext('2d');
+        const stepInfo = document.getElementById('stepInfo');
+
+        const SIZE = 7;
+        let mode = 'chaining';
+        let isAnimating = false;
+
+        let table = []; // Array of Arrays for chaining, Array of Values for probing
+
+        function switchMode(newMode) {
+            mode = newMode;
+            isAnimating = false;
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+
+            reset();
+        }
+
+        function reset() {
+            if (mode === 'chaining') {
+                table = Array.from({ length: SIZE }, () => []);
+            } else {
+                table = Array(SIZE).fill(null);
+            }
+            draw();
+            stepInfo.textContent = "Hash Function: key % 7";
+        }
+
+        // --- DRAWING ---
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function drawBox(x, y, val, color = '#fff', label = '') {
+            ctx.fillStyle = color;
+            ctx.fillRect(x, y, 60, 50);
+            ctx.strokeStyle = '#333';
+            ctx.strokeRect(x, y, 60, 50);
+
+            if (val !== null && val !== undefined) {
+                ctx.fillStyle = '#1a1a2e';
+                ctx.font = 'bold 16px Segoe UI';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(val, x + 30, y + 25);
+            }
+
+            if (label) {
+                ctx.fillStyle = '#333';
+                ctx.font = '12px Segoe UI';
+                ctx.fillText(label, x + 30, y + 65); // index below
+            }
+        }
+
+        function drawArrow(x, y) {
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            ctx.lineTo(x + 20, y);
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            // arrow head
+            ctx.beginPath();
+            ctx.moveTo(x + 20, y);
+            ctx.lineTo(x + 15, y - 5);
+            ctx.lineTo(x + 15, y + 5);
+            ctx.fill();
+        }
+
+        function draw(highlightIdx = -1, color = '#fef08a') {
+            clearCanvas();
+            const startX = 100;
+            const startY = 50;
+
+            if (mode === 'chaining') {
+                // Vertical Buckets
+                for (let i = 0; i < SIZE; i++) {
+                    const y = startY + i * 55;
+                    const isHigh = i === highlightIdx;
+                    drawBox(startX, y, i, isHigh ? color : '#f3e8ff', '');
+
+                    // Draw Chain
+                    let currX = startX + 80;
+                    table[i].forEach((val) => {
+                        drawArrow(currX - 20, y + 25);
+                        drawBox(currX, y, val, '#fff', '');
+                        currX += 80;
+                    });
+                }
+            } else {
+                // Horizontal Array
+                const arrY = 150;
+                for (let i = 0; i < SIZE; i++) {
+                    const x = startX + i * 70;
+                    const isHigh = i === highlightIdx;
+                    drawBox(x, arrY, table[i], isHigh ? color : '#fff', i);
+                }
+            }
+        }
+
+        // --- OPERATIONS ---
+        async function insert() {
+            if (isAnimating) return;
+            isAnimating = true;
+
+            const val = parseInt(document.getElementById('inputVal').value);
+            const idx = val % SIZE;
+            stepInfo.textContent = `Hash: ${val} % ${SIZE} = ${idx}`;
+
+            if (mode === 'chaining') {
+                draw(idx);
+                await sleep(500);
+                table[idx].push(val);
+                draw(idx, '#86efac');
+
+            } else {
+                // Linear Probing
+                let curr = idx;
+                let found = false;
+
+                for (let k = 0; k < SIZE; k++) {
+                    draw(curr);
+                    stepInfo.textContent = `Checking index ${curr}...`;
+                    await sleep(500);
+
+                    if (table[curr] === null) {
+                        table[curr] = val;
+                        draw(curr, '#86efac');
+                        stepInfo.textContent = `Inserted at ${curr}`;
+                        found = true;
+                        break;
+                    } else {
+                        stepInfo.textContent = `Collision at ${curr}. Probing next...`;
+                        draw(curr, '#fca5a5'); // red collision
+                        await sleep(500);
+                        curr = (curr + 1) % SIZE;
+                    }
+                }
+                if (!found) stepInfo.textContent = "Table Full!";
+            }
+
+            isAnimating = false;
+        }
+
+        async function search() {
+            if (isAnimating) return;
+            isAnimating = true;
+
+            const val = parseInt(document.getElementById('inputVal').value);
+            const idx = val % SIZE;
+            stepInfo.textContent = `Searching: ${val} % ${SIZE} = ${idx}`;
+
+            if (mode === 'chaining') {
+                draw(idx);
+                await sleep(500);
+                if (table[idx].includes(val)) {
+                    stepInfo.textContent = "Found in chain!";
+                    draw(idx, '#86efac');
+                } else {
+                    stepInfo.textContent = "Not found in chain.";
+                    draw(idx, '#fca5a5');
+                }
+            } else {
+                let curr = idx;
+                let found = false;
+                for (let k = 0; k < SIZE; k++) {
+                    draw(curr);
+                    if (table[curr] === val) {
+                        stepInfo.textContent = `Found at index ${curr}!`;
+                        draw(curr, '#86efac');
+                        found = true;
+                        break;
+                    }
+                    if (table[curr] === null) {
+                        stepInfo.textContent = "Hit empty slot. Not found.";
+                        draw(curr, '#fca5a5'); // red
+                        break;
+                    }
+                    curr = (curr + 1) % SIZE;
+                    await sleep(300);
+                }
+                if (!found && table[curr] !== null) stepInfo.textContent = "Table traversed. Not found.";
+            }
+
+            isAnimating = false;
+        }
+
+        function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+        reset();
+    </script>
+</body>
+
+</html>

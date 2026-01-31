@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Searching Algorithms - Master DSA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+        }
+
+        .nav-bar {
+            background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-bar a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-bar h1 {
+            color: white;
+            font-size: 1.5em;
+            flex: 1;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 30px;
+        }
+
+        @media (max-width: 1100px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 25px;
+        }
+
+        .card h2 {
+            font-size: 1.5em;
+            color: #1a1a2e;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 3px solid #d97706;
+            padding-bottom: 10px;
+        }
+
+        .card h2 i {
+            color: #d97706;
+        }
+
+        .canvas-container {
+            background: #fffbeb;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            overflow-x: auto;
+        }
+
+        canvas {
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background: white;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-primary {
+            background: #d97706;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #b45309;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #1a1a2e;
+            border-color: #e0e0e0;
+        }
+
+        .btn-secondary:hover {
+            border-color: #d97706;
+            color: #d97706;
+        }
+
+        .input-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .input-wrapper input {
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            width: 80px;
+        }
+
+        .step-info {
+            background: #d97706;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            margin: 15px 0;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 12px;
+            background: #e0e0e0;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            background: #d97706;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="nav-bar">
+        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+        <h1><i class="fas fa-search"></i> Searching Algorithms</h1>
+        <a href="tree-traversal-interactive.html">Next: Trees <i class="fas fa-arrow-right"></i></a>
+    </div>
+
+    <div class="container">
+        <div class="main-grid">
+            <div class="left-column">
+                <div class="card">
+                    <h2><i class="fas fa-search-location"></i> Visualizer</h2>
+                    <div class="tabs">
+                        <button class="tab active" onclick="switchAlgo('linear')">Linear Search</button>
+                        <button class="tab" onclick="switchAlgo('binary')">Binary Search</button>
+                        <button class="tab" onclick="switchAlgo('ternary')">Ternary Search</button>
+                    </div>
+
+                    <div class="canvas-container">
+                        <canvas id="mainCanvas" width="800" height="300"></canvas>
+                    </div>
+
+                    <div class="step-info" id="stepInfo">Select algorithm and enter target</div>
+
+                    <div class="controls">
+                        <div class="input-wrapper">
+                            <label>Target:</label>
+                            <input type="number" id="targetInput" value="42">
+                        </div>
+                        <button class="btn btn-primary" onclick="search()"><i class="fas fa-search"></i> Find</button>
+                        <button class="btn btn-secondary" onclick="generateArray()"><i class="fas fa-random"></i> New
+                            Array</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="right-column">
+                <div class="card">
+                    <h2><i class="fas fa-info-circle"></i> Info</h2>
+                    <h3 id="algoTitle">Linear Search</h3>
+                    <p id="algoDesc" style="color: #555; margin: 10px 0; line-height: 1.6;">Checks each element one by
+                        one until the target is found or the list ends.</p>
+
+                    <ul style="line-height: 1.8; color: #444; margin-top: 15px;">
+                        <li><strong>Time:</strong> <span id="timeComp">O(n)</span></li>
+                        <li><strong>Condition:</strong> <span id="condition">Unsorted or Sorted</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('mainCanvas');
+        const ctx = canvas.getContext('2d');
+        const stepInfo = document.getElementById('stepInfo');
+
+        let array = [];
+        let algo = 'linear'; // linear, binary, ternary
+        let isSearching = false;
+
+        function switchAlgo(newAlgo) {
+            algo = newAlgo;
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Generate appropriate array
+            generateArray();
+
+            // Update Info
+            const title = document.getElementById('algoTitle');
+            const desc = document.getElementById('algoDesc');
+            const time = document.getElementById('timeComp');
+            const cond = document.getElementById('condition');
+
+            if (algo === 'linear') {
+                title.textContent = 'Linear Search';
+                desc.textContent = 'Iterates through the entire array sequentially to find the target.';
+                time.textContent = 'O(n)';
+                cond.textContent = 'None (Works on unsorted)';
+            } else if (algo === 'binary') {
+                title.textContent = 'Binary Search';
+                desc.textContent = 'Repeatedly divides the search interval in half. Extremely efficient.';
+                time.textContent = 'O(log n)';
+                cond.textContent = 'Sorted Array Required';
+            } else {
+                title.textContent = 'Ternary Search';
+                desc.textContent = 'Divides the array into three parts using two mid points.';
+                time.textContent = 'O(log₃ n)';
+                cond.textContent = 'Sorted Array Required';
+            }
+            stepInfo.textContent = "Ready.";
+        }
+
+        function generateArray() {
+            const size = 15;
+            array = Array.from({ length: size }, () => Math.floor(Math.random() * 99) + 1);
+
+            if (algo !== 'linear') {
+                array.sort((a, b) => a - b); // Must be sorted
+            }
+            drawArray();
+        }
+
+        function drawBox(x, y, val, color = '#fff', label = '') {
+            ctx.fillStyle = color;
+            ctx.fillRect(x, y, 45, 45);
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 1;
+            ctx.strokeRect(x, y, 45, 45);
+
+            ctx.fillStyle = '#111';
+            ctx.font = 'bold 16px Segoe UI';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(val, x + 22.5, y + 22.5);
+
+            if (label) {
+                ctx.fillStyle = '#d97706';
+                ctx.font = 'bold 12px Segoe UI';
+                ctx.fillText(label, x + 22.5, y + 60);
+            }
+        }
+
+        function drawArray(highlights = {}, labels = {}) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const startX = (canvas.width - (array.length * 50)) / 2;
+            const startY = 120;
+
+            array.forEach((val, i) => {
+                let color = '#fff';
+                if (highlights[i]) color = highlights[i];
+                // Gray out ignored parts for binary/ternary
+                if (highlights.range && (i < highlights.range[0] || i > highlights.range[1])) {
+                    color = '#f3f4f6';
+                    ctx.globalAlpha = 0.5;
+                } else {
+                    ctx.globalAlpha = 1.0;
+                }
+
+                drawBox(startX + i * 50, startY, val, color, labels[i]);
+            });
+            ctx.globalAlpha = 1.0;
+
+            // Indices
+            ctx.fillStyle = '#999';
+            ctx.font = '10px Segoe UI';
+            array.forEach((_, i) => {
+                ctx.fillText(i, startX + i * 50 + 22.5, startY - 10);
+            });
+        }
+
+        async function search() {
+            if (isSearching) return;
+            isSearching = true;
+            const target = parseInt(document.getElementById('targetInput').value);
+
+            if (algo === 'linear') await linearSearch(target);
+            else if (algo === 'binary') await binarySearch(target);
+            else await ternarySearch(target);
+
+            isSearching = false;
+        }
+
+        async function linearSearch(target) {
+            for (let i = 0; i < array.length; i++) {
+                drawArray({ [i]: '#fef08a' }, { [i]: '?' });
+                stepInfo.textContent = `Checking index ${i}: Is ${array[i]} == ${target}?`;
+                await sleep(600);
+
+                if (array[i] === target) {
+                    drawArray({ [i]: '#86efac' }, { [i]: 'Found' });
+                    stepInfo.textContent = `Target found at index ${i}!`;
+                    return;
+                }
+            }
+            stepInfo.textContent = "Target not found.";
+        }
+
+        async function binarySearch(target) {
+            let l = 0, r = array.length - 1;
+
+            while (l <= r) {
+                let mid = Math.floor((l + r) / 2);
+                drawArray(
+                    { range: [l, r], [mid]: '#fef08a' },
+                    { [l]: 'L', [r]: 'R', [mid]: 'Mid' }
+                );
+                stepInfo.textContent = `Range [${l}, ${r}]. Mid ${mid} val ${array[mid]}.`;
+                await sleep(1000);
+
+                if (array[mid] === target) {
+                    drawArray({ range: [l, r], [mid]: '#86efac' }, { [mid]: 'Found' });
+                    stepInfo.textContent = `Found at ${mid}!`;
+                    return;
+                }
+
+                if (array[mid] < target) {
+                    stepInfo.textContent = `${array[mid]} < ${target}. Search Right.`;
+                    l = mid + 1;
+                } else {
+                    stepInfo.textContent = `${array[mid]} > ${target}. Search Left.`;
+                    r = mid - 1;
+                }
+                await sleep(800);
+            }
+            stepInfo.textContent = "Target not found.";
+            drawArray({ range: [] }); // Clear highlights
+        }
+
+        async function ternarySearch(target) {
+            let l = 0, r = array.length - 1;
+
+            while (l <= r) {
+                let mid1 = l + Math.floor((r - l) / 3);
+                let mid2 = r - Math.floor((r - l) / 3);
+
+                drawArray(
+                    { range: [l, r], [mid1]: '#fef08a', [mid2]: '#fef08a' },
+                    { [l]: 'L', [r]: 'R', [mid1]: 'M1', [mid2]: 'M2' }
+                );
+                stepInfo.textContent = `Partitioning range [${l}, ${r}]`;
+                await sleep(1000);
+
+                if (array[mid1] === target) {
+                    drawArray({ range: [l, r], [mid1]: '#86efac' }, { [mid1]: 'Found' });
+                    stepInfo.textContent = `Found at ${mid1}!`;
+                    return;
+                }
+                if (array[mid2] === target) {
+                    drawArray({ range: [l, r], [mid2]: '#86efac' }, { [mid2]: 'Found' });
+                    stepInfo.textContent = `Found at ${mid2}!`;
+                    return;
+                }
+
+                if (target < array[mid1]) {
+                    stepInfo.textContent = "Target in Left 1/3";
+                    r = mid1 - 1;
+                } else if (target > array[mid2]) {
+                    stepInfo.textContent = "Target in Right 1/3";
+                    l = mid2 + 1;
+                } else {
+                    stepInfo.textContent = "Target in Middle 1/3";
+                    l = mid1 + 1;
+                    r = mid2 - 1;
+                }
+                await sleep(800);
+            }
+            stepInfo.textContent = "Target not found.";
+        }
+
+        function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+        generateArray();
+    </script>
+</body>
+
+</html>

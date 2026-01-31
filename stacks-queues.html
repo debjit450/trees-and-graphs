@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stacks & Queues - Master DSA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+        }
+
+        .nav-bar {
+            background: linear-gradient(135deg, #0891b2 0%, #06b6d4 100%);
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-bar a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-bar h1 {
+            color: white;
+            font-size: 1.5em;
+            flex: 1;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 30px;
+        }
+
+        @media (max-width: 1100px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 25px;
+        }
+
+        .card h2 {
+            font-size: 1.5em;
+            color: #1a1a2e;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 3px solid #0891b2;
+            padding-bottom: 10px;
+        }
+
+        .card h2 i {
+            color: #0891b2;
+        }
+
+        .canvas-container {
+            background: #f8f8f8;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        canvas {
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background: white;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-primary {
+            background: #0891b2;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #0e7490;
+        }
+
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+        }
+
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #1a1a2e;
+            border-color: #e0e0e0;
+        }
+
+        .btn-secondary:hover {
+            border-color: #0891b2;
+            color: #0891b2;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .input-group input {
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            width: 80px;
+        }
+
+        .step-info {
+            background: #0891b2;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            margin: 15px 0;
+            display: none;
+        }
+
+        .step-info.active {
+            display: block;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 12px;
+            background: #e0e0e0;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            background: #0891b2;
+            color: white;
+        }
+
+        .code-box {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="nav-bar">
+        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+        <h1><i class="fas fa-layer-group"></i> Stacks & Queues</h1>
+        <a href="sorting-interactive.html">Next: Sorting <i class="fas fa-arrow-right"></i></a>
+    </div>
+
+    <div class="container">
+        <div class="main-grid">
+            <div class="left-column">
+                <div class="card">
+                    <h2><i class="fas fa-eye"></i> Visualizer</h2>
+                    <div class="tabs">
+                        <button class="tab active" onclick="switchMode('stack')">Stack (LIFO)</button>
+                        <button class="tab" onclick="switchMode('queue')">Queue (FIFO)</button>
+                        <button class="tab" onclick="switchMode('monotonic')">Monotonic Stack</button>
+                    </div>
+
+                    <div class="canvas-container">
+                        <canvas id="mainCanvas" width="800" height="400"></canvas>
+                    </div>
+
+                    <!-- Stack Controls -->
+                    <div id="stackControls" class="controls">
+                        <div class="input-group">
+                            <input type="number" id="stackInput" value="10">
+                            <button class="btn btn-primary" onclick="pushStack()">Push</button>
+                        </div>
+                        <button class="btn btn-danger" onclick="popStack()">Pop</button>
+                        <button class="btn btn-secondary" onclick="peekStack()">Peek</button>
+                    </div>
+
+                    <!-- Queue Controls -->
+                    <div id="queueControls" class="controls" style="display: none;">
+                        <div class="input-group">
+                            <input type="number" id="queueInput" value="10">
+                            <button class="btn btn-success" onclick="enqueue()">Enqueue</button>
+                        </div>
+                        <button class="btn btn-danger" onclick="dequeue()">Dequeue</button>
+                    </div>
+
+                    <!-- Monotonic Controls -->
+                    <div id="monotonicControls" class="controls" style="display: none;">
+                        <button class="btn btn-primary" onclick="generateMonotonic()">New Array</button>
+                        <button class="btn btn-warning" onclick="findNextGreater()">Next Greater Element</button>
+                    </div>
+
+                    <div class="step-info" id="stepInfo"></div>
+                </div>
+            </div>
+
+            <div class="right-column">
+                <div class="card">
+                    <h2><i class="fas fa-info-circle"></i> Info</h2>
+                    <div id="infoContent">
+                        <h4>Stack Operations</h4>
+                        <ul style="margin-left: 20px; margin-top: 10px; line-height: 1.8; color: #555;">
+                            <li><strong>Push:</strong> Add to top. O(1)</li>
+                            <li><strong>Pop:</strong> Remove from top. O(1)</li>
+                            <li><strong>Peek:</strong> View top. O(1)</li>
+                        </ul>
+                    </div>
+
+                    <div class="code-box" id="codeDisplay">
+                        // Stack Implementation
+                        push(val) {
+                        stack.push(val);
+                        }
+                        pop() {
+                        return stack.pop();
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('mainCanvas');
+        const ctx = canvas.getContext('2d');
+        const stepInfo = document.getElementById('stepInfo');
+
+        let mode = 'stack';
+        let dataStructure = [10, 20, 30];
+        let isAnimating = false;
+
+        // Monotonic State
+        let arr = [];
+        let ngeStack = [];
+        let ngeResult = [];
+
+        function switchMode(newMode) {
+            mode = newMode;
+            isAnimating = false;
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+
+            document.getElementById('stackControls').style.display = mode === 'stack' ? 'flex' : 'none';
+            document.getElementById('queueControls').style.display = mode === 'queue' ? 'flex' : 'none';
+            document.getElementById('monotonicControls').style.display = mode === 'monotonic' ? 'flex' : 'none';
+
+            stepInfo.classList.remove('active');
+
+            if (mode === 'stack') {
+                dataStructure = [10, 20, 30];
+                document.getElementById('infoContent').innerHTML = `<h4>Stack (LIFO)</h4><p>Last In, First Out. Like a stack of plates.</p>`;
+                document.getElementById('codeDisplay').textContent = `stack.push(x)\nstack.pop()`;
+            } else if (mode === 'queue') {
+                dataStructure = [10, 20, 30];
+                document.getElementById('infoContent').innerHTML = `<h4>Queue (FIFO)</h4><p>First In, First Out. Like a line at a store.</p>`;
+                document.getElementById('codeDisplay').textContent = `queue.enqueue(x)\nqueue.dequeue()`;
+            } else {
+                generateMonotonic();
+                document.getElementById('infoContent').innerHTML = `<h4>Monotonic Stack</h4><p>Used to find Next Greater Element efficiently O(n).</p>`;
+                document.getElementById('codeDisplay').textContent = `while (!stack.empty() && stack.top() < arr[i]) {\n  res[stack.pop()] = arr[i]\n}\nstack.push(i)`;
+            }
+            draw();
+        }
+
+        // --- DRAWING ---
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function drawBox(x, y, val, color = '#fff', label = '') {
+            ctx.fillStyle = color;
+            ctx.fillRect(x, y, 60, 60);
+            ctx.strokeStyle = '#333';
+            ctx.strokeRect(x, y, 60, 60);
+
+            ctx.fillStyle = '#1a1a2e';
+            ctx.font = 'bold 20px Segoe UI';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(val, x + 30, y + 30);
+
+            if (label) {
+                ctx.font = '12px Segoe UI';
+                ctx.fillText(label, x + 30, y + 80);
+            }
+        }
+
+        function draw() {
+            clearCanvas();
+            const cx = canvas.width / 2;
+            const cy = canvas.height / 2;
+
+            if (mode === 'stack') {
+                // Draw Container
+                const startY = 350;
+                ctx.strokeStyle = '#333';
+                ctx.lineWidth = 4;
+                ctx.beginPath();
+                ctx.moveTo(cx - 50, 100);
+                ctx.lineTo(cx - 50, startY);
+                ctx.lineTo(cx + 50, startY);
+                ctx.lineTo(cx + 50, 100);
+                ctx.stroke();
+
+                dataStructure.forEach((val, i) => {
+                    drawBox(cx - 30, startY - 60 - i * 65, val, '#dbeafe');
+                });
+
+                ctx.fillStyle = '#333';
+                ctx.fillText('TOP', cx + 80, startY - 30 - (dataStructure.length - 1) * 65);
+
+            } else if (mode === 'queue') {
+                // Draw Horizontal Pipe
+                const startX = 100;
+                ctx.fillStyle = '#f0fdf4';
+                ctx.fillRect(startX, cy - 40, 600, 80);
+                ctx.strokeStyle = '#ccc';
+                ctx.strokeRect(startX, cy - 40, 600, 80);
+
+                dataStructure.forEach((val, i) => {
+                    const x = startX + 20 + i * 70;
+                    drawBox(x, cy - 30, val, '#dbeafe', i === 0 ? 'Front' : (i === dataStructure.length - 1 ? 'Rear' : ''));
+                });
+
+            } else if (mode === 'monotonic') {
+                // Draw Array at top
+                arr.forEach((val, i) => {
+                    let color = '#fff';
+                    if (ngeStack.includes(i)) color = '#fef08a'; // In stack
+                    drawBox(50 + i * 70, 50, val, color, i);
+
+                    // Result
+                    if (ngeResult[i] !== -1) {
+                        ctx.fillStyle = '#059669';
+                        ctx.font = 'bold 14px Segoe UI';
+                        ctx.fillText(ngeResult[i], 50 + i * 70 + 30, 130);
+                    }
+                });
+                ctx.fillStyle = '#333';
+                ctx.textAlign = 'left';
+                ctx.fillText("Results (NGE):", 50, 130);
+
+                // Draw Stack at bottom
+                const stackBaseX = 100;
+                const stackBaseY = 350;
+                ctx.strokeStyle = '#333';
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+                ctx.moveTo(stackBaseX, 200);
+                ctx.lineTo(stackBaseX, stackBaseY);
+                ctx.lineTo(stackBaseX + 80, stackBaseY);
+                ctx.lineTo(stackBaseX + 80, 200);
+                ctx.stroke();
+
+                ngeStack.forEach((idx, i) => {
+                    drawBox(stackBaseX + 10, stackBaseY - 60 - i * 65, arr[idx], '#fef08a');
+                });
+            }
+        }
+
+        // --- STACK OPS ---
+        async function pushStack() {
+            if (isAnimating) return;
+            const val = parseInt(document.getElementById('stackInput').value);
+            dataStructure.push(val);
+            draw();
+        }
+        async function popStack() {
+            if (dataStructure.length > 0) dataStructure.pop();
+            draw();
+        }
+
+        // --- QUEUE OPS ---
+        async function enqueue() {
+            if (isAnimating) return;
+            const val = parseInt(document.getElementById('queueInput').value);
+            dataStructure.push(val);
+            draw();
+        }
+        async function dequeue() {
+            if (dataStructure.length > 0) dataStructure.shift();
+            draw();
+        }
+
+        // --- MONOTONIC ---
+        function generateMonotonic() {
+            arr = Array.from({ length: 8 }, () => Math.floor(Math.random() * 20) + 1);
+            ngeStack = [];
+            ngeResult = Array(8).fill(-1);
+            draw();
+        }
+
+        async function findNextGreater() {
+            if (isAnimating) return;
+            isAnimating = true;
+            stepInfo.classList.add('active');
+
+            // Stack stores indices
+            ngeStack = [];
+            ngeResult = Array(arr.length).fill(-1);
+
+            for (let i = 0; i < arr.length; i++) {
+                stepInfo.textContent = `Processing index ${i} (value ${arr[i]})...`;
+                draw();
+                await sleep(500);
+
+                while (ngeStack.length > 0 && arr[ngeStack[ngeStack.length - 1]] < arr[i]) {
+                    const topIdx = ngeStack.pop();
+                    stepInfo.textContent = `Found NGE for index ${topIdx} (value ${arr[topIdx]}): ${arr[i]}`;
+                    ngeResult[topIdx] = arr[i];
+                    draw();
+                    await sleep(800);
+                }
+
+                ngeStack.push(i);
+                draw();
+                await sleep(500);
+            }
+
+            stepInfo.textContent = "Finished! Elements remaining in stack have no NGE.";
+            isAnimating = false;
+        }
+
+        function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+        draw();
+    </script>
+</body>
+
+</html>

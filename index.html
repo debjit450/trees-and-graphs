@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trees & Graphs — Interactive Learning Platform</title>
+    <title>Master DSA — Interactive Learning Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&family=Playfair+Display:wght@600;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -22,15 +25,23 @@
             --red: #dc2626;
             --red-light: #fee2e2;
             --red-50: #fef2f2;
+            --purple: #9333ea;
+            --purple-light: #f3e8ff;
+            --purple-50: #faf5ff;
+            --cyan: #0891b2;
+            --cyan-light: #cffafe;
+            --cyan-50: #ecfeff;
+            --rose: #e11d48;
+            --rose-light: #ffe4e6;
+            --rose-50: #fff1f2;
             --text-primary: #111827;
             --text-secondary: #6b7280;
             --text-tertiary: #9ca3af;
             --border: #e5e7eb;
             --border-light: #f3f4f6;
-            --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
-            --shadow-md: 0 4px 16px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.04);
-            --shadow-lg: 0 12px 40px rgba(0,0,0,0.1), 0 4px 8px rgba(0,0,0,0.05);
-            --shadow-hover: 0 20px 60px rgba(0,0,0,0.12), 0 6px 12px rgba(0,0,0,0.06);
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.04);
+            --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.05);
         }
 
         * {
@@ -52,7 +63,7 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            background: rgba(255,255,255,0.88);
+            background: rgba(255, 255, 255, 0.88);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border);
@@ -60,11 +71,8 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            transition: box-shadow 0.3s;
         }
-        nav.scrolled {
-            box-shadow: var(--shadow-sm);
-        }
+
         .nav-brand {
             display: flex;
             align-items: center;
@@ -72,29 +80,35 @@
             text-decoration: none;
             color: var(--text-primary);
         }
+
         .nav-brand i {
             font-size: 20px;
-            color: var(--green);
+            color: var(--purple);
         }
+
         .nav-brand span {
             font-family: 'Playfair Display', serif;
             font-weight: 700;
             font-size: 1.25rem;
         }
+
         .nav-links {
             display: flex;
-            gap: 28px;
+            gap: 24px;
             list-style: none;
         }
+
         .nav-links a {
             text-decoration: none;
             color: var(--text-secondary);
             font-size: 0.9rem;
             font-weight: 500;
-            letter-spacing: 0.02em;
             transition: color 0.2s;
         }
-        .nav-links a:hover { color: var(--green); }
+
+        .nav-links a:hover {
+            color: var(--purple);
+        }
 
         /* ─── HERO ─── */
         .hero {
@@ -103,7 +117,7 @@
             position: relative;
             overflow: hidden;
         }
-        /* Decorative dot grid */
+
         .hero::before {
             content: '';
             position: absolute;
@@ -113,17 +127,19 @@
             opacity: 0.5;
             pointer-events: none;
         }
+
         .hero-content {
             position: relative;
             z-index: 1;
         }
+
         .hero-badge {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: var(--green-50);
-            border: 1px solid var(--green-light);
-            color: var(--green);
+            background: var(--purple-50);
+            border: 1px solid var(--purple-light);
+            color: var(--purple);
             padding: 6px 16px;
             border-radius: 50px;
             font-size: 0.82rem;
@@ -133,7 +149,6 @@
             margin-bottom: 28px;
             animation: fadeInDown 0.6s ease both;
         }
-        .hero-badge i { font-size: 11px; }
 
         .hero h1 {
             font-family: 'Playfair Display', serif;
@@ -144,115 +159,42 @@
             margin-bottom: 22px;
             animation: fadeInUp 0.7s 0.15s ease both;
         }
-        .hero h1 .accent { color: var(--green); }
+
+        .hero h1 .accent {
+            color: var(--purple);
+        }
 
         .hero p {
             font-size: 1.15rem;
             color: var(--text-secondary);
-            max-width: 580px;
+            max-width: 600px;
             margin: 0 auto 40px;
             font-weight: 300;
             animation: fadeInUp 0.7s 0.3s ease both;
         }
 
-        .hero-stats {
-            display: flex;
-            justify-content: center;
-            gap: 56px;
-            flex-wrap: wrap;
-            animation: fadeInUp 0.7s 0.45s ease both;
-        }
-        .hero-stat { text-align: center; }
-        .hero-stat-number {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.4rem;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-        .hero-stat-label {
-            font-size: 0.82rem;
-            color: var(--text-tertiary);
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            margin-top: 2px;
-        }
-
-        /* ─── QUICK START ─── */
-        .quick-start {
-            max-width: 1100px;
-            margin: 0 auto 80px;
-            padding: 0 40px;
-            animation: fadeInUp 0.7s 0.55s ease both;
-        }
-        .quick-start-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
-        }
-        .quick-start-card {
-            display: flex;
-            align-items: center;
-            gap: 18px;
-            background: #fff;
-            border: 1.5px solid var(--border);
-            border-radius: 14px;
-            padding: 22px 24px;
-            text-decoration: none;
-            color: inherit;
-            transition: all 0.25s ease;
-            cursor: pointer;
-        }
-        .quick-start-card:hover {
-            border-color: var(--green);
-            box-shadow: var(--shadow-md);
-            transform: translateY(-2px);
-        }
-        .quick-start-card:hover .qs-icon { background: var(--green); color: #fff; }
-        .qs-icon {
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
-            background: var(--green-50);
-            color: var(--green);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            flex-shrink: 0;
-            transition: all 0.25s ease;
-        }
-        .qs-text h4 {
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 2px;
-        }
-        .qs-text p {
-            font-size: 0.78rem;
-            color: var(--text-tertiary);
-            line-height: 1.4;
-        }
-
-        /* ─── SECTION ─── */
+        /* ─── GRID LAYOUT ─── */
         .container {
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 0 40px 100px;
         }
+
         .section-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 28px;
+            margin: 60px 0 28px;
             padding-bottom: 16px;
             border-bottom: 1px solid var(--border-light);
         }
+
         .section-header-left {
             display: flex;
             align-items: center;
             gap: 12px;
         }
+
         .section-icon {
             width: 38px;
             height: 38px;
@@ -262,9 +204,36 @@
             justify-content: center;
             font-size: 17px;
         }
-        .section-icon.green { background: var(--green-light); color: var(--green); }
-        .section-icon.blue  { background: var(--blue-light);  color: var(--blue); }
-        .section-icon.amber { background: var(--amber-light); color: var(--amber); }
+
+        .section-icon.cyan {
+            background: var(--cyan-light);
+            color: var(--cyan);
+        }
+
+        .section-icon.amber {
+            background: var(--amber-light);
+            color: var(--amber);
+        }
+
+        .section-icon.green {
+            background: var(--green-light);
+            color: var(--green);
+        }
+
+        .section-icon.blue {
+            background: var(--blue-light);
+            color: var(--blue);
+        }
+
+        .section-icon.rose {
+            background: var(--rose-light);
+            color: var(--rose);
+        }
+
+        .section-icon.purple {
+            background: var(--purple-light);
+            color: var(--purple);
+        }
 
         .section-header h2 {
             font-family: 'Playfair Display', serif;
@@ -272,690 +241,536 @@
             font-weight: 700;
             color: var(--text-primary);
         }
-        .section-count {
-            font-size: 0.78rem;
-            font-weight: 600;
-            color: var(--text-tertiary);
-            background: var(--border-light);
-            padding: 4px 10px;
-            border-radius: 20px;
-        }
 
-        /* ─── CARDS ─── */
         .topics-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 14px;
-            margin-bottom: 64px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-bottom: 20px;
         }
+
+        @media (max-width: 1000px) {
+            .topics-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .topics-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         .topic-card {
             display: flex;
-            align-items: flex-start;
-            gap: 18px;
+            flex-direction: column;
+            gap: 15px;
             background: #fff;
             border: 1.5px solid var(--border);
             border-radius: 14px;
-            padding: 22px 22px;
+            padding: 22px;
             text-decoration: none;
             color: inherit;
             transition: all 0.25s ease;
-            cursor: pointer;
         }
+
         .topic-card:hover {
             box-shadow: var(--shadow-md);
             transform: translateY(-2px);
         }
-        .topic-card:hover .card-icon { transform: scale(1.08); }
 
-        /* Card accent left border on hover */
-        .topic-card.tree:hover  { border-color: var(--green); }
-        .topic-card.graph:hover { border-color: var(--blue); }
-        .topic-card.algo:hover  { border-color: var(--amber); }
-        .topic-card.adv:hover   { border-color: var(--red); }
+        /* Accents */
+        .topic-card.linear:hover {
+            border-color: var(--cyan);
+        }
+
+        .topic-card.sort:hover {
+            border-color: var(--amber);
+        }
+
+        .topic-card.tree:hover {
+            border-color: var(--green);
+        }
+
+        .topic-card.graph:hover {
+            border-color: var(--blue);
+        }
+
+        .topic-card.algo:hover {
+            border-color: var(--rose);
+        }
+
+        .topic-card.adv:hover {
+            border-color: var(--purple);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
 
         .card-icon {
-            width: 46px;
-            height: 46px;
-            border-radius: 12px;
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 19px;
-            flex-shrink: 0;
-            transition: transform 0.25s ease;
+            font-size: 18px;
         }
-        .topic-card.tree  .card-icon { background: var(--green-50); color: var(--green); }
-        .topic-card.graph .card-icon { background: var(--blue-50);  color: var(--blue); }
-        .topic-card.algo  .card-icon { background: var(--amber-50); color: var(--amber); }
-        .topic-card.adv    .card-icon { background: var(--red-50);   color: var(--red); }
 
-        .card-body { min-width: 0; }
-        .card-title-row {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 6px;
-            flex-wrap: wrap;
+        .topic-card.linear .card-icon {
+            background: var(--cyan-50);
+            color: var(--cyan);
         }
-        .card-title-row h3 {
-            font-size: 0.98rem;
+
+        .topic-card.sort .card-icon {
+            background: var(--amber-50);
+            color: var(--amber);
+        }
+
+        .topic-card.tree .card-icon {
+            background: var(--green-50);
+            color: var(--green);
+        }
+
+        .topic-card.graph .card-icon {
+            background: var(--blue-50);
+            color: var(--blue);
+        }
+
+        .topic-card.algo .card-icon {
+            background: var(--rose-50);
+            color: var(--rose);
+        }
+
+        .topic-card.adv .card-icon {
+            background: var(--purple-50);
+            color: var(--purple);
+        }
+
+        .topic-card h3 {
+            font-size: 1rem;
             font-weight: 600;
-            color: var(--text-primary);
         }
+
         .topic-card p {
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             color: var(--text-secondary);
             line-height: 1.5;
-            margin-bottom: 10px;
+            flex: 1;
         }
+
         .tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 5px;
+            gap: 6px;
+            margin-top: 10px;
         }
+
         .tag {
             background: var(--border-light);
             color: var(--text-secondary);
-            padding: 3px 9px;
+            padding: 3px 8px;
             border-radius: 6px;
             font-size: 0.72rem;
             font-weight: 500;
-            letter-spacing: 0.01em;
         }
 
-        /* ─── DIFFICULTY BADGE ─── */
         .badge {
-            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
             padding: 2px 8px;
             border-radius: 6px;
-            font-size: 0.68rem;
-            font-weight: 600;
-            letter-spacing: 0.04em;
-            text-transform: uppercase;
-            white-space: nowrap;
         }
-        .badge.beginner    { background: var(--green-light);  color: #15803d; }
-        .badge.intermediate { background: var(--amber-light); color: #b45309; }
-        .badge.advanced    { background: var(--red-light);    color: #dc2626; }
 
-        /* ─── FOOTER ─── */
-        footer {
-            border-top: 1px solid var(--border);
-            padding: 44px 40px;
-            text-align: center;
+        .badge.beg {
+            background: var(--green-light);
+            color: #15803d;
         }
-        footer p {
-            font-size: 0.82rem;
-            color: var(--text-tertiary);
-            margin-bottom: 6px;
-        }
-        footer a {
-            color: var(--green);
-            text-decoration: none;
-            font-weight: 500;
-        }
-        footer a:hover { text-decoration: underline; }
 
-        /* ─── ANIMATIONS ─── */
+        .badge.int {
+            background: var(--amber-light);
+            color: #b45309;
+        }
+
+        .badge.adv {
+            background: var(--rose-light);
+            color: #be123c;
+        }
+
+        /* Animations */
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(18px); }
-            to   { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
+
         @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-10px); }
-            to   { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        /* Staggered card entrance */
         .topic-card {
-            opacity: 0;
-            transform: translateY(14px);
-            animation: fadeInUp 0.45s ease forwards;
-        }
-        .topics-grid .topic-card:nth-child(1)  { animation-delay: 0.05s; }
-        .topics-grid .topic-card:nth-child(2)  { animation-delay: 0.10s; }
-        .topics-grid .topic-card:nth-child(3)  { animation-delay: 0.15s; }
-        .topics-grid .topic-card:nth-child(4)  { animation-delay: 0.20s; }
-        .topics-grid .topic-card:nth-child(5)  { animation-delay: 0.25s; }
-        .topics-grid .topic-card:nth-child(6)  { animation-delay: 0.30s; }
-        .topics-grid .topic-card:nth-child(7)  { animation-delay: 0.35s; }
-        .topics-grid .topic-card:nth-child(8)  { animation-delay: 0.40s; }
-        .topics-grid .topic-card:nth-child(9)  { animation-delay: 0.45s; }
-        .topics-grid .topic-card:nth-child(10) { animation-delay: 0.50s; }
-
-        /* ─── RESPONSIVE ─── */
-        @media (max-width: 780px) {
-            nav { padding: 14px 20px; }
-            .nav-links { display: none; }
-            .hero { padding: 70px 24px 50px; }
-            .quick-start { padding: 0 20px; }
-            .quick-start-grid { grid-template-columns: 1fr; }
-            .container { padding: 0 20px 70px; }
-            .topics-grid { grid-template-columns: 1fr; }
-            .section-header { flex-wrap: wrap; gap: 8px; }
+            animation: fadeInUp 0.5s ease backwards;
         }
     </style>
 </head>
+
 <body>
 
-<!-- NAV -->
-<nav id="navbar">
-    <a href="#" class="nav-brand">
-        <i class="fas fa-project-diagram"></i>
-        <span>Trees & Graphs</span>
-    </a>
-    <ul class="nav-links">
-        <li><a href="#trees">Trees</a></li>
-        <li><a href="#graphs">Graphs</a></li>
-        <li><a href="#advanced">Advanced</a></li>
-    </ul>
-</nav>
+    <nav>
+        <a href="#" class="nav-brand"><i class="fas fa-layer-group"></i> <span>Master DSA</span></a>
+        <ul class="nav-links">
+            <li><a href="#linear">Linear</a></li>
+            <li><a href="#sorting">Sorting</a></li>
+            <li><a href="#trees">Trees</a></li>
+            <li><a href="#graphs">Graphs</a></li>
+            <li><a href="#advanced">Advanced</a></li>
+        </ul>
+    </nav>
 
-<!-- HERO -->
-<section class="hero">
-    <div class="hero-content">
-        <div class="hero-badge"><i class="fas fa-bolt"></i> Interactive Learning Platform</div>
-        <h1>Master <span class="accent">Trees</span> &<br>Graphs</h1>
-        <p>Learn fundamental data structures and algorithms through hands-on visualizations, step-by-step animations, and interactive exercises.</p>
-        <div class="hero-stats">
-            <div class="hero-stat">
-                <div class="hero-stat-number">50+</div>
-                <div class="hero-stat-label">Concepts</div>
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge"><i class="fas fa-code"></i> Complete Interactive Platform</div>
+            <h1>Master <span class="accent">DSA</span><br>Interactively</h1>
+            <p>A comprehensive journey through Data Structures & Algorithms. Visualize, interact, and master every
+                concept from Arrays to Advanced Graph Theory.</p>
+        </div>
+    </section>
+
+    <div class="container">
+
+        <!-- LINEAR STRUCTURES -->
+        <div id="linear">
+            <div class="section-header">
+                <div class="section-header-left">
+                    <div class="section-icon cyan"><i class="fas fa-stream"></i></div>
+                    <h2>Linear Data Structures</h2>
+                </div>
             </div>
-            <div class="hero-stat">
-                <div class="hero-stat-number">20+</div>
-                <div class="hero-stat-label">Algorithms</div>
-            </div>
-            <div class="hero-stat">
-                <div class="hero-stat-number">100%</div>
-                <div class="hero-stat-label">Interactive</div>
+            <div class="topics-grid">
+                <a href="arrays-interactive.html" class="topic-card linear" style="animation-delay: 0.1s">
+                    <div class="card-header">
+                        <div class="card-icon"><i class="fas fa-th-list"></i></div>
+                        <span class="badge beg">Beginner</span>
+                    </div>
+                    <h3>Arrays & Lists</h3>
+                    <p>Dynamic arrays, resizing, sliding window, and two-pointer techniques.</p>
+                    <div class="tags"><span class="tag">ArrayList</span><span class="tag">Sliding Window</span></div>
+                </a>
+                <a href="linked-lists.html" class="topic-card linear" style="animation-delay: 0.2s">
+                    <div class="card-header">
+                        <div class="card-icon"><i class="fas fa-link"></i></div>
+                        <span class="badge beg">Beginner</span>
+                    </div>
+                    <h3>Linked Lists</h3>
+                    <p>Singly, doubly, and circular lists with pointer manipulation visuals.</p>
+                    <div class="tags"><span class="tag">Singly</span><span class="tag">Doubly</span><span
+                            class="tag">Floyd's</span></div>
+                </a>
+                <a href="stacks-queues.html" class="topic-card linear" style="animation-delay: 0.3s">
+                    <div class="card-header">
+                        <div class="card-icon"><i class="fas fa-layer-group"></i></div>
+                        <span class="badge beg">Beginner</span>
+                    </div>
+                    <h3>Stacks & Queues</h3>
+                    <p>LIFO and FIFO principles, monotonic stacks, and deque operations.</p>
+                    <div class="tags"><span class="tag">LIFO/FIFO</span><span class="tag">Monotonic</span></div>
+                </a>
             </div>
         </div>
-    </div>
-</section>
 
-<!-- QUICK START -->
-<div class="quick-start">
-    <div class="quick-start-grid">
-        <a href="tree-traversal-interactive.html" class="quick-start-card">
-            <div class="qs-icon"><i class="fas fa-tree"></i></div>
-            <div class="qs-text">
-                <h4>Tree Traversals</h4>
-                <p>Preorder, inorder, postorder & level order</p>
+        <!-- SORTING & SEARCHING -->
+        <div id="sorting">
+            <div class="section-header">
+                <div class="section-header-left">
+                    <div class="section-icon amber"><i class="fas fa-sort-amount-down"></i></div>
+                    <h2>Sorting & Searching</h2>
+                </div>
             </div>
-        </a>
-        <a href="graphs-interactive.html" class="quick-start-card">
-            <div class="qs-icon"><i class="fas fa-share-alt"></i></div>
-            <div class="qs-text">
-                <h4>Graph Basics</h4>
-                <p>BFS, DFS and connectivity</p>
+            <div class="topics-grid">
+                <a href="sorting-interactive.html" class="topic-card sort" style="animation-delay: 0.1s">
+                    <div class="card-header">
+                        <div class="card-icon"><i class="fas fa-sort"></i></div>
+                        <span class="badge int">Intermediate</span>
+                    </div>
+                    <h3>Sorting Algorithms</h3>
+                    <p>Visualize Bubble, Merge, Quick, Heap, and Radix sort processes.</p>
+                    <div class="tags"><span class="tag">Merge Sort</span><span class="tag">Quick Sort</span></div>
+                </a>
+                <a href="searching-interactive.html" class="topic-card sort" style="animation-delay: 0.2s">
+                    <div class="card-header">
+                        <div class="card-icon"><i class="fas fa-search"></i></div>
+                        <span class="badge beg">Beginner</span>
+                    </div>
+                    <h3>Searching Algorithms</h3>
+                    <p>Linear vs Binary Search, Ternary search, and search spaces.</p>
+                    <div class="tags"><span class="tag">Binary Search</span><span class="tag">Lower Bound</span></div>
+                </a>
             </div>
-        </a>
-        <a href="algorithms-interactive.html" class="quick-start-card">
-            <div class="qs-icon"><i class="fas fa-route"></i></div>
-            <div class="qs-text">
-                <h4>Shortest Paths</h4>
-                <p>Dijkstra's, Bellman-Ford & Floyd-Warshall</p>
-            </div>
-        </a>
-    </div>
-</div>
-
-<!-- MAIN CONTENT -->
-<div class="container">
-
-    <!-- ─── TREES ─── -->
-    <div id="trees">
-        <div class="section-header">
-            <div class="section-header-left">
-                <div class="section-icon green"><i class="fas fa-tree"></i></div>
-                <h2>Tree Data Structures</h2>
-            </div>
-            <span class="section-count">10 Topics</span>
         </div>
-        <div class="topics-grid">
-            <a href="tree-foundations.html" class="topic-card tree">
-                <div class="card-icon"><i class="fas fa-seedling"></i></div>
-                <div class="card-body">
-                    <div class="card-title-row">
-                        <h3>Tree Foundations</h3>
-                        <span class="badge beginner">Beginner</span>
-                    </div>
-                    <p>Basic concepts — nodes, edges, root, leaves, height and depth.</p>
-                    <div class="tags">
-                        <span class="tag">Definition</span>
-                        <span class="tag">Terminology</span>
-                        <span class="tag">Properties</span>
-                        <span class="tag">Rooted Trees</span>
-                    </div>
-                </div>
-            </a>
 
-            <a href="binary-trees.html" class="topic-card tree">
-                <div class="card-icon"><i class="fas fa-code-branch"></i></div>
-                <div class="card-body">
-                    <div class="card-title-row">
-                        <h3>Binary Trees</h3>
-                        <span class="badge beginner">Beginner</span>
-                    </div>
-                    <p>Strict, full, complete, perfect, and degenerate tree types.</p>
-                    <div class="tags">
-                        <span class="tag">Left/Right Child</span>
-                        <span class="tag">Complete Tree</span>
-                        <span class="tag">Perfect Tree</span>
-                        <span class="tag">Array Rep.</span>
-                    </div>
+        <!-- TREES -->
+        <div id="trees">
+            <div class="section-header">
+                <div class="section-header-left">
+                    <div class="section-icon green"><i class="fas fa-tree"></i></div>
+                    <h2>Tree Data Structures</h2>
                 </div>
-            </a>
-
-            <a href="tree-traversal-interactive.html" class="topic-card tree">
-                <div class="card-icon"><i class="fas fa-route"></i></div>
-                <div class="card-body">
-                    <div class="card-title-row">
-                        <h3>Tree Traversals</h3>
-                        <span class="badge beginner">Beginner</span>
+            </div>
+            <div class="topics-grid">
+                <a href="tree-foundations.html" class="topic-card tree">
+                    <div class="card-header">
+                        <div class="card-icon"><i class="fas fa-seedling"></i></div><span
+                            class="badge beg">Beginner</span>
                     </div>
-                    <p>Step-by-step animated traversals for all major methods.</p>
-                    <div class="tags">
-                        <span class="tag">Preorder</span>
-                        <span class="tag">Inorder</span>
-                        <span class="tag">Postorder</span>
-                        <span class="tag">Level Order</span>
-                        <span class="tag">Morris</span>
+                    <h3>Tree Foundations</h3>
+                    <p>Nodes, edges, height, depth, and basic terminology.</p>
+                </a>
+                <a href="binary-trees.html" class="topic-card tree">
+                    <div class="card-header">
+                        <div class="card-icon"><i class="fas fa-code-branch"></i></div><span
+                            class="badge beg">Beginner</span>
                     </div>
-                </div>
-            </a>
-
-            <a href="bst-interactive.html" class="topic-card tree">
-                <div class="card-icon"><i class="fas fa-search"></i></div>
-                <div class="card-body">
-                    <div class="card-title-row">
-                        <h3>Binary Search Trees</h3>
-                        <span class="badge intermediate">Intermediate</span>
+                    <h3>Binary Trees</h3>
+                    <p>Full, complete, perfect trees and array representation.</p>
+                </a>
+                <a href="tree-traversal-interactive.html" class="topic-card tree">
+                    <div class="card-header">
+                        <div class="card-icon"><i class="fas fa-route"></i></div><span class="badge beg">Beginner</span>
                     </div>
-                    <p>Interactive search, insert, delete, and BST properties.</p>
-                    <div class="tags">
-                        <span class="tag">Search</span>
-                        <span class="tag">Insert</span>
-                        <span class="tag">Delete</span>
-                        <span class="tag">Floor/Ceil</span>
-                        <span class="tag">Range Query</span>
+                    <h3>Traversals</h3>
+                    <p>Preorder, Inorder, Postorder & Level Order visualizations.</p>
+                </a>
+                <a href="bst-interactive.html" class="topic-card tree">
+                    <div class="card-header">
+                        <div class="card-icon"><i class="fas fa-network-wired"></i></div><span
+                            class="badge int">Intermediate</span>
                     </div>
-                </div>
-            </a>
-
-            <a href="avl-trees.html" class="topic-card tree">
-                <div class="card-icon"><i class="fas fa-balance-scale"></i></div>
-                <div class="card-body">
-                    <div class="card-title-row">
-                        <h3>AVL Trees</h3>
-                        <span class="badge intermediate">Intermediate</span>
+                    <h3>Binary Search Trees</h3>
+                    <p>BST properties, insertion, deletion, and searching.</p>
+                </a>
+                <a href="avl-trees.html" class="topic-card tree">
+                    <div class="card-header">
+                        <div class="card-icon"><i class="fas fa-balance-scale"></i></div><span
+                            class="badge int">Intermediate</span>
                     </div>
+                    <h3>AVL Trees</h3>
                     <p>Self-balancing trees with LL, RR, LR, RL rotations.</p>
-                    <div class="tags">
-                        <span class="tag">Balance Factor</span>
-                        <span class="tag">Rotations</span>
-                        <span class="tag">Insert</span>
-                        <span class="tag">Delete</span>
+                </a>
+                <a href="heap-trees.html" class="topic-card tree">
+                    <div class="card-header">
+                        <div class="card-icon"><i class="fas fa-layer-group"></i></div><span
+                            class="badge int">Intermediate</span>
                     </div>
-                </div>
-            </a>
-
-            <a href="red-black-trees.html" class="topic-card adv">
-                <div class="card-icon"><i class="fas fa-yin-yang"></i></div>
-                <div class="card-body">
-                    <div class="card-title-row">
-                        <h3>Red-Black Trees</h3>
-                        <span class="badge advanced">Advanced</span>
+                    <h3>Heaps & Priority Queues</h3>
+                    <p>Min/Max heaps, heapify, and efficient extraction.</p>
+                </a>
+                <a href="tries.html" class="topic-card tree">
+                    <div class="card-header">
+                        <div class="card-icon"><i class="fas fa-font"></i></div><span
+                            class="badge int">Intermediate</span>
                     </div>
-                    <p>Coloring rules, black height, and rebalancing techniques.</p>
-                    <div class="tags">
-                        <span class="tag">Coloring Rules</span>
-                        <span class="tag">Black Height</span>
-                        <span class="tag">Insertion</span>
-                        <span class="tag">Deletion</span>
+                    <h3>Tries (Prefix Trees)</h3>
+                    <p>String storage, autocomplete, and prefix matching.</p>
+                </a>
+                <a href="b-trees.html" class="topic-card tree">
+                    <div class="card-header">
+                        <div class="card-icon"><i class="fas fa-database"></i></div><span
+                            class="badge adv">Advanced</span>
                     </div>
-                </div>
-            </a>
-
-            <a href="heap-trees.html" class="topic-card tree">
-                <div class="card-icon"><i class="fas fa-layer-group"></i></div>
-                <div class="card-body">
-                    <div class="card-title-row">
-                        <h3>Heap Trees</h3>
-                        <span class="badge intermediate">Intermediate</span>
+                    <h3>B-Trees</h3>
+                    <p>Multi-way search trees for databases and file systems.</p>
+                </a>
+                <a href="tree-algorithms.html" class="topic-card tree">
+                    <div class="card-header">
+                        <div class="card-icon"><i class="fas fa-code"></i></div><span class="badge adv">Advanced</span>
                     </div>
-                    <p>Min/max heaps, heapify, and priority queue operations.</p>
-                    <div class="tags">
-                        <span class="tag">Min Heap</span>
-                        <span class="tag">Max Heap</span>
-                        <span class="tag">Heapify</span>
-                        <span class="tag">Heap Sort</span>
-                        <span class="tag">Priority Queue</span>
-                    </div>
-                </div>
-            </a>
-
-            <a href="tries.html" class="topic-card tree">
-                <div class="card-icon"><i class="fas fa-spell-check"></i></div>
-                <div class="card-body">
-                    <div class="card-title-row">
-                        <h3>Tries (Prefix Trees)</h3>
-                        <span class="badge intermediate">Intermediate</span>
-                    </div>
-                    <p>Efficient string operations and autocomplete systems.</p>
-                    <div class="tags">
-                        <span class="tag">Insert</span>
-                        <span class="tag">Search</span>
-                        <span class="tag">Prefix Match</span>
-                        <span class="tag">Autocomplete</span>
-                    </div>
-                </div>
-            </a>
-
-            <a href="segment-trees.html" class="topic-card algo">
-                <div class="card-icon"><i class="fas fa-chart-bar"></i></div>
-                <div class="card-body">
-                    <div class="card-title-row">
-                        <h3>Segment Trees</h3>
-                        <span class="badge advanced">Advanced</span>
-                    </div>
-                    <p>Efficient range queries and updates on arrays.</p>
-                    <div class="tags">
-                        <span class="tag">Range Queries</span>
-                        <span class="tag">Point Update</span>
-                        <span class="tag">Lazy Propagation</span>
-                    </div>
-                </div>
-            </a>
-
-            <a href="b-trees.html" class="topic-card adv">
-                <div class="card-icon"><i class="fas fa-database"></i></div>
-                <div class="card-body">
-                    <div class="card-title-row">
-                        <h3>B-Trees & B+ Trees</h3>
-                        <span class="badge advanced">Advanced</span>
-                    </div>
-                    <p>Multiway search trees used in databases and file systems.</p>
-                    <div class="tags">
-                        <span class="tag">B-Tree Props</span>
-                        <span class="tag">B+ Tree</span>
-                        <span class="tag">Database Index</span>
-                    </div>
-                </div>
-            </a>
-        </div>
-    </div>
-
-    <!-- ─── GRAPHS ─── -->
-    <div id="graphs">
-        <div class="section-header">
-            <div class="section-header-left">
-                <div class="section-icon blue"><i class="fas fa-share-alt"></i></div>
-                <h2>Graph Data Structures</h2>
+                    <h3>Tree Algorithms</h3>
+                    <p>LCA, Diameter, Distance, and advanced tree problems.</p>
+                </a>
             </div>
-            <span class="section-count">10 Topics</span>
         </div>
-        <div class="topics-grid">
-            <a href="graph-foundations.html" class="topic-card graph">
-                <div class="card-icon"><i class="fas fa-project-diagram"></i></div>
-                <div class="card-body">
-                    <div class="card-title-row">
-                        <h3>Graph Foundations</h3>
-                        <span class="badge beginner">Beginner</span>
-                    </div>
-                    <p>Vertices, edges, directed & undirected, weighted graphs.</p>
-                    <div class="tags">
-                        <span class="tag">Vertices</span>
-                        <span class="tag">Edges</span>
-                        <span class="tag">Directed</span>
-                        <span class="tag">Weighted</span>
-                    </div>
-                </div>
-            </a>
 
-            <a href="graph-representations.html" class="topic-card graph">
-                <div class="card-icon"><i class="fas fa-th"></i></div>
-                <div class="card-body">
-                    <div class="card-title-row">
-                        <h3>Graph Representations</h3>
-                        <span class="badge beginner">Beginner</span>
-                    </div>
-                    <p>Compare adjacency matrix, list, and edge list representations.</p>
-                    <div class="tags">
-                        <span class="tag">Adjacency Matrix</span>
-                        <span class="tag">Adjacency List</span>
-                        <span class="tag">Edge List</span>
-                        <span class="tag">Tradeoffs</span>
-                    </div>
+        <!-- GRAPHS -->
+        <div id="graphs">
+            <div class="section-header">
+                <div class="section-header-left">
+                    <div class="section-icon blue"><i class="fas fa-project-diagram"></i></div>
+                    <h2>Graph Algorithms</h2>
                 </div>
-            </a>
-
-            <a href="graphs-interactive.html" class="topic-card graph">
-                <div class="card-icon"><i class="fas fa-search"></i></div>
-                <div class="card-body">
-                    <div class="card-title-row">
-                        <h3>Graph Traversals</h3>
-                        <span class="badge beginner">Beginner</span>
-                    </div>
-                    <p>Interactive BFS and DFS with real-time visualizations.</p>
-                    <div class="tags">
-                        <span class="tag">BFS</span>
-                        <span class="tag">DFS</span>
-                        <span class="tag">Connected Components</span>
-                        <span class="tag">Cycle Detection</span>
-                    </div>
-                </div>
-            </a>
-
-            <a href="topological-sort.html" class="topic-card graph">
-                <div class="card-icon"><i class="fas fa-sort-amount-down"></i></div>
-                <div class="card-body">
-                    <div class="card-title-row">
-                        <h3>Topological Sorting</h3>
-                        <span class="badge intermediate">Intermediate</span>
-                    </div>
-                    <p>Topological ordering for DAGs using Kahn's and DFS.</p>
-                    <div class="tags">
-                        <span class="tag">DAG</span>
-                        <span class="tag">Kahn's Algorithm</span>
-                        <span class="tag">DFS Method</span>
-                    </div>
-                </div>
-            </a>
-
-            <a href="algorithms-interactive.html" class="topic-card algo">
-                <div class="card-icon"><i class="fas fa-route"></i></div>
-                <div class="card-body">
-                    <div class="card-title-row">
-                        <h3>Shortest Path Algorithms</h3>
-                        <span class="badge intermediate">Intermediate</span>
-                    </div>
-                    <p>Visualize Dijkstra, Bellman-Ford, and Floyd-Warshall.</p>
-                    <div class="tags">
-                        <span class="tag">Dijkstra</span>
-                        <span class="tag">Bellman-Ford</span>
-                        <span class="tag">Floyd-Warshall</span>
-                        <span class="tag">Negative Cycles</span>
-                    </div>
-                </div>
-            </a>
-
-            <a href="mst-interactive.html" class="topic-card algo">
-                <div class="card-icon"><i class="fas fa-network-wired"></i></div>
-                <div class="card-body">
-                    <div class="card-title-row">
-                        <h3>Minimum Spanning Tree</h3>
-                        <span class="badge intermediate">Intermediate</span>
-                    </div>
-                    <p>Kruskal's and Prim's algorithms with Union-Find.</p>
-                    <div class="tags">
-                        <span class="tag">Kruskal</span>
-                        <span class="tag">Prim</span>
-                        <span class="tag">Union-Find</span>
-                        <span class="tag">Path Compression</span>
-                    </div>
-                </div>
-            </a>
-
-            <a href="scc-interactive.html" class="topic-card adv">
-                <div class="card-icon"><i class="fas fa-compress-arrows-alt"></i></div>
-                <div class="card-body">
-                    <div class="card-title-row">
-                        <h3>Strongly Connected Components</h3>
-                        <span class="badge advanced">Advanced</span>
-                    </div>
-                    <p>Kosaraju's and Tarjan's algorithms for finding SCCs.</p>
-                    <div class="tags">
-                        <span class="tag">Kosaraju</span>
-                        <span class="tag">Tarjan</span>
-                        <span class="tag">Condensation Graph</span>
-                    </div>
-                </div>
-            </a>
-
-            <a href="flow-networks.html" class="topic-card adv">
-                <div class="card-icon"><i class="fas fa-water"></i></div>
-                <div class="card-body">
-                    <div class="card-title-row">
-                        <h3>Flow Networks</h3>
-                        <span class="badge advanced">Advanced</span>
-                    </div>
-                    <p>Max flow, min cut, Ford-Fulkerson & Edmonds-Karp.</p>
-                    <div class="tags">
-                        <span class="tag">Max Flow</span>
-                        <span class="tag">Min Cut</span>
-                        <span class="tag">Ford-Fulkerson</span>
-                        <span class="tag">Edmonds-Karp</span>
-                    </div>
-                </div>
-            </a>
-
-            <a href="graph-coloring.html" class="topic-card graph">
-                <div class="card-icon"><i class="fas fa-palette"></i></div>
-                <div class="card-body">
-                    <div class="card-title-row">
-                        <h3>Graph Coloring</h3>
-                        <span class="badge intermediate">Intermediate</span>
-                    </div>
-                    <p>Vertex coloring, bipartite graphs, and chromatic number.</p>
-                    <div class="tags">
-                        <span class="tag">Vertex Coloring</span>
-                        <span class="tag">Bipartite Check</span>
-                        <span class="tag">Chromatic Number</span>
-                    </div>
-                </div>
-            </a>
-
-            <a href="eulerian-hamiltonian.html" class="topic-card adv">
-                <div class="card-icon"><i class="fas fa-circle-notch"></i></div>
-                <div class="card-body">
-                    <div class="card-title-row">
-                        <h3>Eulerian & Hamiltonian</h3>
-                        <span class="badge advanced">Advanced</span>
-                    </div>
-                    <p>Euler paths/circuits and Hamiltonian paths/cycles.</p>
-                    <div class="tags">
-                        <span class="tag">Euler Path</span>
-                        <span class="tag">Euler Circuit</span>
-                        <span class="tag">Hamiltonian</span>
-                        <span class="tag">NP-Complete</span>
-                    </div>
-                </div>
-            </a>
-        </div>
-    </div>
-
-    <!-- ─── ADVANCED ─── -->
-    <div id="advanced">
-        <div class="section-header">
-            <div class="section-header-left">
-                <div class="section-icon amber"><i class="fas fa-rocket"></i></div>
-                <h2>Advanced Topics</h2>
             </div>
-            <span class="section-count">4 Topics</span>
+            <div class="topics-grid">
+                <a href="graph-foundations.html" class="topic-card graph">
+                    <div class="card-header">
+                        <div class="card-icon"><i class="fas fa-circle-nodes"></i></div><span
+                            class="badge beg">Beginner</span>
+                    </div>
+                    <h3>Graph Basics</h3>
+                    <p>Vertices, edges, direction, weights, and terminology.</p>
+                </a>
+                <a href="graphs-interactive.html" class="topic-card graph">
+                    <div class="card-header">
+                        <div class="card-icon"><i class="fas fa-share-alt"></i></div><span
+                            class="badge beg">Beginner</span>
+                    </div>
+                    <h3>BFS & DFS</h3>
+                    <p>Breadth-First and Depth-First Search visualizations.</p>
+                </a>
+                <a href="topological-sort.html" class="topic-card graph">
+                    <div class="card-header">
+                        <div class="card-icon"><i class="fas fa-sort-amount-down"></i></div><span
+                            class="badge int">Intermediate</span>
+                    </div>
+                    <h3>Topological Sort</h3>
+                    <p>Ordering dependencies in Directed Acyclic Graphs.</p>
+                </a>
+                <a href="algorithms-interactive.html" class="topic-card graph">
+                    <div class="card-header">
+                        <div class="card-icon"><i class="fas fa-map-marked-alt"></i></div><span
+                            class="badge int">Intermediate</span>
+                    </div>
+                    <h3>Shortest Paths</h3>
+                    <p>Dijkstra, Bellman-Ford, and Floyd-Warshall algorithms.</p>
+                </a>
+                <a href="mst-interactive.html" class="topic-card graph">
+                    <div class="card-header">
+                        <div class="card-icon"><i class="fas fa-bezier-curve"></i></div><span
+                            class="badge int">Intermediate</span>
+                    </div>
+                    <h3>MST</h3>
+                    <p>Minimum Spanning Trees using Kruskal's and Prim's.</p>
+                </a>
+                <a href="flow-networks.html" class="topic-card graph">
+                    <div class="card-header">
+                        <div class="card-icon"><i class="fas fa-water"></i></div><span class="badge adv">Advanced</span>
+                    </div>
+                    <h3>Flow Networks</h3>
+                    <p>Max-Flow Min-Cut, Ford-Fulkerson, and Edmonds-Karp.</p>
+                </a>
+            </div>
         </div>
-        <div class="topics-grid">
-            <a href="tree-algorithms.html" class="topic-card algo">
-                <div class="card-icon"><i class="fas fa-sitemap"></i></div>
-                <div class="card-body">
-                    <div class="card-title-row">
-                        <h3>Tree Algorithms</h3>
-                        <span class="badge advanced">Advanced</span>
-                    </div>
-                    <p>LCA, tree diameter, centroid & heavy-light decomposition.</p>
-                    <div class="tags">
-                        <span class="tag">LCA</span>
-                        <span class="tag">Binary Lifting</span>
-                        <span class="tag">Tree DP</span>
-                        <span class="tag">Centroid</span>
-                    </div>
-                </div>
-            </a>
 
-            <a href="fenwick-tree.html" class="topic-card algo">
-                <div class="card-icon"><i class="fas fa-calculator"></i></div>
-                <div class="card-body">
-                    <div class="card-title-row">
-                        <h3>Fenwick Tree (BIT)</h3>
-                        <span class="badge advanced">Advanced</span>
-                    </div>
-                    <p>Binary Indexed Tree for prefix sums and range queries.</p>
-                    <div class="tags">
-                        <span class="tag">Prefix Sum</span>
-                        <span class="tag">Point Update</span>
-                        <span class="tag">Range Query</span>
-                    </div>
+        <!-- PARADIGMS -->
+        <div id="paradigms">
+            <div class="section-header">
+                <div class="section-header-left">
+                    <div class="section-icon rose"><i class="fas fa-brain"></i></div>
+                    <h2>Algorithm Paradigms</h2>
                 </div>
-            </a>
-
-            <a href="articulation-bridges.html" class="topic-card adv">
-                <div class="card-icon"><i class="fas fa-unlink"></i></div>
-                <div class="card-body">
-                    <div class="card-title-row">
-                        <h3>Articulation Points & Bridges</h3>
-                        <span class="badge advanced">Advanced</span>
+            </div>
+            <div class="topics-grid">
+                <a href="recursion-backtracking.html" class="topic-card algo">
+                    <div class="card-header">
+                        <div class="card-icon"><i class="fas fa-undo"></i></div><span
+                            class="badge int">Intermediate</span>
                     </div>
-                    <p>Critical vertices and edges for connectivity analysis.</p>
-                    <div class="tags">
-                        <span class="tag">Cut Vertices</span>
-                        <span class="tag">Bridges</span>
-                        <span class="tag">Biconnected</span>
+                    <h3>Recursion & Backtracking</h3>
+                    <p>Visualizing the call stack, N-Queens, and decision trees.</p>
+                </a>
+                <a href="dynamic-programming.html" class="topic-card algo">
+                    <div class="card-header">
+                        <div class="card-icon"><i class="fas fa-table"></i></div><span class="badge adv">Advanced</span>
                     </div>
-                </div>
-            </a>
-
-            <a href="complexity-analysis.html" class="topic-card algo">
-                <div class="card-icon"><i class="fas fa-clock"></i></div>
-                <div class="card-body">
-                    <div class="card-title-row">
-                        <h3>Complexity Analysis</h3>
-                        <span class="badge intermediate">Intermediate</span>
+                    <h3>Dynamic Programming</h3>
+                    <p>Memoization, Tabulation, Knapsack, and LCS patterns.</p>
+                </a>
+                <a href="greedy-algorithms.html" class="topic-card algo">
+                    <div class="card-header">
+                        <div class="card-icon"><i class="fas fa-pizza-slice"></i></div><span
+                            class="badge int">Intermediate</span>
                     </div>
-                    <p>Time and space complexity for all tree and graph algorithms.</p>
-                    <div class="tags">
-                        <span class="tag">Time Complexity</span>
-                        <span class="tag">Space Complexity</span>
-                        <span class="tag">Sparse vs Dense</span>
-                    </div>
-                </div>
-            </a>
+                    <h3>Greedy Algorithms</h3>
+                    <p>Local optimal choices, Huffman coding, and activity selection.</p>
+                </a>
+            </div>
         </div>
+
+        <!-- ADVANCED -->
+        <div id="advanced">
+            <div class="section-header">
+                <div class="section-header-left">
+                    <div class="section-icon purple"><i class="fas fa-flask"></i></div>
+                    <h2>Advanced Topics</h2>
+                </div>
+            </div>
+            <div class="topics-grid">
+                <a href="hashing-interactive.html" class="topic-card adv">
+                    <div class="card-header">
+                        <div class="card-icon"><i class="fas fa-hashtag"></i></div><span
+                            class="badge int">Intermediate</span>
+                    </div>
+                    <h3>Hashing</h3>
+                    <p>Hash maps, collision resolution, and rolling hashes.</p>
+                </a>
+                <a href="bit-manipulation.html" class="topic-card adv">
+                    <div class="card-header">
+                        <div class="card-icon"><i class="fas fa-microchip"></i></div><span
+                            class="badge int">Intermediate</span>
+                    </div>
+                    <h3>Bit Manipulation</h3>
+                    <p>Bitwise operators, masks, and XOR tricks.</p>
+                </a>
+                <a href="segment-trees.html" class="topic-card adv">
+                    <div class="card-header">
+                        <div class="card-icon"><i class="fas fa-chart-bar"></i></div><span
+                            class="badge adv">Advanced</span>
+                    </div>
+                    <h3>Segment Trees</h3>
+                    <p>Range queries and updates on arrays.</p>
+                </a>
+                <a href="fenwick-tree.html" class="topic-card adv">
+                    <div class="card-header">
+                        <div class="card-icon"><i class="fas fa-tree"></i></div><span class="badge adv">Advanced</span>
+                    </div>
+                    <h3>Fenwick Trees</h3>
+                    <p>Binary Indexed Trees for efficient prefix sums.</p>
+                </a>
+                <a href="string-algorithms.html" class="topic-card adv">
+                    <div class="card-header">
+                        <div class="card-icon"><i class="fas fa-font"></i></div><span class="badge adv">Advanced</span>
+                    </div>
+                    <h3>String Algorithms</h3>
+                    <p>KMP, Rabin-Karp, and pattern matching.</p>
+                </a>
+                <a href="math-algorithms.html" class="topic-card adv">
+                    <div class="card-header">
+                        <div class="card-icon"><i class="fas fa-square-root-alt"></i></div><span
+                            class="badge adv">Advanced</span>
+                    </div>
+                    <h3>Math Algorithms</h3>
+                    <p>Sieve of Eratosthenes, GCD, and number theory basics.</p>
+                </a>
+                <a href="complexity-analysis.html" class="topic-card adv">
+                    <div class="card-header">
+                        <div class="card-icon"><i class="fas fa-tachometer-alt"></i></div><span
+                            class="badge beg">Reference</span>
+                    </div>
+                    <h3>Complexity Analysis</h3>
+                    <p>Big-O notation, master theorem, and limits.</p>
+                </a>
+            </div>
+        </div>
+
     </div>
-</div>
 
-<!-- FOOTER -->
-<footer>
-    <p>Built with ❤️ for learning data structures and algorithms</p>
-    <p>Start with <a href="tree-foundations.html">Tree Foundations</a> or <a href="graph-foundations.html">Graph Foundations</a></p>
-</footer>
-
-<script>
-    // Sticky nav shadow on scroll
-    const nav = document.getElementById('navbar');
-    window.addEventListener('scroll', () => {
-        nav.classList.toggle('scrolled', window.scrollY > 10);
-    });
-</script>
 </body>
+
 </html>

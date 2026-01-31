@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linked Lists - Master DSA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+        }
+
+        .nav-bar {
+            background: linear-gradient(135deg, #0891b2 0%, #06b6d4 100%);
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-bar a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-bar h1 {
+            color: white;
+            font-size: 1.5em;
+            flex: 1;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 30px;
+        }
+
+        @media (max-width: 1100px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 25px;
+        }
+
+        .card h2 {
+            font-size: 1.5em;
+            color: #1a1a2e;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 3px solid #0891b2;
+            padding-bottom: 10px;
+        }
+
+        .card h2 i {
+            color: #0891b2;
+        }
+
+        .canvas-container {
+            background: #f8f8f8;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            overflow-x: auto;
+        }
+
+        canvas {
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background: white;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-primary {
+            background: #0891b2;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #0e7490;
+        }
+
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+        }
+
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #1a1a2e;
+            border-color: #e0e0e0;
+        }
+
+        .btn-secondary:hover {
+            border-color: #0891b2;
+            color: #0891b2;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .step-info {
+            background: #0891b2;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            margin: 15px 0;
+            display: none;
+        }
+
+        .step-info.active {
+            display: block;
+        }
+
+        .complexity-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 13px;
+        }
+
+        .complexity-table th,
+        .complexity-table td {
+            padding: 10px;
+            border: 1px solid #e0e0e0;
+            text-align: left;
+        }
+
+        .complexity-table th {
+            background: #0891b2;
+            color: white;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 12px;
+            background: #e0e0e0;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            background: #0891b2;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="nav-bar">
+        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+        <h1><i class="fas fa-link"></i> Linked Lists</h1>
+        <a href="stacks-queues.html">Next: Stacks & Queues <i class="fas fa-arrow-right"></i></a>
+    </div>
+
+    <div class="container">
+        <div class="main-grid">
+            <div class="left-column">
+                <div class="card">
+                    <h2><i class="fas fa-project-diagram"></i> Linked List Visualizer</h2>
+                    <div class="tabs">
+                        <button class="tab active" onclick="switchMode('singly')">Singly Linked List</button>
+                        <button class="tab" onclick="switchMode('doubly')">Doubly Linked List</button>
+                        <button class="tab" onclick="switchMode('floyd')">Floyd's Cycle</button>
+                    </div>
+
+                    <div class="canvas-container">
+                        <canvas id="mainCanvas" width="850" height="350"></canvas>
+                    </div>
+
+                    <div id="listControls" class="controls">
+                        <div class="input-group">
+                            <input type="number" id="nodeValue" placeholder="Val" value="10"
+                                style="padding: 10px; border-radius: 8px; border: 1px solid #ccc; width: 80px;">
+                            <button class="btn btn-primary" onclick="insertHead()">Insert Head</button>
+                            <button class="btn btn-primary" onclick="insertTail()">Insert Tail</button>
+                        </div>
+                        <button class="btn btn-danger" onclick="deleteHead()">Delete Head</button>
+                        <button class="btn btn-danger" onclick="deleteTail()">Delete Tail</button>
+                    </div>
+
+                    <div id="floydControls" class="controls" style="display: none;">
+                        <button class="btn btn-primary" onclick="generateCycleList()">New List with Cycle</button>
+                        <button class="btn btn-secondary" onclick="generateLinearList()">New Linear List</button>
+                        <button class="btn btn-success" onclick="startFloyd()">Detect Cycle</button>
+                    </div>
+
+                    <div class="step-info" id="stepInfo"></div>
+                </div>
+            </div>
+
+            <div class="right-column">
+                <div class="card">
+                    <h2><i class="fas fa-info-circle"></i> Complexity</h2>
+                    <table class="complexity-table">
+                        <thead>
+                            <tr>
+                                <th>Op</th>
+                                <th>Singly</th>
+                                <th>Doubly</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Access</td>
+                                <td>O(n)</td>
+                                <td>O(n)</td>
+                            </tr>
+                            <tr>
+                                <td>Insert Head</td>
+                                <td>O(1)</td>
+                                <td>O(1)</td>
+                            </tr>
+                            <tr>
+                                <td>Insert Tail</td>
+                                <td>O(1)*</td>
+                                <td>O(1)</td>
+                            </tr>
+                            <tr>
+                                <td>Delete Head</td>
+                                <td>O(1)</td>
+                                <td>O(1)</td>
+                            </tr>
+                            <tr>
+                                <td>Delete Tail</td>
+                                <td>O(n)</td>
+                                <td>O(1)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p style="font-size: 12px; color: #666;">*Assuming tail pointer is maintained.</p>
+                </div>
+
+                <div class="card">
+                    <h2><i class="fas fa-lightbulb"></i> Concepts</h2>
+                    <div id="conceptInfo">
+                        <h4>Singly Linked List</h4>
+                        <p style="color: #555; font-size: 14px; margin-bottom: 10px;">Each node points to the next node.
+                            Last node points to null.</p>
+                        <pre
+                            style="background: #f0f0f0; padding: 10px; border-radius: 6px; font-size: 12px;">Node { val, next }</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('mainCanvas');
+        const ctx = canvas.getContext('2d');
+        const stepInfo = document.getElementById('stepInfo');
+
+        // State
+        let mode = 'singly'; // singly, doubly, floyd
+        let list = [10, 20, 30, 40];
+        let isAnimating = false;
+
+        // Floyd State
+        let floydNodes = [];
+        let slow = 0;
+        let fast = 0;
+        let cycleIndex = -1;
+
+        function switchMode(newMode) {
+            mode = newMode;
+            isAnimating = false;
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Toggle UI
+            const isFloyd = mode === 'floyd';
+            document.getElementById('listControls').style.display = isFloyd ? 'none' : 'flex';
+            document.getElementById('floydControls').style.display = isFloyd ? 'flex' : 'none';
+            stepInfo.classList.remove('active');
+
+            if (isFloyd) generateCycleList();
+            else {
+                list = [10, 20, 30, 40];
+                drawList();
+            }
+
+            // Update Info
+            const concept = document.getElementById('conceptInfo');
+            if (mode === 'singly') {
+                concept.innerHTML = '<h4>Singly Linked List</h4><p>Nodes point forward only. Efficient for head operations.</p>';
+            } else if (mode === 'doubly') {
+                concept.innerHTML = '<h4>Doubly Linked List</h4><p>Nodes have next and prev pointers. Can traverse both ways.</p>';
+            } else {
+                concept.innerHTML = '<h4>Floyd\'s Cycle Detection</h4><p>Use two pointers (Tortoise & Hare). Slow moves 1 step, Fast moves 2. If they meet, there is a cycle.</p>';
+            }
+        }
+
+        // --- DRAWING ---
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function drawArrow(fromX, fromY, toX, toY, color = '#333', curvy = false) {
+            ctx.beginPath();
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 2;
+
+            if (curvy) {
+                const midX = (fromX + toX) / 2;
+                const midY = Math.min(fromY, toY) - 50;
+                ctx.moveTo(fromX, fromY);
+                ctx.quadraticCurveTo(midX, midY, toX, toY);
+            } else {
+                ctx.moveTo(fromX, fromY);
+                ctx.lineTo(toX, toY);
+            }
+            ctx.stroke();
+
+            // Head (simplified)
+            // ... (omitted for brevity in this tool call, will use simple lines or circles)
+            ctx.fillStyle = color;
+            ctx.beginPath();
+            if (curvy) ctx.arc(toX, toY, 4, 0, Math.PI * 2);
+            else {
+                const angle = Math.atan2(toY - fromY, toX - fromX);
+                ctx.moveTo(toX, toY);
+                ctx.lineTo(toX - 10 * Math.cos(angle - Math.PI / 6), toY - 10 * Math.sin(angle - Math.PI / 6));
+                ctx.lineTo(toX - 10 * Math.cos(angle + Math.PI / 6), toY - 10 * Math.sin(angle + Math.PI / 6));
+            }
+            ctx.fill();
+        }
+
+        function drawNode(x, y, val, color = '#e0e0e0', highlight = false) {
+            if (highlight) {
+                ctx.shadowBlur = 15;
+                ctx.shadowColor = color;
+            }
+            ctx.fillStyle = color;
+            ctx.fillRect(x, y, 60, 40);
+            ctx.shadowBlur = 0;
+
+            ctx.strokeStyle = '#333';
+            ctx.strokeRect(x, y, 60, 40);
+
+            ctx.fillStyle = '#1a1a2e';
+            ctx.font = 'bold 16px Segoe UI';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(val, x + 30, y + 20);
+
+            // Pointer box
+            ctx.fillStyle = '#ccc';
+            ctx.fillRect(x + 45, y, 15, 40);
+            ctx.strokeRect(x + 45, y, 15, 40);
+        }
+
+        function drawList() {
+            clearCanvas();
+            const startX = 50;
+            const startY = 150;
+            const gap = 100;
+
+            list.forEach((val, i) => {
+                const x = startX + i * gap;
+                drawNode(x, startY, val, '#fff');
+
+                // Next pointer
+                if (i < list.length - 1) {
+                    drawArrow(x + 60, startY + 20, x + gap, startY + 20);
+                } else {
+                    // Null pointer
+                    ctx.fillStyle = '#333';
+                    ctx.font = '12px Segoe UI';
+                    ctx.fillText('NULL', x + 90, startY + 20);
+                }
+
+                // Prev pointer for Doubly
+                if (mode === 'doubly' && i > 0) {
+                    const prevX = startX + (i - 1) * gap;
+                    drawArrow(x, startY + 30, prevX + 60, startY + 30, '#0891b2');
+                }
+            });
+
+            // Labels
+            if (list.length > 0) {
+                ctx.fillStyle = '#d97706';
+                ctx.fillText('HEAD', startX + 30, startY + 60);
+                ctx.fillText('TAIL', startX + (list.length - 1) * gap + 30, startY + 60);
+            }
+        }
+
+        // --- LIST OPERATIONS ---
+        async function insertHead() {
+            if (isAnimating) return;
+            const val = parseInt(document.getElementById('nodeValue').value);
+            list.unshift(val);
+            drawList();
+        }
+
+        async function insertTail() {
+            if (isAnimating) return;
+            const val = parseInt(document.getElementById('nodeValue').value);
+            list.push(val);
+            drawList();
+        }
+
+        async function deleteHead() {
+            if (list.length === 0) return;
+            list.shift();
+            drawList();
+        }
+
+        async function deleteTail() {
+            if (list.length === 0) return;
+            list.pop();
+            drawList();
+        }
+
+        // --- FLOYD'S ALGORITHM ---
+        function generateCycleList() {
+            floydNodes = Array.from({ length: 8 }, (_, i) => ({
+                id: i, val: Math.floor(Math.random() * 90) + 10,
+                x: 80 + i * 80, y: 150
+            }));
+            // Create cycle
+            cycleIndex = 3; // Cycle starts at index 3
+            slow = 0;
+            fast = 0;
+            drawFloyd(slow, fast);
+        }
+
+        function generateLinearList() {
+            floydNodes = Array.from({ length: 6 }, (_, i) => ({
+                id: i, val: Math.floor(Math.random() * 90) + 10,
+                x: 80 + i * 80, y: 150
+            }));
+            cycleIndex = -1;
+            slow = 0;
+            fast = 0;
+            drawFloyd(slow, fast);
+        }
+
+        function drawFloyd(sVal, fVal, meet = false) {
+            clearCanvas();
+
+            // Draw nodes
+            floydNodes.forEach((node, i) => {
+                const color = (i === sVal || i === fVal) ? '#fef08a' : '#fff';
+                drawNode(node.x, node.y, node.val, meet && i === sVal ? '#86efac' : color);
+
+                // Next pointer
+                if (i < floydNodes.length - 1) {
+                    drawArrow(node.x + 60, node.y + 20, floydNodes[i + 1].x, node.y + 20);
+                } else if (cycleIndex !== -1) {
+                    // Back edge
+                    const target = floydNodes[cycleIndex];
+                    drawArrow(node.x + 60, node.y, target.x + 30, target.y, '#ef4444', true);
+                } else {
+                    ctx.fillText('NULL', node.x + 90, node.y + 20);
+                }
+            });
+
+            // Draw S and F
+            if (sVal < floydNodes.length) {
+                const sNode = floydNodes[sVal];
+                ctx.fillStyle = '#d97706';
+                ctx.beginPath();
+                ctx.arc(sNode.x + 30, sNode.y - 20, 10, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillText('S', sNode.x + 30, sNode.y - 35);
+            }
+            if (fVal < floydNodes.length) {
+                const fNode = floydNodes[fVal];
+                ctx.fillStyle = '#0891b2';
+                ctx.beginPath();
+                ctx.arc(fNode.x + 30, fNode.y + 60, 10, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillText('F', fNode.x + 30, fNode.y + 80);
+            }
+        }
+
+        async function startFloyd() {
+            if (isAnimating) return;
+            isAnimating = true;
+            stepInfo.classList.add('active');
+
+            slow = 0;
+            fast = 0;
+
+            while (true) {
+                drawFloyd(slow, fast);
+                stepInfo.textContent = `Slow at ${slow}, Fast at ${fast}`;
+                await sleep(1000);
+
+                if (slow === fast && slow !== 0) {
+                    stepInfo.textContent = "Cycle Detected! Slow and Fast met.";
+                    drawFloyd(slow, fast, true);
+                    break;
+                }
+
+                slow++; // moves 1
+
+                // Fast moves 2, careful with cycle
+                if (cycleIndex !== -1) {
+                    // Simulate linkage for fast
+                    let fNext = fast + 1;
+                    if (fast === floydNodes.length - 1) fNext = cycleIndex;
+
+                    let fNextNext = fNext + 1;
+                    if (fNext === floydNodes.length - 1) fNextNext = cycleIndex;
+
+                    fast = fNextNext;
+
+                    // Simulate linkage for slow
+                    if (slow === floydNodes.length) slow = cycleIndex; // if just wrapped
+                } else {
+                    // Linear logic
+                    fast += 2;
+                    if (fast >= floydNodes.length) {
+                        stepInfo.textContent = "Fast reached NULL. No cycle.";
+                        drawFloyd(slow, floydNodes.length); // draw fast out of bounds
+                        break;
+                    }
+                }
+
+                // Correct standard wrap logic for visual simplicity
+                if (cycleIndex !== -1 && slow >= floydNodes.length) slow = cycleIndex + (slow - floydNodes.length);
+            }
+            isAnimating = false;
+        }
+
+        function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+        switchMode('singly');
+    </script>
+</body>
+
+</html>

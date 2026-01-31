@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Programming - Master DSA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+        }
+
+        .nav-bar {
+            background: linear-gradient(135deg, #e11d48 0%, #be123c 100%);
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-bar a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-bar h1 {
+            color: white;
+            font-size: 1.5em;
+            flex: 1;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 30px;
+        }
+
+        @media (max-width: 1100px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 25px;
+        }
+
+        .card h2 {
+            font-size: 1.5em;
+            color: #1a1a2e;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 3px solid #e11d48;
+            padding-bottom: 10px;
+        }
+
+        .card h2 i {
+            color: #e11d48;
+        }
+
+        .canvas-container {
+            background: #fff1f2;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        canvas {
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background: white;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-primary {
+            background: #e11d48;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #9f1239;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #1a1a2e;
+            border-color: #e0e0e0;
+        }
+
+        .btn-secondary:hover {
+            border-color: #e11d48;
+            color: #e11d48;
+        }
+
+        .step-info {
+            background: #e11d48;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            margin: 15px 0;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 12px;
+            background: #e0e0e0;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            background: #e11d48;
+            color: white;
+        }
+
+        .code-box {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+
+        .dp-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 5px;
+            margin-top: 15px;
+        }
+
+        .dp-cell {
+            background: #fff;
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="nav-bar">
+        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+        <h1><i class="fas fa-table"></i> Dynamic Programming</h1>
+        <a href="greedy-algorithms.html">Next: Greedy Algorithms <i class="fas fa-arrow-right"></i></a>
+    </div>
+
+    <div class="container">
+        <div class="main-grid">
+            <div class="left-column">
+                <div class="card">
+                    <h2><i class="fas fa-project-diagram"></i> Visualizer</h2>
+                    <div class="tabs">
+                        <button class="tab active" onclick="switchMode('fib')">Fibonacci (Memo vs Tab)</button>
+                        <button class="tab" onclick="switchMode('knapsack')">0/1 Knapsack</button>
+                    </div>
+
+                    <div class="canvas-container">
+                        <canvas id="mainCanvas" width="800" height="400"></canvas>
+                    </div>
+
+                    <div class="controls" id="fibControls">
+                        <button class="btn btn-primary" onclick="runFibMemo()">Run Memoization(6)</button>
+                        <button class="btn btn-secondary" onclick="runFibTab()">Run Tabulation(6)</button>
+                    </div>
+
+                    <div class="controls" id="knapsackControls" style="display: none;">
+                        <button class="btn btn-primary" onclick="runKnapsack()">Fill Table</button>
+                    </div>
+
+                    <div class="step-info" id="stepInfo">Ready</div>
+                </div>
+            </div>
+
+            <div class="right-column">
+                <div class="card">
+                    <h2><i class="fas fa-lightbulb"></i> Concept</h2>
+                    <div id="infoContent">
+                        <h4>DP: Overlapping Subproblems</h4>
+                        <p style="color: #555; margin-bottom: 10px;">Solve complex problems by breaking them down into
+                            simpler subproblems and storing their solutions.</p>
+
+                        <div class="code-box">
+                            // Memoization (Top-Down)
+                            int fib(n) {
+                            if (memo[n] != -1) return memo[n];
+                            if (n <= 1) return n; return memo[n]=fib(n-1) + fib(n-2); } // Tabulation (Bottom-Up)
+                                dp[0]=0; dp[1]=1; for (i=2; i <=n; i++) dp[i]=dp[i-1] + dp[i-2]; </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            const canvas = document.getElementById('mainCanvas');
+            const ctx = canvas.getContext('2d');
+            const stepInfo = document.getElementById('stepInfo');
+
+            // Mode
+            let mode = 'fib';
+            let isRunning = false;
+
+            // Fib State
+            let memo = [];
+
+            // Knapsack State
+            let weights = [1, 3, 4, 5];
+            let values = [1, 4, 5, 7];
+            let capacity = 7;
+            let dpTable = [];
+
+            function switchMode(newMode) {
+                mode = newMode;
+                isRunning = false;
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                event.target.classList.add('active');
+
+                document.getElementById('fibControls').style.display = mode === 'fib' ? 'flex' : 'none';
+                document.getElementById('knapsackControls').style.display = mode === 'knapsack' ? 'flex' : 'none';
+
+                if (mode === 'fib') {
+                    runFibMemo(); // Initial draw
+                } else {
+                    initKnapsack();
+                    drawKnapsack();
+                }
+            }
+
+            // --- DRAWING HELPERS ---
+            function clearCanvas() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+
+            function drawArray(arr, x, y, label, highlightIdx = -1) {
+                ctx.font = '16px Segoe UI';
+                ctx.fillStyle = '#333';
+                ctx.textAlign = 'left';
+                ctx.fillText(label, x, y - 10);
+
+                arr.forEach((val, i) => {
+                    const bx = x + i * 60;
+                    ctx.fillStyle = i === highlightIdx ? '#fcd34d' : '#fff'; // yellow if highlight
+                    if (val !== -1 && val !== undefined && i !== highlightIdx) ctx.fillStyle = '#86efac'; // green if filled
+                    if (val === -1 || val === undefined) ctx.fillStyle = '#f3f4f6'; // gray if empty
+
+                    ctx.fillRect(bx, y, 50, 50);
+                    ctx.strokeStyle = '#333';
+                    ctx.strokeRect(bx, y, 50, 50);
+
+                    ctx.fillStyle = '#111';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(val === -1 || val === undefined ? '?' : val, bx + 25, y + 30);
+
+                    // Index
+                    ctx.font = '12px Segoe UI';
+                    ctx.fillText(i, bx + 25, y + 65);
+                    ctx.font = '16px Segoe UI'; // reset
+                });
+            }
+
+            // --- FIBONACCI ---
+            async function runFibMemo() {
+                if (isRunning) return;
+                isRunning = true;
+                memo = Array(7).fill(-1);
+
+                // Visualization wrapper
+                await fibMemo(6);
+
+                stepInfo.textContent = "Memoization Complete.";
+                isRunning = false;
+            }
+
+            async function fibMemo(n, depth = 0) {
+                if (!isRunning) return 0;
+
+                clearCanvas();
+                drawArray(memo, 100, 200, "Memo Array (Top-Down)");
+
+                // Draw Call Stack Visualization (simple text)
+                ctx.fillStyle = '#333';
+                ctx.textAlign = 'left';
+                ctx.fillText(`Calculating fib(${n})...`, 100, 100);
+
+                if (n <= 1) return n;
+
+                if (memo[n] !== -1) {
+                    stepInfo.textContent = `fib(${n}) found in memo: ${memo[n]}. Returning.`;
+                    ctx.fillStyle = '#e11d48';
+                    ctx.fillText(`Hit memo[${n}]! Skips recursion.`, 300, 100);
+                    await sleep(1000);
+                    return memo[n];
+                }
+
+                stepInfo.textContent = `fib(${n}) not known. Recursing...`;
+                await sleep(500);
+
+                let res = await fibMemo(n - 1, depth + 1) + await fibMemo(n - 2, depth + 1);
+
+                memo[n] = res;
+                stepInfo.textContent = `Computed fib(${n}) = ${res}. Storing in memo.`;
+                clearCanvas();
+                drawArray(memo, 100, 200, "Memo Array", n); // Highlight assignment
+                await sleep(800);
+
+                return res;
+            }
+
+            async function runFibTab() {
+                if (isRunning) return;
+                isRunning = true;
+                let tab = Array(7).fill(0);
+
+                stepInfo.textContent = "Base cases: dp[0]=0, dp[1]=1";
+                tab[0] = 0; tab[1] = 1;
+
+                clearCanvas();
+                drawArray(tab, 100, 200, "DP Table (Bottom-Up)");
+                await sleep(1000);
+
+                for (let i = 2; i <= 6; i++) {
+                    stepInfo.textContent = `df[${i}] = dp[${i - 1}] + dp[${i - 2}] = ${tab[i - 1]} + ${tab[i - 2]}`;
+                    tab[i] = tab[i - 1] + tab[i - 2];
+                    clearCanvas();
+                    drawArray(tab, 100, 200, "DP Table (Bottom-Up)", i);
+                    await sleep(1000);
+                }
+
+                stepInfo.textContent = "Tabulation Complete.";
+                isRunning = false;
+            }
+
+            // --- KNAPSACK ---
+            function initKnapsack() {
+                // W=7, items=4
+                // Reset DP table (n+1 x W+1)
+                dpTable = Array.from({ length: 5 }, () => Array(8).fill(0));
+            }
+
+            function drawKnapsack(currI = -1, currW = -1) {
+                clearCanvas();
+                const startX = 50;
+                const startY = 80;
+                const cellW = 40;
+                const cellH = 30;
+
+                // Draw Headers
+                ctx.font = '14px Segoe UI';
+                ctx.textAlign = 'center';
+                for (let w = 0; w <= 7; w++) {
+                    ctx.fillText(w, startX + 100 + w * cellW + cellW / 2, startY - 10);
+                }
+
+                for (let i = 0; i <= 4; i++) {
+                    const label = i === 0 ? '0' : `Item ${i} (${weights[i - 1]}kg, $${values[i - 1]})`;
+                    ctx.textAlign = 'right';
+                    ctx.fillText(label, startX + 90, startY + i * cellH + cellH / 2 + 5);
+
+                    for (let w = 0; w <= 7; w++) {
+                        const bx = startX + 100 + w * cellW;
+                        const by = startY + i * cellH;
+
+                        ctx.fillStyle = (i === currI && w === currW) ? '#fcd34d' : '#fff';
+                        ctx.fillRect(bx, by, cellW, cellH);
+                        ctx.strokeStyle = '#ccc';
+                        ctx.strokeRect(bx, by, cellW, cellH);
+
+                        ctx.fillStyle = '#333';
+                        ctx.textAlign = 'center';
+                        ctx.fillText(dpTable[i][w], bx + cellW / 2, by + cellH / 2 + 5);
+                    }
+                }
+            }
+
+            async function runKnapsack() {
+                if (isRunning) return;
+                isRunning = true;
+                initKnapsack();
+
+                for (let i = 1; i <= 4; i++) {
+                    let wt = weights[i - 1];
+                    let val = values[i - 1];
+
+                    for (let w = 0; w <= 7; w++) {
+                        stepInfo.textContent = `Checking Item ${i} (wt:${wt}) for capacity ${w}...`;
+                        drawKnapsack(i, w);
+                        await sleep(300);
+
+                        if (wt <= w) {
+                            let include = val + dpTable[i - 1][w - wt];
+                            let exclude = dpTable[i - 1][w];
+                            dpTable[i][w] = Math.max(include, exclude);
+                            if (include > exclude) {
+                                stepInfo.textContent = `Take item: ${val} + dp[${i - 1}][${w - wt}] = ${include}`;
+                            } else {
+                                stepInfo.textContent = `Skip item: dp[${i - 1}][${w}] = ${exclude}`;
+                            }
+                        } else {
+                            dpTable[i][w] = dpTable[i - 1][w];
+                            stepInfo.textContent = `Too heavy. Skip.`;
+                        }
+                        drawKnapsack(i, w); // show update
+                        await sleep(400);
+                    }
+                }
+
+                stepInfo.textContent = "Finished! Max Value: " + dpTable[4][7];
+                isRunning = false;
+            }
+
+            function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+            // Initial
+            runFibMemo();
+        </script>
+</body>
+
+</html>

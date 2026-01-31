@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Algorithms - Master DSA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+        }
+
+        .nav-bar {
+            background: linear-gradient(135deg, #db2777 0%, #be185d 100%);
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-bar a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-bar h1 {
+            color: white;
+            font-size: 1.5em;
+            flex: 1;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 30px;
+        }
+
+        @media (max-width: 1100px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 25px;
+        }
+
+        .card h2 {
+            font-size: 1.5em;
+            color: #1a1a2e;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 3px solid #db2777;
+            padding-bottom: 10px;
+        }
+
+        .card h2 i {
+            color: #db2777;
+        }
+
+        .canvas-container {
+            background: #fdf2f8;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        canvas {
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background: white;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-primary {
+            background: #db2777;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #be185d;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #1a1a2e;
+            border-color: #e0e0e0;
+        }
+
+        .btn-secondary:hover {
+            border-color: #db2777;
+            color: #db2777;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .input-group input {
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            width: 100px;
+        }
+
+        .step-info {
+            background: #db2777;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            margin: 15px 0;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 12px;
+            background: #e0e0e0;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            background: #db2777;
+            color: white;
+        }
+
+        .code-box {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="nav-bar">
+        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+        <h1><i class="fas fa-square-root-alt"></i> Math Algorithms</h1>
+        <a href="index.html">Back to Dashboard <i class="fas fa-th-large"></i></a>
+    </div>
+
+    <div class="container">
+        <div class="main-grid">
+            <div class="left-column">
+                <div class="card">
+                    <h2><i class="fas fa-calculator"></i> Math Visualizer</h2>
+                    <div class="tabs">
+                        <button class="tab active" onclick="switchMode('sieve')">Sieve of Eratosthenes</button>
+                        <button class="tab" onclick="switchMode('gcd')">GCD (Euclidean)</button>
+                    </div>
+
+                    <div class="canvas-container">
+                        <canvas id="mainCanvas" width="800" height="400"></canvas>
+                    </div>
+
+                    <div class="controls" id="sieveControls">
+                        <div class="input-group">
+                            <label style="align-self:center;">Max N:</label>
+                            <input type="number" id="sieveN" value="50" max="100">
+                            <button class="btn btn-primary" onclick="runSieve()"><i class="fas fa-play"></i> Find
+                                Primes</button>
+                        </div>
+                    </div>
+
+                    <div class="controls" id="gcdControls" style="display: none;">
+                        <div class="input-group">
+                            <input type="number" id="gcdA" value="48" placeholder="A">
+                            <input type="number" id="gcdB" value="18" placeholder="B">
+                            <button class="btn btn-primary" onclick="runGCD()"><i class="fas fa-play"></i> Compute
+                                GCD</button>
+                        </div>
+                    </div>
+
+                    <div class="step-info" id="stepInfo">Ready</div>
+                </div>
+            </div>
+
+            <div class="right-column">
+                <div class="card">
+                    <h2><i class="fas fa-brain"></i> Concept</h2>
+                    <div id="infoContent">
+                        <h4>Sieve of Eratosthenes</h4>
+                        <p style="color: #555; margin-bottom: 10px;">Efficiently find all prime numbers up to N.</p>
+                        <ol style="margin-left: 20px; color: #444;">
+                            <li>Start with all numbers marked prime.</li>
+                            <li>Pick next prime P (start 2).</li>
+                            <li>Mark all multiples of P as composite.</li>
+                            <li>Repeat until sqrt(N).</li>
+                        </ol>
+                        <p style="margin-top: 10px;"><strong>Complexity:</strong> O(N log log N)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('mainCanvas');
+        const ctx = canvas.getContext('2d');
+        const stepInfo = document.getElementById('stepInfo');
+
+        let mode = 'sieve';
+        let isRunning = false;
+
+        function switchMode(newMode) {
+            mode = newMode;
+            isRunning = false;
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+
+            document.getElementById('sieveControls').style.display = mode === 'sieve' ? 'flex' : 'none';
+            document.getElementById('gcdControls').style.display = mode === 'gcd' ? 'flex' : 'none';
+
+            if (mode === 'sieve') {
+                document.getElementById('infoContent').innerHTML = `<h4>Sieve of Eratosthenes</h4><p>Eliminate multiples of each prime starting from 2.</p>`;
+                runSieve(true); // static draw
+            } else {
+                document.getElementById('infoContent').innerHTML = `<h4>Euclidean GCD</h4><p>GCD(a, b) = GCD(b, a % b). Repeat until b is 0.</p>`;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                stepInfo.textContent = "Enter two numbers to start.";
+            }
+        }
+
+        // --- DRAWING ---
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function drawGrid(n, primes, current = -1, multiples = []) {
+            clearCanvas();
+            const cols = 10;
+            const size = 40;
+            const startX = 50;
+            const startY = 20;
+
+            for (let i = 1; i <= n; i++) {
+                const r = Math.floor((i - 1) / cols);
+                const c = (i - 1) % cols;
+                const x = startX + c * 45;
+                const y = startY + r * 45;
+
+                let color = '#fff';
+                let borderColor = '#ddd';
+
+                if (i === 1) color = '#f3f4f6'; // 1 is not prime
+                else if (primes[i] === false) color = '#fca5a5'; // composite (marked false)
+                else if (primes[i] === true) color = '#fff'; // potential prime
+
+                // Visual states
+                if (i === current) {
+                    color = '#fcd34d'; // currently checking
+                    borderColor = '#d97706';
+                }
+                if (multiples.includes(i)) {
+                    color = '#f87171'; // just marked
+                }
+                if (primes[i] === 'confirmed') {
+                    color = '#86efac'; // confirmed prime
+                }
+
+                ctx.fillStyle = color;
+                ctx.fillRect(x, y, 40, 40);
+                ctx.strokeStyle = borderColor;
+                ctx.lineWidth = 2;
+                ctx.strokeRect(x, y, 40, 40);
+
+                ctx.fillStyle = '#333';
+                ctx.font = '14px Segoe UI';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(i, x + 20, y + 20);
+            }
+        }
+
+        async function runSieve(staticDraw = false) {
+            if (isRunning) return;
+            if (!staticDraw) isRunning = true;
+
+            const n = parseInt(document.getElementById('sieveN').value);
+            // primes array: true = prime, false = composite
+            let primes = Array(n + 1).fill(true);
+            primes[0] = primes[1] = false;
+
+            if (staticDraw) {
+                drawGrid(n, primes);
+                return;
+            }
+
+            for (let p = 2; p * p <= n; p++) {
+                stepInfo.textContent = `Checking number ${p}...`;
+                drawGrid(n, primes, p);
+                await sleep(500);
+
+                if (primes[p] === true) {
+                    stepInfo.textContent = `${p} is Prime! Marking multiples...`;
+                    let mults = [];
+                    for (let i = p * p; i <= n; i += p) {
+                        primes[i] = false;
+                        mults.push(i);
+                        drawGrid(n, primes, p, mults); // highlight multiples
+                        await sleep(100);
+                    }
+                    primes[p] = 'confirmed'; // mark as processed prime
+                    drawGrid(n, primes);
+                    await sleep(500);
+                }
+            }
+
+            // Mark remaining as confirmed
+            for (let i = 2; i <= n; i++) {
+                if (primes[i] === true) primes[i] = 'confirmed';
+            }
+            drawGrid(n, primes);
+            stepInfo.textContent = "Sieve Complete! Green numbers are Primes.";
+            isRunning = false;
+        }
+
+        // --- GCD ---
+        function drawBar(val, x, y, width, color, label) {
+            const h = val * 5; // scale height
+            ctx.fillStyle = color;
+            ctx.fillRect(x, y - h, width, h);
+            ctx.strokeStyle = '#333';
+            ctx.strokeRect(x, y - h, width, h);
+
+            ctx.fillStyle = '#333';
+            ctx.textAlign = 'center';
+            ctx.fillText(label, x + width / 2, y + 20);
+            ctx.fillText(val, x + width / 2, y - h - 10);
+        }
+
+        async function runGCD() {
+            if (isRunning) return;
+            isRunning = true;
+
+            let a = parseInt(document.getElementById('gcdA').value);
+            let b = parseInt(document.getElementById('gcdB').value);
+
+            stepInfo.textContent = `Computing GCD(${a}, ${b})`;
+
+            while (b !== 0) {
+                clearCanvas();
+                const startX = 200;
+                const groundY = 300;
+
+                // Draw A and B as bars
+                drawBar(a, startX, groundY, 60, '#fcd34d', 'A');
+                drawBar(b, startX + 100, groundY, 60, '#db2777', 'B');
+
+                stepInfo.textContent = `${a} % ${b} = ${a % b}`;
+                await sleep(1500);
+
+                let temp = b;
+                b = a % b;
+                a = temp;
+
+                // Animate transition (visual swap/reduce)
+            }
+
+            clearCanvas();
+            const startX = 200;
+            const groundY = 300;
+            drawBar(a, startX, groundY, 60, '#86efac', 'Result');
+            stepInfo.textContent = `GCD is ${a}`;
+
+            isRunning = false;
+        }
+
+        function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+        switchMode('sieve');
+    </script>
+</body>
+
+</html>

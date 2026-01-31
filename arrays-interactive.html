@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arrays & Sliding Window - Master DSA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+        }
+
+        .nav-bar {
+            background: linear-gradient(135deg, #0891b2 0%, #06b6d4 100%);
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-bar a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-bar h1 {
+            color: white;
+            font-size: 1.5em;
+            flex: 1;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 30px;
+        }
+
+        @media (max-width: 1100px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 25px;
+        }
+
+        .card h2 {
+            font-size: 1.5em;
+            color: #1a1a2e;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 3px solid #0891b2;
+            padding-bottom: 10px;
+        }
+
+        .card h2 i {
+            color: #0891b2;
+        }
+
+        .canvas-container {
+            background: #f8f8f8;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        canvas {
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background: white;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-primary {
+            background: #0891b2;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #0e7490;
+        }
+
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+        }
+
+        .btn-warning {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .btn-warning:hover {
+            background: #d97706;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #1a1a2e;
+            border-color: #e0e0e0;
+        }
+
+        .btn-secondary:hover {
+            border-color: #0891b2;
+            color: #0891b2;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .input-group input {
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            width: 100px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 15px;
+            background: #f8f8f8;
+            border-radius: 8px;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #0891b2;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .step-info {
+            background: #0891b2;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            margin: 15px 0;
+            display: none;
+        }
+
+        .step-info.active {
+            display: block;
+        }
+
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+        }
+
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+        }
+
+        .code-box {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+
+        .code-box .keyword {
+            color: #569cd6;
+        }
+
+        .code-box .function {
+            color: #dcdcaa;
+        }
+
+        .code-box .comment {
+            color: #6a9955;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 12px;
+            background: #e0e0e0;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            background: #0891b2;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="nav-bar">
+        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+        <h1><i class="fas fa-th-list"></i> Arrays & Techniques</h1>
+        <a href="linked-lists.html">Next: Linked Lists <i class="fas fa-arrow-right"></i></a>
+    </div>
+
+    <div class="container">
+        <div class="main-grid">
+            <div class="left-column">
+                <div class="card">
+                    <h2><i class="fas fa-play"></i> Visualization</h2>
+                    <div class="tabs">
+                        <button class="tab active" onclick="switchTab('dynamic')">Dynamic Array</button>
+                        <button class="tab" onclick="switchTab('sliding')">Sliding Window</button>
+                        <button class="tab" onclick="switchTab('two-pointer')">Two Pointers</button>
+                    </div>
+
+                    <div class="canvas-container">
+                        <canvas id="mainCanvas" width="800" height="300"></canvas>
+                    </div>
+
+                    <!-- Dynamic Array Controls -->
+                    <div id="dynamicControls" class="controls">
+                        <div class="input-group">
+                            <input type="number" id="arrInput" placeholder="Value" value="10">
+                            <button class="btn btn-primary" onclick="pushElement()">Push</button>
+                        </div>
+                        <button class="btn btn-danger" onclick="popElement()">Pop</button>
+                        <button class="btn btn-secondary" onclick="resetDynamic()">Reset</button>
+                    </div>
+
+                    <!-- Sliding Window Controls -->
+                    <div id="slidingControls" class="controls" style="display: none;">
+                        <div class="input-group">
+                            <input type="number" id="windowSize" placeholder="k" value="3" min="1" max="5">
+                            <button class="btn btn-success" onclick="startSlidingWindow()">Find Max Sum</button>
+                        </div>
+                        <button class="btn btn-secondary" onclick="initSlidingWindow()">New Array</button>
+                    </div>
+
+                    <!-- Two Pointers Controls -->
+                    <div id="twoPointerControls" class="controls" style="display: none;">
+                        <div class="input-group">
+                            <input type="number" id="targetSum" placeholder="Target" value="15">
+                            <button class="btn btn-warning" onclick="startTwoPointers()">Find Pair Sum</button>
+                        </div>
+                        <button class="btn btn-secondary" onclick="initTwoPointers()">New Sorted Array</button>
+                    </div>
+
+                    <div class="step-info" id="stepInfo"></div>
+
+                    <div class="stats-grid" id="arrayStats">
+                        <div class="stat-item">
+                            <div class="stat-value" id="arrSize">0</div>
+                            <div class="stat-label">Size</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="arrCapacity">4</div>
+                            <div class="stat-label">Capacity</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="arrAccess">O(1)</div>
+                            <div class="stat-label">Access Time</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="right-column">
+                <div class="card" id="infoCard">
+                    <!-- Dynamic Array Info -->
+                    <div id="dynamicInfo">
+                        <h2><i class="fas fa-expand-alt"></i> Dynamic Array</h2>
+                        <p>An array that automatically resizes when it gets full. Usually doubles its capacity.</p>
+                        <div class="code-box">
+                            <span class="keyword">function</span> <span class="function">push</span>(val):
+                            <span class="keyword">if</span> size == capacity:
+                            capacity *= 2
+                            <span class="function">resize</span>(capacity)
+                            data[size] = val
+                            size++
+                        </div>
+                        <p style="margin-top: 10px;"><strong>Amortized Complexity:</strong> O(1) insertion.</p>
+                    </div>
+
+                    <!-- Sliding Window Info -->
+                    <div id="slidingInfo" style="display: none;">
+                        <h2><i class="fas fa-window-maximize"></i> Sliding Window</h2>
+                        <p>Optimization technique to convert nested loops into a single loop. Useful for subarray
+                            problems.</p>
+                        <div class="code-box">
+                            <span class="keyword">function</span> <span class="function">maxSum</span>(arr, k):
+                            curr = <span class="function">sum</span>(arr[0..k-1])
+                            max_sum = curr
+                            <span class="keyword">for</span> i <span class="keyword">from</span> k <span
+                                class="keyword">to</span> n-1:
+                            curr += arr[i] - arr[i-k]
+                            max_sum = <span class="function">max</span>(max_sum, curr)
+                            <span class="keyword">return</span> max_sum
+                        </div>
+                    </div>
+
+                    <!-- Two Pointers Info -->
+                    <div id="twoPointerInfo" style="display: none;">
+                        <h2><i class="fas fa-arrows-alt-h"></i> Two Pointers</h2>
+                        <p>Using two indices to traverse the array, often from different ends. Requires sorted array for
+                            sum problems.</p>
+                        <div class="code-box">
+                            <span class="keyword">while</span> left < right: sum=arr[left] + arr[right] <span
+                                class="keyword">if</span> sum == target: <span class="keyword">return</span> true
+                                <span class="keyword">else if</span> sum < target: left++ <span class="keyword">
+                                    else</span>: right--
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('mainCanvas');
+        const ctx = canvas.getContext('2d');
+        const stepInfo = document.getElementById('stepInfo');
+
+        // State
+        let currentTab = 'dynamic';
+        let isAnimating = false;
+
+        // Dynamic Array State
+        let dynArr = [10, 20];
+        let capacity = 4;
+
+        // Sliding Window State
+        let slideArr = [2, 1, 5, 1, 3, 2, 9, 7];
+        let windowStart = 0;
+        let windowEnd = 0;
+
+        // Two Pointer State
+        let tpArr = [1, 3, 4, 6, 8, 9, 11, 14];
+        let pLeft = 0;
+        let pRight = 0;
+
+        function switchTab(tab) {
+            currentTab = tab;
+            isAnimating = false;
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active'); // active btn
+
+            // Toggle Controls
+            document.getElementById('dynamicControls').style.display = tab === 'dynamic' ? 'flex' : 'none';
+            document.getElementById('slidingControls').style.display = tab === 'sliding' ? 'flex' : 'none';
+            document.getElementById('twoPointerControls').style.display = tab === 'two-pointer' ? 'flex' : 'none';
+
+            // Toggle Info
+            document.getElementById('dynamicInfo').style.display = tab === 'dynamic' ? 'block' : 'none';
+            document.getElementById('slidingInfo').style.display = tab === 'sliding' ? 'block' : 'none';
+            document.getElementById('twoPointerInfo').style.display = tab === 'two-pointer' ? 'block' : 'none';
+
+            stepInfo.classList.remove('active');
+
+            if (tab === 'dynamic') drawDynamic();
+            else if (tab === 'sliding') initSlidingWindow();
+            else if (tab === 'two-pointer') initTwoPointers();
+        }
+
+        // --- DRAWING HELPERS ---
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function drawBox(x, y, val, color = '#e0e0e0', label = null, isGhost = false) {
+            ctx.fillStyle = color;
+            if (isGhost) {
+                ctx.strokeStyle = '#ccc';
+                ctx.setLineDash([5, 5]);
+                ctx.strokeRect(x, y, 50, 50);
+                ctx.setLineDash([]);
+            } else {
+                ctx.fillRect(x, y, 50, 50);
+                ctx.strokeStyle = '#333';
+                ctx.strokeRect(x, y, 50, 50);
+            }
+
+            if (val !== null) {
+                ctx.fillStyle = '#1a1a2e';
+                ctx.font = 'bold 18px Segoe UI';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(val, x + 25, y + 25);
+            }
+
+            if (label) {
+                ctx.fillStyle = '#666';
+                ctx.font = '12px Segoe UI';
+                ctx.fillText(label, x + 25, y + 65);
+            }
+        }
+
+        // --- DYNAMIC ARRAY LOGIC ---
+        function drawDynamic() {
+            clearCanvas();
+            document.getElementById('arrSize').textContent = dynArr.length;
+            document.getElementById('arrCapacity').textContent = capacity;
+
+            const startX = 50;
+            const startY = 120;
+
+            for (let i = 0; i < capacity; i++) {
+                const val = i < dynArr.length ? dynArr[i] : null;
+                const color = i < dynArr.length ? '#0891b2' : '#f0f0f0';
+                drawBox(startX + i * 60, startY, val, i < dynArr.length ? '#bde0fe' : null, i, i >= dynArr.length);
+            }
+        }
+
+        async function pushElement() {
+            if (isAnimating) return;
+            const val = parseInt(document.getElementById('arrInput').value);
+
+            if (dynArr.length === capacity) {
+                stepInfo.classList.add('active');
+                stepInfo.textContent = "Capacity reached! Resizing array (Doubling capacity)...";
+                isAnimating = true;
+
+                // Animation of resizing
+                const oldCap = capacity;
+                capacity *= 2;
+
+                // Draw new empty slots
+                drawDynamic();
+                await sleep(1000);
+            }
+
+            dynArr.push(val);
+            if (isAnimating) {
+                stepInfo.textContent = "Copied elements and added new value.";
+                await sleep(500);
+            }
+
+            isAnimating = false;
+            stepInfo.classList.remove('active');
+            drawDynamic();
+        }
+
+        function popElement() {
+            if (dynArr.length > 0) dynArr.pop();
+            drawDynamic();
+        }
+
+        function resetDynamic() {
+            dynArr = [10, 20];
+            capacity = 4;
+            drawDynamic();
+        }
+
+        // --- SLIDING WINDOW LOGIC ---
+        function initSlidingWindow() {
+            slideArr = Array.from({ length: 8 }, () => Math.floor(Math.random() * 10) + 1);
+            drawSlidingWindow(-1, -1, 0); // Reset visual
+        }
+
+        function drawSlidingWindow(start, end, currentSum) {
+            clearCanvas();
+            const startX = 100;
+            const startY = 120;
+
+            // Draw array
+            slideArr.forEach((val, i) => {
+                let color = '#fff';
+                if (i >= start && i < end) color = '#a7f3d0'; // In window
+                drawBox(startX + i * 60, startY, val, color, i);
+            });
+
+            // Draw Window Bracket
+            if (start !== -1) {
+                ctx.beginPath();
+                ctx.strokeStyle = '#059669';
+                ctx.lineWidth = 3;
+                ctx.moveTo(startX + start * 60, startY - 10);
+                ctx.lineTo(startX + start * 60, startY - 20);
+                ctx.lineTo(startX + (end - 1) * 60 + 50, startY - 20);
+                ctx.lineTo(startX + (end - 1) * 60 + 50, startY - 10);
+                ctx.stroke();
+
+                ctx.fillStyle = '#059669';
+                ctx.font = 'bold 16px Segoe UI';
+                ctx.fillText(`Sum: ${currentSum}`, startX + ((start + end - 1) / 2) * 60 + 25, startY - 40);
+            }
+        }
+
+        async function startSlidingWindow() {
+            if (isAnimating) return;
+            isAnimating = true;
+            stepInfo.classList.add('active');
+
+            const k = parseInt(document.getElementById('windowSize').value);
+            let currSum = 0;
+            let maxSum = -Infinity;
+
+            // Initial Window
+            stepInfo.textContent = `Building initial window of size ${k}...`;
+            for (let i = 0; i < k; i++) {
+                currSum += slideArr[i];
+                drawSlidingWindow(0, i + 1, currSum);
+                await sleep(500);
+            }
+            maxSum = currSum;
+            await sleep(800);
+
+            // Slide
+            for (let i = k; i < slideArr.length; i++) {
+                stepInfo.textContent = `Sliding: Subtract ${slideArr[i - k]}, Add ${slideArr[i]}`;
+                currSum += slideArr[i] - slideArr[i - k];
+                maxSum = Math.max(maxSum, currSum);
+
+                drawSlidingWindow(i - k + 1, i + 1, currSum);
+                await sleep(1000);
+            }
+
+            stepInfo.textContent = `Finished! Max Sum is ${maxSum}`;
+            isAnimating = false;
+        }
+
+        // --- TWO POINTERS LOGIC ---
+        function initTwoPointers() {
+            tpArr = [1, 2, 4, 5, 7, 10, 11, 15].sort((a, b) => a - b);
+            drawTwoPointers(-1, -1);
+        }
+
+        function drawTwoPointers(left, right, found = false) {
+            clearCanvas();
+            const startX = 100;
+            const startY = 120;
+
+            tpArr.forEach((val, i) => {
+                let color = '#fff';
+                if (i === left || i === right) color = found ? '#a7f3d0' : '#fef08a';
+                drawBox(startX + i * 60, startY, val, color, i);
+            });
+
+            // Draw Pointers
+            if (left !== -1) {
+                // Left Pointer
+                ctx.fillStyle = '#d97706';
+                ctx.beginPath();
+                ctx.moveTo(startX + left * 60 + 25, startY + 60);
+                ctx.lineTo(startX + left * 60 + 15, startY + 80);
+                ctx.lineTo(startX + left * 60 + 35, startY + 80);
+                ctx.fill();
+                ctx.fillText("L", startX + left * 60 + 25, startY + 95);
+
+                // Right Pointer
+                ctx.beginPath();
+                ctx.moveTo(startX + right * 60 + 25, startY + 60);
+                ctx.lineTo(startX + right * 60 + 15, startY + 80);
+                ctx.lineTo(startX + right * 60 + 35, startY + 80);
+                ctx.fill();
+                ctx.fillText("R", startX + right * 60 + 25, startY + 95);
+            }
+        }
+
+        async function startTwoPointers() {
+            if (isAnimating) return;
+            isAnimating = true;
+            stepInfo.classList.add('active');
+
+            const target = parseInt(document.getElementById('targetSum').value);
+            let left = 0;
+            let right = tpArr.length - 1;
+            let found = false;
+
+            while (left < right) {
+                drawTwoPointers(left, right);
+                const sum = tpArr[left] + tpArr[right];
+                stepInfo.textContent = `L(${tpArr[left]}) + R(${tpArr[right]}) = ${sum}. Target: ${target}`;
+                await sleep(1000);
+
+                if (sum === target) {
+                    stepInfo.textContent = `Found pair! indices ${left} and ${right}`;
+                    drawTwoPointers(left, right, true);
+                    found = true;
+                    break;
+                } else if (sum < target) {
+                    stepInfo.textContent = `Sum < Target. Move Left pointer forward.`;
+                    left++;
+                } else {
+                    stepInfo.textContent = `Sum > Target. Move Right pointer backward.`;
+                    right--;
+                }
+                await sleep(500);
+            }
+
+            if (!found) stepInfo.textContent = "No pair found.";
+            isAnimating = false;
+        }
+
+        function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+        // Initial load
+        drawDynamic();
+    </script>
+</body>
+
+</html>

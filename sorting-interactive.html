@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorting Algorithms - Master DSA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+        }
+
+        .nav-bar {
+            background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-bar a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-bar h1 {
+            color: white;
+            font-size: 1.5em;
+            flex: 1;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 30px;
+        }
+
+        @media (max-width: 1100px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 25px;
+        }
+
+        .card h2 {
+            font-size: 1.5em;
+            color: #1a1a2e;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 3px solid #d97706;
+            padding-bottom: 10px;
+        }
+
+        .card h2 i {
+            color: #d97706;
+        }
+
+        .canvas-container {
+            background: #fffbeb;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        canvas {
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background: white;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-primary {
+            background: #d97706;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #b45309;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #1a1a2e;
+            border-color: #e0e0e0;
+        }
+
+        .btn-secondary:hover {
+            border-color: #d97706;
+            color: #d97706;
+        }
+
+        .slider-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-left: auto;
+        }
+
+        .step-info {
+            background: #d97706;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            margin: 15px 0;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .algo-tabs {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .algo-tab {
+            padding: 10px 16px;
+            background: #e0e0e0;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            transition: all 0.2s;
+        }
+
+        .algo-tab.active {
+            background: #d97706;
+            color: white;
+        }
+
+        .complexity-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 13px;
+        }
+
+        .complexity-table th,
+        .complexity-table td {
+            padding: 10px;
+            border: 1px solid #e0e0e0;
+            text-align: left;
+        }
+
+        .complexity-table th {
+            background: #d97706;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="nav-bar">
+        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+        <h1><i class="fas fa-sort-amount-down"></i> Sorting Algorithms</h1>
+        <a href="searching-interactive.html">Next: Searching <i class="fas fa-arrow-right"></i></a>
+    </div>
+
+    <div class="container">
+        <div class="main-grid">
+            <div class="left-column">
+                <div class="card">
+                    <h2><i class="fas fa-chart-bar"></i> Visualizer</h2>
+
+                    <div class="algo-tabs">
+                        <button class="algo-tab active" onclick="setAlgo('bubble')">Bubble Sort</button>
+                        <button class="algo-tab" onclick="setAlgo('selection')">Selection Sort</button>
+                        <button class="algo-tab" onclick="setAlgo('insertion')">Insertion Sort</button>
+                        <button class="algo-tab" onclick="setAlgo('merge')">Merge Sort</button>
+                        <button class="algo-tab" onclick="setAlgo('quick')">Quick Sort</button>
+                        <button class="algo-tab" onclick="setAlgo('heap')">Heap Sort</button>
+                    </div>
+
+                    <div class="canvas-container">
+                        <canvas id="mainCanvas" width="800" height="400"></canvas>
+                    </div>
+
+                    <div class="step-info" id="stepInfo">Select an algorithm to start</div>
+
+                    <div class="controls">
+                        <button class="btn btn-primary" onclick="startSort()"><i class="fas fa-play"></i> Sort</button>
+                        <button class="btn btn-secondary" onclick="generateArray()"><i class="fas fa-random"></i>
+                            Shuffle</button>
+
+                        <div class="slider-group">
+                            <label>Size</label>
+                            <input type="range" id="sizeSlider" min="10" max="100" value="50" oninput="generateArray()">
+                            <label>Speed</label>
+                            <input type="range" id="speedSlider" min="1" max="100" value="50">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="right-column">
+                <div class="card">
+                    <h2><i class="fas fa-info-circle"></i> Algorithm Details</h2>
+                    <h3 id="algoTitle">Bubble Sort</h3>
+                    <p id="algoDesc" style="color: #555; margin: 10px 0; line-height: 1.6;">Repeatedly steps through the
+                        list, compares adjacent elements and swaps them if they are in the wrong order.</p>
+
+                    <table class="complexity-table">
+                        <tr>
+                            <th>Time (Avg)</th>
+                            <td id="timeAvg">O(n²)</td>
+                        </tr>
+                        <tr>
+                            <th>Time (Best)</th>
+                            <td id="timeBest">O(n)</td>
+                        </tr>
+                        <tr>
+                            <th>Time (Worst)</th>
+                            <td id="timeWorst">O(n²)</td>
+                        </tr>
+                        <tr>
+                            <th>Space</th>
+                            <td id="spaceComplex">O(1)</td>
+                        </tr>
+                        <tr>
+                            <th>Stable?</th>
+                            <td id="isStable">Yes</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('mainCanvas');
+        const ctx = canvas.getContext('2d');
+        const stepInfo = document.getElementById('stepInfo');
+
+        // State
+        let array = [];
+        let currentAlgo = 'bubble';
+        let isSorting = false;
+        let abortSort = false;
+
+        // Colors
+        const COLOR_DEFAULT = '#fcd34d'; // amber-300
+        const COLOR_COMPARE = '#ef4444'; // red-500
+        const COLOR_SWAP = '#3b82f6';    // blue-500
+        const COLOR_SORTED = '#10b981';  // green-500
+        const COLOR_PIVOT = '#8b5cf6';   // purple-500
+
+        const algos = {
+            bubble: { name: 'Bubble Sort', avg: 'O(n²)', best: 'O(n)', worst: 'O(n²)', space: 'O(1)', stable: 'Yes', desc: 'Simple comparison-based sorting. Swaps adjacent elements if they are in wrong order.' },
+            selection: { name: 'Selection Sort', avg: 'O(n²)', best: 'O(n²)', worst: 'O(n²)', space: 'O(1)', stable: 'No', desc: 'Divides list into sorted and unsorted parts. Repeatedly finds minimum from unsorted part.' },
+            insertion: { name: 'Insertion Sort', avg: 'O(n²)', best: 'O(n)', worst: 'O(n²)', space: 'O(1)', stable: 'Yes', desc: 'Builds sorted array one item at a time. Much like sorting playing cards.' },
+            merge: { name: 'Merge Sort', avg: 'O(n log n)', best: 'O(n log n)', worst: 'O(n log n)', space: 'O(n)', stable: 'Yes', desc: 'Divide and conquer. Recursively divides array in halves and merges sorted halves.' },
+            quick: { name: 'Quick Sort', avg: 'O(n log n)', best: 'O(n log n)', worst: 'O(n²)', space: 'O(log n)', stable: 'No', desc: 'Divide and conquer. Picks a pivot and partitions array around it.' },
+            heap: { name: 'Heap Sort', avg: 'O(n log n)', best: 'O(n log n)', worst: 'O(n log n)', space: 'O(1)', stable: 'No', desc: 'Uses a binary heap data structure. Similar to selection sort but finds max faster.' }
+        };
+
+        function setAlgo(algo) {
+            if (isSorting) return;
+            currentAlgo = algo;
+            document.querySelectorAll('.algo-tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Update Info
+            const info = algos[algo];
+            document.getElementById('algoTitle').textContent = info.name;
+            document.getElementById('algoDesc').textContent = info.desc;
+            document.getElementById('timeAvg').textContent = info.avg;
+            document.getElementById('timeBest').textContent = info.best;
+            document.getElementById('timeWorst').textContent = info.worst;
+            document.getElementById('spaceComplex').textContent = info.space;
+            document.getElementById('isStable').textContent = info.stable;
+
+            stepInfo.textContent = `Selected ${info.name}. Press Sort to begin.`;
+        }
+
+        function generateArray() {
+            if (isSorting) {
+                abortSort = true;
+                return; // Will regenerate after abort
+            }
+            const size = parseInt(document.getElementById('sizeSlider').value);
+            array = Array.from({ length: size }, () => Math.floor(Math.random() * 100) + 5);
+            drawArray();
+            stepInfo.textContent = "New Array Generated";
+        }
+
+        function drawArray(highlights = {}, sortedIndices = []) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const w = (canvas.width - 20) / array.length;
+            const barWidth = Math.max(2, w - 2);
+
+            array.forEach((val, i) => {
+                const h = (val / 105) * (canvas.height - 40);
+                const x = 10 + i * w;
+                const y = canvas.height - h;
+
+                let color = COLOR_DEFAULT;
+                if (sortedIndices.includes(i)) color = COLOR_SORTED;
+                if (highlights[i]) color = highlights[i];
+
+                ctx.fillStyle = color;
+                ctx.fillRect(x, y, barWidth, h);
+            });
+        }
+
+        async function startSort() {
+            if (isSorting) return;
+            isSorting = true;
+            abortSort = false;
+
+            // Re-generate if already sorted (visual check hack) or just use current
+            // Actually, let's just sort whatever is there.
+
+            switch (currentAlgo) {
+                case 'bubble': await bubbleSort(); break;
+                case 'selection': await selectionSort(); break;
+                case 'insertion': await insertionSort(); break;
+                case 'merge': await mergeSort(0, array.length - 1); break;
+                case 'quick': await quickSort(0, array.length - 1); break;
+                case 'heap': await heapSort(); break;
+            }
+
+            if (!abortSort) {
+                drawArray({}, array.map((_, i) => i)); // All sorted
+                stepInfo.textContent = "Sort Completed!";
+            }
+            isSorting = false;
+        }
+
+        function getDelay() {
+            const speed = parseInt(document.getElementById('speedSlider').value);
+            return Math.max(1, 150 - speed * 1.5);
+        }
+
+        async function swap(i, j) {
+            const temp = array[i];
+            array[i] = array[j];
+            array[j] = temp;
+        }
+
+        // --- SORTING ALGLOS ---
+
+        async function bubbleSort() {
+            for (let i = 0; i < array.length; i++) {
+                for (let j = 0; j < array.length - i - 1; j++) {
+                    if (abortSort) return;
+                    drawArray({ [j]: COLOR_COMPARE, [j + 1]: COLOR_COMPARE });
+                    await new Promise(r => setTimeout(r, getDelay()));
+
+                    if (array[j] > array[j + 1]) {
+                        await swap(j, j + 1);
+                        drawArray({ [j]: COLOR_SWAP, [j + 1]: COLOR_SWAP });
+                        await new Promise(r => setTimeout(r, getDelay()));
+                    }
+                }
+                // i elements at end are sorted
+            }
+        }
+
+        async function selectionSort() {
+            for (let i = 0; i < array.length; i++) {
+                let minIdx = i;
+                for (let j = i + 1; j < array.length; j++) {
+                    if (abortSort) return;
+                    drawArray({ [i]: COLOR_PIVOT, [j]: COLOR_COMPARE, [minIdx]: COLOR_SWAP });
+                    await new Promise(r => setTimeout(r, getDelay()));
+
+                    if (array[j] < array[minIdx]) minIdx = j;
+                }
+                if (minIdx !== i) await swap(i, minIdx);
+            }
+        }
+
+        async function insertionSort() {
+            for (let i = 1; i < array.length; i++) {
+                let key = array[i];
+                let j = i - 1;
+                while (j >= 0 && array[j] > key) {
+                    if (abortSort) return;
+                    drawArray({ [i]: COLOR_PIVOT, [j]: COLOR_COMPARE });
+                    await new Promise(r => setTimeout(r, getDelay()));
+
+                    array[j + 1] = array[j];
+                    j = j - 1;
+                    array[j + 1] = key; // Visualize intermediate
+                    drawArray({ [j + 1]: COLOR_SWAP });
+                }
+                array[j + 1] = key;
+            }
+        }
+
+        async function mergeSort(l, r) {
+            if (l >= r || abortSort) return;
+            const m = l + Math.floor((r - l) / 2);
+            await mergeSort(l, m);
+            await mergeSort(m + 1, r);
+            await merge(l, m, r);
+        }
+
+        async function merge(l, m, r) {
+            const n1 = m - l + 1;
+            const n2 = r - m;
+            const L = new Array(n1);
+            const R = new Array(n2);
+
+            for (let i = 0; i < n1; i++) L[i] = array[l + i];
+            for (let j = 0; j < n2; j++) R[j] = array[m + 1 + j];
+
+            let i = 0, j = 0, k = l;
+            while (i < n1 && j < n2) {
+                if (abortSort) return;
+                drawArray({ [k]: COLOR_SWAP, [l + i]: COLOR_COMPARE, [m + 1 + j]: COLOR_COMPARE });
+                await new Promise(r => setTimeout(r, getDelay()));
+
+                if (L[i] <= R[j]) {
+                    array[k] = L[i];
+                    i++;
+                } else {
+                    array[k] = R[j];
+                    j++;
+                }
+                k++;
+            }
+            while (i < n1) {
+                if (abortSort) return;
+                array[k] = L[i];
+                drawArray({ [k]: COLOR_SWAP });
+                await new Promise(r => setTimeout(r, getDelay()));
+                i++; k++;
+            }
+            while (j < n2) {
+                if (abortSort) return;
+                array[k] = R[j];
+                drawArray({ [k]: COLOR_SWAP });
+                await new Promise(r => setTimeout(r, getDelay()));
+                j++; k++;
+            }
+        }
+
+        async function quickSort(low, high) {
+            if (low < high) {
+                if (abortSort) return;
+                let pi = await partition(low, high);
+                await quickSort(low, pi - 1);
+                await quickSort(pi + 1, high);
+            }
+        }
+
+        async function partition(low, high) {
+            let pivot = array[high];
+            let i = (low - 1);
+
+            for (let j = low; j <= high - 1; j++) {
+                if (abortSort) return;
+                drawArray({ [high]: COLOR_PIVOT, [j]: COLOR_COMPARE, [i + 1]: COLOR_DEFAULT });
+                await new Promise(r => setTimeout(r, getDelay()));
+
+                if (array[j] < pivot) {
+                    i++;
+                    await swap(i, j);
+                    drawArray({ [i]: COLOR_SWAP, [j]: COLOR_SWAP });
+                }
+            }
+            await swap(i + 1, high);
+            return (i + 1);
+        }
+
+        async function heapSort() {
+            const n = array.length;
+            // Build help
+            for (let i = Math.floor(n / 2) - 1; i >= 0; i--) {
+                if (abortSort) return;
+                await heapify(n, i);
+            }
+            // Extract
+            for (let i = n - 1; i > 0; i--) {
+                if (abortSort) return;
+                await swap(0, i);
+                drawArray({ [i]: COLOR_SORTED, [0]: COLOR_SWAP });
+                await new Promise(r => setTimeout(r, getDelay()));
+                await heapify(i, 0);
+            }
+        }
+
+        async function heapify(n, i) {
+            let largest = i;
+            let l = 2 * i + 1;
+            let r = 2 * i + 2;
+
+            if (l < n && array[l] > array[largest]) largest = l;
+            if (r < n && array[r] > array[largest]) largest = r;
+
+            drawArray({ [i]: COLOR_PIVOT, [l]: l < n ? COLOR_COMPARE : null, [r]: r < n ? COLOR_COMPARE : null });
+            await new Promise(r => setTimeout(r, getDelay()));
+
+            if (largest != i) {
+                await swap(i, largest);
+                await heapify(n, largest);
+            }
+        }
+
+        generateArray();
+    </script>
+</body>
+
+</html>
