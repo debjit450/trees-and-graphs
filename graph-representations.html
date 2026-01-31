@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graph Representations - Interactive Learning</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f5f5; min-height: 100vh; }
+        .nav-bar { background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); padding: 15px 30px; display: flex; align-items: center; gap: 20px; }
+        .nav-bar a { color: white; text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+        .nav-bar h1 { color: white; font-size: 1.5em; flex: 1; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+        .card { background: white; border-radius: 16px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); margin-bottom: 25px; }
+        .card h2 { font-size: 1.8em; color: #1a1a2e; margin-bottom: 20px; border-bottom: 3px solid #3b82f6; padding-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+        .card h2 i { color: #3b82f6; }
+        .card p { color: #555; line-height: 1.8; margin-bottom: 15px; }
+        .main-grid { display: grid; grid-template-columns: 300px 1fr; gap: 30px; }
+        @media (max-width: 900px) { .main-grid { grid-template-columns: 1fr; } }
+        .graph-display { background: #f8f8f8; border-radius: 12px; padding: 20px; text-align: center; }
+        canvas { border: 2px solid #e0e0e0; border-radius: 8px; background: white; }
+        .representation { background: #f8f8f8; border-radius: 12px; padding: 25px; margin-bottom: 20px; }
+        .representation h3 { color: #1a1a2e; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+        .representation h3 i { color: #3b82f6; }
+        .matrix-table { border-collapse: collapse; margin: 15px 0; }
+        .matrix-table td, .matrix-table th { padding: 10px 15px; border: 1px solid #ddd; text-align: center; min-width: 40px; }
+        .matrix-table th { background: #3b82f6; color: white; }
+        .matrix-table td.highlight { background: #dbeafe; }
+        .code-box { background: #1e1e1e; color: #d4d4d4; padding: 20px; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 14px; margin: 15px 0; }
+        .code-box .key { color: #9cdcfe; }
+        .code-box .value { color: #ce9178; }
+        .info-box { background: #eff6ff; border: 2px solid #3b82f6; border-radius: 8px; padding: 20px; margin: 20px 0; }
+        .info-box h4 { color: #1d4ed8; margin-bottom: 10px; }
+        .info-box p { color: #1e40af; }
+        .comparison-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        .comparison-table th, .comparison-table td { padding: 12px 15px; border: 1px solid #e0e0e0; text-align: center; }
+        .comparison-table th { background: #3b82f6; color: white; }
+        .comparison-table tr:nth-child(even) { background: #f8f8f8; }
+        .good { color: #059669; font-weight: 600; }
+        .bad { color: #dc2626; font-weight: 600; }
+        .nav-buttons { display: flex; justify-content: space-between; margin-top: 40px; padding-top: 30px; border-top: 2px solid #e0e0e0; }
+        .btn { padding: 12px 24px; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; }
+        .btn-primary { background: #3b82f6; color: white; }
+        .btn-secondary { background: white; color: #1a1a2e; border: 2px solid #e0e0e0; }
+    </style>
+</head>
+<body>
+    <div class="nav-bar">
+        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+        <h1><i class="fas fa-th"></i> Graph Representations</h1>
+        <a href="graphs-interactive.html">Next: Graph Traversals <i class="fas fa-arrow-right"></i></a>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <h2><i class="fas fa-project-diagram"></i> Sample Graph</h2>
+            <div class="main-grid">
+                <div class="graph-display">
+                    <canvas id="graphCanvas" width="260" height="200"></canvas>
+                    <p style="margin-top: 10px; color: #666;">Undirected graph with 5 vertices</p>
+                </div>
+                <div>
+                    <div class="representation">
+                        <h3><i class="fas fa-th"></i> 1. Adjacency Matrix</h3>
+                        <p>A 2D array where matrix[i][j] = 1 if there's an edge between vertex i and j.</p>
+                        <table class="matrix-table">
+                            <tr><th></th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th></tr>
+                            <tr><th>A</th><td>0</td><td class="highlight">1</td><td class="highlight">1</td><td>0</td><td>0</td></tr>
+                            <tr><th>B</th><td class="highlight">1</td><td>0</td><td class="highlight">1</td><td class="highlight">1</td><td>0</td></tr>
+                            <tr><th>C</th><td class="highlight">1</td><td class="highlight">1</td><td>0</td><td>0</td><td class="highlight">1</td></tr>
+                            <tr><th>D</th><td>0</td><td class="highlight">1</td><td>0</td><td>0</td><td class="highlight">1</td></tr>
+                            <tr><th>E</th><td>0</td><td>0</td><td class="highlight">1</td><td class="highlight">1</td><td>0</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-list"></i> 2. Adjacency List</h2>
+            <p>Each vertex stores a list of its neighbors. Most common representation for sparse graphs.</p>
+            
+            <div class="code-box">
+<span class="key">A</span>: [B, C]
+<span class="key">B</span>: [A, C, D]
+<span class="key">C</span>: [A, B, E]
+<span class="key">D</span>: [B, E]
+<span class="key">E</span>: [C, D]
+</div>
+
+            <div class="info-box">
+                <h4><i class="fas fa-check-circle"></i> Advantages</h4>
+                <p>Space efficient for sparse graphs O(V+E). Fast to iterate over all neighbors of a vertex.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-minus"></i> 3. Edge List</h2>
+            <p>Simply a list of all edges. Good for edge-centric algorithms like Kruskal's MST.</p>
+            
+            <div class="code-box">
+edges = [
+    (A, B),
+    (A, C),
+    (B, C),
+    (B, D),
+    (C, E),
+    (D, E)
+]
+</div>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-balance-scale"></i> Comparison</h2>
+            <table class="comparison-table">
+                <tr>
+                    <th>Operation</th>
+                    <th>Adjacency Matrix</th>
+                    <th>Adjacency List</th>
+                    <th>Edge List</th>
+                </tr>
+                <tr>
+                    <td>Space</td>
+                    <td>O(V²)</td>
+                    <td class="good">O(V + E)</td>
+                    <td class="good">O(E)</td>
+                </tr>
+                <tr>
+                    <td>Check if edge exists</td>
+                    <td class="good">O(1)</td>
+                    <td>O(degree)</td>
+                    <td class="bad">O(E)</td>
+                </tr>
+                <tr>
+                    <td>Iterate neighbors</td>
+                    <td>O(V)</td>
+                    <td class="good">O(degree)</td>
+                    <td class="bad">O(E)</td>
+                </tr>
+                <tr>
+                    <td>Add edge</td>
+                    <td class="good">O(1)</td>
+                    <td class="good">O(1)</td>
+                    <td class="good">O(1)</td>
+                </tr>
+                <tr>
+                    <td>Remove edge</td>
+                    <td class="good">O(1)</td>
+                    <td>O(degree)</td>
+                    <td class="bad">O(E)</td>
+                </tr>
+                <tr>
+                    <td>Best for</td>
+                    <td>Dense graphs</td>
+                    <td>Sparse graphs (most common)</td>
+                    <td>Edge algorithms</td>
+                </tr>
+            </table>
+
+            <div class="info-box">
+                <h4><i class="fas fa-lightbulb"></i> When to Use Which?</h4>
+                <ul style="margin-left: 20px;">
+                    <li><strong>Adjacency List:</strong> Default choice for most graph algorithms</li>
+                    <li><strong>Adjacency Matrix:</strong> When you need O(1) edge lookup, or dense graphs</li>
+                    <li><strong>Edge List:</strong> For edge-centric algorithms like Kruskal's MST</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="nav-buttons">
+            <a href="graph-foundations.html" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Graph Foundations</a>
+            <a href="graphs-interactive.html" class="btn btn-primary">Graph Traversals <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('graphCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        const nodes = [
+            { label: 'A', x: 50, y: 100 },
+            { label: 'B', x: 130, y: 40 },
+            { label: 'C', x: 130, y: 160 },
+            { label: 'D', x: 210, y: 60 },
+            { label: 'E', x: 210, y: 140 }
+        ];
+        
+        const edges = [[0,1], [0,2], [1,2], [1,3], [2,4], [3,4]];
+        
+        // Draw edges
+        ctx.strokeStyle = '#333';
+        ctx.lineWidth = 2;
+        edges.forEach(([i, j]) => {
+            ctx.beginPath();
+            ctx.moveTo(nodes[i].x, nodes[i].y);
+            ctx.lineTo(nodes[j].x, nodes[j].y);
+            ctx.stroke();
+        });
+        
+        // Draw nodes
+        nodes.forEach(n => {
+            ctx.beginPath();
+            ctx.arc(n.x, n.y, 22, 0, 2 * Math.PI);
+            ctx.fillStyle = '#3b82f6';
+            ctx.fill();
+            ctx.strokeStyle = '#1a1a2e';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            
+            ctx.font = 'bold 16px Segoe UI';
+            ctx.fillStyle = 'white';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(n.label, n.x, n.y);
+        });
+    </script>
+</body>
+</html>

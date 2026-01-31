@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tries (Prefix Trees) - Interactive Learning</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f5f5; min-height: 100vh; }
+        .nav-bar { background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); padding: 15px 30px; display: flex; align-items: center; gap: 20px; }
+        .nav-bar a { color: white; text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+        .nav-bar h1 { color: white; font-size: 1.5em; flex: 1; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 40px 20px; }
+        .main-grid { display: grid; grid-template-columns: 1fr 380px; gap: 30px; }
+        @media (max-width: 1100px) { .main-grid { grid-template-columns: 1fr; } }
+        .card { background: white; border-radius: 16px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); margin-bottom: 25px; }
+        .card h2 { font-size: 1.6em; color: #1a1a2e; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; border-bottom: 3px solid #6366f1; padding-bottom: 10px; }
+        .card h2 i { color: #6366f1; }
+        .canvas-container { background: #f8f8f8; border-radius: 12px; padding: 20px; text-align: center; overflow-x: auto; }
+        canvas { border: 2px solid #e0e0e0; border-radius: 8px; background: white; }
+        .controls { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; align-items: center; }
+        .btn { padding: 12px 20px; border: 2px solid transparent; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.3s; display: inline-flex; align-items: center; gap: 6px; }
+        .btn-primary { background: #6366f1; color: white; }
+        .btn-primary:hover { background: #4f46e5; }
+        .btn-success { background: #10b981; color: white; }
+        .btn-success:hover { background: #059669; }
+        .btn-warning { background: #f59e0b; color: white; }
+        .btn-warning:hover { background: #d97706; }
+        .btn-danger { background: #ef4444; color: white; }
+        .btn-danger:hover { background: #dc2626; }
+        .btn-secondary { background: white; color: #1a1a2e; border-color: #e0e0e0; }
+        .btn-secondary:hover { border-color: #6366f1; color: #6366f1; }
+        input[type="text"] { padding: 12px 15px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px; width: 200px; }
+        input[type="text"]:focus { outline: none; border-color: #6366f1; }
+        .info-box { background: #eef2ff; border: 2px solid #6366f1; border-radius: 8px; padding: 20px; margin: 20px 0; }
+        .info-box h4 { color: #4338ca; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        .info-box p, .info-box li { color: #3730a3; line-height: 1.6; }
+        .code-box { background: #1e1e1e; color: #d4d4d4; padding: 20px; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 13px; overflow-x: auto; margin: 15px 0; }
+        .code-box .keyword { color: #569cd6; }
+        .code-box .comment { color: #6a9955; }
+        .code-box .function { color: #dcdcaa; }
+        .code-box .string { color: #ce9178; }
+        .step-info { background: #6366f1; color: white; padding: 15px 20px; border-radius: 8px; font-weight: 600; margin: 15px 0; display: none; }
+        .step-info.active { display: block; }
+        .word-list { display: flex; flex-wrap: wrap; gap: 10px; margin: 15px 0; }
+        .word-tag { padding: 8px 16px; background: #eef2ff; border: 2px solid #6366f1; border-radius: 20px; font-weight: 600; color: #4338ca; display: flex; align-items: center; gap: 8px; }
+        .word-tag .remove { cursor: pointer; color: #ef4444; }
+        .autocomplete-results { background: white; border: 2px solid #e0e0e0; border-radius: 8px; margin-top: 10px; max-height: 200px; overflow-y: auto; }
+        .autocomplete-item { padding: 12px 15px; border-bottom: 1px solid #e0e0e0; cursor: pointer; }
+        .autocomplete-item:hover { background: #eef2ff; }
+        .autocomplete-item:last-child { border-bottom: none; }
+        .legend { display: flex; flex-wrap: wrap; gap: 15px; margin-top: 15px; }
+        .legend-item { display: flex; align-items: center; gap: 6px; font-size: 14px; }
+        .legend-color { width: 16px; height: 16px; border-radius: 50%; border: 2px solid #333; }
+        ul.concept-list { list-style: none; padding: 0; }
+        ul.concept-list li { padding: 12px 0; border-bottom: 1px solid #e0e0e0; display: flex; align-items: flex-start; gap: 10px; }
+        ul.concept-list li:last-child { border-bottom: none; }
+        ul.concept-list i { color: #6366f1; margin-top: 3px; }
+    </style>
+</head>
+<body>
+    <div class="nav-bar">
+        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+        <h1><i class="fas fa-spell-check"></i> Tries (Prefix Trees)</h1>
+        <a href="segment-trees.html">Next: Segment Trees <i class="fas fa-arrow-right"></i></a>
+    </div>
+
+    <div class="container">
+        <div class="main-grid">
+            <div class="left-column">
+                <div class="card">
+                    <h2><i class="fas fa-tree"></i> Trie Visualizer</h2>
+                    
+                    <div class="controls">
+                        <input type="text" id="wordInput" placeholder="Enter word..." maxlength="15">
+                        <button class="btn btn-primary" onclick="insertWord()">
+                            <i class="fas fa-plus"></i> Insert
+                        </button>
+                        <button class="btn btn-success" onclick="searchWord()">
+                            <i class="fas fa-search"></i> Search
+                        </button>
+                        <button class="btn btn-warning" onclick="prefixSearch()">
+                            <i class="fas fa-filter"></i> Prefix Match
+                        </button>
+                        <button class="btn btn-danger" onclick="deleteWord()">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                    </div>
+
+                    <div class="controls">
+                        <button class="btn btn-secondary" onclick="loadSample()">
+                            <i class="fas fa-book"></i> Load Sample Words
+                        </button>
+                        <button class="btn btn-secondary" onclick="clearTrie()">
+                            <i class="fas fa-eraser"></i> Clear All
+                        </button>
+                    </div>
+
+                    <div class="step-info" id="stepInfo"></div>
+
+                    <h4 style="margin: 15px 0 10px;">Words in Trie:</h4>
+                    <div class="word-list" id="wordList"></div>
+
+                    <div class="canvas-container">
+                        <canvas id="trieCanvas" width="800" height="400"></canvas>
+                    </div>
+
+                    <div class="legend">
+                        <div class="legend-item"><div class="legend-color" style="background: #6366f1;"></div> Regular Node</div>
+                        <div class="legend-item"><div class="legend-color" style="background: #10b981;"></div> End of Word</div>
+                        <div class="legend-item"><div class="legend-color" style="background: #f59e0b;"></div> Current Path</div>
+                        <div class="legend-item"><div class="legend-color" style="background: #ef4444;"></div> Not Found</div>
+                    </div>
+                </div>
+
+                <!-- Autocomplete Demo -->
+                <div class="card">
+                    <h2><i class="fas fa-keyboard"></i> Autocomplete Demo</h2>
+                    <p style="margin-bottom: 15px;">Type a prefix to see autocomplete suggestions:</p>
+                    <input type="text" id="autocompleteInput" placeholder="Type prefix..." style="width: 100%;" oninput="showAutocomplete()">
+                    <div class="autocomplete-results" id="autocompleteResults"></div>
+                </div>
+            </div>
+
+            <div class="right-column">
+                <!-- What is Trie -->
+                <div class="card">
+                    <h2><i class="fas fa-info-circle"></i> What is a Trie?</h2>
+                    <p>A <strong>Trie</strong> (pronounced "try") is a tree-like data structure for storing strings, where:</p>
+                    <ul style="margin: 15px 0 15px 20px;">
+                        <li>Each node represents a character</li>
+                        <li>The root is empty</li>
+                        <li>Paths from root to marked nodes form words</li>
+                        <li>Common prefixes share the same path</li>
+                    </ul>
+                    <div class="info-box">
+                        <h4><i class="fas fa-lightbulb"></i> Key Advantage</h4>
+                        <p>Search/Insert/Delete in <strong>O(m)</strong> where m = word length. Independent of how many words are stored!</p>
+                    </div>
+                </div>
+
+                <!-- Operations -->
+                <div class="card">
+                    <h2><i class="fas fa-cog"></i> Trie Operations</h2>
+                    <ul class="concept-list">
+                        <li><i class="fas fa-plus"></i> <strong>Insert:</strong> O(m) - traverse/create path for each character</li>
+                        <li><i class="fas fa-search"></i> <strong>Search:</strong> O(m) - traverse path, check if end-of-word</li>
+                        <li><i class="fas fa-filter"></i> <strong>Prefix:</strong> O(m) - traverse prefix path, collect all words</li>
+                        <li><i class="fas fa-trash"></i> <strong>Delete:</strong> O(m) - unmark end-of-word, optionally prune</li>
+                    </ul>
+                    <p style="margin-top: 15px; color: #666;">m = length of word/prefix</p>
+                </div>
+
+                <!-- Implementation -->
+                <div class="card">
+                    <h2><i class="fas fa-code"></i> Trie Node</h2>
+                    <div class="code-box">
+<span class="keyword">class</span> <span class="function">TrieNode</span>:
+    <span class="keyword">def</span> <span class="function">__init__</span>(self):
+        self.children = {}  <span class="comment"># char -> TrieNode</span>
+        self.isEndOfWord = False
+
+<span class="keyword">class</span> <span class="function">Trie</span>:
+    <span class="keyword">def</span> <span class="function">insert</span>(self, word):
+        node = self.root
+        <span class="keyword">for</span> char <span class="keyword">in</span> word:
+            <span class="keyword">if</span> char not <span class="keyword">in</span> node.children:
+                node.children[char] = TrieNode()
+            node = node.children[char]
+        node.isEndOfWord = True
+
+    <span class="keyword">def</span> <span class="function">search</span>(self, word):
+        node = self._traverse(word)
+        <span class="keyword">return</span> node <span class="keyword">and</span> node.isEndOfWord
+</div>
+                </div>
+
+                <!-- Applications -->
+                <div class="card">
+                    <h2><i class="fas fa-rocket"></i> Applications</h2>
+                    <ul class="concept-list">
+                        <li><i class="fas fa-keyboard"></i> <strong>Autocomplete:</strong> Search engines, IDEs</li>
+                        <li><i class="fas fa-spell-check"></i> <strong>Spell checker:</strong> Suggest corrections</li>
+                        <li><i class="fas fa-book"></i> <strong>Dictionary:</strong> Word lookup</li>
+                        <li><i class="fas fa-network-wired"></i> <strong>IP routing:</strong> Longest prefix match</li>
+                        <li><i class="fas fa-phone"></i> <strong>Phone directory:</strong> Contact search</li>
+                        <li><i class="fas fa-dna"></i> <strong>DNA sequencing:</strong> Pattern matching</li>
+                    </ul>
+                </div>
+
+                <!-- Complexity -->
+                <div class="card">
+                    <h2><i class="fas fa-clock"></i> Complexity</h2>
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <tr style="background: #6366f1; color: white;">
+                            <th style="padding: 10px; text-align: left;">Operation</th>
+                            <th style="padding: 10px;">Time</th>
+                            <th style="padding: 10px;">Space</th>
+                        </tr>
+                        <tr><td style="padding: 10px; border-bottom: 1px solid #e0e0e0;">Insert</td><td style="padding: 10px; text-align: center; border-bottom: 1px solid #e0e0e0;">O(m)</td><td style="padding: 10px; text-align: center; border-bottom: 1px solid #e0e0e0;">O(m)</td></tr>
+                        <tr><td style="padding: 10px; border-bottom: 1px solid #e0e0e0;">Search</td><td style="padding: 10px; text-align: center; border-bottom: 1px solid #e0e0e0;">O(m)</td><td style="padding: 10px; text-align: center; border-bottom: 1px solid #e0e0e0;">O(1)</td></tr>
+                        <tr><td style="padding: 10px; border-bottom: 1px solid #e0e0e0;">Prefix</td><td style="padding: 10px; text-align: center; border-bottom: 1px solid #e0e0e0;">O(m+k)</td><td style="padding: 10px; text-align: center; border-bottom: 1px solid #e0e0e0;">O(k)</td></tr>
+                        <tr><td style="padding: 10px;">Space (total)</td><td colspan="2" style="padding: 10px; text-align: center;">O(ALPHABET × m × n)</td></tr>
+                    </table>
+                    <p style="margin-top: 10px; color: #666; font-size: 14px;">m = word length, k = matching words, n = total words</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('trieCanvas');
+        const ctx = canvas.getContext('2d');
+
+        class TrieNode {
+            constructor() {
+                this.children = {};
+                this.isEndOfWord = false;
+                this.x = 0;
+                this.y = 0;
+                this.state = 'normal';
+            }
+        }
+
+        let root = new TrieNode();
+        let words = [];
+        let isAnimating = false;
+
+        function insertWord() {
+            const input = document.getElementById('wordInput');
+            const word = input.value.toLowerCase().trim();
+            if (!word || isAnimating) return;
+
+            insert(word);
+            if (!words.includes(word)) words.push(word);
+            updateWordList();
+            drawTrie();
+            input.value = '';
+        }
+
+        function insert(word) {
+            let node = root;
+            for (let char of word) {
+                if (!node.children[char]) {
+                    node.children[char] = new TrieNode();
+                }
+                node = node.children[char];
+            }
+            node.isEndOfWord = true;
+        }
+
+        async function searchWord() {
+            const input = document.getElementById('wordInput');
+            const word = input.value.toLowerCase().trim();
+            if (!word || isAnimating) return;
+
+            isAnimating = true;
+            const stepInfo = document.getElementById('stepInfo');
+            stepInfo.classList.add('active');
+            resetStates();
+
+            let node = root;
+            for (let i = 0; i < word.length; i++) {
+                const char = word[i];
+                stepInfo.textContent = `Searching: looking for '${char}'...`;
+                
+                if (!node.children[char]) {
+                    stepInfo.textContent = `❌ Character '${char}' not found. Word "${word}" does not exist.`;
+                    drawTrie();
+                    isAnimating = false;
+                    return;
+                }
+                
+                node = node.children[char];
+                node.state = 'path';
+                drawTrie();
+                await sleep(400);
+            }
+
+            if (node.isEndOfWord) {
+                stepInfo.textContent = `✅ Word "${word}" found!`;
+                node.state = 'found';
+            } else {
+                stepInfo.textContent = `❌ "${word}" is only a prefix, not a complete word.`;
+                node.state = 'notfound';
+            }
+            drawTrie();
+            isAnimating = false;
+        }
+
+        async function prefixSearch() {
+            const input = document.getElementById('wordInput');
+            const prefix = input.value.toLowerCase().trim();
+            if (!prefix || isAnimating) return;
+
+            isAnimating = true;
+            const stepInfo = document.getElementById('stepInfo');
+            stepInfo.classList.add('active');
+            resetStates();
+
+            let node = root;
+            for (let char of prefix) {
+                if (!node.children[char]) {
+                    stepInfo.textContent = `No words with prefix "${prefix}"`;
+                    isAnimating = false;
+                    return;
+                }
+                node = node.children[char];
+                node.state = 'path';
+            }
+            drawTrie();
+
+            const matches = [];
+            collectWords(node, prefix, matches);
+            
+            stepInfo.textContent = `Words with prefix "${prefix}": ${matches.join(', ') || 'none'}`;
+            isAnimating = false;
+        }
+
+        function collectWords(node, prefix, result) {
+            if (node.isEndOfWord) {
+                result.push(prefix);
+            }
+            for (let [char, child] of Object.entries(node.children)) {
+                collectWords(child, prefix + char, result);
+            }
+        }
+
+        async function deleteWord() {
+            const input = document.getElementById('wordInput');
+            const word = input.value.toLowerCase().trim();
+            if (!word || isAnimating) return;
+
+            const stepInfo = document.getElementById('stepInfo');
+            stepInfo.classList.add('active');
+
+            if (deleteHelper(root, word, 0)) {
+                words = words.filter(w => w !== word);
+                stepInfo.textContent = `✅ Deleted "${word}"`;
+            } else {
+                stepInfo.textContent = `❌ Word "${word}" not found`;
+            }
+            
+            updateWordList();
+            drawTrie();
+            input.value = '';
+        }
+
+        function deleteHelper(node, word, index) {
+            if (index === word.length) {
+                if (!node.isEndOfWord) return false;
+                node.isEndOfWord = false;
+                return Object.keys(node.children).length === 0;
+            }
+
+            const char = word[index];
+            if (!node.children[char]) return false;
+
+            const shouldDelete = deleteHelper(node.children[char], word, index + 1);
+            
+            if (shouldDelete) {
+                delete node.children[char];
+                return Object.keys(node.children).length === 0 && !node.isEndOfWord;
+            }
+            return false;
+        }
+
+        function loadSample() {
+            clearTrie();
+            const sampleWords = ['apple', 'app', 'application', 'apt', 'bat', 'ball', 'cat', 'car', 'card'];
+            sampleWords.forEach(word => {
+                insert(word);
+                words.push(word);
+            });
+            updateWordList();
+            drawTrie();
+        }
+
+        function clearTrie() {
+            root = new TrieNode();
+            words = [];
+            updateWordList();
+            drawTrie();
+            document.getElementById('stepInfo').classList.remove('active');
+        }
+
+        function resetStates() {
+            function reset(node) {
+                node.state = 'normal';
+                for (let child of Object.values(node.children)) {
+                    reset(child);
+                }
+            }
+            reset(root);
+        }
+
+        function updateWordList() {
+            const container = document.getElementById('wordList');
+            container.innerHTML = words.map(word => 
+                `<span class="word-tag">${word}</span>`
+            ).join('');
+        }
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        function drawTrie() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            if (Object.keys(root.children).length === 0) {
+                ctx.font = '16px Segoe UI';
+                ctx.fillStyle = '#666';
+                ctx.textAlign = 'center';
+                ctx.fillText('Empty trie - Insert words to visualize', canvas.width / 2, canvas.height / 2);
+                return;
+            }
+
+            // Calculate positions using BFS
+            const positions = new Map();
+            const queue = [[root, canvas.width / 2, 40, 'root']];
+            positions.set(root, { x: canvas.width / 2, y: 40, label: 'root' });
+
+            let level = 0;
+            while (queue.length > 0) {
+                const levelSize = queue.length;
+                const levelNodes = [];
+                
+                for (let i = 0; i < levelSize; i++) {
+                    const [node, x, y, label] = queue.shift();
+                    const children = Object.entries(node.children);
+                    const startX = x - (children.length - 1) * 40;
+
+                    children.forEach(([char, child], idx) => {
+                        const childX = startX + idx * 80;
+                        const childY = y + 70;
+                        positions.set(child, { x: childX, y: childY, label: char, parent: node });
+                        queue.push([child, childX, childY, char]);
+                    });
+                }
+                level++;
+            }
+
+            // Draw edges
+            for (let [node, pos] of positions) {
+                if (pos.parent) {
+                    const parentPos = positions.get(pos.parent);
+                    ctx.beginPath();
+                    ctx.moveTo(parentPos.x, parentPos.y + 15);
+                    ctx.lineTo(pos.x, pos.y - 15);
+                    ctx.strokeStyle = node.state === 'path' ? '#f59e0b' : '#333';
+                    ctx.lineWidth = node.state === 'path' ? 3 : 2;
+                    ctx.stroke();
+                }
+            }
+
+            // Draw nodes
+            for (let [node, pos] of positions) {
+                ctx.beginPath();
+                ctx.arc(pos.x, pos.y, 18, 0, 2 * Math.PI);
+                
+                let color = '#6366f1';
+                if (node.state === 'path') color = '#f59e0b';
+                else if (node.state === 'found') color = '#10b981';
+                else if (node.state === 'notfound') color = '#ef4444';
+                else if (node.isEndOfWord) color = '#10b981';
+                
+                ctx.fillStyle = color;
+                ctx.fill();
+                ctx.strokeStyle = '#1a1a2e';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                ctx.font = 'bold 14px Segoe UI';
+                ctx.fillStyle = 'white';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(pos.label === 'root' ? '•' : pos.label, pos.x, pos.y);
+            }
+        }
+
+        function showAutocomplete() {
+            const input = document.getElementById('autocompleteInput');
+            const prefix = input.value.toLowerCase().trim();
+            const container = document.getElementById('autocompleteResults');
+
+            if (!prefix) {
+                container.innerHTML = '';
+                return;
+            }
+
+            let node = root;
+            for (let char of prefix) {
+                if (!node.children[char]) {
+                    container.innerHTML = '<div class="autocomplete-item" style="color: #999;">No matches</div>';
+                    return;
+                }
+                node = node.children[char];
+            }
+
+            const matches = [];
+            collectWords(node, prefix, matches);
+
+            if (matches.length === 0) {
+                container.innerHTML = '<div class="autocomplete-item" style="color: #999;">No complete words</div>';
+            } else {
+                container.innerHTML = matches.slice(0, 10).map(word => 
+                    `<div class="autocomplete-item" onclick="selectAutocomplete('${word}')">${word}</div>`
+                ).join('');
+            }
+        }
+
+        function selectAutocomplete(word) {
+            document.getElementById('autocompleteInput').value = word;
+            document.getElementById('autocompleteResults').innerHTML = '';
+        }
+
+        document.getElementById('wordInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') insertWord();
+        });
+
+        // Initialize
+        loadSample();
+    </script>
+</body>
+</html>

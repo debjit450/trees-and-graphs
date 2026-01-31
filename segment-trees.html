@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Segment Trees - Interactive Learning</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f5f5; min-height: 100vh; }
+        .nav-bar { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); padding: 15px 30px; display: flex; align-items: center; gap: 20px; }
+        .nav-bar a { color: white; text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+        .nav-bar h1 { color: white; font-size: 1.5em; flex: 1; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+        .card { background: white; border-radius: 16px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); margin-bottom: 25px; }
+        .card h2 { font-size: 1.8em; color: #1a1a2e; margin-bottom: 20px; border-bottom: 3px solid #f59e0b; padding-bottom: 10px; }
+        .card p { color: #555; line-height: 1.8; margin-bottom: 15px; }
+        .info-box { background: #fffbeb; border: 2px solid #f59e0b; border-radius: 8px; padding: 20px; margin: 20px 0; }
+        .info-box h4 { color: #b45309; margin-bottom: 10px; }
+        .info-box p, .info-box li { color: #92400e; line-height: 1.6; }
+        .code-box { background: #1e1e1e; color: #d4d4d4; padding: 20px; border-radius: 8px; font-family: monospace; font-size: 13px; margin: 15px 0; overflow-x: auto; }
+        .code-box .keyword { color: #569cd6; }
+        .code-box .comment { color: #6a9955; }
+        .code-box .function { color: #dcdcaa; }
+        .nav-buttons { display: flex; justify-content: space-between; margin-top: 40px; padding-top: 30px; border-top: 2px solid #e0e0e0; }
+        .btn { padding: 12px 24px; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; }
+        .btn-primary { background: #f59e0b; color: white; }
+        .btn-secondary { background: white; color: #1a1a2e; border: 2px solid #e0e0e0; }
+        .operation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .operation-card { background: #fffbeb; padding: 20px; border-radius: 8px; border-left: 4px solid #f59e0b; }
+        .operation-card h4 { color: #b45309; margin-bottom: 10px; }
+        .operation-card p { color: #92400e; margin: 0; }
+        .complexity-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        .complexity-table th, .complexity-table td { padding: 12px 15px; border: 1px solid #e0e0e0; text-align: center; }
+        .complexity-table th { background: #f59e0b; color: white; }
+    </style>
+</head>
+<body>
+    <div class="nav-bar">
+        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+        <h1><i class="fas fa-chart-bar"></i> Segment Trees</h1>
+        <a href="fenwick-tree.html">Next: Fenwick Tree <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="container">
+        <div class="card">
+            <h2>What is a Segment Tree?</h2>
+            <p>A <strong>Segment Tree</strong> is a tree data structure used for storing information about intervals or segments. It allows efficient querying and updating of array intervals.</p>
+            <div class="info-box">
+                <h4><i class="fas fa-lightbulb"></i> Key Use Case</h4>
+                <p>When you need to perform many range queries (sum, min, max, gcd, etc.) and point updates on an array, segment trees provide O(log n) for both operations.</p>
+            </div>
+        </div>
+        <div class="card">
+            <h2>Operations</h2>
+            <div class="operation-grid">
+                <div class="operation-card">
+                    <h4><i class="fas fa-building"></i> Build</h4>
+                    <p>Construct the segment tree from an array in O(n) time.</p>
+                </div>
+                <div class="operation-card">
+                    <h4><i class="fas fa-search"></i> Range Query</h4>
+                    <p>Query sum/min/max over a range [l, r] in O(log n) time.</p>
+                </div>
+                <div class="operation-card">
+                    <h4><i class="fas fa-edit"></i> Point Update</h4>
+                    <p>Update a single element and propagate changes in O(log n).</p>
+                </div>
+                <div class="operation-card">
+                    <h4><i class="fas fa-bolt"></i> Lazy Propagation</h4>
+                    <p>Range updates in O(log n) by deferring updates.</p>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <h2>Time Complexity</h2>
+            <table class="complexity-table">
+                <tr><th>Operation</th><th>Time</th><th>Space</th></tr>
+                <tr><td>Build</td><td>O(n)</td><td>O(n)</td></tr>
+                <tr><td>Range Query</td><td>O(log n)</td><td>O(log n) stack</td></tr>
+                <tr><td>Point Update</td><td>O(log n)</td><td>O(log n) stack</td></tr>
+                <tr><td>Range Update (Lazy)</td><td>O(log n)</td><td>O(n)</td></tr>
+            </table>
+        </div>
+        <div class="card">
+            <h2>Build Algorithm</h2>
+            <div class="code-box">
+<span class="keyword">function</span> <span class="function">build</span>(arr, tree, node, start, end):
+    <span class="keyword">if</span> start == end:
+        tree[node] = arr[start]
+    <span class="keyword">else</span>:
+        mid = (start + end) / 2
+        <span class="function">build</span>(arr, tree, 2*node, start, mid)
+        <span class="function">build</span>(arr, tree, 2*node+1, mid+1, end)
+        tree[node] = tree[2*node] + tree[2*node+1]
+</div>
+        </div>
+        <div class="card">
+            <h2>Range Sum Query</h2>
+            <div class="code-box">
+<span class="keyword">function</span> <span class="function">query</span>(tree, node, start, end, l, r):
+    <span class="keyword">if</span> r < start <span class="keyword">or</span> end < l:
+        <span class="keyword">return</span> 0  <span class="comment">// Out of range</span>
+    <span class="keyword">if</span> l <= start <span class="keyword">and</span> end <= r:
+        <span class="keyword">return</span> tree[node]  <span class="comment">// Fully within range</span>
+    
+    mid = (start + end) / 2
+    left = <span class="function">query</span>(tree, 2*node, start, mid, l, r)
+    right = <span class="function">query</span>(tree, 2*node+1, mid+1, end, l, r)
+    <span class="keyword">return</span> left + right
+</div>
+        </div>
+        <div class="nav-buttons">
+            <a href="tries.html" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Tries</a>
+            <a href="fenwick-tree.html" class="btn btn-primary">Fenwick Tree <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+</body>
+</html>

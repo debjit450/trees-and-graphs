@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binary Search Tree - Interactive Learning</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f5f5; min-height: 100vh; }
+        .nav-bar {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .nav-bar a { color: white; text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+        .nav-bar h1 { color: white; font-size: 1.5em; flex: 1; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 40px 20px; }
+        .main-grid { display: grid; grid-template-columns: 1fr 380px; gap: 30px; }
+        @media (max-width: 1100px) { .main-grid { grid-template-columns: 1fr; } }
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+        }
+        .card h2 {
+            font-size: 1.6em;
+            color: #1a1a2e;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 3px solid #10b981;
+            padding-bottom: 10px;
+        }
+        .card h2 i { color: #10b981; }
+        .canvas-container { background: #f8f8f8; border-radius: 12px; padding: 20px; text-align: center; }
+        canvas { border: 2px solid #e0e0e0; border-radius: 8px; background: white; }
+        .controls { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; align-items: center; }
+        .btn {
+            padding: 12px 20px;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-primary { background: #10b981; color: white; }
+        .btn-primary:hover { background: #059669; }
+        .btn-danger { background: #ef4444; color: white; }
+        .btn-danger:hover { background: #dc2626; }
+        .btn-secondary { background: white; color: #1a1a2e; border-color: #e0e0e0; }
+        .btn-secondary:hover { border-color: #10b981; color: #10b981; }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        input[type="number"] {
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            width: 100px;
+        }
+        input[type="number"]:focus { outline: none; border-color: #10b981; }
+        .operation-tabs { display: flex; gap: 5px; margin-bottom: 20px; flex-wrap: wrap; }
+        .op-tab {
+            padding: 12px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .op-tab.active { border-color: #10b981; background: #f0fdf4; color: #059669; }
+        .op-tab:hover { border-color: #10b981; }
+        .info-box {
+            background: #f0fdf4;
+            border: 2px solid #10b981;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .info-box h4 { color: #059669; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        .info-box p, .info-box li { color: #166534; line-height: 1.6; }
+        .code-box {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+        .code-box .keyword { color: #569cd6; }
+        .code-box .comment { color: #6a9955; }
+        .code-box .function { color: #dcdcaa; }
+        .step-info {
+            background: #10b981;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            margin: 15px 0;
+            display: none;
+        }
+        .step-info.active { display: block; }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .stat-item { text-align: center; padding: 15px; background: #f8f8f8; border-radius: 8px; }
+        .stat-value { font-size: 28px; font-weight: 700; color: #10b981; }
+        .stat-label { font-size: 14px; color: #666; }
+        .result-box {
+            background: #f8f8f8;
+            border-left: 4px solid #10b981;
+            padding: 15px 20px;
+            border-radius: 0 8px 8px 0;
+            margin-top: 15px;
+        }
+        .result-box h4 { color: #1a1a2e; margin-bottom: 8px; }
+        .result-box .value { font-family: 'Courier New', monospace; font-size: 18px; color: #10b981; }
+        .legend { display: flex; flex-wrap: wrap; gap: 15px; margin-top: 15px; }
+        .legend-item { display: flex; align-items: center; gap: 6px; font-size: 14px; }
+        .legend-color { width: 16px; height: 16px; border-radius: 50%; border: 2px solid #333; }
+        ul.concept-list { list-style: none; padding: 0; }
+        ul.concept-list li { padding: 12px 0; border-bottom: 1px solid #e0e0e0; display: flex; align-items: center; gap: 10px; }
+        ul.concept-list li:last-child { border-bottom: none; }
+        ul.concept-list i { color: #10b981; }
+    </style>
+</head>
+<body>
+    <div class="nav-bar">
+        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+        <h1><i class="fas fa-search"></i> Binary Search Trees</h1>
+        <a href="avl-trees.html">Next: AVL Trees <i class="fas fa-arrow-right"></i></a>
+    </div>
+
+    <div class="container">
+        <div class="main-grid">
+            <div class="left-column">
+                <div class="card">
+                    <h2><i class="fas fa-tree"></i> BST Visualizer</h2>
+                    
+                    <div class="operation-tabs">
+                        <div class="op-tab active" data-op="insert" onclick="setOperation('insert')">
+                            <i class="fas fa-plus"></i> Insert
+                        </div>
+                        <div class="op-tab" data-op="search" onclick="setOperation('search')">
+                            <i class="fas fa-search"></i> Search
+                        </div>
+                        <div class="op-tab" data-op="delete" onclick="setOperation('delete')">
+                            <i class="fas fa-trash"></i> Delete
+                        </div>
+                        <div class="op-tab" data-op="min" onclick="setOperation('min')">
+                            <i class="fas fa-arrow-down"></i> Min
+                        </div>
+                        <div class="op-tab" data-op="max" onclick="setOperation('max')">
+                            <i class="fas fa-arrow-up"></i> Max
+                        </div>
+                        <div class="op-tab" data-op="floor" onclick="setOperation('floor')">
+                            <i class="fas fa-level-down-alt"></i> Floor
+                        </div>
+                        <div class="op-tab" data-op="ceil" onclick="setOperation('ceil')">
+                            <i class="fas fa-level-up-alt"></i> Ceil
+                        </div>
+                    </div>
+
+                    <div class="controls">
+                        <input type="number" id="nodeValue" placeholder="Value" min="1" max="999">
+                        <button class="btn btn-primary" onclick="executeOperation()" id="executeBtn">
+                            <i class="fas fa-play"></i> <span id="opButtonText">Insert</span>
+                        </button>
+                        <button class="btn btn-secondary" onclick="loadSampleTree('balanced')">
+                            <i class="fas fa-tree"></i> Balanced BST
+                        </button>
+                        <button class="btn btn-secondary" onclick="loadSampleTree('skewed')">
+                            <i class="fas fa-level-down-alt"></i> Skewed
+                        </button>
+                        <button class="btn btn-danger" onclick="clearTree()">
+                            <i class="fas fa-trash-alt"></i> Clear
+                        </button>
+                    </div>
+
+                    <div class="step-info" id="stepInfo"></div>
+
+                    <div class="canvas-container">
+                        <canvas id="treeCanvas" width="800" height="450"></canvas>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-value" id="nodeCount">0</div>
+                            <div class="stat-label">Nodes</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="treeHeight">0</div>
+                            <div class="stat-label">Height</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="minValue">-</div>
+                            <div class="stat-label">Min</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="maxValue">-</div>
+                            <div class="stat-label">Max</div>
+                        </div>
+                    </div>
+
+                    <div class="legend">
+                        <div class="legend-item"><div class="legend-color" style="background: #3b82f6;"></div> Normal</div>
+                        <div class="legend-item"><div class="legend-color" style="background: #f59e0b;"></div> Comparing</div>
+                        <div class="legend-item"><div class="legend-color" style="background: #10b981;"></div> Found/Inserted</div>
+                        <div class="legend-item"><div class="legend-color" style="background: #ef4444;"></div> Not Found</div>
+                    </div>
+
+                    <div class="result-box" id="resultBox" style="display: none;">
+                        <h4 id="resultTitle">Result</h4>
+                        <div class="value" id="resultValue"></div>
+                    </div>
+                </div>
+
+                <!-- Traversals -->
+                <div class="card">
+                    <h2><i class="fas fa-route"></i> BST Traversals</h2>
+                    <div class="controls">
+                        <button class="btn btn-primary" onclick="runTraversal('inorder')">
+                            <i class="fas fa-sort"></i> Inorder (Sorted)
+                        </button>
+                        <button class="btn btn-secondary" onclick="runTraversal('preorder')">
+                            <i class="fas fa-arrow-right"></i> Preorder
+                        </button>
+                        <button class="btn btn-secondary" onclick="runTraversal('postorder')">
+                            <i class="fas fa-arrow-left"></i> Postorder
+                        </button>
+                    </div>
+                    <div class="result-box" style="display: block; margin-top: 20px;">
+                        <h4>Traversal Output</h4>
+                        <div class="value" id="traversalOutput">-</div>
+                    </div>
+                    <div class="info-box">
+                        <h4><i class="fas fa-star"></i> Key Insight</h4>
+                        <p><strong>Inorder traversal of a BST always gives sorted output!</strong> This is the main reason BSTs are used for ordered data.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="right-column">
+                <!-- BST Property -->
+                <div class="card">
+                    <h2><i class="fas fa-info-circle"></i> BST Property</h2>
+                    <div class="info-box">
+                        <h4><i class="fas fa-key"></i> The Rule</h4>
+                        <p>For every node N:</p>
+                        <ul style="margin-left: 20px; margin-top: 10px;">
+                            <li>All values in <strong>left subtree</strong> are <strong>&lt; N</strong></li>
+                            <li>All values in <strong>right subtree</strong> are <strong>&gt; N</strong></li>
+                        </ul>
+                    </div>
+                    <div class="code-box">
+<span class="keyword">class</span> <span class="function">BSTNode</span>:
+    value
+    left   <span class="comment">// smaller values</span>
+    right  <span class="comment">// larger values</span>
+</div>
+                </div>
+
+                <!-- Operations -->
+                <div class="card">
+                    <h2><i class="fas fa-cog"></i> BST Operations</h2>
+                    <ul class="concept-list">
+                        <li><i class="fas fa-search"></i> <strong>Search:</strong> O(h) - compare and go left/right</li>
+                        <li><i class="fas fa-plus"></i> <strong>Insert:</strong> O(h) - search for position, then insert</li>
+                        <li><i class="fas fa-trash"></i> <strong>Delete:</strong> O(h) - 3 cases to handle</li>
+                        <li><i class="fas fa-arrow-down"></i> <strong>Min:</strong> O(h) - leftmost node</li>
+                        <li><i class="fas fa-arrow-up"></i> <strong>Max:</strong> O(h) - rightmost node</li>
+                        <li><i class="fas fa-level-down-alt"></i> <strong>Floor:</strong> largest value ≤ key</li>
+                        <li><i class="fas fa-level-up-alt"></i> <strong>Ceil:</strong> smallest value ≥ key</li>
+                    </ul>
+                    <p style="margin-top: 15px; color: #666;"><strong>h = height</strong>: Best O(log n), Worst O(n)</p>
+                </div>
+
+                <!-- Deletion Cases -->
+                <div class="card">
+                    <h2><i class="fas fa-trash-alt"></i> Delete Cases</h2>
+                    <div class="info-box">
+                        <h4><i class="fas fa-1"></i> Leaf Node</h4>
+                        <p>Simply remove the node</p>
+                    </div>
+                    <div class="info-box">
+                        <h4><i class="fas fa-2"></i> One Child</h4>
+                        <p>Replace node with its child</p>
+                    </div>
+                    <div class="info-box">
+                        <h4><i class="fas fa-3"></i> Two Children</h4>
+                        <p>Replace with inorder successor (or predecessor), then delete successor</p>
+                    </div>
+                </div>
+
+                <!-- Validation -->
+                <div class="card">
+                    <h2><i class="fas fa-check-circle"></i> BST Validation</h2>
+                    <div class="code-box">
+<span class="keyword">function</span> <span class="function">isValidBST</span>(node, min, max):
+    <span class="keyword">if</span> node == null: <span class="keyword">return</span> true
+    
+    <span class="keyword">if</span> node.value <= min <span class="keyword">or</span> node.value >= max:
+        <span class="keyword">return</span> false
+    
+    <span class="keyword">return</span> <span class="function">isValidBST</span>(node.left, min, node.value)
+        <span class="keyword">and</span> <span class="function">isValidBST</span>(node.right, node.value, max)
+</div>
+                    <p style="margin-top: 10px; color: #666;">Call with: isValidBST(root, -∞, +∞)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('treeCanvas');
+        const ctx = canvas.getContext('2d');
+
+        class TreeNode {
+            constructor(value) {
+                this.value = value;
+                this.left = null;
+                this.right = null;
+                this.x = 0;
+                this.y = 0;
+                this.state = 'normal';
+            }
+        }
+
+        let root = null;
+        let currentOperation = 'insert';
+        let isAnimating = false;
+        const animationSpeed = 600;
+
+        function setOperation(op) {
+            currentOperation = op;
+            document.querySelectorAll('.op-tab').forEach(t => t.classList.remove('active'));
+            document.querySelector(`[data-op="${op}"]`).classList.add('active');
+            
+            const btnText = document.getElementById('opButtonText');
+            const input = document.getElementById('nodeValue');
+            
+            if (op === 'min' || op === 'max') {
+                input.style.display = 'none';
+                btnText.textContent = op === 'min' ? 'Find Min' : 'Find Max';
+            } else {
+                input.style.display = 'block';
+                btnText.textContent = op.charAt(0).toUpperCase() + op.slice(1);
+            }
+            
+            document.getElementById('resultBox').style.display = 'none';
+        }
+
+        function loadSampleTree(type) {
+            clearTree();
+            
+            if (type === 'balanced') {
+                [50, 30, 70, 20, 40, 60, 80, 15, 25, 35, 45].forEach(v => insertNode(v));
+            } else {
+                [10, 20, 30, 40, 50, 60, 70].forEach(v => insertNode(v));
+            }
+            
+            drawTree();
+            updateStats();
+        }
+
+        function clearTree() {
+            root = null;
+            drawTree();
+            updateStats();
+            document.getElementById('resultBox').style.display = 'none';
+            document.getElementById('stepInfo').classList.remove('active');
+            document.getElementById('traversalOutput').textContent = '-';
+        }
+
+        function insertNode(value) {
+            const newNode = new TreeNode(value);
+            if (!root) {
+                root = newNode;
+                return root;
+            }
+
+            let current = root;
+            while (true) {
+                if (value < current.value) {
+                    if (!current.left) {
+                        current.left = newNode;
+                        return newNode;
+                    }
+                    current = current.left;
+                } else if (value > current.value) {
+                    if (!current.right) {
+                        current.right = newNode;
+                        return newNode;
+                    }
+                    current = current.right;
+                } else {
+                    return null; // Duplicate
+                }
+            }
+        }
+
+        async function executeOperation() {
+            if (isAnimating) return;
+            
+            const value = parseInt(document.getElementById('nodeValue').value);
+            const stepInfo = document.getElementById('stepInfo');
+            
+            if (currentOperation === 'min') {
+                await findMin();
+            } else if (currentOperation === 'max') {
+                await findMax();
+            } else if (isNaN(value)) {
+                return;
+            } else if (currentOperation === 'insert') {
+                await animatedInsert(value);
+            } else if (currentOperation === 'search') {
+                await animatedSearch(value);
+            } else if (currentOperation === 'delete') {
+                await animatedDelete(value);
+            } else if (currentOperation === 'floor') {
+                await findFloor(value);
+            } else if (currentOperation === 'ceil') {
+                await findCeil(value);
+            }
+            
+            document.getElementById('nodeValue').value = '';
+        }
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        function resetNodeStates(node = root) {
+            if (!node) return;
+            node.state = 'normal';
+            resetNodeStates(node.left);
+            resetNodeStates(node.right);
+        }
+
+        async function animatedInsert(value) {
+            isAnimating = true;
+            resetNodeStates();
+            const stepInfo = document.getElementById('stepInfo');
+            stepInfo.classList.add('active');
+
+            if (!root) {
+                root = new TreeNode(value);
+                root.state = 'found';
+                stepInfo.textContent = `Inserting ${value} as root`;
+                drawTree();
+                await sleep(animationSpeed);
+            } else {
+                let current = root;
+                let step = 1;
+                
+                while (true) {
+                    current.state = 'comparing';
+                    drawTree();
+                    
+                    if (value < current.value) {
+                        stepInfo.textContent = `Step ${step}: ${value} < ${current.value}, go LEFT`;
+                        await sleep(animationSpeed);
+                        current.state = 'normal';
+                        
+                        if (!current.left) {
+                            current.left = new TreeNode(value);
+                            current.left.state = 'found';
+                            stepInfo.textContent = `Inserted ${value} as left child of ${current.value}`;
+                            drawTree();
+                            break;
+                        }
+                        current = current.left;
+                    } else if (value > current.value) {
+                        stepInfo.textContent = `Step ${step}: ${value} > ${current.value}, go RIGHT`;
+                        await sleep(animationSpeed);
+                        current.state = 'normal';
+                        
+                        if (!current.right) {
+                            current.right = new TreeNode(value);
+                            current.right.state = 'found';
+                            stepInfo.textContent = `Inserted ${value} as right child of ${current.value}`;
+                            drawTree();
+                            break;
+                        }
+                        current = current.right;
+                    } else {
+                        stepInfo.textContent = `Value ${value} already exists in tree`;
+                        current.state = 'notfound';
+                        drawTree();
+                        break;
+                    }
+                    step++;
+                }
+            }
+
+            updateStats();
+            await sleep(animationSpeed);
+            resetNodeStates();
+            drawTree();
+            isAnimating = false;
+        }
+
+        async function animatedSearch(value) {
+            isAnimating = true;
+            resetNodeStates();
+            const stepInfo = document.getElementById('stepInfo');
+            stepInfo.classList.add('active');
+            
+            let current = root;
+            let step = 1;
+            let found = false;
+
+            while (current) {
+                current.state = 'comparing';
+                drawTree();
+                
+                if (value === current.value) {
+                    stepInfo.textContent = `Step ${step}: Found ${value}!`;
+                    current.state = 'found';
+                    found = true;
+                    showResult('Search Result', `Found: ${value}`);
+                    break;
+                } else if (value < current.value) {
+                    stepInfo.textContent = `Step ${step}: ${value} < ${current.value}, go LEFT`;
+                    await sleep(animationSpeed);
+                    current.state = 'normal';
+                    current = current.left;
+                } else {
+                    stepInfo.textContent = `Step ${step}: ${value} > ${current.value}, go RIGHT`;
+                    await sleep(animationSpeed);
+                    current.state = 'normal';
+                    current = current.right;
+                }
+                step++;
+            }
+
+            if (!found) {
+                stepInfo.textContent = `Value ${value} not found in tree`;
+                showResult('Search Result', 'Not Found');
+            }
+
+            drawTree();
+            await sleep(animationSpeed * 2);
+            resetNodeStates();
+            drawTree();
+            isAnimating = false;
+        }
+
+        async function animatedDelete(value) {
+            isAnimating = true;
+            resetNodeStates();
+            const stepInfo = document.getElementById('stepInfo');
+            stepInfo.classList.add('active');
+
+            // First, find the node
+            let parent = null;
+            let current = root;
+            let isLeftChild = false;
+
+            while (current && current.value !== value) {
+                current.state = 'comparing';
+                drawTree();
+                await sleep(animationSpeed / 2);
+                current.state = 'normal';
+                
+                parent = current;
+                if (value < current.value) {
+                    current = current.left;
+                    isLeftChild = true;
+                } else {
+                    current = current.right;
+                    isLeftChild = false;
+                }
+            }
+
+            if (!current) {
+                stepInfo.textContent = `Value ${value} not found`;
+                showResult('Delete Result', 'Not Found');
+                drawTree();
+                isAnimating = false;
+                return;
+            }
+
+            current.state = 'found';
+            stepInfo.textContent = `Found ${value}. Deleting...`;
+            drawTree();
+            await sleep(animationSpeed);
+
+            // Case 1: Leaf node
+            if (!current.left && !current.right) {
+                stepInfo.textContent = `Case 1: ${value} is a leaf. Simply remove.`;
+                if (!parent) root = null;
+                else if (isLeftChild) parent.left = null;
+                else parent.right = null;
+            }
+            // Case 2: One child
+            else if (!current.left || !current.right) {
+                const child = current.left || current.right;
+                stepInfo.textContent = `Case 2: ${value} has one child. Replace with child.`;
+                if (!parent) root = child;
+                else if (isLeftChild) parent.left = child;
+                else parent.right = child;
+            }
+            // Case 3: Two children
+            else {
+                stepInfo.textContent = `Case 3: ${value} has two children. Find inorder successor.`;
+                await sleep(animationSpeed);
+                
+                // Find inorder successor
+                let successorParent = current;
+                let successor = current.right;
+                while (successor.left) {
+                    successor.state = 'comparing';
+                    drawTree();
+                    await sleep(animationSpeed / 2);
+                    successor.state = 'normal';
+                    successorParent = successor;
+                    successor = successor.left;
+                }
+                
+                successor.state = 'found';
+                stepInfo.textContent = `Inorder successor is ${successor.value}. Replace ${value} with ${successor.value}.`;
+                drawTree();
+                await sleep(animationSpeed);
+                
+                current.value = successor.value;
+                
+                if (successorParent === current) {
+                    successorParent.right = successor.right;
+                } else {
+                    successorParent.left = successor.right;
+                }
+            }
+
+            showResult('Delete Result', `Deleted: ${value}`);
+            updateStats();
+            drawTree();
+            await sleep(animationSpeed);
+            resetNodeStates();
+            drawTree();
+            isAnimating = false;
+        }
+
+        async function findMin() {
+            isAnimating = true;
+            resetNodeStates();
+            const stepInfo = document.getElementById('stepInfo');
+            stepInfo.classList.add('active');
+
+            if (!root) {
+                stepInfo.textContent = 'Tree is empty';
+                showResult('Min', '-');
+                isAnimating = false;
+                return;
+            }
+
+            let current = root;
+            stepInfo.textContent = 'Finding minimum: Go left as far as possible';
+            
+            while (current.left) {
+                current.state = 'comparing';
+                drawTree();
+                await sleep(animationSpeed);
+                current.state = 'normal';
+                current = current.left;
+            }
+
+            current.state = 'found';
+            stepInfo.textContent = `Minimum value is ${current.value}`;
+            showResult('Min', current.value);
+            drawTree();
+            
+            await sleep(animationSpeed * 2);
+            resetNodeStates();
+            drawTree();
+            isAnimating = false;
+        }
+
+        async function findMax() {
+            isAnimating = true;
+            resetNodeStates();
+            const stepInfo = document.getElementById('stepInfo');
+            stepInfo.classList.add('active');
+
+            if (!root) {
+                stepInfo.textContent = 'Tree is empty';
+                showResult('Max', '-');
+                isAnimating = false;
+                return;
+            }
+
+            let current = root;
+            stepInfo.textContent = 'Finding maximum: Go right as far as possible';
+            
+            while (current.right) {
+                current.state = 'comparing';
+                drawTree();
+                await sleep(animationSpeed);
+                current.state = 'normal';
+                current = current.right;
+            }
+
+            current.state = 'found';
+            stepInfo.textContent = `Maximum value is ${current.value}`;
+            showResult('Max', current.value);
+            drawTree();
+            
+            await sleep(animationSpeed * 2);
+            resetNodeStates();
+            drawTree();
+            isAnimating = false;
+        }
+
+        async function findFloor(value) {
+            isAnimating = true;
+            resetNodeStates();
+            const stepInfo = document.getElementById('stepInfo');
+            stepInfo.classList.add('active');
+
+            let floor = null;
+            let current = root;
+
+            while (current) {
+                current.state = 'comparing';
+                drawTree();
+                await sleep(animationSpeed);
+
+                if (current.value === value) {
+                    floor = current;
+                    current.state = 'found';
+                    break;
+                } else if (current.value < value) {
+                    stepInfo.textContent = `${current.value} < ${value}, could be floor. Go right.`;
+                    floor = current;
+                    current.state = 'normal';
+                    current = current.right;
+                } else {
+                    stepInfo.textContent = `${current.value} > ${value}, go left.`;
+                    current.state = 'normal';
+                    current = current.left;
+                }
+            }
+
+            if (floor) {
+                floor.state = 'found';
+                stepInfo.textContent = `Floor of ${value} is ${floor.value}`;
+                showResult(`Floor of ${value}`, floor.value);
+            } else {
+                stepInfo.textContent = `No floor found for ${value}`;
+                showResult(`Floor of ${value}`, 'None');
+            }
+            
+            drawTree();
+            await sleep(animationSpeed * 2);
+            resetNodeStates();
+            drawTree();
+            isAnimating = false;
+        }
+
+        async function findCeil(value) {
+            isAnimating = true;
+            resetNodeStates();
+            const stepInfo = document.getElementById('stepInfo');
+            stepInfo.classList.add('active');
+
+            let ceil = null;
+            let current = root;
+
+            while (current) {
+                current.state = 'comparing';
+                drawTree();
+                await sleep(animationSpeed);
+
+                if (current.value === value) {
+                    ceil = current;
+                    current.state = 'found';
+                    break;
+                } else if (current.value > value) {
+                    stepInfo.textContent = `${current.value} > ${value}, could be ceil. Go left.`;
+                    ceil = current;
+                    current.state = 'normal';
+                    current = current.left;
+                } else {
+                    stepInfo.textContent = `${current.value} < ${value}, go right.`;
+                    current.state = 'normal';
+                    current = current.right;
+                }
+            }
+
+            if (ceil) {
+                ceil.state = 'found';
+                stepInfo.textContent = `Ceil of ${value} is ${ceil.value}`;
+                showResult(`Ceil of ${value}`, ceil.value);
+            } else {
+                stepInfo.textContent = `No ceil found for ${value}`;
+                showResult(`Ceil of ${value}`, 'None');
+            }
+            
+            drawTree();
+            await sleep(animationSpeed * 2);
+            resetNodeStates();
+            drawTree();
+            isAnimating = false;
+        }
+
+        function showResult(title, value) {
+            document.getElementById('resultTitle').textContent = title;
+            document.getElementById('resultValue').textContent = value;
+            document.getElementById('resultBox').style.display = 'block';
+        }
+
+        async function runTraversal(type) {
+            if (isAnimating) return;
+            isAnimating = true;
+            resetNodeStates();
+            
+            const result = [];
+            
+            async function inorder(node) {
+                if (!node) return;
+                await inorder(node.left);
+                node.state = 'found';
+                drawTree();
+                result.push(node.value);
+                document.getElementById('traversalOutput').textContent = result.join(' → ');
+                await sleep(400);
+                node.state = 'normal';
+                await inorder(node.right);
+            }
+
+            async function preorder(node) {
+                if (!node) return;
+                node.state = 'found';
+                drawTree();
+                result.push(node.value);
+                document.getElementById('traversalOutput').textContent = result.join(' → ');
+                await sleep(400);
+                node.state = 'normal';
+                await preorder(node.left);
+                await preorder(node.right);
+            }
+
+            async function postorder(node) {
+                if (!node) return;
+                await postorder(node.left);
+                await postorder(node.right);
+                node.state = 'found';
+                drawTree();
+                result.push(node.value);
+                document.getElementById('traversalOutput').textContent = result.join(' → ');
+                await sleep(400);
+                node.state = 'normal';
+            }
+
+            if (type === 'inorder') await inorder(root);
+            else if (type === 'preorder') await preorder(root);
+            else await postorder(root);
+
+            drawTree();
+            isAnimating = false;
+        }
+
+        function calculatePositions(node, x, y, hSpacing, level = 0) {
+            if (!node) return;
+            node.x = x;
+            node.y = y;
+            
+            const nextSpacing = hSpacing / 1.8;
+            const vSpacing = 70;
+            
+            if (node.left) calculatePositions(node.left, x - hSpacing, y + vSpacing, nextSpacing, level + 1);
+            if (node.right) calculatePositions(node.right, x + hSpacing, y + vSpacing, nextSpacing, level + 1);
+        }
+
+        function drawTree() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            if (!root) {
+                ctx.font = '18px Segoe UI';
+                ctx.fillStyle = '#666';
+                ctx.textAlign = 'center';
+                ctx.fillText('Empty tree - Insert nodes or load a sample', canvas.width / 2, canvas.height / 2);
+                return;
+            }
+
+            calculatePositions(root, canvas.width / 2, 50, 150);
+            drawNode(root);
+        }
+
+        function drawNode(node) {
+            if (!node) return;
+
+            // Draw edges
+            if (node.left) {
+                ctx.beginPath();
+                ctx.moveTo(node.x, node.y);
+                ctx.lineTo(node.left.x, node.left.y);
+                ctx.strokeStyle = '#333';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                drawNode(node.left);
+            }
+            if (node.right) {
+                ctx.beginPath();
+                ctx.moveTo(node.x, node.y);
+                ctx.lineTo(node.right.x, node.right.y);
+                ctx.strokeStyle = '#333';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                drawNode(node.right);
+            }
+
+            // Draw node
+            ctx.beginPath();
+            ctx.arc(node.x, node.y, 25, 0, 2 * Math.PI);
+            
+            const colors = {
+                'normal': '#3b82f6',
+                'comparing': '#f59e0b',
+                'found': '#10b981',
+                'notfound': '#ef4444'
+            };
+            ctx.fillStyle = colors[node.state] || '#3b82f6';
+            ctx.fill();
+            ctx.strokeStyle = '#1a1a2e';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            ctx.font = 'bold 16px Segoe UI';
+            ctx.fillStyle = 'white';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(node.value, node.x, node.y);
+        }
+
+        function getHeight(node) {
+            if (!node) return -1;
+            return 1 + Math.max(getHeight(node.left), getHeight(node.right));
+        }
+
+        function countNodes(node) {
+            if (!node) return 0;
+            return 1 + countNodes(node.left) + countNodes(node.right);
+        }
+
+        function getMin(node) {
+            if (!node) return null;
+            while (node.left) node = node.left;
+            return node.value;
+        }
+
+        function getMax(node) {
+            if (!node) return null;
+            while (node.right) node = node.right;
+            return node.value;
+        }
+
+        function updateStats() {
+            document.getElementById('nodeCount').textContent = countNodes(root);
+            document.getElementById('treeHeight').textContent = Math.max(0, getHeight(root));
+            document.getElementById('minValue').textContent = getMin(root) ?? '-';
+            document.getElementById('maxValue').textContent = getMax(root) ?? '-';
+        }
+
+        document.getElementById('nodeValue').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') executeOperation();
+        });
+
+        // Initialize
+        loadSampleTree('balanced');
+    </script>
+</body>
+</html>

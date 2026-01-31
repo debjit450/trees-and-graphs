@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graph Foundations - Interactive Learning</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f5f5; min-height: 100vh; }
+        .nav-bar { background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); padding: 15px 30px; display: flex; align-items: center; gap: 20px; }
+        .nav-bar a { color: white; text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+        .nav-bar h1 { color: white; font-size: 1.5em; flex: 1; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+        .card { background: white; border-radius: 16px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); margin-bottom: 25px; }
+        .card h2 { font-size: 1.8em; color: #1a1a2e; margin-bottom: 20px; border-bottom: 3px solid #3b82f6; padding-bottom: 10px; }
+        .card p { color: #555; line-height: 1.8; margin-bottom: 15px; }
+        .concept-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
+        .concept-card { background: #f8f8f8; border-radius: 12px; padding: 25px; border-left: 5px solid #3b82f6; }
+        .concept-card h3 { font-size: 1.2em; color: #1a1a2e; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+        .concept-card h3 i { color: #3b82f6; }
+        .concept-card p { color: #555; font-size: 0.95em; margin-bottom: 10px; }
+        .info-box { background: #eff6ff; border: 2px solid #3b82f6; border-radius: 8px; padding: 20px; margin: 20px 0; }
+        .info-box h4 { color: #1d4ed8; margin-bottom: 10px; }
+        .info-box p, .info-box li { color: #1e40af; line-height: 1.6; }
+        .comparison-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        .comparison-table th, .comparison-table td { padding: 12px 15px; border: 1px solid #e0e0e0; text-align: left; }
+        .comparison-table th { background: #3b82f6; color: white; }
+        .comparison-table tr:nth-child(even) { background: #f8f8f8; }
+        .diagram-container { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; padding: 30px; background: #f8f8f8; border-radius: 12px; margin: 20px 0; }
+        .diagram { text-align: center; }
+        .diagram canvas { border: 2px solid #e0e0e0; border-radius: 8px; background: white; }
+        .diagram p { margin-top: 10px; font-weight: 600; color: #1a1a2e; }
+        .nav-buttons { display: flex; justify-content: space-between; margin-top: 40px; padding-top: 30px; border-top: 2px solid #e0e0e0; }
+        .btn { padding: 12px 24px; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; }
+        .btn-primary { background: #3b82f6; color: white; }
+        .btn-secondary { background: white; color: #1a1a2e; border: 2px solid #e0e0e0; }
+    </style>
+</head>
+<body>
+    <div class="nav-bar">
+        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+        <h1><i class="fas fa-project-diagram"></i> Graph Foundations</h1>
+        <a href="graphs-interactive.html">Next: Graph Traversals <i class="fas fa-arrow-right"></i></a>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <h2>What is a Graph?</h2>
+            <p>A <strong>graph</strong> is a data structure consisting of a set of <strong>vertices (nodes)</strong> and a set of <strong>edges</strong> connecting pairs of vertices. Unlike trees, graphs can have cycles and multiple paths between nodes.</p>
+            
+            <div class="info-box">
+                <h4><i class="fas fa-key"></i> Formal Definition</h4>
+                <p>G = (V, E) where V is a set of vertices and E is a set of edges. Each edge connects two vertices.</p>
+            </div>
+
+            <div class="diagram-container">
+                <div class="diagram">
+                    <canvas id="undirectedCanvas" width="200" height="150"></canvas>
+                    <p>Undirected Graph</p>
+                </div>
+                <div class="diagram">
+                    <canvas id="directedCanvas" width="200" height="150"></canvas>
+                    <p>Directed Graph (Digraph)</p>
+                </div>
+                <div class="diagram">
+                    <canvas id="weightedCanvas" width="200" height="150"></canvas>
+                    <p>Weighted Graph</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Types of Graphs</h2>
+            <div class="concept-grid">
+                <div class="concept-card">
+                    <h3><i class="fas fa-arrows-alt-h"></i> Undirected Graph</h3>
+                    <p>Edges have no direction. If there's an edge between A and B, you can go both ways.</p>
+                    <p><strong>Example:</strong> Facebook friendships</p>
+                </div>
+                <div class="concept-card">
+                    <h3><i class="fas fa-arrow-right"></i> Directed Graph (Digraph)</h3>
+                    <p>Edges have direction. Edge from A to B doesn't imply edge from B to A.</p>
+                    <p><strong>Example:</strong> Twitter follows, web links</p>
+                </div>
+                <div class="concept-card">
+                    <h3><i class="fas fa-weight-hanging"></i> Weighted Graph</h3>
+                    <p>Edges have associated weights/costs representing distance, time, capacity, etc.</p>
+                    <p><strong>Example:</strong> Road networks with distances</p>
+                </div>
+                <div class="concept-card">
+                    <h3><i class="fas fa-circle"></i> Simple Graph</h3>
+                    <p>No self-loops (edge from vertex to itself) and no multiple edges between same vertices.</p>
+                </div>
+                <div class="concept-card">
+                    <h3><i class="fas fa-sync"></i> Multigraph</h3>
+                    <p>Allows multiple edges between the same pair of vertices.</p>
+                    <p><strong>Example:</strong> Multiple flight routes</p>
+                </div>
+                <div class="concept-card">
+                    <h3><i class="fas fa-project-diagram"></i> Complete Graph</h3>
+                    <p>Every pair of vertices is connected by an edge. Has n(n-1)/2 edges for n vertices.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Graph Terminology</h2>
+            <table class="comparison-table">
+                <tr><th>Term</th><th>Definition</th><th>Example</th></tr>
+                <tr><td><strong>Vertex/Node</strong></td><td>A point in the graph</td><td>City in a map</td></tr>
+                <tr><td><strong>Edge</strong></td><td>Connection between two vertices</td><td>Road between cities</td></tr>
+                <tr><td><strong>Degree</strong></td><td>Number of edges incident to a vertex</td><td>Number of roads from a city</td></tr>
+                <tr><td><strong>In-degree</strong></td><td>(Directed) Number of incoming edges</td><td>Followers on Twitter</td></tr>
+                <tr><td><strong>Out-degree</strong></td><td>(Directed) Number of outgoing edges</td><td>Following on Twitter</td></tr>
+                <tr><td><strong>Path</strong></td><td>Sequence of vertices connected by edges</td><td>Route from A to B</td></tr>
+                <tr><td><strong>Cycle</strong></td><td>Path that starts and ends at same vertex</td><td>Round trip</td></tr>
+                <tr><td><strong>Connected</strong></td><td>Path exists between every pair of vertices</td><td>All cities reachable</td></tr>
+                <tr><td><strong>Component</strong></td><td>Maximal connected subgraph</td><td>Isolated networks</td></tr>
+                <tr><td><strong>DAG</strong></td><td>Directed Acyclic Graph - no cycles</td><td>Task dependencies</td></tr>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>Special Properties</h2>
+            <div class="concept-grid">
+                <div class="concept-card">
+                    <h3><i class="fas fa-link"></i> Connected Graph</h3>
+                    <p>There exists a path between every pair of vertices.</p>
+                </div>
+                <div class="concept-card">
+                    <h3><i class="fas fa-compress-arrows-alt"></i> Strongly Connected</h3>
+                    <p>In a directed graph, there's a path from every vertex to every other vertex.</p>
+                </div>
+                <div class="concept-card">
+                    <h3><i class="fas fa-columns"></i> Bipartite Graph</h3>
+                    <p>Vertices can be divided into two sets with no edges within each set.</p>
+                </div>
+                <div class="concept-card">
+                    <h3><i class="fas fa-tree"></i> Tree (Special Graph)</h3>
+                    <p>Connected graph with no cycles. Has exactly V-1 edges for V vertices.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="nav-buttons">
+            <a href="index.html" class="btn btn-secondary"><i class="fas fa-home"></i> Home</a>
+            <a href="graph-representations.html" class="btn btn-primary">Graph Representations <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+
+    <script>
+        // Draw sample graphs
+        function drawUndirected() {
+            const c = document.getElementById('undirectedCanvas');
+            const ctx = c.getContext('2d');
+            const nodes = [{x: 50, y: 40}, {x: 150, y: 40}, {x: 100, y: 110}];
+            
+            // Edges
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 2;
+            nodes.forEach((n, i) => {
+                nodes.forEach((m, j) => {
+                    if (i < j) {
+                        ctx.beginPath();
+                        ctx.moveTo(n.x, n.y);
+                        ctx.lineTo(m.x, m.y);
+                        ctx.stroke();
+                    }
+                });
+            });
+            
+            // Nodes
+            nodes.forEach((n, i) => {
+                ctx.beginPath();
+                ctx.arc(n.x, n.y, 20, 0, 2 * Math.PI);
+                ctx.fillStyle = '#3b82f6';
+                ctx.fill();
+                ctx.stroke();
+                ctx.fillStyle = 'white';
+                ctx.font = 'bold 14px Segoe UI';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(['A', 'B', 'C'][i], n.x, n.y);
+            });
+        }
+
+        function drawDirected() {
+            const c = document.getElementById('directedCanvas');
+            const ctx = c.getContext('2d');
+            const nodes = [{x: 50, y: 75}, {x: 100, y: 40}, {x: 150, y: 75}, {x: 100, y: 110}];
+            const edges = [[0, 1], [1, 2], [2, 3], [3, 0]];
+            
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 2;
+            edges.forEach(([i, j]) => {
+                const n = nodes[i], m = nodes[j];
+                const angle = Math.atan2(m.y - n.y, m.x - n.x);
+                ctx.beginPath();
+                ctx.moveTo(n.x + 15 * Math.cos(angle), n.y + 15 * Math.sin(angle));
+                ctx.lineTo(m.x - 15 * Math.cos(angle), m.y - 15 * Math.sin(angle));
+                ctx.stroke();
+                // Arrow
+                const ax = m.x - 20 * Math.cos(angle);
+                const ay = m.y - 20 * Math.sin(angle);
+                ctx.beginPath();
+                ctx.moveTo(ax, ay);
+                ctx.lineTo(ax - 8 * Math.cos(angle - 0.4), ay - 8 * Math.sin(angle - 0.4));
+                ctx.lineTo(ax - 8 * Math.cos(angle + 0.4), ay - 8 * Math.sin(angle + 0.4));
+                ctx.closePath();
+                ctx.fill();
+            });
+            
+            nodes.forEach((n, i) => {
+                ctx.beginPath();
+                ctx.arc(n.x, n.y, 15, 0, 2 * Math.PI);
+                ctx.fillStyle = '#3b82f6';
+                ctx.fill();
+                ctx.stroke();
+                ctx.fillStyle = 'white';
+                ctx.font = 'bold 12px Segoe UI';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(['A', 'B', 'C', 'D'][i], n.x, n.y);
+            });
+        }
+
+        function drawWeighted() {
+            const c = document.getElementById('weightedCanvas');
+            const ctx = c.getContext('2d');
+            const nodes = [{x: 50, y: 50}, {x: 150, y: 50}, {x: 100, y: 120}];
+            const edges = [[0, 1, 5], [1, 2, 3], [0, 2, 4]];
+            
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 2;
+            edges.forEach(([i, j, w]) => {
+                const n = nodes[i], m = nodes[j];
+                ctx.beginPath();
+                ctx.moveTo(n.x, n.y);
+                ctx.lineTo(m.x, m.y);
+                ctx.stroke();
+                // Weight label
+                ctx.fillStyle = '#1d4ed8';
+                ctx.font = 'bold 12px Segoe UI';
+                ctx.fillText(w, (n.x + m.x) / 2, (n.y + m.y) / 2 - 8);
+            });
+            
+            nodes.forEach((n, i) => {
+                ctx.beginPath();
+                ctx.arc(n.x, n.y, 18, 0, 2 * Math.PI);
+                ctx.fillStyle = '#3b82f6';
+                ctx.fill();
+                ctx.strokeStyle = '#333';
+                ctx.stroke();
+                ctx.fillStyle = 'white';
+                ctx.font = 'bold 12px Segoe UI';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(['A', 'B', 'C'][i], n.x, n.y);
+            });
+        }
+
+        drawUndirected();
+        drawDirected();
+        drawWeighted();
+    </script>
+</body>
+</html>

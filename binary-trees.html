@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binary Trees - Interactive Learning</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f5f5; min-height: 100vh; }
+        .nav-bar { background: linear-gradient(135deg, #10b981 0%, #059669 100%); padding: 15px 30px; display: flex; align-items: center; gap: 20px; }
+        .nav-bar a { color: white; text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+        .nav-bar h1 { color: white; font-size: 1.5em; flex: 1; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+        .card { background: white; border-radius: 16px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); margin-bottom: 25px; }
+        .card h2 { font-size: 1.8em; color: #1a1a2e; margin-bottom: 20px; border-bottom: 3px solid #10b981; padding-bottom: 10px; }
+        .card h3 { font-size: 1.3em; color: #1a1a2e; margin: 20px 0 15px; }
+        .card p { color: #555; line-height: 1.8; margin-bottom: 15px; }
+        .type-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-bottom: 30px; }
+        .type-card { background: #f8f8f8; border-radius: 12px; padding: 25px; border-left: 5px solid #10b981; }
+        .type-card h4 { font-size: 1.2em; color: #1a1a2e; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+        .type-card h4 i { color: #10b981; }
+        .type-card p { color: #555; font-size: 0.95em; margin-bottom: 10px; }
+        .type-card .formula { background: #1e1e1e; color: #d4d4d4; padding: 10px 15px; border-radius: 6px; font-family: 'Courier New', monospace; font-size: 14px; margin-top: 10px; }
+        .diagram-container { display: flex; justify-content: center; padding: 20px; background: #f8f8f8; border-radius: 12px; margin: 20px 0; }
+        canvas { border: 2px solid #e0e0e0; border-radius: 8px; background: white; }
+        .controls { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; justify-content: center; }
+        .btn { padding: 12px 20px; border: 2px solid transparent; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.3s; display: inline-flex; align-items: center; gap: 6px; }
+        .btn-primary { background: #10b981; color: white; }
+        .btn-primary:hover { background: #059669; }
+        .btn-secondary { background: white; color: #1a1a2e; border-color: #e0e0e0; }
+        .btn-secondary:hover { border-color: #10b981; color: #10b981; }
+        .info-box { background: #f0fdf4; border: 2px solid #10b981; border-radius: 8px; padding: 20px; margin: 20px 0; }
+        .info-box h4 { color: #059669; margin-bottom: 10px; }
+        .info-box p, .info-box li { color: #166534; }
+        .comparison-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        .comparison-table th, .comparison-table td { padding: 12px 15px; border: 1px solid #e0e0e0; text-align: center; }
+        .comparison-table th { background: #10b981; color: white; }
+        .comparison-table tr:nth-child(even) { background: #f8f8f8; }
+        .highlight-box { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 15px 20px; border-radius: 0 8px 8px 0; margin: 20px 0; }
+        .array-visual { display: flex; gap: 5px; justify-content: center; flex-wrap: wrap; margin: 20px 0; }
+        .array-cell { width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; border: 2px solid #333; border-radius: 8px; font-weight: 700; background: white; position: relative; }
+        .array-cell .idx { position: absolute; top: -18px; font-size: 11px; color: #666; font-weight: normal; }
+        .array-cell.null { background: #f0f0f0; color: #999; }
+        .nav-buttons { display: flex; justify-content: space-between; margin-top: 40px; padding-top: 30px; border-top: 2px solid #e0e0e0; }
+    </style>
+</head>
+<body>
+    <div class="nav-bar">
+        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+        <h1><i class="fas fa-code-branch"></i> Binary Trees</h1>
+        <a href="tree-traversal-interactive.html">Next: Traversals <i class="fas fa-arrow-right"></i></a>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <h2>What is a Binary Tree?</h2>
+            <p>A <strong>binary tree</strong> is a tree data structure where each node has <strong>at most two children</strong>, referred to as the <strong>left child</strong> and <strong>right child</strong>.</p>
+            
+            <div class="info-box">
+                <h4><i class="fas fa-key"></i> Key Characteristics</h4>
+                <ul style="margin-left: 20px;">
+                    <li>Each node has 0, 1, or 2 children</li>
+                    <li>Children are ordered (left vs right matters)</li>
+                    <li>Maximum nodes at level k: 2<sup>k</sup></li>
+                    <li>Maximum nodes in tree of height h: 2<sup>h+1</sup> - 1</li>
+                </ul>
+            </div>
+
+            <div class="diagram-container">
+                <canvas id="binaryTreeCanvas" width="600" height="300"></canvas>
+            </div>
+            <div class="controls">
+                <button class="btn btn-primary" onclick="drawTreeType('normal')">Standard Binary Tree</button>
+                <button class="btn btn-secondary" onclick="drawTreeType('full')">Full Binary Tree</button>
+                <button class="btn btn-secondary" onclick="drawTreeType('complete')">Complete Binary Tree</button>
+                <button class="btn btn-secondary" onclick="drawTreeType('perfect')">Perfect Binary Tree</button>
+                <button class="btn btn-secondary" onclick="drawTreeType('skewed')">Skewed Tree</button>
+            </div>
+        </div>
+
+        <!-- Types of Binary Trees -->
+        <div class="card">
+            <h2>Types of Binary Trees</h2>
+            
+            <div class="type-grid">
+                <div class="type-card">
+                    <h4><i class="fas fa-check-double"></i> Strict (Proper) Binary Tree</h4>
+                    <p>Every node has either <strong>0 or 2 children</strong>. No node has only one child.</p>
+                    <div class="formula">Leaves = Internal nodes + 1</div>
+                </div>
+
+                <div class="type-card">
+                    <h4><i class="fas fa-fill"></i> Full Binary Tree</h4>
+                    <p>All levels are completely filled. Has maximum possible nodes for its height.</p>
+                    <div class="formula">Nodes = 2<sup>h+1</sup> - 1</div>
+                </div>
+
+                <div class="type-card">
+                    <h4><i class="fas fa-layer-group"></i> Complete Binary Tree</h4>
+                    <p>All levels filled except possibly the last, which is filled from <strong>left to right</strong>.</p>
+                    <div class="formula">Used in: Heaps, Priority Queues</div>
+                </div>
+
+                <div class="type-card">
+                    <h4><i class="fas fa-star"></i> Perfect Binary Tree</h4>
+                    <p>All internal nodes have 2 children AND all leaves are at the same level.</p>
+                    <div class="formula">Leaves = (n + 1) / 2</div>
+                </div>
+
+                <div class="type-card">
+                    <h4><i class="fas fa-level-down-alt"></i> Degenerate (Skewed) Tree</h4>
+                    <p>Each parent has only one child. Essentially a linked list.</p>
+                    <div class="formula">Height = n - 1 (worst case)</div>
+                </div>
+
+                <div class="type-card">
+                    <h4><i class="fas fa-balance-scale"></i> Balanced Binary Tree</h4>
+                    <p>Height difference between left and right subtrees is at most 1 for all nodes.</p>
+                    <div class="formula">Height = O(log n)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Height vs Nodes -->
+        <div class="card">
+            <h2>Height vs Number of Nodes</h2>
+            
+            <table class="comparison-table">
+                <tr>
+                    <th>Property</th>
+                    <th>Formula</th>
+                    <th>h=0</th>
+                    <th>h=1</th>
+                    <th>h=2</th>
+                    <th>h=3</th>
+                    <th>h=4</th>
+                </tr>
+                <tr>
+                    <td>Max nodes at level k</td>
+                    <td>2<sup>k</sup></td>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>4</td>
+                    <td>8</td>
+                    <td>16</td>
+                </tr>
+                <tr>
+                    <td>Max total nodes</td>
+                    <td>2<sup>h+1</sup> - 1</td>
+                    <td>1</td>
+                    <td>3</td>
+                    <td>7</td>
+                    <td>15</td>
+                    <td>31</td>
+                </tr>
+                <tr>
+                    <td>Min height for n nodes</td>
+                    <td>⌊log₂(n)⌋</td>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>1-2</td>
+                    <td>2-3</td>
+                    <td>3-4</td>
+                </tr>
+            </table>
+
+            <div class="highlight-box">
+                <strong>Key Insight:</strong> A balanced binary tree with n nodes has height O(log n), making operations efficient. A skewed tree has height O(n), which is worst case.
+            </div>
+        </div>
+
+        <!-- Array Representation -->
+        <div class="card">
+            <h2>Array Representation</h2>
+            <p>Binary trees can be efficiently stored in an array (especially complete binary trees):</p>
+            
+            <div class="array-visual" id="arrayRepresentation">
+                <div class="array-cell"><span class="idx">0</span>A</div>
+                <div class="array-cell"><span class="idx">1</span>B</div>
+                <div class="array-cell"><span class="idx">2</span>C</div>
+                <div class="array-cell"><span class="idx">3</span>D</div>
+                <div class="array-cell"><span class="idx">4</span>E</div>
+                <div class="array-cell"><span class="idx">5</span>F</div>
+                <div class="array-cell"><span class="idx">6</span>G</div>
+            </div>
+
+            <div class="info-box">
+                <h4><i class="fas fa-calculator"></i> Index Formulas (0-indexed)</h4>
+                <ul style="margin-left: 20px;">
+                    <li><strong>Parent of node at i:</strong> (i - 1) / 2</li>
+                    <li><strong>Left child of node at i:</strong> 2i + 1</li>
+                    <li><strong>Right child of node at i:</strong> 2i + 2</li>
+                </ul>
+            </div>
+
+            <h3>Example</h3>
+            <p>For node at index 1 (value B):</p>
+            <ul style="margin-left: 20px;">
+                <li>Parent: (1-1)/2 = 0 → A</li>
+                <li>Left child: 2(1)+1 = 3 → D</li>
+                <li>Right child: 2(1)+2 = 4 → E</li>
+            </ul>
+
+            <div class="highlight-box">
+                <strong>When to use array representation:</strong> Best for complete binary trees (like heaps). Wastes space for sparse trees since you need to store null values.
+            </div>
+        </div>
+
+        <!-- Pointer Representation -->
+        <div class="card">
+            <h2>Pointer (Linked) Representation</h2>
+            <p>Each node contains data and pointers to left and right children:</p>
+            
+            <div style="background: #1e1e1e; color: #d4d4d4; padding: 20px; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 14px; margin: 20px 0;">
+<span style="color: #569cd6;">class</span> <span style="color: #dcdcaa;">TreeNode</span> {
+    <span style="color: #569cd6;">constructor</span>(value) {
+        <span style="color: #569cd6;">this</span>.value = value;
+        <span style="color: #569cd6;">this</span>.left = <span style="color: #569cd6;">null</span>;   <span style="color: #6a9955;">// pointer to left child</span>
+        <span style="color: #569cd6;">this</span>.right = <span style="color: #569cd6;">null</span>;  <span style="color: #6a9955;">// pointer to right child</span>
+    }
+}
+
+<span style="color: #6a9955;">// Create a simple tree</span>
+<span style="color: #569cd6;">let</span> root = <span style="color: #569cd6;">new</span> <span style="color: #dcdcaa;">TreeNode</span>(<span style="color: #ce9178;">'A'</span>);
+root.left = <span style="color: #569cd6;">new</span> <span style="color: #dcdcaa;">TreeNode</span>(<span style="color: #ce9178;">'B'</span>);
+root.right = <span style="color: #569cd6;">new</span> <span style="color: #dcdcaa;">TreeNode</span>(<span style="color: #ce9178;">'C'</span>);
+</div>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Aspect</th>
+                    <th>Array Representation</th>
+                    <th>Pointer Representation</th>
+                </tr>
+                <tr>
+                    <td>Space for complete tree</td>
+                    <td>✅ Optimal</td>
+                    <td>❌ Extra pointer overhead</td>
+                </tr>
+                <tr>
+                    <td>Space for sparse tree</td>
+                    <td>❌ Wastes space</td>
+                    <td>✅ Only stores actual nodes</td>
+                </tr>
+                <tr>
+                    <td>Insert/Delete</td>
+                    <td>❌ May need shifting</td>
+                    <td>✅ Just update pointers</td>
+                </tr>
+                <tr>
+                    <td>Random access</td>
+                    <td>✅ O(1) by index</td>
+                    <td>❌ O(h) traversal needed</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="nav-buttons">
+            <a href="tree-foundations.html" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Tree Foundations
+            </a>
+            <a href="tree-traversal-interactive.html" class="btn btn-primary">
+                Tree Traversals <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('binaryTreeCanvas');
+        const ctx = canvas.getContext('2d');
+
+        const treeTypes = {
+            normal: {
+                nodes: [
+                    { value: 'A', x: 300, y: 40 },
+                    { value: 'B', x: 150, y: 120, parent: 0 },
+                    { value: 'C', x: 450, y: 120, parent: 0 },
+                    { value: 'D', x: 80, y: 200, parent: 1 },
+                    { value: 'E', x: 220, y: 200, parent: 1 },
+                    { value: 'F', x: 520, y: 200, parent: 2 }
+                ],
+                title: 'Standard Binary Tree'
+            },
+            full: {
+                nodes: [
+                    { value: 'A', x: 300, y: 40 },
+                    { value: 'B', x: 150, y: 120, parent: 0 },
+                    { value: 'C', x: 450, y: 120, parent: 0 },
+                    { value: 'D', x: 80, y: 200, parent: 1 },
+                    { value: 'E', x: 220, y: 200, parent: 1 },
+                    { value: 'F', x: 380, y: 200, parent: 2 },
+                    { value: 'G', x: 520, y: 200, parent: 2 }
+                ],
+                title: 'Full Binary Tree (all levels filled)'
+            },
+            complete: {
+                nodes: [
+                    { value: 'A', x: 300, y: 40 },
+                    { value: 'B', x: 150, y: 120, parent: 0 },
+                    { value: 'C', x: 450, y: 120, parent: 0 },
+                    { value: 'D', x: 80, y: 200, parent: 1 },
+                    { value: 'E', x: 220, y: 200, parent: 1 },
+                    { value: 'F', x: 380, y: 200, parent: 2 }
+                ],
+                title: 'Complete Binary Tree (filled left to right)'
+            },
+            perfect: {
+                nodes: [
+                    { value: 'A', x: 300, y: 40 },
+                    { value: 'B', x: 150, y: 120, parent: 0 },
+                    { value: 'C', x: 450, y: 120, parent: 0 },
+                    { value: 'D', x: 80, y: 200, parent: 1 },
+                    { value: 'E', x: 220, y: 200, parent: 1 },
+                    { value: 'F', x: 380, y: 200, parent: 2 },
+                    { value: 'G', x: 520, y: 200, parent: 2 }
+                ],
+                title: 'Perfect Binary Tree (all leaves same level)'
+            },
+            skewed: {
+                nodes: [
+                    { value: 'A', x: 150, y: 40 },
+                    { value: 'B', x: 220, y: 100, parent: 0 },
+                    { value: 'C', x: 290, y: 160, parent: 1 },
+                    { value: 'D', x: 360, y: 220, parent: 2 }
+                ],
+                title: 'Right-Skewed Tree (like a linked list)'
+            }
+        };
+
+        function drawTreeType(type) {
+            const tree = treeTypes[type];
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw title
+            ctx.font = 'bold 16px Segoe UI';
+            ctx.fillStyle = '#10b981';
+            ctx.textAlign = 'center';
+            ctx.fillText(tree.title, canvas.width / 2, 25);
+
+            // Draw edges
+            tree.nodes.forEach((node, i) => {
+                if (node.parent !== undefined) {
+                    const parent = tree.nodes[node.parent];
+                    ctx.beginPath();
+                    ctx.moveTo(parent.x, parent.y + 20);
+                    ctx.lineTo(node.x, node.y - 20);
+                    ctx.strokeStyle = '#333';
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+                }
+            });
+
+            // Draw nodes
+            tree.nodes.forEach(node => {
+                ctx.beginPath();
+                ctx.arc(node.x, node.y, 22, 0, 2 * Math.PI);
+                ctx.fillStyle = '#10b981';
+                ctx.fill();
+                ctx.strokeStyle = '#1a1a2e';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                ctx.font = 'bold 16px Segoe UI';
+                ctx.fillStyle = 'white';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(node.value, node.x, node.y);
+            });
+        }
+
+        // Initial draw
+        drawTreeType('normal');
+    </script>
+</body>
+</html>

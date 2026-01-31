@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AVL Trees - Interactive Learning</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f5f5; min-height: 100vh; }
+        .nav-bar { background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%); padding: 15px 30px; display: flex; align-items: center; gap: 20px; }
+        .nav-bar a { color: white; text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+        .nav-bar h1 { color: white; font-size: 1.5em; flex: 1; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 40px 20px; }
+        .main-grid { display: grid; grid-template-columns: 1fr 380px; gap: 30px; }
+        @media (max-width: 1100px) { .main-grid { grid-template-columns: 1fr; } }
+        .card { background: white; border-radius: 16px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); margin-bottom: 25px; }
+        .card h2 { font-size: 1.6em; color: #1a1a2e; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; border-bottom: 3px solid #14b8a6; padding-bottom: 10px; }
+        .card h2 i { color: #14b8a6; }
+        .canvas-container { background: #f8f8f8; border-radius: 12px; padding: 20px; text-align: center; }
+        canvas { border: 2px solid #e0e0e0; border-radius: 8px; background: white; }
+        .controls { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; align-items: center; }
+        .btn { padding: 12px 20px; border: 2px solid transparent; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.3s; display: inline-flex; align-items: center; gap: 6px; }
+        .btn-primary { background: #14b8a6; color: white; }
+        .btn-primary:hover { background: #0d9488; }
+        .btn-danger { background: #ef4444; color: white; }
+        .btn-danger:hover { background: #dc2626; }
+        .btn-secondary { background: white; color: #1a1a2e; border-color: #e0e0e0; }
+        .btn-secondary:hover { border-color: #14b8a6; color: #14b8a6; }
+        input[type="number"] { padding: 12px 15px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px; width: 100px; }
+        input[type="number"]:focus { outline: none; border-color: #14b8a6; }
+        .info-box { background: #f0fdfa; border: 2px solid #14b8a6; border-radius: 8px; padding: 20px; margin: 20px 0; }
+        .info-box h4 { color: #0d9488; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        .info-box p, .info-box li { color: #115e59; line-height: 1.6; }
+        .code-box { background: #1e1e1e; color: #d4d4d4; padding: 20px; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 13px; overflow-x: auto; margin: 15px 0; }
+        .code-box .keyword { color: #569cd6; }
+        .code-box .comment { color: #6a9955; }
+        .code-box .function { color: #dcdcaa; }
+        .step-info { background: #14b8a6; color: white; padding: 15px 20px; border-radius: 8px; font-weight: 600; margin: 15px 0; display: none; }
+        .step-info.active { display: block; }
+        .rotation-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin: 20px 0; }
+        .rotation-card { background: #f8f8f8; border-radius: 12px; padding: 20px; text-align: center; border: 2px solid #e0e0e0; }
+        .rotation-card h4 { color: #1a1a2e; margin-bottom: 10px; }
+        .rotation-card p { font-size: 14px; color: #666; margin-bottom: 10px; }
+        .rotation-card canvas { border-radius: 8px; }
+        .balance-indicator { display: inline-block; padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; }
+        .balance-ok { background: #d1fae5; color: #065f46; }
+        .balance-bad { background: #fee2e2; color: #991b1b; }
+        .legend { display: flex; flex-wrap: wrap; gap: 15px; margin-top: 15px; }
+        .legend-item { display: flex; align-items: center; gap: 6px; font-size: 14px; }
+        .legend-color { width: 16px; height: 16px; border-radius: 50%; border: 2px solid #333; }
+        ul.concept-list { list-style: none; padding: 0; }
+        ul.concept-list li { padding: 12px 0; border-bottom: 1px solid #e0e0e0; display: flex; align-items: flex-start; gap: 10px; }
+        ul.concept-list li:last-child { border-bottom: none; }
+        ul.concept-list i { color: #14b8a6; margin-top: 3px; }
+    </style>
+</head>
+<body>
+    <div class="nav-bar">
+        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+        <h1><i class="fas fa-balance-scale"></i> AVL Trees</h1>
+        <a href="red-black-trees.html">Next: Red-Black Trees <i class="fas fa-arrow-right"></i></a>
+    </div>
+
+    <div class="container">
+        <div class="main-grid">
+            <div class="left-column">
+                <div class="card">
+                    <h2><i class="fas fa-tree"></i> AVL Tree Visualizer</h2>
+                    
+                    <div class="controls">
+                        <input type="number" id="nodeValue" placeholder="Value" min="1" max="999">
+                        <button class="btn btn-primary" onclick="insertNode()">
+                            <i class="fas fa-plus"></i> Insert
+                        </button>
+                        <button class="btn btn-secondary" onclick="deleteNode()">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                        <button class="btn btn-secondary" onclick="loadSample()">
+                            <i class="fas fa-random"></i> Sample Tree
+                        </button>
+                        <button class="btn btn-danger" onclick="clearTree()">
+                            <i class="fas fa-eraser"></i> Clear
+                        </button>
+                    </div>
+
+                    <div class="step-info" id="stepInfo"></div>
+
+                    <div class="canvas-container">
+                        <canvas id="avlCanvas" width="800" height="400"></canvas>
+                    </div>
+
+                    <div class="legend">
+                        <div class="legend-item"><div class="legend-color" style="background: #14b8a6;"></div> Balanced (|BF| ≤ 1)</div>
+                        <div class="legend-item"><div class="legend-color" style="background: #f59e0b;"></div> Rotating</div>
+                        <div class="legend-item"><div class="legend-color" style="background: #ef4444;"></div> Unbalanced (|BF| > 1)</div>
+                    </div>
+
+                    <div class="info-box">
+                        <h4><i class="fas fa-calculator"></i> Balance Factor (BF)</h4>
+                        <p>BF = height(left subtree) - height(right subtree)</p>
+                        <p style="margin-top: 10px;">AVL property: For every node, <strong>|BF| ≤ 1</strong></p>
+                    </div>
+                </div>
+
+                <!-- Rotations Visualization -->
+                <div class="card">
+                    <h2><i class="fas fa-sync-alt"></i> AVL Rotations</h2>
+                    <p style="margin-bottom: 20px;">AVL trees use four types of rotations to maintain balance:</p>
+                    
+                    <div class="rotation-grid">
+                        <div class="rotation-card">
+                            <h4>LL Rotation (Right Rotate)</h4>
+                            <p>Left-Left imbalance: new node in left subtree of left child</p>
+                            <canvas id="llCanvas" width="200" height="150"></canvas>
+                            <button class="btn btn-secondary" style="margin-top: 10px;" onclick="demonstrateRotation('ll')">Animate</button>
+                        </div>
+                        <div class="rotation-card">
+                            <h4>RR Rotation (Left Rotate)</h4>
+                            <p>Right-Right imbalance: new node in right subtree of right child</p>
+                            <canvas id="rrCanvas" width="200" height="150"></canvas>
+                            <button class="btn btn-secondary" style="margin-top: 10px;" onclick="demonstrateRotation('rr')">Animate</button>
+                        </div>
+                        <div class="rotation-card">
+                            <h4>LR Rotation</h4>
+                            <p>Left-Right: rotate left on left child, then right on root</p>
+                            <canvas id="lrCanvas" width="200" height="150"></canvas>
+                            <button class="btn btn-secondary" style="margin-top: 10px;" onclick="demonstrateRotation('lr')">Animate</button>
+                        </div>
+                        <div class="rotation-card">
+                            <h4>RL Rotation</h4>
+                            <p>Right-Left: rotate right on right child, then left on root</p>
+                            <canvas id="rlCanvas" width="200" height="150"></canvas>
+                            <button class="btn btn-secondary" style="margin-top: 10px;" onclick="demonstrateRotation('rl')">Animate</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="right-column">
+                <!-- What is AVL -->
+                <div class="card">
+                    <h2><i class="fas fa-info-circle"></i> What is AVL?</h2>
+                    <p>AVL (Adelson-Velsky and Landis) tree is a <strong>self-balancing BST</strong> where:</p>
+                    <div class="info-box">
+                        <h4><i class="fas fa-balance-scale"></i> Balance Condition</h4>
+                        <p>For <strong>every node</strong>, the heights of left and right subtrees differ by at most 1.</p>
+                    </div>
+                    <p style="margin-top: 15px;">This guarantees <strong>O(log n)</strong> height, ensuring all operations remain efficient.</p>
+                </div>
+
+                <!-- Why Balance -->
+                <div class="card">
+                    <h2><i class="fas fa-question-circle"></i> Why Balance?</h2>
+                    <ul class="concept-list">
+                        <li><i class="fas fa-chart-line"></i> <strong>Unbalanced BST:</strong> Can degrade to O(n) for search/insert</li>
+                        <li><i class="fas fa-check-circle"></i> <strong>AVL Tree:</strong> Guarantees O(log n) for all operations</li>
+                        <li><i class="fas fa-sync-alt"></i> <strong>Trade-off:</strong> Extra work during insert/delete to rebalance</li>
+                    </ul>
+                </div>
+
+                <!-- Balance Factor -->
+                <div class="card">
+                    <h2><i class="fas fa-calculator"></i> Balance Factor</h2>
+                    <div class="code-box">
+BF(node) = height(left) - height(right)
+
+<span class="comment">// AVL Valid: BF ∈ {-1, 0, 1}</span>
+BF = -1  <span class="comment">// Right heavy</span>
+BF =  0  <span class="comment">// Perfectly balanced</span>
+BF = +1  <span class="comment">// Left heavy</span>
+
+<span class="comment">// Needs rotation:</span>
+BF = -2  <span class="comment">// Right-too-heavy → RR or RL</span>
+BF = +2  <span class="comment">// Left-too-heavy → LL or LR</span>
+</div>
+                </div>
+
+                <!-- Rotation Rules -->
+                <div class="card">
+                    <h2><i class="fas fa-sync-alt"></i> Rotation Rules</h2>
+                    <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+                        <tr style="background: #14b8a6; color: white;">
+                            <th style="padding: 10px;">Imbalance</th>
+                            <th style="padding: 10px;">Child BF</th>
+                            <th style="padding: 10px;">Rotation</th>
+                        </tr>
+                        <tr><td style="padding: 10px; border-bottom: 1px solid #e0e0e0;">BF = +2</td><td style="padding: 10px; border-bottom: 1px solid #e0e0e0;">Left ≥ 0</td><td style="padding: 10px; border-bottom: 1px solid #e0e0e0;"><strong>LL</strong> (Right)</td></tr>
+                        <tr><td style="padding: 10px; border-bottom: 1px solid #e0e0e0;">BF = +2</td><td style="padding: 10px; border-bottom: 1px solid #e0e0e0;">Left < 0</td><td style="padding: 10px; border-bottom: 1px solid #e0e0e0;"><strong>LR</strong> (Left-Right)</td></tr>
+                        <tr><td style="padding: 10px; border-bottom: 1px solid #e0e0e0;">BF = -2</td><td style="padding: 10px; border-bottom: 1px solid #e0e0e0;">Right ≤ 0</td><td style="padding: 10px; border-bottom: 1px solid #e0e0e0;"><strong>RR</strong> (Left)</td></tr>
+                        <tr><td style="padding: 10px;">BF = -2</td><td style="padding: 10px;">Right > 0</td><td style="padding: 10px;"><strong>RL</strong> (Right-Left)</td></tr>
+                    </table>
+                </div>
+
+                <!-- Complexity -->
+                <div class="card">
+                    <h2><i class="fas fa-clock"></i> Time Complexity</h2>
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <tr style="background: #14b8a6; color: white;">
+                            <th style="padding: 10px; text-align: left;">Operation</th>
+                            <th style="padding: 10px;">Time</th>
+                        </tr>
+                        <tr><td style="padding: 10px; border-bottom: 1px solid #e0e0e0;">Search</td><td style="padding: 10px; text-align: center; border-bottom: 1px solid #e0e0e0;">O(log n)</td></tr>
+                        <tr><td style="padding: 10px; border-bottom: 1px solid #e0e0e0;">Insert</td><td style="padding: 10px; text-align: center; border-bottom: 1px solid #e0e0e0;">O(log n)</td></tr>
+                        <tr><td style="padding: 10px; border-bottom: 1px solid #e0e0e0;">Delete</td><td style="padding: 10px; text-align: center; border-bottom: 1px solid #e0e0e0;">O(log n)</td></tr>
+                        <tr><td style="padding: 10px;">Space</td><td style="padding: 10px; text-align: center;">O(n)</td></tr>
+                    </table>
+                    <p style="margin-top: 15px; color: #666; font-size: 14px;">All operations guaranteed O(log n) due to balance property!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('avlCanvas');
+        const ctx = canvas.getContext('2d');
+
+        class AVLNode {
+            constructor(value) {
+                this.value = value;
+                this.left = null;
+                this.right = null;
+                this.height = 1;
+                this.x = 0;
+                this.y = 0;
+                this.state = 'normal';
+            }
+        }
+
+        let root = null;
+        let isAnimating = false;
+
+        function getHeight(node) {
+            return node ? node.height : 0;
+        }
+
+        function getBalance(node) {
+            return node ? getHeight(node.left) - getHeight(node.right) : 0;
+        }
+
+        function updateHeight(node) {
+            if (node) {
+                node.height = 1 + Math.max(getHeight(node.left), getHeight(node.right));
+            }
+        }
+
+        function rightRotate(y) {
+            const x = y.left;
+            const T2 = x.right;
+            x.right = y;
+            y.left = T2;
+            updateHeight(y);
+            updateHeight(x);
+            return x;
+        }
+
+        function leftRotate(x) {
+            const y = x.right;
+            const T2 = y.left;
+            y.left = x;
+            x.right = T2;
+            updateHeight(x);
+            updateHeight(y);
+            return y;
+        }
+
+        function insert(node, value) {
+            if (!node) return new AVLNode(value);
+
+            if (value < node.value) {
+                node.left = insert(node.left, value);
+            } else if (value > node.value) {
+                node.right = insert(node.right, value);
+            } else {
+                return node; // Duplicates not allowed
+            }
+
+            updateHeight(node);
+            const balance = getBalance(node);
+
+            // LL Case
+            if (balance > 1 && value < node.left.value) {
+                return rightRotate(node);
+            }
+            // RR Case
+            if (balance < -1 && value > node.right.value) {
+                return leftRotate(node);
+            }
+            // LR Case
+            if (balance > 1 && value > node.left.value) {
+                node.left = leftRotate(node.left);
+                return rightRotate(node);
+            }
+            // RL Case
+            if (balance < -1 && value < node.right.value) {
+                node.right = rightRotate(node.right);
+                return leftRotate(node);
+            }
+
+            return node;
+        }
+
+        function getMinValueNode(node) {
+            let current = node;
+            while (current.left) current = current.left;
+            return current;
+        }
+
+        function deleteNodeHelper(node, value) {
+            if (!node) return node;
+
+            if (value < node.value) {
+                node.left = deleteNodeHelper(node.left, value);
+            } else if (value > node.value) {
+                node.right = deleteNodeHelper(node.right, value);
+            } else {
+                if (!node.left || !node.right) {
+                    node = node.left || node.right;
+                } else {
+                    const temp = getMinValueNode(node.right);
+                    node.value = temp.value;
+                    node.right = deleteNodeHelper(node.right, temp.value);
+                }
+            }
+
+            if (!node) return node;
+
+            updateHeight(node);
+            const balance = getBalance(node);
+
+            if (balance > 1 && getBalance(node.left) >= 0) return rightRotate(node);
+            if (balance > 1 && getBalance(node.left) < 0) {
+                node.left = leftRotate(node.left);
+                return rightRotate(node);
+            }
+            if (balance < -1 && getBalance(node.right) <= 0) return leftRotate(node);
+            if (balance < -1 && getBalance(node.right) > 0) {
+                node.right = rightRotate(node.right);
+                return leftRotate(node);
+            }
+
+            return node;
+        }
+
+        function insertNode() {
+            const input = document.getElementById('nodeValue');
+            const value = parseInt(input.value);
+            if (isNaN(value)) return;
+
+            root = insert(root, value);
+            drawTree();
+            input.value = '';
+            
+            const stepInfo = document.getElementById('stepInfo');
+            stepInfo.classList.add('active');
+            stepInfo.textContent = `Inserted ${value}. Tree rebalanced if needed.`;
+        }
+
+        function deleteNode() {
+            const input = document.getElementById('nodeValue');
+            const value = parseInt(input.value);
+            if (isNaN(value)) return;
+
+            root = deleteNodeHelper(root, value);
+            drawTree();
+            input.value = '';
+            
+            const stepInfo = document.getElementById('stepInfo');
+            stepInfo.classList.add('active');
+            stepInfo.textContent = `Deleted ${value}. Tree rebalanced if needed.`;
+        }
+
+        function loadSample() {
+            clearTree();
+            [50, 30, 70, 20, 40, 60, 80, 15, 25].forEach(v => {
+                root = insert(root, v);
+            });
+            drawTree();
+        }
+
+        function clearTree() {
+            root = null;
+            drawTree();
+            document.getElementById('stepInfo').classList.remove('active');
+        }
+
+        function calculatePositions(node, x, y, hSpacing, level = 0) {
+            if (!node) return;
+            node.x = x;
+            node.y = y;
+            const nextSpacing = hSpacing / 1.8;
+            if (node.left) calculatePositions(node.left, x - hSpacing, y + 70, nextSpacing, level + 1);
+            if (node.right) calculatePositions(node.right, x + hSpacing, y + 70, nextSpacing, level + 1);
+        }
+
+        function drawTree() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            if (!root) {
+                ctx.font = '16px Segoe UI';
+                ctx.fillStyle = '#666';
+                ctx.textAlign = 'center';
+                ctx.fillText('Empty AVL tree - Insert nodes to visualize', canvas.width / 2, canvas.height / 2);
+                return;
+            }
+
+            calculatePositions(root, canvas.width / 2, 50, 150);
+            drawNode(root);
+        }
+
+        function drawNode(node) {
+            if (!node) return;
+
+            // Draw edges
+            if (node.left) {
+                ctx.beginPath();
+                ctx.moveTo(node.x, node.y);
+                ctx.lineTo(node.left.x, node.left.y);
+                ctx.strokeStyle = '#333';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                drawNode(node.left);
+            }
+            if (node.right) {
+                ctx.beginPath();
+                ctx.moveTo(node.x, node.y);
+                ctx.lineTo(node.right.x, node.right.y);
+                ctx.strokeStyle = '#333';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                drawNode(node.right);
+            }
+
+            // Draw node
+            const balance = getBalance(node);
+            ctx.beginPath();
+            ctx.arc(node.x, node.y, 22, 0, 2 * Math.PI);
+            
+            let color = '#14b8a6';
+            if (Math.abs(balance) > 1) color = '#ef4444';
+            
+            ctx.fillStyle = color;
+            ctx.fill();
+            ctx.strokeStyle = '#1a1a2e';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            // Value
+            ctx.font = 'bold 14px Segoe UI';
+            ctx.fillStyle = 'white';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(node.value, node.x, node.y);
+
+            // Balance factor
+            ctx.font = '11px Segoe UI';
+            ctx.fillStyle = '#333';
+            ctx.fillText(`BF:${balance}`, node.x, node.y - 32);
+        }
+
+        // Rotation demonstrations
+        function drawRotationDiagram(canvasId, type, step = 0) {
+            const c = document.getElementById(canvasId);
+            const context = c.getContext('2d');
+            context.clearRect(0, 0, c.width, c.height);
+
+            const nodes = {
+                'll': step === 0 ? 
+                    [{v: 30, x: 150, y: 30}, {v: 20, x: 100, y: 70}, {v: 10, x: 50, y: 110}] :
+                    [{v: 20, x: 100, y: 50}, {v: 10, x: 50, y: 100}, {v: 30, x: 150, y: 100}],
+                'rr': step === 0 ?
+                    [{v: 10, x: 50, y: 30}, {v: 20, x: 100, y: 70}, {v: 30, x: 150, y: 110}] :
+                    [{v: 20, x: 100, y: 50}, {v: 10, x: 50, y: 100}, {v: 30, x: 150, y: 100}],
+                'lr': step === 0 ?
+                    [{v: 30, x: 150, y: 30}, {v: 10, x: 50, y: 70}, {v: 20, x: 100, y: 110}] :
+                    [{v: 20, x: 100, y: 50}, {v: 10, x: 50, y: 100}, {v: 30, x: 150, y: 100}],
+                'rl': step === 0 ?
+                    [{v: 10, x: 50, y: 30}, {v: 30, x: 150, y: 70}, {v: 20, x: 100, y: 110}] :
+                    [{v: 20, x: 100, y: 50}, {v: 10, x: 50, y: 100}, {v: 30, x: 150, y: 100}]
+            };
+
+            const nodeList = nodes[type];
+            
+            // Draw edges
+            if (step === 0) {
+                context.beginPath();
+                context.moveTo(nodeList[0].x, nodeList[0].y);
+                context.lineTo(nodeList[1].x, nodeList[1].y);
+                context.lineTo(nodeList[2].x, nodeList[2].y);
+                context.strokeStyle = '#333';
+                context.lineWidth = 2;
+                context.stroke();
+            } else {
+                context.beginPath();
+                context.moveTo(nodeList[0].x, nodeList[0].y);
+                context.lineTo(nodeList[1].x, nodeList[1].y);
+                context.stroke();
+                context.beginPath();
+                context.moveTo(nodeList[0].x, nodeList[0].y);
+                context.lineTo(nodeList[2].x, nodeList[2].y);
+                context.stroke();
+            }
+
+            // Draw nodes
+            nodeList.forEach(n => {
+                context.beginPath();
+                context.arc(n.x, n.y, 18, 0, 2 * Math.PI);
+                context.fillStyle = step === 0 ? '#ef4444' : '#14b8a6';
+                context.fill();
+                context.strokeStyle = '#1a1a2e';
+                context.lineWidth = 2;
+                context.stroke();
+
+                context.font = 'bold 12px Segoe UI';
+                context.fillStyle = 'white';
+                context.textAlign = 'center';
+                context.textBaseline = 'middle';
+                context.fillText(n.v, n.x, n.y);
+            });
+        }
+
+        async function demonstrateRotation(type) {
+            drawRotationDiagram(type + 'Canvas', type, 0);
+            await new Promise(r => setTimeout(r, 800));
+            drawRotationDiagram(type + 'Canvas', type, 1);
+        }
+
+        // Initialize rotation diagrams
+        ['ll', 'rr', 'lr', 'rl'].forEach(type => drawRotationDiagram(type + 'Canvas', type, 0));
+
+        document.getElementById('nodeValue').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') insertNode();
+        });
+
+        // Initialize
+        loadSample();
+    </script>
+</body>
+</html>

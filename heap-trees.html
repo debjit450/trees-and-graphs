@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heap Trees - Interactive Learning</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f5f5; min-height: 100vh; }
+        .nav-bar { background: linear-gradient(135deg, #ec4899 0%, #db2777 100%); padding: 15px 30px; display: flex; align-items: center; gap: 20px; }
+        .nav-bar a { color: white; text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+        .nav-bar h1 { color: white; font-size: 1.5em; flex: 1; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 40px 20px; }
+        .main-grid { display: grid; grid-template-columns: 1fr 380px; gap: 30px; }
+        @media (max-width: 1100px) { .main-grid { grid-template-columns: 1fr; } }
+        .card { background: white; border-radius: 16px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); margin-bottom: 25px; }
+        .card h2 { font-size: 1.6em; color: #1a1a2e; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; border-bottom: 3px solid #ec4899; padding-bottom: 10px; }
+        .card h2 i { color: #ec4899; }
+        .canvas-container { background: #f8f8f8; border-radius: 12px; padding: 20px; text-align: center; }
+        canvas { border: 2px solid #e0e0e0; border-radius: 8px; background: white; }
+        .controls { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; align-items: center; }
+        .btn { padding: 12px 20px; border: 2px solid transparent; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.3s; display: inline-flex; align-items: center; gap: 6px; }
+        .btn-primary { background: #ec4899; color: white; }
+        .btn-primary:hover { background: #db2777; }
+        .btn-success { background: #10b981; color: white; }
+        .btn-success:hover { background: #059669; }
+        .btn-danger { background: #ef4444; color: white; }
+        .btn-danger:hover { background: #dc2626; }
+        .btn-secondary { background: white; color: #1a1a2e; border-color: #e0e0e0; }
+        .btn-secondary:hover { border-color: #ec4899; color: #ec4899; }
+        input[type="number"] { padding: 12px 15px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px; width: 100px; }
+        input[type="number"]:focus { outline: none; border-color: #ec4899; }
+        .heap-tabs { display: flex; gap: 10px; margin-bottom: 20px; }
+        .heap-tab { flex: 1; padding: 20px; border: 2px solid #e0e0e0; border-radius: 8px; background: white; cursor: pointer; text-align: center; transition: all 0.3s; }
+        .heap-tab.active { border-color: #ec4899; background: #fdf2f8; }
+        .heap-tab h4 { margin-bottom: 5px; color: #1a1a2e; }
+        .heap-tab p { font-size: 12px; color: #666; }
+        .info-box { background: #fdf2f8; border: 2px solid #ec4899; border-radius: 8px; padding: 20px; margin: 20px 0; }
+        .info-box h4 { color: #db2777; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        .info-box p, .info-box li { color: #9d174d; line-height: 1.6; }
+        .code-box { background: #1e1e1e; color: #d4d4d4; padding: 20px; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 13px; overflow-x: auto; margin: 15px 0; }
+        .code-box .keyword { color: #569cd6; }
+        .code-box .comment { color: #6a9955; }
+        .code-box .function { color: #dcdcaa; }
+        .step-info { background: #ec4899; color: white; padding: 15px 20px; border-radius: 8px; font-weight: 600; margin: 15px 0; display: none; }
+        .step-info.active { display: block; }
+        .array-display { display: flex; flex-wrap: wrap; gap: 5px; margin: 20px 0; justify-content: center; }
+        .array-item { width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; background: #f8f8f8; border: 2px solid #e0e0e0; border-radius: 8px; font-weight: 700; font-size: 16px; position: relative; }
+        .array-item .index { position: absolute; top: -18px; font-size: 11px; color: #666; }
+        .array-item.highlight { background: #fdf2f8; border-color: #ec4899; }
+        .array-item.swapping { background: #fef3c7; border-color: #f59e0b; animation: pulse 0.3s; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+        .legend { display: flex; flex-wrap: wrap; gap: 15px; margin-top: 15px; }
+        .legend-item { display: flex; align-items: center; gap: 6px; font-size: 14px; }
+        .legend-color { width: 16px; height: 16px; border-radius: 50%; border: 2px solid #333; }
+        ul.concept-list { list-style: none; padding: 0; }
+        ul.concept-list li { padding: 12px 0; border-bottom: 1px solid #e0e0e0; display: flex; align-items: flex-start; gap: 10px; }
+        ul.concept-list li:last-child { border-bottom: none; }
+        ul.concept-list i { color: #ec4899; margin-top: 3px; }
+    </style>
+</head>
+<body>
+    <div class="nav-bar">
+        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+        <h1><i class="fas fa-layer-group"></i> Heap Trees</h1>
+        <a href="tries.html">Next: Tries <i class="fas fa-arrow-right"></i></a>
+    </div>
+
+    <div class="container">
+        <div class="main-grid">
+            <div class="left-column">
+                <div class="card">
+                    <h2><i class="fas fa-layer-group"></i> Heap Visualizer</h2>
+                    
+                    <div class="heap-tabs">
+                        <div class="heap-tab active" onclick="setHeapType('max')">
+                            <h4><i class="fas fa-arrow-up"></i> Max Heap</h4>
+                            <p>Parent ≥ Children</p>
+                        </div>
+                        <div class="heap-tab" onclick="setHeapType('min')">
+                            <h4><i class="fas fa-arrow-down"></i> Min Heap</h4>
+                            <p>Parent ≤ Children</p>
+                        </div>
+                    </div>
+
+                    <div class="controls">
+                        <input type="number" id="nodeValue" placeholder="Value" min="1" max="999">
+                        <button class="btn btn-primary" onclick="insertValue()">
+                            <i class="fas fa-plus"></i> Insert
+                        </button>
+                        <button class="btn btn-success" onclick="extractTop()">
+                            <i class="fas fa-arrow-up"></i> Extract Top
+                        </button>
+                        <button class="btn btn-secondary" onclick="loadSample()">
+                            <i class="fas fa-random"></i> Random Heap
+                        </button>
+                        <button class="btn btn-danger" onclick="clearHeap()">
+                            <i class="fas fa-trash-alt"></i> Clear
+                        </button>
+                    </div>
+
+                    <div class="step-info" id="stepInfo"></div>
+
+                    <div class="canvas-container">
+                        <canvas id="heapCanvas" width="800" height="350"></canvas>
+                    </div>
+
+                    <h3 style="margin: 20px 0 10px;">Array Representation</h3>
+                    <div class="array-display" id="arrayDisplay"></div>
+
+                    <div class="info-box">
+                        <h4><i class="fas fa-calculator"></i> Index Formulas (0-indexed)</h4>
+                        <ul style="margin-left: 20px;">
+                            <li><strong>Parent:</strong> (i - 1) / 2</li>
+                            <li><strong>Left Child:</strong> 2i + 1</li>
+                            <li><strong>Right Child:</strong> 2i + 2</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Heap Sort -->
+                <div class="card">
+                    <h2><i class="fas fa-sort-amount-down"></i> Heap Sort Demo</h2>
+                    <div class="controls">
+                        <button class="btn btn-primary" onclick="runHeapSort()">
+                            <i class="fas fa-play"></i> Run Heap Sort
+                        </button>
+                        <button class="btn btn-secondary" onclick="loadSortArray()">
+                            <i class="fas fa-random"></i> New Array
+                        </button>
+                    </div>
+                    <div class="array-display" id="sortArrayDisplay"></div>
+                    <div class="step-info" id="sortStepInfo"></div>
+                </div>
+            </div>
+
+            <div class="right-column">
+                <!-- Heap Property -->
+                <div class="card">
+                    <h2><i class="fas fa-info-circle"></i> Heap Property</h2>
+                    <div class="info-box">
+                        <h4><i class="fas fa-arrow-up"></i> Max Heap</h4>
+                        <p>Every parent node is <strong>greater than or equal to</strong> its children. Root is the maximum.</p>
+                    </div>
+                    <div class="info-box">
+                        <h4><i class="fas fa-arrow-down"></i> Min Heap</h4>
+                        <p>Every parent node is <strong>less than or equal to</strong> its children. Root is the minimum.</p>
+                    </div>
+                    <p style="margin-top: 15px;">Heaps are <strong>complete binary trees</strong>: filled level by level, left to right.</p>
+                </div>
+
+                <!-- Operations -->
+                <div class="card">
+                    <h2><i class="fas fa-cog"></i> Heap Operations</h2>
+                    <ul class="concept-list">
+                        <li><i class="fas fa-plus"></i> <strong>Insert:</strong> Add at end, bubble UP - O(log n)</li>
+                        <li><i class="fas fa-arrow-up"></i> <strong>Extract:</strong> Remove root, bubble DOWN - O(log n)</li>
+                        <li><i class="fas fa-eye"></i> <strong>Peek:</strong> Return root - O(1)</li>
+                        <li><i class="fas fa-hammer"></i> <strong>Heapify:</strong> Fix single violation - O(log n)</li>
+                        <li><i class="fas fa-building"></i> <strong>Build Heap:</strong> From array - O(n)</li>
+                    </ul>
+                </div>
+
+                <!-- Heapify Code -->
+                <div class="card">
+                    <h2><i class="fas fa-code"></i> Heapify (Max Heap)</h2>
+                    <div class="code-box">
+<span class="keyword">function</span> <span class="function">heapifyDown</span>(arr, n, i):
+    largest = i
+    left = 2*i + 1
+    right = 2*i + 2
+    
+    <span class="keyword">if</span> left < n <span class="keyword">and</span> arr[left] > arr[largest]:
+        largest = left
+    <span class="keyword">if</span> right < n <span class="keyword">and</span> arr[right] > arr[largest]:
+        largest = right
+    
+    <span class="keyword">if</span> largest != i:
+        <span class="function">swap</span>(arr[i], arr[largest])
+        <span class="function">heapifyDown</span>(arr, n, largest)
+</div>
+                </div>
+
+                <!-- Priority Queue -->
+                <div class="card">
+                    <h2><i class="fas fa-tasks"></i> Priority Queue</h2>
+                    <p>A heap is the perfect implementation for a priority queue:</p>
+                    <ul class="concept-list">
+                        <li><i class="fas fa-plus-circle"></i> <strong>enqueue(priority, item):</strong> Insert into heap</li>
+                        <li><i class="fas fa-minus-circle"></i> <strong>dequeue():</strong> Extract top element</li>
+                        <li><i class="fas fa-eye"></i> <strong>peek():</strong> View highest priority item</li>
+                    </ul>
+                    <div class="info-box" style="margin-top: 15px;">
+                        <h4><i class="fas fa-rocket"></i> Applications</h4>
+                        <ul style="margin-left: 20px;">
+                            <li>Dijkstra's algorithm</li>
+                            <li>Task scheduling (OS)</li>
+                            <li>Huffman coding</li>
+                            <li>Event-driven simulation</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Complexity -->
+                <div class="card">
+                    <h2><i class="fas fa-clock"></i> Time Complexity</h2>
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <tr style="background: #ec4899; color: white;">
+                            <th style="padding: 10px; text-align: left;">Operation</th>
+                            <th style="padding: 10px;">Time</th>
+                        </tr>
+                        <tr><td style="padding: 10px; border-bottom: 1px solid #e0e0e0;">Insert</td><td style="padding: 10px; text-align: center; border-bottom: 1px solid #e0e0e0;">O(log n)</td></tr>
+                        <tr><td style="padding: 10px; border-bottom: 1px solid #e0e0e0;">Extract</td><td style="padding: 10px; text-align: center; border-bottom: 1px solid #e0e0e0;">O(log n)</td></tr>
+                        <tr><td style="padding: 10px; border-bottom: 1px solid #e0e0e0;">Peek</td><td style="padding: 10px; text-align: center; border-bottom: 1px solid #e0e0e0;">O(1)</td></tr>
+                        <tr><td style="padding: 10px; border-bottom: 1px solid #e0e0e0;">Build Heap</td><td style="padding: 10px; text-align: center; border-bottom: 1px solid #e0e0e0;">O(n)</td></tr>
+                        <tr><td style="padding: 10px;">Heap Sort</td><td style="padding: 10px; text-align: center;">O(n log n)</td></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('heapCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        let heap = [];
+        let heapType = 'max';
+        let isAnimating = false;
+        let highlightedIndex = -1;
+        let swappingIndices = [];
+
+        function setHeapType(type) {
+            heapType = type;
+            document.querySelectorAll('.heap-tab').forEach(t => t.classList.remove('active'));
+            document.querySelector(`.heap-tab:nth-child(${type === 'max' ? 1 : 2})`).classList.add('active');
+            clearHeap();
+        }
+
+        function compare(a, b) {
+            return heapType === 'max' ? a > b : a < b;
+        }
+
+        function loadSample() {
+            clearHeap();
+            const values = Array.from({length: 7}, () => Math.floor(Math.random() * 90) + 10);
+            heap = [];
+            values.forEach(v => {
+                heap.push(v);
+                bubbleUp(heap.length - 1);
+            });
+            drawHeap();
+            updateArrayDisplay();
+        }
+
+        function clearHeap() {
+            heap = [];
+            highlightedIndex = -1;
+            swappingIndices = [];
+            drawHeap();
+            updateArrayDisplay();
+            document.getElementById('stepInfo').classList.remove('active');
+        }
+
+        async function insertValue() {
+            const input = document.getElementById('nodeValue');
+            const value = parseInt(input.value);
+            if (isNaN(value) || isAnimating) return;
+            
+            isAnimating = true;
+            const stepInfo = document.getElementById('stepInfo');
+            stepInfo.classList.add('active');
+            
+            heap.push(value);
+            let i = heap.length - 1;
+            highlightedIndex = i;
+            stepInfo.textContent = `Inserted ${value} at index ${i}`;
+            drawHeap();
+            updateArrayDisplay();
+            await sleep(500);
+
+            while (i > 0) {
+                const parent = Math.floor((i - 1) / 2);
+                if (compare(heap[i], heap[parent])) {
+                    swappingIndices = [i, parent];
+                    stepInfo.textContent = `${heap[i]} should be above ${heap[parent]}, swapping...`;
+                    drawHeap();
+                    updateArrayDisplay();
+                    await sleep(500);
+                    
+                    [heap[i], heap[parent]] = [heap[parent], heap[i]];
+                    i = parent;
+                    highlightedIndex = i;
+                    swappingIndices = [];
+                    drawHeap();
+                    updateArrayDisplay();
+                    await sleep(300);
+                } else {
+                    break;
+                }
+            }
+
+            stepInfo.textContent = `Insert complete! Heap property maintained.`;
+            highlightedIndex = -1;
+            drawHeap();
+            updateArrayDisplay();
+            input.value = '';
+            isAnimating = false;
+        }
+
+        function bubbleUp(i) {
+            while (i > 0) {
+                const parent = Math.floor((i - 1) / 2);
+                if (compare(heap[i], heap[parent])) {
+                    [heap[i], heap[parent]] = [heap[parent], heap[i]];
+                    i = parent;
+                } else break;
+            }
+        }
+
+        async function extractTop() {
+            if (heap.length === 0 || isAnimating) return;
+            
+            isAnimating = true;
+            const stepInfo = document.getElementById('stepInfo');
+            stepInfo.classList.add('active');
+            
+            const extracted = heap[0];
+            highlightedIndex = 0;
+            stepInfo.textContent = `Extracting ${extracted} (root)`;
+            drawHeap();
+            await sleep(500);
+
+            if (heap.length === 1) {
+                heap.pop();
+            } else {
+                heap[0] = heap.pop();
+                stepInfo.textContent = `Moved ${heap[0]} to root, now heapify down`;
+                drawHeap();
+                updateArrayDisplay();
+                await sleep(500);
+
+                let i = 0;
+                while (true) {
+                    const left = 2 * i + 1;
+                    const right = 2 * i + 2;
+                    let target = i;
+
+                    if (left < heap.length && compare(heap[left], heap[target])) target = left;
+                    if (right < heap.length && compare(heap[right], heap[target])) target = right;
+
+                    if (target !== i) {
+                        swappingIndices = [i, target];
+                        stepInfo.textContent = `Swapping ${heap[i]} with ${heap[target]}`;
+                        drawHeap();
+                        updateArrayDisplay();
+                        await sleep(500);
+
+                        [heap[i], heap[target]] = [heap[target], heap[i]];
+                        i = target;
+                        highlightedIndex = i;
+                        swappingIndices = [];
+                        drawHeap();
+                        updateArrayDisplay();
+                        await sleep(300);
+                    } else break;
+                }
+            }
+
+            stepInfo.textContent = `Extracted ${extracted}. Heap property restored.`;
+            highlightedIndex = -1;
+            drawHeap();
+            updateArrayDisplay();
+            isAnimating = false;
+        }
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        function drawHeap() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            if (heap.length === 0) {
+                ctx.font = '18px Segoe UI';
+                ctx.fillStyle = '#666';
+                ctx.textAlign = 'center';
+                ctx.fillText('Empty heap - Insert values or load sample', canvas.width / 2, canvas.height / 2);
+                return;
+            }
+
+            const levels = Math.ceil(Math.log2(heap.length + 1));
+            const nodeRadius = 25;
+            const levelHeight = 80;
+            const startY = 50;
+
+            // Calculate positions
+            const positions = [];
+            for (let i = 0; i < heap.length; i++) {
+                const level = Math.floor(Math.log2(i + 1));
+                const indexInLevel = i - (Math.pow(2, level) - 1);
+                const nodesInLevel = Math.pow(2, level);
+                const levelWidth = canvas.width / (nodesInLevel + 1);
+                
+                positions.push({
+                    x: levelWidth * (indexInLevel + 1),
+                    y: startY + level * levelHeight
+                });
+            }
+
+            // Draw edges
+            for (let i = 0; i < heap.length; i++) {
+                const left = 2 * i + 1;
+                const right = 2 * i + 2;
+                
+                if (left < heap.length) {
+                    ctx.beginPath();
+                    ctx.moveTo(positions[i].x, positions[i].y);
+                    ctx.lineTo(positions[left].x, positions[left].y);
+                    ctx.strokeStyle = '#333';
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+                }
+                if (right < heap.length) {
+                    ctx.beginPath();
+                    ctx.moveTo(positions[i].x, positions[i].y);
+                    ctx.lineTo(positions[right].x, positions[right].y);
+                    ctx.strokeStyle = '#333';
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+                }
+            }
+
+            // Draw nodes
+            for (let i = 0; i < heap.length; i++) {
+                ctx.beginPath();
+                ctx.arc(positions[i].x, positions[i].y, nodeRadius, 0, 2 * Math.PI);
+                
+                let color = '#3b82f6';
+                if (swappingIndices.includes(i)) color = '#f59e0b';
+                else if (i === highlightedIndex) color = '#ec4899';
+                else if (i === 0) color = '#10b981';
+                
+                ctx.fillStyle = color;
+                ctx.fill();
+                ctx.strokeStyle = '#1a1a2e';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                ctx.font = 'bold 16px Segoe UI';
+                ctx.fillStyle = 'white';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(heap[i], positions[i].x, positions[i].y);
+            }
+        }
+
+        function updateArrayDisplay() {
+            const container = document.getElementById('arrayDisplay');
+            container.innerHTML = heap.map((val, i) => {
+                let className = 'array-item';
+                if (swappingIndices.includes(i)) className += ' swapping';
+                else if (i === highlightedIndex) className += ' highlight';
+                return `<div class="${className}"><span class="index">${i}</span>${val}</div>`;
+            }).join('');
+        }
+
+        // Heap Sort
+        let sortArray = [];
+
+        function loadSortArray() {
+            sortArray = Array.from({length: 8}, () => Math.floor(Math.random() * 90) + 10);
+            updateSortArrayDisplay();
+            document.getElementById('sortStepInfo').classList.remove('active');
+        }
+
+        function updateSortArrayDisplay(heapEnd = sortArray.length) {
+            const container = document.getElementById('sortArrayDisplay');
+            container.innerHTML = sortArray.map((val, i) => {
+                let className = 'array-item';
+                if (i >= heapEnd) className += ' highlight';
+                return `<div class="${className}"><span class="index">${i}</span>${val}</div>`;
+            }).join('');
+        }
+
+        async function runHeapSort() {
+            if (sortArray.length === 0 || isAnimating) {
+                loadSortArray();
+                return;
+            }
+            
+            isAnimating = true;
+            const stepInfo = document.getElementById('sortStepInfo');
+            stepInfo.classList.add('active');
+            
+            const n = sortArray.length;
+
+            // Build max heap
+            stepInfo.textContent = 'Building max heap...';
+            for (let i = Math.floor(n / 2) - 1; i >= 0; i--) {
+                await heapifySort(n, i, stepInfo);
+            }
+
+            // Extract elements
+            for (let i = n - 1; i > 0; i--) {
+                stepInfo.textContent = `Swapping max (${sortArray[0]}) with position ${i}`;
+                [sortArray[0], sortArray[i]] = [sortArray[i], sortArray[0]];
+                updateSortArrayDisplay(i);
+                await sleep(400);
+
+                await heapifySort(i, 0, stepInfo);
+            }
+
+            stepInfo.textContent = 'Heap sort complete!';
+            updateSortArrayDisplay(0);
+            isAnimating = false;
+        }
+
+        async function heapifySort(n, i, stepInfo) {
+            let largest = i;
+            const left = 2 * i + 1;
+            const right = 2 * i + 2;
+
+            if (left < n && sortArray[left] > sortArray[largest]) largest = left;
+            if (right < n && sortArray[right] > sortArray[largest]) largest = right;
+
+            if (largest !== i) {
+                stepInfo.textContent = `Heapify: swapping ${sortArray[i]} with ${sortArray[largest]}`;
+                [sortArray[i], sortArray[largest]] = [sortArray[largest], sortArray[i]];
+                updateSortArrayDisplay(n);
+                await sleep(300);
+                await heapifySort(n, largest, stepInfo);
+            }
+        }
+
+        // Initialize
+        loadSample();
+        loadSortArray();
+
+        document.getElementById('nodeValue').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') insertValue();
+        });
+    </script>
+</body>
+</html>

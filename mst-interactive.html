@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimum Spanning Tree - Interactive Learning</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f5f5; min-height: 100vh; }
+        .nav-bar {
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            padding: 15px 30px; display: flex; align-items: center; gap: 20px;
+        }
+        .nav-bar a { color: white; text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+        .nav-bar h1 { color: white; font-size: 1.5em; flex: 1; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 40px 20px; }
+        .main-grid { display: grid; grid-template-columns: 1fr 380px; gap: 30px; }
+        @media (max-width: 1100px) { .main-grid { grid-template-columns: 1fr; } }
+        .card { background: white; border-radius: 16px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); margin-bottom: 25px; }
+        .card h2 { font-size: 1.6em; color: #1a1a2e; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; border-bottom: 3px solid #8b5cf6; padding-bottom: 10px; }
+        .card h2 i { color: #8b5cf6; }
+        .canvas-container { background: #f8f8f8; border-radius: 12px; padding: 20px; text-align: center; }
+        canvas { border: 2px solid #e0e0e0; border-radius: 8px; background: white; cursor: crosshair; }
+        .controls { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+        .btn { padding: 12px 20px; border: 2px solid transparent; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.3s; display: inline-flex; align-items: center; gap: 6px; }
+        .btn-primary { background: #8b5cf6; color: white; }
+        .btn-primary:hover { background: #7c3aed; }
+        .btn-success { background: #10b981; color: white; }
+        .btn-success:hover { background: #059669; }
+        .btn-warning { background: #f59e0b; color: white; }
+        .btn-warning:hover { background: #d97706; }
+        .btn-danger { background: #ef4444; color: white; }
+        .btn-danger:hover { background: #dc2626; }
+        .btn-secondary { background: white; color: #1a1a2e; border-color: #e0e0e0; }
+        .btn-secondary:hover { border-color: #8b5cf6; color: #8b5cf6; }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .algo-tabs { display: flex; gap: 10px; margin-bottom: 20px; }
+        .algo-tab { flex: 1; padding: 20px; border: 2px solid #e0e0e0; border-radius: 8px; background: white; cursor: pointer; text-align: center; transition: all 0.3s; }
+        .algo-tab.active { border-color: #8b5cf6; background: #f5f3ff; }
+        .algo-tab h4 { margin-bottom: 5px; color: #1a1a2e; }
+        .algo-tab p { font-size: 12px; color: #666; }
+        .info-box { background: #f5f3ff; border: 2px solid #8b5cf6; border-radius: 8px; padding: 20px; margin: 20px 0; }
+        .info-box h4 { color: #7c3aed; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        .info-box p, .info-box li { color: #5b21b6; line-height: 1.6; }
+        .code-box { background: #1e1e1e; color: #d4d4d4; padding: 20px; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 13px; overflow-x: auto; margin: 15px 0; }
+        .code-box .keyword { color: #569cd6; }
+        .code-box .comment { color: #6a9955; }
+        .code-box .function { color: #dcdcaa; }
+        .step-info { background: #8b5cf6; color: white; padding: 15px 20px; border-radius: 8px; font-weight: 600; margin: 15px 0; display: none; }
+        .step-info.active { display: block; }
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin: 20px 0; }
+        .stat-item { text-align: center; padding: 15px; background: #f8f8f8; border-radius: 8px; }
+        .stat-value { font-size: 28px; font-weight: 700; color: #8b5cf6; }
+        .stat-label { font-size: 14px; color: #666; }
+        .edge-list { max-height: 200px; overflow-y: auto; }
+        .edge-item { display: flex; justify-content: space-between; padding: 8px 12px; border-bottom: 1px solid #e0e0e0; font-family: 'Courier New', monospace; }
+        .edge-item.selected { background: #f5f3ff; }
+        .edge-item.rejected { background: #fee2e2; text-decoration: line-through; opacity: 0.5; }
+        .edge-item.mst { background: #d1fae5; }
+        .legend { display: flex; flex-wrap: wrap; gap: 15px; margin-top: 15px; }
+        .legend-item { display: flex; align-items: center; gap: 6px; font-size: 14px; }
+        .legend-color { width: 20px; height: 4px; border-radius: 2px; }
+        ul.concept-list { list-style: none; padding: 0; }
+        ul.concept-list li { padding: 12px 0; border-bottom: 1px solid #e0e0e0; display: flex; align-items: flex-start; gap: 10px; }
+        ul.concept-list li:last-child { border-bottom: none; }
+        ul.concept-list i { color: #8b5cf6; margin-top: 3px; }
+        .speed-control { display: flex; align-items: center; gap: 15px; margin: 15px 0; }
+        .speed-control label { font-weight: 600; }
+        input[type="range"] { width: 150px; }
+    </style>
+</head>
+<body>
+    <div class="nav-bar">
+        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+        <h1><i class="fas fa-network-wired"></i> Minimum Spanning Tree</h1>
+        <a href="scc-interactive.html">Next: SCC <i class="fas fa-arrow-right"></i></a>
+    </div>
+
+    <div class="container">
+        <div class="main-grid">
+            <div class="left-column">
+                <div class="card">
+                    <h2><i class="fas fa-project-diagram"></i> MST Visualizer</h2>
+                    
+                    <div class="algo-tabs">
+                        <div class="algo-tab active" onclick="selectAlgorithm('kruskal')">
+                            <h4><i class="fas fa-sort-amount-down"></i> Kruskal's</h4>
+                            <p>Sort edges, use Union-Find</p>
+                        </div>
+                        <div class="algo-tab" onclick="selectAlgorithm('prim')">
+                            <h4><i class="fas fa-expand-arrows-alt"></i> Prim's</h4>
+                            <p>Grow from a vertex</p>
+                        </div>
+                    </div>
+                    
+                    <div class="canvas-container">
+                        <canvas id="graphCanvas" width="700" height="400"></canvas>
+                    </div>
+                    
+                    <div class="controls" style="margin-top: 20px;">
+                        <button class="btn btn-primary" onclick="loadSampleGraph('simple')">
+                            <i class="fas fa-shapes"></i> Simple
+                        </button>
+                        <button class="btn btn-primary" onclick="loadSampleGraph('complex')">
+                            <i class="fas fa-project-diagram"></i> Complex
+                        </button>
+                        <button class="btn btn-primary" onclick="loadSampleGraph('grid')">
+                            <i class="fas fa-th"></i> Grid
+                        </button>
+                        <button class="btn btn-danger" onclick="clearGraph()">
+                            <i class="fas fa-trash-alt"></i> Clear
+                        </button>
+                    </div>
+
+                    <div class="controls">
+                        <button class="btn btn-success" onclick="runMST()" id="runBtn">
+                            <i class="fas fa-play"></i> Run Algorithm
+                        </button>
+                        <button class="btn btn-secondary" onclick="resetMST()">
+                            <i class="fas fa-redo"></i> Reset
+                        </button>
+                    </div>
+
+                    <div class="speed-control">
+                        <label>Speed:</label>
+                        <input type="range" id="speedSlider" min="100" max="2000" value="800">
+                        <span id="speedLabel">0.8s</span>
+                    </div>
+
+                    <div class="step-info" id="stepInfo"></div>
+
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-value" id="nodeCount">0</div>
+                            <div class="stat-label">Vertices</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="mstEdges">0</div>
+                            <div class="stat-label">MST Edges</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="mstWeight">0</div>
+                            <div class="stat-label">MST Weight</div>
+                        </div>
+                    </div>
+
+                    <div class="legend">
+                        <div class="legend-item"><div class="legend-color" style="background: #666;"></div> Unused Edge</div>
+                        <div class="legend-item"><div class="legend-color" style="background: #f59e0b; height: 6px;"></div> Considering</div>
+                        <div class="legend-item"><div class="legend-color" style="background: #10b981; height: 6px;"></div> In MST</div>
+                        <div class="legend-item"><div class="legend-color" style="background: #ef4444;"></div> Rejected</div>
+                    </div>
+                </div>
+
+                <!-- Edge List -->
+                <div class="card">
+                    <h2><i class="fas fa-list"></i> Edge List (Sorted by Weight)</h2>
+                    <div class="edge-list" id="edgeList"></div>
+                </div>
+            </div>
+
+            <div class="right-column">
+                <!-- MST Definition -->
+                <div class="card">
+                    <h2><i class="fas fa-info-circle"></i> What is MST?</h2>
+                    <div class="info-box">
+                        <h4><i class="fas fa-tree"></i> Spanning Tree</h4>
+                        <p>A subgraph that connects all vertices with exactly V-1 edges and no cycles.</p>
+                    </div>
+                    <div class="info-box">
+                        <h4><i class="fas fa-weight-hanging"></i> Minimum</h4>
+                        <p>Among all spanning trees, MST has the minimum total edge weight.</p>
+                    </div>
+                </div>
+
+                <!-- Kruskal's Info -->
+                <div class="card" id="kruskalInfo">
+                    <h2><i class="fas fa-sort-amount-down"></i> Kruskal's Algorithm</h2>
+                    <div class="info-box">
+                        <h4><i class="fas fa-lightbulb"></i> Key Idea</h4>
+                        <p>Greedy approach: Sort all edges by weight, then add edges that don't create cycles.</p>
+                    </div>
+                    <div class="code-box">
+<span class="keyword">function</span> <span class="function">kruskal</span>(graph):
+    mst = []
+    edges = <span class="function">sortByWeight</span>(graph.edges)
+    uf = <span class="keyword">new</span> <span class="function">UnionFind</span>(vertices)
+    
+    <span class="keyword">for</span> edge (u, v, w) <span class="keyword">in</span> edges:
+        <span class="keyword">if</span> uf.<span class="function">find</span>(u) != uf.<span class="function">find</span>(v):
+            mst.<span class="function">add</span>(edge)
+            uf.<span class="function">union</span>(u, v)
+        <span class="keyword">if</span> mst.length == V - 1:
+            <span class="keyword">break</span>
+    
+    <span class="keyword">return</span> mst
+</div>
+                    <p><strong>Time:</strong> O(E log E) for sorting</p>
+                </div>
+
+                <!-- Prim's Info -->
+                <div class="card" id="primInfo" style="display: none;">
+                    <h2><i class="fas fa-expand-arrows-alt"></i> Prim's Algorithm</h2>
+                    <div class="info-box">
+                        <h4><i class="fas fa-lightbulb"></i> Key Idea</h4>
+                        <p>Start from any vertex. Always add the minimum weight edge that connects a new vertex.</p>
+                    </div>
+                    <div class="code-box">
+<span class="keyword">function</span> <span class="function">prim</span>(graph, start):
+    mst = []
+    visited = {start}
+    edges = <span class="function">PriorityQueue</span>()
+    
+    <span class="function">addEdges</span>(start, edges)
+    
+    <span class="keyword">while</span> edges not empty:
+        (u, v, w) = edges.<span class="function">extractMin</span>()
+        <span class="keyword">if</span> v not <span class="keyword">in</span> visited:
+            visited.<span class="function">add</span>(v)
+            mst.<span class="function">add</span>((u, v, w))
+            <span class="function">addEdges</span>(v, edges)
+    
+    <span class="keyword">return</span> mst
+</div>
+                    <p><strong>Time:</strong> O(E log V) with min-heap</p>
+                </div>
+
+                <!-- Union-Find -->
+                <div class="card">
+                    <h2><i class="fas fa-object-group"></i> Union-Find</h2>
+                    <p style="margin-bottom: 15px;">Data structure for efficiently tracking connected components.</p>
+                    <ul class="concept-list">
+                        <li><i class="fas fa-search"></i> <strong>Find(x):</strong> Find the representative/root of x's set</li>
+                        <li><i class="fas fa-link"></i> <strong>Union(x,y):</strong> Merge the sets containing x and y</li>
+                        <li><i class="fas fa-compress-arrows-alt"></i> <strong>Path Compression:</strong> Flatten tree during Find</li>
+                        <li><i class="fas fa-layer-group"></i> <strong>Union by Rank:</strong> Attach smaller tree under larger</li>
+                    </ul>
+                    <div class="code-box">
+<span class="keyword">function</span> <span class="function">find</span>(x):
+    <span class="keyword">if</span> parent[x] != x:
+        parent[x] = <span class="function">find</span>(parent[x]) <span class="comment">// path compression</span>
+    <span class="keyword">return</span> parent[x]
+
+<span class="keyword">function</span> <span class="function">union</span>(x, y):
+    rootX = <span class="function">find</span>(x)
+    rootY = <span class="function">find</span>(y)
+    <span class="keyword">if</span> rank[rootX] < rank[rootY]:
+        parent[rootX] = rootY
+    <span class="keyword">else if</span> rank[rootX] > rank[rootY]:
+        parent[rootY] = rootX
+    <span class="keyword">else</span>:
+        parent[rootY] = rootX
+        rank[rootX]++
+</div>
+                    <p><strong>Time:</strong> Nearly O(1) per operation (inverse Ackermann)</p>
+                </div>
+
+                <!-- Applications -->
+                <div class="card">
+                    <h2><i class="fas fa-rocket"></i> Applications</h2>
+                    <ul class="concept-list">
+                        <li><i class="fas fa-network-wired"></i> Network design (cables, pipes)</li>
+                        <li><i class="fas fa-road"></i> Road construction</li>
+                        <li><i class="fas fa-bolt"></i> Electrical grid design</li>
+                        <li><i class="fas fa-project-diagram"></i> Cluster analysis</li>
+                        <li><i class="fas fa-image"></i> Image segmentation</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('graphCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        let nodes = [];
+        let edges = [];
+        let currentAlgorithm = 'kruskal';
+        let isAnimating = false;
+        let animationSpeed = 800;
+        let mstEdges = [];
+        
+        // Union-Find
+        let parent = {};
+        let rank = {};
+
+        document.getElementById('speedSlider').addEventListener('input', function(e) {
+            animationSpeed = parseInt(e.target.value);
+            document.getElementById('speedLabel').textContent = (animationSpeed / 1000).toFixed(1) + 's';
+        });
+
+        function selectAlgorithm(algo) {
+            currentAlgorithm = algo;
+            document.querySelectorAll('.algo-tab').forEach(t => t.classList.remove('active'));
+            document.querySelector(`.algo-tab:nth-child(${algo === 'kruskal' ? 1 : 2})`).classList.add('active');
+            document.getElementById('kruskalInfo').style.display = algo === 'kruskal' ? 'block' : 'none';
+            document.getElementById('primInfo').style.display = algo === 'prim' ? 'block' : 'none';
+            resetMST();
+        }
+
+        function loadSampleGraph(type) {
+            clearGraph();
+            
+            if (type === 'simple') {
+                nodes = [
+                    { id: 0, label: 'A', x: 150, y: 100 },
+                    { id: 1, label: 'B', x: 350, y: 80 },
+                    { id: 2, label: 'C', x: 550, y: 100 },
+                    { id: 3, label: 'D', x: 150, y: 300 },
+                    { id: 4, label: 'E', x: 350, y: 320 },
+                    { id: 5, label: 'F', x: 550, y: 300 }
+                ];
+                edges = [
+                    { from: 0, to: 1, weight: 4, state: 'normal' },
+                    { from: 0, to: 3, weight: 2, state: 'normal' },
+                    { from: 1, to: 2, weight: 5, state: 'normal' },
+                    { from: 1, to: 3, weight: 1, state: 'normal' },
+                    { from: 1, to: 4, weight: 3, state: 'normal' },
+                    { from: 2, to: 4, weight: 4, state: 'normal' },
+                    { from: 2, to: 5, weight: 6, state: 'normal' },
+                    { from: 3, to: 4, weight: 3, state: 'normal' },
+                    { from: 4, to: 5, weight: 2, state: 'normal' }
+                ];
+            } else if (type === 'complex') {
+                nodes = [
+                    { id: 0, label: 'A', x: 100, y: 200 },
+                    { id: 1, label: 'B', x: 220, y: 80 },
+                    { id: 2, label: 'C', x: 220, y: 320 },
+                    { id: 3, label: 'D', x: 380, y: 150 },
+                    { id: 4, label: 'E', x: 380, y: 250 },
+                    { id: 5, label: 'F', x: 520, y: 80 },
+                    { id: 6, label: 'G', x: 520, y: 320 },
+                    { id: 7, label: 'H', x: 620, y: 200 }
+                ];
+                edges = [
+                    { from: 0, to: 1, weight: 4, state: 'normal' },
+                    { from: 0, to: 2, weight: 3, state: 'normal' },
+                    { from: 1, to: 2, weight: 2, state: 'normal' },
+                    { from: 1, to: 3, weight: 5, state: 'normal' },
+                    { from: 2, to: 4, weight: 6, state: 'normal' },
+                    { from: 3, to: 4, weight: 1, state: 'normal' },
+                    { from: 3, to: 5, weight: 4, state: 'normal' },
+                    { from: 4, to: 6, weight: 3, state: 'normal' },
+                    { from: 5, to: 6, weight: 7, state: 'normal' },
+                    { from: 5, to: 7, weight: 2, state: 'normal' },
+                    { from: 6, to: 7, weight: 5, state: 'normal' },
+                    { from: 1, to: 5, weight: 8, state: 'normal' },
+                    { from: 2, to: 6, weight: 9, state: 'normal' }
+                ];
+            } else if (type === 'grid') {
+                nodes = [
+                    { id: 0, label: '0', x: 150, y: 100 },
+                    { id: 1, label: '1', x: 350, y: 100 },
+                    { id: 2, label: '2', x: 550, y: 100 },
+                    { id: 3, label: '3', x: 150, y: 250 },
+                    { id: 4, label: '4', x: 350, y: 250 },
+                    { id: 5, label: '5', x: 550, y: 250 }
+                ];
+                edges = [
+                    { from: 0, to: 1, weight: 3, state: 'normal' },
+                    { from: 1, to: 2, weight: 5, state: 'normal' },
+                    { from: 0, to: 3, weight: 2, state: 'normal' },
+                    { from: 1, to: 4, weight: 4, state: 'normal' },
+                    { from: 2, to: 5, weight: 1, state: 'normal' },
+                    { from: 3, to: 4, weight: 6, state: 'normal' },
+                    { from: 4, to: 5, weight: 2, state: 'normal' },
+                    { from: 0, to: 4, weight: 7, state: 'normal' },
+                    { from: 1, to: 3, weight: 8, state: 'normal' },
+                    { from: 1, to: 5, weight: 9, state: 'normal' },
+                    { from: 2, to: 4, weight: 3, state: 'normal' }
+                ];
+            }
+            
+            updateEdgeList();
+            updateStats();
+            drawGraph();
+        }
+
+        function clearGraph() {
+            nodes = [];
+            edges = [];
+            mstEdges = [];
+            updateEdgeList();
+            updateStats();
+            drawGraph();
+            document.getElementById('stepInfo').classList.remove('active');
+        }
+
+        function resetMST() {
+            mstEdges = [];
+            edges.forEach(e => e.state = 'normal');
+            initUnionFind();
+            updateEdgeList();
+            updateStats();
+            drawGraph();
+            document.getElementById('stepInfo').classList.remove('active');
+        }
+
+        function initUnionFind() {
+            parent = {};
+            rank = {};
+            nodes.forEach(n => {
+                parent[n.id] = n.id;
+                rank[n.id] = 0;
+            });
+        }
+
+        function find(x) {
+            if (parent[x] !== x) {
+                parent[x] = find(parent[x]); // Path compression
+            }
+            return parent[x];
+        }
+
+        function union(x, y) {
+            const rootX = find(x);
+            const rootY = find(y);
+            if (rootX === rootY) return false;
+            
+            if (rank[rootX] < rank[rootY]) {
+                parent[rootX] = rootY;
+            } else if (rank[rootX] > rank[rootY]) {
+                parent[rootY] = rootX;
+            } else {
+                parent[rootY] = rootX;
+                rank[rootX]++;
+            }
+            return true;
+        }
+
+        function getNodeById(id) {
+            return nodes.find(n => n.id === id);
+        }
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        async function runMST() {
+            if (nodes.length === 0 || isAnimating) return;
+            resetMST();
+            isAnimating = true;
+
+            if (currentAlgorithm === 'kruskal') {
+                await runKruskal();
+            } else {
+                await runPrim();
+            }
+
+            isAnimating = false;
+        }
+
+        async function runKruskal() {
+            const stepInfo = document.getElementById('stepInfo');
+            stepInfo.classList.add('active');
+            
+            // Sort edges by weight
+            const sortedEdges = [...edges].sort((a, b) => a.weight - b.weight);
+            
+            stepInfo.textContent = 'Kruskal: Edges sorted by weight';
+            await sleep(animationSpeed);
+
+            for (let edge of sortedEdges) {
+                edge.state = 'considering';
+                drawGraph();
+                updateEdgeList();
+                
+                const from = getNodeById(edge.from);
+                const to = getNodeById(edge.to);
+                stepInfo.textContent = `Considering edge ${from.label}-${to.label} (weight ${edge.weight})`;
+                await sleep(animationSpeed);
+
+                if (find(edge.from) !== find(edge.to)) {
+                    union(edge.from, edge.to);
+                    edge.state = 'mst';
+                    mstEdges.push(edge);
+                    stepInfo.textContent = `Added edge ${from.label}-${to.label} to MST (no cycle)`;
+                } else {
+                    edge.state = 'rejected';
+                    stepInfo.textContent = `Rejected edge ${from.label}-${to.label} (would create cycle)`;
+                }
+
+                drawGraph();
+                updateEdgeList();
+                updateStats();
+                await sleep(animationSpeed);
+
+                if (mstEdges.length === nodes.length - 1) {
+                    stepInfo.textContent = `MST complete! Total weight: ${getTotalWeight()}`;
+                    break;
+                }
+            }
+        }
+
+        async function runPrim() {
+            const stepInfo = document.getElementById('stepInfo');
+            stepInfo.classList.add('active');
+            
+            const visited = new Set();
+            const startNode = nodes[0];
+            visited.add(startNode.id);
+            
+            stepInfo.textContent = `Prim: Starting from vertex ${startNode.label}`;
+            await sleep(animationSpeed);
+
+            while (visited.size < nodes.length) {
+                let minEdge = null;
+                let minWeight = Infinity;
+
+                // Find minimum edge from visited to unvisited
+                for (let edge of edges) {
+                    const fromVisited = visited.has(edge.from);
+                    const toVisited = visited.has(edge.to);
+
+                    if (fromVisited !== toVisited && edge.state !== 'mst') {
+                        edge.state = 'considering';
+                        if (edge.weight < minWeight) {
+                            minWeight = edge.weight;
+                            minEdge = edge;
+                        }
+                    }
+                }
+
+                drawGraph();
+                await sleep(animationSpeed / 2);
+
+                if (minEdge) {
+                    const newVertex = visited.has(minEdge.from) ? minEdge.to : minEdge.from;
+                    visited.add(newVertex);
+                    minEdge.state = 'mst';
+                    mstEdges.push(minEdge);
+
+                    const from = getNodeById(minEdge.from);
+                    const to = getNodeById(minEdge.to);
+                    stepInfo.textContent = `Added edge ${from.label}-${to.label} (weight ${minEdge.weight})`;
+
+                    // Reset other considering edges
+                    edges.forEach(e => {
+                        if (e.state === 'considering') e.state = 'normal';
+                    });
+
+                    drawGraph();
+                    updateEdgeList();
+                    updateStats();
+                    await sleep(animationSpeed);
+                } else {
+                    break;
+                }
+            }
+
+            stepInfo.textContent = `MST complete! Total weight: ${getTotalWeight()}`;
+        }
+
+        function getTotalWeight() {
+            return mstEdges.reduce((sum, e) => sum + e.weight, 0);
+        }
+
+        function updateStats() {
+            document.getElementById('nodeCount').textContent = nodes.length;
+            document.getElementById('mstEdges').textContent = mstEdges.length;
+            document.getElementById('mstWeight').textContent = getTotalWeight();
+        }
+
+        function updateEdgeList() {
+            const container = document.getElementById('edgeList');
+            const sortedEdges = [...edges].sort((a, b) => a.weight - b.weight);
+            
+            container.innerHTML = sortedEdges.map(e => {
+                const from = getNodeById(e.from);
+                const to = getNodeById(e.to);
+                return `<div class="edge-item ${e.state}">
+                    <span>${from.label} — ${to.label}</span>
+                    <span>w: ${e.weight}</span>
+                </div>`;
+            }).join('');
+        }
+
+        function drawGraph() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            if (nodes.length === 0) {
+                ctx.font = '16px Segoe UI';
+                ctx.fillStyle = '#666';
+                ctx.textAlign = 'center';
+                ctx.fillText('Load a sample graph to start', canvas.width / 2, canvas.height / 2);
+                return;
+            }
+
+            // Draw edges
+            edges.forEach(edge => {
+                const from = getNodeById(edge.from);
+                const to = getNodeById(edge.to);
+                if (!from || !to) return;
+
+                ctx.beginPath();
+                ctx.moveTo(from.x, from.y);
+                ctx.lineTo(to.x, to.y);
+
+                if (edge.state === 'mst') {
+                    ctx.strokeStyle = '#10b981';
+                    ctx.lineWidth = 5;
+                } else if (edge.state === 'considering') {
+                    ctx.strokeStyle = '#f59e0b';
+                    ctx.lineWidth = 4;
+                } else if (edge.state === 'rejected') {
+                    ctx.strokeStyle = '#ef4444';
+                    ctx.lineWidth = 2;
+                    ctx.setLineDash([5, 5]);
+                } else {
+                    ctx.strokeStyle = '#999';
+                    ctx.lineWidth = 2;
+                }
+                ctx.stroke();
+                ctx.setLineDash([]);
+
+                // Weight label
+                const midX = (from.x + to.x) / 2;
+                const midY = (from.y + to.y) / 2;
+                ctx.fillStyle = 'white';
+                ctx.beginPath();
+                ctx.arc(midX, midY, 15, 0, 2 * Math.PI);
+                ctx.fill();
+                ctx.strokeStyle = '#333';
+                ctx.lineWidth = 1;
+                ctx.stroke();
+
+                ctx.font = 'bold 12px Segoe UI';
+                ctx.fillStyle = edge.state === 'mst' ? '#059669' : '#333';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(edge.weight, midX, midY);
+            });
+
+            // Draw nodes
+            nodes.forEach(node => {
+                const inMST = mstEdges.some(e => e.from === node.id || e.to === node.id);
+                
+                ctx.beginPath();
+                ctx.arc(node.x, node.y, 25, 0, 2 * Math.PI);
+                ctx.fillStyle = inMST ? '#8b5cf6' : '#3b82f6';
+                ctx.fill();
+                ctx.strokeStyle = '#1a1a2e';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                ctx.font = 'bold 16px Segoe UI';
+                ctx.fillStyle = 'white';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(node.label, node.x, node.y);
+            });
+        }
+
+        // Initialize
+        loadSampleGraph('simple');
+    </script>
+</body>
+</html>
